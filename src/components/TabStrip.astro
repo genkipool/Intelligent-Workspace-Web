@@ -1,0 +1,129 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+/**
+ * The four groups, laid out along a 1200-unit strip. Widths are the data: they are what
+ * makes the picture read as "a lot of tabs folded into a few named things".
+ */
+const groups = [
+    { tone: 'blue', x: 0, w: 268, label: 'Work · 9' },
+    { tone: 'green', x: 284, w: 252, label: 'Docs · 6' },
+    { tone: 'purple', x: 552, w: 300, label: 'Research · 12' },
+    { tone: 'orange', x: 868, w: 332, label: 'Read later · 13' },
+] as const;
+
+/** Ten loose tabs, evenly spaced. Generated rather than written out ten times. */
+const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 102 : 112 }));
+---
+
+<figure class="strip" aria-labelledby="strip-caption">
+    <svg viewBox="0 0 1200 130" preserveAspectRatio="xMidYMid meet" role="img" aria-label={t('strip.alt')}>
+        <g class="loose">
+            {loose.map((tab) => <rect x={tab.x} y="0" width={tab.w} height="30" rx="7" />)}
+        </g>
+
+        <path class="fall" d="M600 46 v26 m-10-10 10 10 10-10"></path>
+
+        <g class="groups">
+            {
+                groups.map((group) => (
+                    <g style={`--c: var(--tg-${group.tone})`}>
+                        <rect x={group.x} y="90" width={group.w} height="34" rx="9" />
+                        <circle cx={group.x + 22} cy="107" r="5.5" />
+                        <text x={group.x + 40} y="112">
+                            {group.label}
+                        </text>
+                    </g>
+                ))
+            }
+        </g>
+    </svg>
+
+    <p class="exchange">
+        <span class="said">{t('strip.said')}</span>
+        <span class="did">{t('strip.did')}</span>
+    </p>
+    <figcaption id="strip-caption">{t('strip.caption')}</figcaption>
+</figure>
+
+<style>
+/* ── The tab strip ─────────────────────────────────────────────── */
+
+.strip {
+    margin: 0;
+    padding: 0 var(--gutter) clamp(40px, 5vw, 68px);
+    max-width: var(--measure);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.strip svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.loose rect {
+    fill: var(--deep-2);
+}
+
+.fall {
+    fill: none;
+    stroke: var(--deep-soft);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.65;
+}
+
+.groups rect {
+    fill: color-mix(in srgb, var(--c) 17%, var(--deep));
+}
+
+.groups circle {
+    fill: var(--c);
+}
+
+.groups text {
+    fill: var(--deep-ink);
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 580;
+}
+
+/* The exchange is HTML, not SVG <text>: inside a 1200-unit viewBox scaled down to a
+   390px phone, 14px type renders at about 4px. As HTML it reflows and stays legible. */
+.exchange {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.said {
+    color: var(--deep-soft);
+    font-size: 0.95rem;
+}
+
+.did {
+    color: var(--tg-green);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+}
+
+figcaption {
+    font-size: 0.86rem;
+    color: var(--deep-soft);
+    max-width: 62ch;
+}
+</style>

@@ -1,0 +1,240 @@
+/**
+ * Intelligent Workspace — global tokens, resets and the two layout primitives.
+ *
+ * Everything here is genuinely global: the palette, the type stack, the measure, and
+ * the `.wrap` / `.band` primitives every section is built from. Anything that belongs
+ * to one section lives in that component's own <style> block, where Astro scopes it —
+ * so a rule can only ever affect the component it was written for.
+ *
+ * TWO RULES THIS SHEET IS BUILT ON.
+ *
+ * 1. No boxes. Nothing on this page is a bordered card. Sections are separated by
+ *    full-bleed bands of ground colour and by hairline rules; hierarchy comes from type
+ *    size and space, not from outlines. If you find yourself adding `border: 1px solid`
+ *    around a block of content, that is the thing this design exists to avoid.
+ *
+ * 2. The colour system is Chrome's own tab-group palette, because that is what the
+ *    product makes. Each feature entry claims one group colour through `--c`, set inline
+ *    on the element, and the rules and numerals read that variable.
+ *
+ * The hero and the keyboard section are inverted in BOTH themes — the page opens on a
+ * browser at night and the body of it reads as daylight. That is deliberate, so those
+ * bands carry their own fixed tokens rather than the theme's.
+ */
+
+:root {
+    /* Daylight: the body of the page. */
+    --paper: #fcfcfd;
+    --ink: #0f1117;
+    --ink-soft: #383c4b;
+    --muted: #6b7186;
+    --hair: #e2e4ec;
+
+    /* Night: the hero and keyboard bands, fixed across both themes. */
+    --deep: #0a0c13;
+    --deep-2: #131725;
+    --deep-ink: #f3f4f9;
+    --deep-soft: #a8aec4;
+    --deep-hair: #232838;
+
+    --accent: #3558e9;
+    --accent-ink: #ffffff;
+
+    /* Chrome tab-group colours, tuned to hold up on both grounds. */
+    --tg-blue: #4d7cff;
+    --tg-red: #f2647a;
+    --tg-green: #35b57e;
+    --tg-purple: #9d7bff;
+    --tg-orange: #f0954a;
+
+    --display:
+        ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+
+    /* One measure for every band, so nothing on the page is off-axis. */
+    --measure: 1160px;
+    --gutter: clamp(20px, 5vw, 64px);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #0f1117;
+        --ink: #f2f3f8;
+        --ink-soft: #c6cad9;
+        --muted: #8b91a6;
+        --hair: #232838;
+
+        --deep: #07080d;
+        --deep-2: #10131f;
+
+        --accent: #5b7bff;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: clamp(16px, 1.05vw, 18px);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+    margin: 0;
+    font-weight: 660;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+    line-height: 1.06;
+}
+
+p {
+    margin: 0;
+    text-wrap: pretty;
+}
+
+a {
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* ── Bands and the shared measure ──────────────────────────────── */
+
+.wrap {
+    width: 100%;
+    max-width: var(--measure);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.band {
+    width: 100%;
+}
+
+.band--deep {
+    background: var(--deep);
+    color: var(--deep-ink);
+    /* A hairline of tab-group colours across the seam: the tab strip, reduced to a
+       rule. It is the only ornament on the page, and it is the product's own image. */
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(
+            90deg,
+            var(--tg-blue) 0 25%,
+            var(--tg-green) 25% 45%,
+            var(--tg-purple) 45% 72%,
+            var(--tg-orange) 72% 100%
+        )
+        1;
+}
+
+.band--accent {
+    background: var(--accent);
+    color: var(--accent-ink);
+}
+
+/* ── The call to action ─────────────────────────────────────────
+   Global because two different bands use it, and a shared button that lives inside one
+   of them would be a component reaching into another. */
+
+.cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 620;
+    font-size: 0.95rem;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+    box-shadow: 0 8px 28px -12px color-mix(in srgb, var(--accent) 90%, transparent);
+}
+
+.cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px -12px color-mix(in srgb, var(--accent) 90%, transparent);
+}
+
+.cta--invert {
+    background: #fff;
+    color: var(--accent);
+    box-shadow: none;
+}
+
+.cta--invert:hover {
+    box-shadow: 0 12px 30px -14px rgb(0 0 0 / 45%);
+}
+
+/* ── Narrow ─────────────────────────────────────────────────────
+   These stay global on purpose: each block retunes several components at once, and
+   splitting them would mean the same breakpoint written out five times, free to drift. */
+
+@media (max-width: 640px) {
+    .groups text {
+        display: none;
+    }
+
+    .eyebrow {
+        flex-wrap: wrap;
+        gap: 6px 10px;
+    }
+}
+
+@media (max-width: 820px) {
+    .entry,
+    .keys-section {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .entry {
+        gap: 14px;
+    }
+
+    .nav nav {
+        display: none;
+    }
+
+    .nav {
+        justify-content: space-between;
+    }
+
+    .lang {
+        margin-inline-start: auto;
+    }
+
+    h1 {
+        max-width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta,
+    .cta:hover,
+    .link-cta .arrow {
+        transition: none;
+        transform: none;
+    }
+}

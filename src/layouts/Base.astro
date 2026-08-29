@@ -1,0 +1,73 @@
+---
+import '@/styles/global.css';
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+    title?: string;
+    description?: string;
+    /** The payment page is framed and indexed by nobody. */
+    noindex?: boolean;
+}
+
+const { lang, title, description, noindex = false } = Astro.props;
+const t = useTranslations(lang);
+
+const pageTitle = title ?? t('meta.title');
+const pageDescription = description ?? t('meta.description');
+
+/**
+ * Alternate links for both languages, so a search engine knows the pages are the same
+ * document rather than duplicate content. Derived from the current path, which means a
+ * new page gets them for free.
+ */
+const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
+const alternates = (['en', 'es'] as const).map((code) => ({
+    code,
+    href: new URL(localisePath(code, bare), Astro.site).href,
+}));
+---
+
+<!doctype html>
+<html lang={lang}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="icon" href="/assets/icon.png" />
+        <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+        {noindex && <meta name="robots" content="noindex, nofollow" />}
+        {!noindex && alternates.map((alt) => <link rel="alternate" hreflang={alt.code} href={alt.href} />)}
+        {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0]!.href} />}
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+        <slot name="head" />
+    </head>
+    <body>
+        <a class="skip" href="#main">{t('nav.skip')}</a>
+        <slot />
+    </body>
+</html>
+
+<!-- `is:global` because the slotted page owns this markup, not the layout: scoping
+     would attach the hash to the layout and never match what the page renders. -->
+<style is:global>
+    .skip {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .skip:focus {
+        left: var(--gutter);
+        top: 16px;
+        z-index: 20;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 10px 16px;
+        border-radius: 8px;
+    }
+</style>

@@ -1,0 +1,42 @@
+---
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="band band--accent">
+    <section class="donate wrap">
+        <h2>{t('donate.title')}</h2>
+        <p>{t('donate.body')}</p>
+        <a class="cta cta--invert" href={localisePath(lang, '/pay')}>{t('donate.cta')}</a>
+    </section>
+</div>
+
+<style>
+/* ── Donate ────────────────────────────────────────────────────── */
+
+.donate {
+    padding-block: clamp(56px, 8vw, 104px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(16px, 2vw, 26px);
+}
+
+.donate h2 {
+    font-size: clamp(28px, 4.2vw, 54px);
+    letter-spacing: -0.032em;
+}
+
+.donate p {
+    font-size: clamp(16px, 1.2vw, 19px);
+    max-width: 52ch;
+    color: color-mix(in srgb, var(--accent-ink) 82%, transparent);
+}
+</style>

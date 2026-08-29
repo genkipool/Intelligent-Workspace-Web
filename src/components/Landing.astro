@@ -1,0 +1,37 @@
+---
+/**
+ * The landing page itself, once. `src/pages/index.astro` and `src/pages/es/index.astro`
+ * are three lines each and both render this — so a change to the page is one edit, and
+ * adding a third language never means copying the layout again.
+ */
+import type { Lang } from '@/i18n/ui';
+import Nav from '@/components/Nav.astro';
+import Hero from '@/components/Hero.astro';
+import TabStrip from '@/components/TabStrip.astro';
+import Features from '@/components/Features.astro';
+import KeyboardBand from '@/components/KeyboardBand.astro';
+import Statement from '@/components/Statement.astro';
+import DonateBand from '@/components/DonateBand.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<div class="band band--deep">
+    <Nav lang={lang} />
+    <Hero lang={lang} />
+    <TabStrip lang={lang} />
+</div>
+
+<main id="main">
+    <Features lang={lang} />
+</main>
+
+<KeyboardBand lang={lang} />
+<Statement lang={lang} />
+<DonateBand lang={lang} />
+<SiteFooter lang={lang} />

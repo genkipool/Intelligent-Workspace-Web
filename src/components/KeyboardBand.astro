@@ -1,0 +1,102 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { shortcuts } from '@/data/shortcuts';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="band band--deep" id="keyboard">
+    <section class="keys-section wrap">
+        <div class="keys-copy">
+            <h2>{t('keyboard.title')}</h2>
+            <p>{t('keyboard.body')}</p>
+        </div>
+        <ul class="keys" aria-label={t('keyboard.legend')}>
+            {
+                shortcuts.map((shortcut) => (
+                    <li>
+                        <span class="combo">
+                            {shortcut.keys.map((key) => (
+                                <kbd>{key}</kbd>
+                            ))}
+                        </span>
+                        <span>{t(shortcut.labelKey)}</span>
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+</div>
+
+<style>
+/* ── Keyboard band ─────────────────────────────────────────────── */
+
+.keys-section {
+    padding-block: clamp(64px, 9vw, 120px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: clamp(36px, 6vw, 88px);
+    align-items: center;
+}
+
+.keys-copy h2 {
+    font-size: clamp(28px, 4vw, 52px);
+    letter-spacing: -0.032em;
+    max-width: 14ch;
+}
+
+.keys-copy p {
+    margin-block-start: clamp(16px, 2vw, 24px);
+    color: var(--deep-soft);
+    font-size: clamp(16px, 1.15vw, 18px);
+    max-width: 50ch;
+}
+
+.keys {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.keys li {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 2vw, 22px);
+    padding-block: clamp(13px, 1.6vw, 19px);
+    border-block-start: 1px solid var(--deep-hair);
+    font-size: 0.95rem;
+    color: var(--deep-soft);
+}
+
+.keys li:first-child {
+    border-block-start: 0;
+}
+
+.combo {
+    display: inline-flex;
+    gap: 5px;
+    flex-shrink: 0;
+    min-width: 11ch;
+}
+
+kbd {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--deep-ink);
+    background: var(--deep-2);
+    border-radius: 6px;
+    padding: 6px 9px;
+    min-width: 30px;
+    text-align: center;
+    box-shadow: inset 0 -2px 0 rgb(0 0 0 / 35%);
+}
+</style>

@@ -1,7 +1,18 @@
-node_modules
+# Astro
+dist/
+.astro/
+
+# Vercel
 .vercel
+
+# Dependencies
+node_modules/
+
+# Secrets. The only one this project has is STRIPE_SECRET_KEY.
 .env
 .env.*
 !.env.example
+
+# OS / editor
 .DS_Store
 *.log

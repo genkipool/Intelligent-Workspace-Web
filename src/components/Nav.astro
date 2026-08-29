@@ -1,0 +1,99 @@
+---
+import { useTranslations, localisePath, otherLang } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const other = otherLang(lang);
+
+/**
+ * The switcher points at the same page in the other language rather than at its home
+ * page, so changing language never loses the reader's place. `Astro.url.pathname` is
+ * already localised, so the current prefix is stripped before the new one goes on.
+ */
+const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
+const switchHref = localisePath(other, bare);
+---
+
+<header class="nav wrap">
+    <a class="brand" href={localisePath(lang, '/')}>
+        <img src="/assets/icon.png" alt="" width="26" height="26" />
+        <span>{site.name}</span>
+    </a>
+    <nav>
+        <a href="#what">{t('nav.what')}</a>
+        <a href="#keyboard">{t('nav.keyboard')}</a>
+        <a href="#privacy">{t('nav.privacy')}</a>
+    </nav>
+    <a class="lang" href={switchHref} hreflang={other} aria-label={t('nav.switchTo')}>
+        {other.toUpperCase()}
+    </a>
+</header>
+
+<style>
+    /* The switcher is a link, not a button: it navigates to a real URL, so it works
+       with JavaScript off and search engines can follow it. */
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 3vw, 40px);
+    padding-block: clamp(20px, 2.4vw, 30px);
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 620;
+    letter-spacing: -0.012em;
+    text-decoration: none;
+    color: var(--deep-ink);
+    white-space: nowrap;
+}
+
+.nav nav {
+    margin-inline-start: auto;
+    display: flex;
+    gap: clamp(14px, 2vw, 30px);
+    font-size: 0.88rem;
+}
+
+.nav nav a {
+    color: var(--deep-soft);
+    text-decoration: none;
+    transition: color 0.16s ease;
+}
+
+.nav nav a:hover {
+    color: var(--deep-ink);
+}
+
+.lang {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 660;
+    letter-spacing: 0.08em;
+    padding: 6px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--deep-hair);
+    background: transparent;
+    color: var(--deep-soft);
+    transition:
+        color 0.16s ease,
+        border-color 0.16s ease;
+}
+
+.lang:hover {
+    color: var(--deep-ink);
+    border-color: var(--deep-soft);
+}
+</style>

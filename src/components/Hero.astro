@@ -1,0 +1,98 @@
+---
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="hero wrap">
+    <p class="eyebrow">
+        <span>{t('hero.eyebrow.a')}</span>
+        <span class="dot" aria-hidden="true"></span>
+        <span>{t('hero.eyebrow.b')}</span>
+    </p>
+
+    <h1>{t('hero.title')}</h1>
+    <p class="lede">{t('hero.lede')}</p>
+
+    <div class="actions">
+        <a class="cta" href={site.storeUrl} rel="noopener">{t('hero.install')}</a>
+        <a class="link-cta" href={localisePath(lang, '/pay')}>
+            {t('hero.support')}
+            <span class="arrow" aria-hidden="true">→</span>
+        </a>
+    </div>
+</section>
+
+<style>
+.hero {
+    padding-block: clamp(48px, 8vw, 104px) clamp(32px, 4vw, 52px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2.4vw, 30px);
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.74rem;
+    font-weight: 620;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--deep-soft);
+}
+
+.eyebrow .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--tg-green);
+}
+
+h1 {
+    /* The one place the page raises its voice. */
+    font-size: clamp(40px, 7.4vw, 96px);
+    font-weight: 700;
+    letter-spacing: -0.038em;
+    max-width: 15ch;
+}
+
+.lede {
+    font-size: clamp(17px, 1.5vw, 22px);
+    line-height: 1.5;
+    color: var(--deep-soft);
+    max-width: 54ch;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(16px, 2.5vw, 32px);
+    padding-block-start: clamp(8px, 1vw, 14px);
+}
+.link-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.95rem;
+    font-weight: 560;
+    color: var(--deep-ink);
+    text-decoration: none;
+}
+
+.link-cta .arrow {
+    transition: transform 0.18s ease;
+}
+
+.link-cta:hover .arrow {
+    transform: translateX(5px);
+}
+</style>

@@ -1,4 +1,4 @@
-# genkipool-site
+# Intelligent Workspace Web
 
 The marketing site for **Intelligent Workspace**, plus the donation form the extension
 frames in its side panel. Deployed to Vercel.
@@ -7,13 +7,44 @@ This is a separate repository from the extension on purpose: different deploy ta
 different lifecycle, and — the reason that actually matters — nothing here can ever end
 up inside the Web Store `.zip` by accident.
 
+Built with **Astro 7**, statically generated, with one server function.
+
 ```
-index.html      the landing page
-styles.css      its stylesheet (Chrome's tab-group palette as the colour system)
-site.js         language toggle + footer year, nothing else
-pay/            the donation form: the page the extension frames
-api/intent.js   creates the PaymentIntent — the only code that sees the secret key
-vercel.json     per-route security headers
+src/pages/            routes. index + es/index, pay + es/pay, api/intent
+src/components/       one section each; Landing.astro composes them
+src/layouts/Base.astro  <head>, hreflang, the skip link
+src/i18n/ui.ts        every string, both languages, key-complete by type
+src/i18n/utils.ts     getLangFromUrl · useTranslations · localisePath
+src/data/             features, shortcuts, site facts — typed, not markup
+src/scripts/pay.ts    the only client-side JavaScript on the whole site
+src/styles/           global tokens and the pay sheet; the rest is scoped per component
+vercel.json           per-route security headers
+```
+
+### The rules this structure enforces
+
+- **No copy in components.** They call `t('key')`. Adding a language is one object in
+  `ui.ts` and one entry in `astro.config.mjs`; a key present in English and missing in
+  Spanish is a compile error, not a page that quietly renders the wrong language.
+- **No content in markup.** The four features and the shortcut list are typed arrays in
+  `src/data/`. `Features.astro` derives the numbering and the colour from the array, so
+  inserting a fifth feature renumbers the rest by itself.
+- **Styles are scoped by default.** Only tokens, the two layout primitives (`.wrap`,
+  `.band`), the shared `.cta` and the breakpoints that retune several components at once
+  live in `global.css`. Everything else sits in the component it belongs to, where Astro
+  guarantees it cannot leak.
+- **Imports are absolute.** `@/*` maps to `src/*`, so moving a page between folders never
+  breaks one and nobody counts `../`.
+- **Zero JavaScript by default.** The landing page ships none — the language switch is a
+  link to a real URL, not a toggle. Only `/pay` loads a script, because Stripe needs one.
+
+## Commands
+
+```bash
+npm run dev      # astro dev
+npm run build    # astro build — static pages + one Vercel function
+npm run check    # astro check — types across .astro and .ts
+npm run preview  # serve the build
 ```
 
 ## Why the payment form is a web page and not part of the extension
@@ -32,10 +63,14 @@ machinery refuses payment hosts by name.
 
 `vercel.json` has three blocks, in this order:
 
-1. `/pay` and anything under it — the strict CSP: `script-src` limited to `js.stripe.com`,
+1. `/pay` and `/es/pay` — the strict CSP: `script-src` limited to `js.stripe.com`,
    `frame-ancestors` limited to the extension, `form-action 'none'`.
-2. Everything except `/pay` — the landing page's CSP, with `frame-ancestors 'none'`.
+2. Everything else — the landing page's CSP, with `frame-ancestors 'none'`.
 3. Everything — `Referrer-Policy`, `nosniff`, HSTS.
+
+Both language variants of the payment page are covered. Adding a third language means
+adding it to the first block's pattern, or the new page inherits the landing CSP and the
+panel shows a blank frame.
 
 Giving both routes one shared policy would mean the payment page inherits whatever the
 marketing page needs, which is always the looser of the two. Keep them separate.
@@ -54,16 +89,17 @@ vercel --prod
 logged. `api/intent.js` gives the browser one thing: the PaymentIntent's `client_secret`,
 which is scoped to a single payment.
 
-The publishable key lives in `pay/pay.js` as `PUBLISHABLE_KEY` and is public by design.
+The publishable key lives in `src/scripts/pay.ts` as `PUBLISHABLE_KEY` and is public by
+design.
 Swap `pk_test_…` for `pk_live_…` when going live.
 
 ## Before it works
 
 **Extension IDs.** `frame-ancestors` currently allows two:
 
-| ID                                 | Which build                                                   |
-| ---------------------------------- | ------------------------------------------------------------- |
-| `ahdppjdbnhpnkphnmogldfgcngekhfgb` | The Web Store listing                                          |
+| ID                                 | Which build                                                          |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| `ahdppjdbnhpnkphnmogldfgcngekhfgb` | The Web Store listing                                                |
 | `lblolblfmhglgakodagcifikmpfppbib` | The unpacked build loaded from `…/Intelligent_Tab_Group_Svelte/dist` |
 
 The second is derived from the SHA-256 of that absolute path, so **it changes if the
@@ -74,7 +110,7 @@ directive — that is the guard working, not a bug.
 
 The proper fix is to put the extension's real RSA public key in the extension's
 `manifest.json` `key` field, so unpacked and Web Store builds share one ID. What is in
-there today is the *ID* in the field that expects a *key*, which Chrome quietly ignores.
+there today is the _ID_ in the field that expects a _key_, which Chrome quietly ignores.
 
 **Register the domain with Stripe.** Dashboard → Settings → **Payment method domains** →
 add `genkipool.com`, in test mode and in live mode. Google Pay and Apple Pay both refuse
@@ -94,16 +130,13 @@ Then in the extension, `src/config/payments.js`:
 export const PAYMENT_ORIGIN = 'http://localhost:3000';
 ```
 
-and rebuild. `localhost` counts as a secure origin, so Stripe.js and the framing both
-work. Note `vercel dev` does not enforce `vercel.json` headers the way production does,
-so `frame-ancestors` is not applied locally — convenient for development, and exactly why
-the production check above matters. **Put the production origin back before committing.**
+and rebuild the extension. `localhost` counts as a secure origin, so Stripe.js and the
+framing both work. Note `vercel dev` does not enforce `vercel.json` headers the way
+production does, so `frame-ancestors` is not applied locally — convenient for
+development, and exactly why the production check above matters.
 
-The landing page alone needs no server features:
-
-```bash
-python3 -m http.server 8899
-```
+**Put the production origin back before releasing the extension.** A build pointing at
+localhost is a build where donations silently go nowhere.
 
 ## Brand marks
 

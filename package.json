@@ -1,0 +1,27 @@
+{
+    "name": "intelligent-workspace-web",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "check": "astro check",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write ."
+    },
+    "dependencies": {
+        "@astrojs/vercel": "^11.0.8",
+        "astro": "^7.2.9"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.10",
+        "prettier": "^3.9.6",
+        "prettier-plugin-astro": "^0.14.1",
+        "typescript": "^6.0.3"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true
+    }
+}
