@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Support Intelligent Workspace</title>
+        <link rel="icon" href="/assets/icon.png" />
+        <link rel="stylesheet" href="/pay/pay.css" />
+    </head>
+    <body>
+        <main class="sheet" aria-labelledby="sheet-title">
+            <h1 id="sheet-title" data-i18n="title">Support Intelligent Workspace</h1>
+
+            <fieldset class="amounts">
+                <legend data-i18n="chooseAmount">Choose an amount</legend>
+                <div class="chips" id="chips" role="radiogroup" aria-labelledby="sheet-title"></div>
+                <label class="custom">
+                    <span data-i18n="otherAmount">Other amount</span>
+                    <div class="field">
+                        <span class="symbol" aria-hidden="true">€</span>
+                        <input
+                            id="custom-amount"
+                            type="number"
+                            inputmode="decimal"
+                            min="1"
+                            max="500"
+                            step="1"
+                            autocomplete="off"
+                        />
+                    </div>
+                </label>
+            </fieldset>
+
+            <div id="express" class="express" hidden></div>
+            <p class="divider" id="divider" hidden><span data-i18n="or">or pay by card</span></p>
+
+            <form id="payment-form" novalidate>
+                <div id="payment-element"></div>
+                <button id="submit" type="submit" disabled>
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span id="submit-label" data-i18n="donateNow">Donate</span>
+                </button>
+            </form>
+
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+
+            <p class="fineprint" id="wallet-note" hidden>
+                <span data-i18n="walletUnavailable"></span>
+            </p>
+
+            <p class="fineprint">
+                <span data-i18n="securedBy">Payments are processed by Stripe. This page never stores your card.</span>
+            </p>
+        </main>
+
+        <script src="https://js.stripe.com/v3/"></script>
+        <script type="module" src="/pay/pay.js"></script>
+    </body>
+</html>
