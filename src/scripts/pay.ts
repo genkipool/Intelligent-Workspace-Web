@@ -103,16 +103,80 @@ function readToken(token: string, fallback: string): string {
     return value || fallback;
 }
 
+/**
+ * Dresses Stripe's own fields as the extension's.
+ *
+ * Everything Stripe renders — the card fields, the country dropdown, the error text —
+ * lives inside an iframe on Stripe's origin, so no stylesheet of ours can reach it. The
+ * Appearance API is the only way in, and `rules` is the part that matters: `variables`
+ * alone leaves the inputs with Stripe's own border and radius, which is what made the
+ * sheet look like a different application wearing our palette.
+ *
+ * The values are the ones `rules.css` uses in the extension, so a field here and a field
+ * on the rules page are the same control.
+ */
 function stripeAppearance() {
+    const border = readToken('border-color', '#e3e6ea');
+    const focus = readToken('action-color', readToken('interactive-color', '#635bff'));
+    const ground = readToken('bg-color', '#ffffff');
+    const text = readToken('text-color', '#1a1a1a');
+    const muted = readToken('muted-color', '#6b7280');
+
     return {
         theme: 'stripe' as const,
         variables: {
             colorPrimary: readToken('interactive-color', '#635bff'),
-            colorBackground: readToken('bg-panel-color', '#ffffff'),
-            colorText: readToken('text-color', '#1a1a1a'),
+            colorBackground: ground,
+            colorText: text,
             colorDanger: readToken('error-color', '#df1b41'),
-            borderRadius: '8px',
+            borderRadius: '7px',
             fontFamily: 'system-ui, sans-serif',
+            fontSizeBase: '0.95rem',
+        },
+        rules: {
+            // One hairline, the panel's ground, the extension's radius.
+            '.Input, .Block, .CheckboxInput, .CodeInput': {
+                border: `1px solid ${border}`,
+                boxShadow: 'none',
+                backgroundColor: ground,
+            },
+            // Focus changes the border colour and nothing else — no glow ring, which is
+            // what the extension's own inputs do.
+            '.Input:focus, .CheckboxInput:focus, .CodeInput:focus': {
+                border: `1px solid ${focus}`,
+                boxShadow: 'none',
+                outline: 'none',
+            },
+            '.Input::placeholder': { color: muted },
+            '.Label': {
+                color: muted,
+                fontSize: '0.85rem',
+                fontWeight: '500',
+            },
+            '.Tab, .TabLabel': {
+                border: `1px solid ${border}`,
+                boxShadow: 'none',
+                backgroundColor: ground,
+            },
+            '.Tab:hover': { border: `1px solid ${focus}` },
+            '.Tab--selected, .Tab--selected:focus': {
+                border: `1px solid ${focus}`,
+                boxShadow: 'none',
+                color: focus,
+            },
+            // The country dropdown. Same dress as the extension's own selects: the panel
+            // ground, one hairline, the small radius, no inner shadow.
+            '.Dropdown': {
+                border: `1px solid ${border}`,
+                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+                backgroundColor: readToken('bg-panel-color', ground),
+            },
+            '.DropdownItem': { color: text },
+            '.DropdownItem--highlight': {
+                backgroundColor: `color-mix(in srgb, ${focus} 15%, transparent)`,
+                color: focus,
+            },
+            '.Error': { fontSize: '0.85rem' },
         },
     };
 }
