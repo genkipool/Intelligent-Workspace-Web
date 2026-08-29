@@ -18,9 +18,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="problem wrap">
-    <p class="kicker">{t('problem.kicker')}</p>
-    <h2>{t('problem.title')}</h2>
+<section class="problem wrap" data-reveal>
+    <div class="opener">
+        <span class="numeral" aria-hidden="true">01</span>
+        <p class="kicker">{t('problem.kicker')}</p>
+        <h2>{t('problem.title')}</h2>
+    </div>
     <ul class="symptoms">
         {symptoms.map((key) => <li>{t(key)}</li>)}
     </ul>
@@ -33,12 +36,6 @@ const t = useTranslations(lang);
         display: flex;
         flex-direction: column;
         gap: clamp(14px, 1.8vw, 22px);
-    }
-
-    h2 {
-        font-size: clamp(26px, 4vw, 46px);
-        letter-spacing: -0.032em;
-        max-width: 22ch;
     }
 
     .symptoms {

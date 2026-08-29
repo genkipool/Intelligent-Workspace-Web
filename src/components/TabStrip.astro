@@ -55,22 +55,25 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
 </figure>
 
 <style>
-    /* ── The tab strip ─────────────────────────────────────────────── */
-
     .strip {
         margin: 0;
-        padding: 0 var(--gutter) clamp(40px, 5vw, 68px);
-        max-width: var(--measure);
+        padding: 0 var(--gutter) clamp(48px, 6vw, 84px);
+        max-width: calc(var(--measure) + 120px);
         margin-inline: auto;
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        align-items: center;
+        gap: 20px;
+        text-align: center;
     }
 
     .strip svg {
         display: block;
         width: 100%;
         height: auto;
+        /* Fades out at both ends rather than stopping at a hard edge, so the strip reads
+           as a fragment of something longer — which is what a tab strip is. */
+        mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
     }
 
     .loose rect {
@@ -83,11 +86,12 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
         stroke-width: 1.6;
         stroke-linecap: round;
         stroke-linejoin: round;
-        opacity: 0.65;
+        opacity: 0.55;
     }
 
     .groups rect {
-        fill: color-mix(in srgb, var(--c) 17%, var(--band));
+        fill: color-mix(in srgb, var(--c) 15%, var(--band));
+        stroke: color-mix(in srgb, var(--c) 35%, transparent);
     }
 
     .groups circle {
@@ -98,11 +102,11 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
         fill: var(--band-ink);
         font-family: var(--display);
         font-size: 14px;
-        font-weight: 580;
+        font-weight: 500;
     }
 
     /* The exchange is HTML, not SVG <text>: inside a 1200-unit viewBox scaled down to a
-   390px phone, 14px type renders at about 4px. As HTML it reflows and stays legible. */
+       390px phone, 14px type renders at about 4px. As HTML it reflows and stays legible. */
     .exchange {
         display: flex;
         flex-direction: column;
@@ -112,18 +116,26 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     .said {
         color: var(--band-soft);
         font-size: 0.95rem;
+        font-weight: 350;
     }
 
     .did {
-        color: var(--c-teal);
+        color: var(--accent);
         font-family: var(--mono);
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         letter-spacing: 0.01em;
     }
 
     figcaption {
         font-size: 0.86rem;
         color: var(--band-soft);
-        max-width: 62ch;
+        max-width: 60ch;
+        opacity: 0.85;
+    }
+
+    @media (max-width: 640px) {
+        .groups text {
+            display: none;
+        }
     }
 </style>

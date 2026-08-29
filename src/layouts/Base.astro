@@ -78,6 +78,7 @@ const alternates = (['en', 'es'] as const).map((code) => ({
     <body>
         <a class="skip" href="#main">{t('nav.skip')}</a>
         <slot />
+        <script src="@/scripts/reveal.ts"></script>
     </body>
 </html>
 

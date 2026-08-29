@@ -39,6 +39,11 @@ export const ui = {
         'strip.alt': 'Loose tabs collapsing into four coloured groups',
 
         'features.heading': 'What it actually does',
+        'features.title': 'Four things it does that nothing else quite does.',
+        'caps.title': 'Fourteen panels, all of them beside the page you are reading.',
+        'trust.title': 'Twenty-three permissions, and a reason for each one.',
+        'faq.title': 'The questions worth asking first.',
+        'team.title': 'Two people, no company behind them.',
 
         'feature.grouping.title': 'Grouping that stays out of the way',
         'feature.grouping.lead':
@@ -237,6 +242,11 @@ export const ui = {
         'strip.alt': 'Pestañas sueltas plegándose en cuatro grupos de colores',
 
         'features.heading': 'Lo que hace de verdad',
+        'features.title': 'Cuatro cosas que hace y que no hace del todo nadie más.',
+        'caps.title': 'Catorce paneles, todos junto a la página que estás leyendo.',
+        'trust.title': 'Veintitrés permisos, y un motivo para cada uno.',
+        'faq.title': 'Las preguntas que conviene hacerse primero.',
+        'team.title': 'Dos personas, sin ninguna empresa detrás.',
 
         'feature.grouping.title': 'Agrupado que no molesta',
         'feature.grouping.lead':

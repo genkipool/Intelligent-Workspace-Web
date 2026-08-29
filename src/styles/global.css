@@ -144,14 +144,25 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+/**
+ * The display register.
+ *
+ * Weight 300 at large sizes rather than 660: the page used to shout, and shouting is
+ * what made it feel dense. Elegance here is light weight, tight tracking and a lot of
+ * air — the size does the emphasis, not the stroke.
+ *
+ * `font-optical-sizing` and the negative tracking only look right above ~28px, so the
+ * smaller headings step the weight back up in their own rules.
+ */
 h1,
 h2,
 h3 {
     margin: 0;
-    font-weight: 660;
-    letter-spacing: -0.028em;
+    font-weight: 300;
+    letter-spacing: -0.036em;
     text-wrap: balance;
-    line-height: 1.06;
+    line-height: 1.04;
+    font-optical-sizing: auto;
 }
 
 p {
@@ -293,6 +304,134 @@ img {
     .cta:hover,
     .link-cta .arrow {
         transition: none;
+        transform: none;
+    }
+}
+
+/* ── Light ───────────────────────────────────────────────────────
+   The hero's wash. Two soft radial fields in the viridian family, offset from each
+   other and from the centre, painted with CSS rather than an image so they cost
+   nothing and follow the theme. `-1` keeps them behind content without a stacking
+   context of their own. */
+
+.aurora {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.aurora::before,
+.aurora::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    /* Large, very soft, very low opacity: a wash, not a blob. Anything more saturated
+       reads as a decorative shape rather than as light. */
+    filter: blur(90px);
+}
+
+.aurora::before {
+    inset-block-start: -28%;
+    inset-inline-start: 8%;
+    width: min(62vw, 760px);
+    aspect-ratio: 1;
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--c-viridian) 40%, transparent),
+        transparent 68%
+    );
+    opacity: 0.5;
+}
+
+.aurora::after {
+    inset-block-start: 6%;
+    inset-inline-end: -12%;
+    width: min(48vw, 600px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle, color-mix(in srgb, var(--c-teal) 34%, transparent), transparent 70%);
+    opacity: 0.38;
+}
+
+/* ── Rules ───────────────────────────────────────────────────────
+   A hairline that fades out at both ends instead of stopping dead. The old hard
+   1px lines were what made the page read as a grid of compartments. */
+
+.rule {
+    height: 1px;
+    border: 0;
+    margin: 0;
+    background: linear-gradient(90deg, transparent, var(--hair) 12%, var(--hair) 88%, transparent);
+}
+
+/* ── Section openers ─────────────────────────────────────────────
+   A large, very faint numeral sitting behind the heading. It carries the sequence
+   without a coloured chip or a rule doing it, and at 8% opacity it is texture rather
+   than information — the heading below is what the reader actually reads. */
+
+.opener {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.4vw, 16px);
+}
+
+.opener .numeral {
+    position: absolute;
+    /* Sits above and behind the kicker as a corner watermark. Any lower and its
+       counters crowd the label that has to be read. */
+    inset-block-start: -0.58em;
+    inset-inline-start: -0.1em;
+    z-index: -1;
+    font-size: clamp(88px, 13vw, 190px);
+    font-weight: 200;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--ink);
+    opacity: 0.06;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+}
+
+.opener h2 {
+    font-size: clamp(28px, 4.4vw, 54px);
+    max-width: 20ch;
+}
+
+.opener .kicker,
+.section-head {
+    font-size: clamp(11px, 1vw, 12.5px);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.opener .lede {
+    font-size: clamp(17px, 1.4vw, 20px);
+    font-weight: 350;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 58ch;
+}
+
+/* ── Reveal ──────────────────────────────────────────────────────
+   Sections lift in as they arrive. Off entirely for anyone who asked for less
+   motion, and the initial state is only applied by the script — so with JavaScript
+   disabled nothing is ever left invisible. */
+
+@media (prefers-reduced-motion: no-preference) {
+    .js-reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+            opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .js-reveal.is-in {
+        opacity: 1;
         transform: none;
     }
 }

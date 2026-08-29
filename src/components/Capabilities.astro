@@ -21,9 +21,13 @@ const grouped = families.map((family) => ({
 }));
 ---
 
-<section id="inside" class="caps wrap">
-    <header class="caps-head">
-        <h2 class="section-head">{t('caps.heading')}</h2>
+<section id="inside" class="caps wrap" data-reveal>
+    <header class="caps-head opener">
+        <div>
+            <span class="numeral" aria-hidden="true">04</span>
+            <p class="kicker">{t('caps.heading')}</p>
+            <h2>{t('caps.title')}</h2>
+        </div>
         <p class="caps-lede">{t('caps.lede')}</p>
     </header>
 

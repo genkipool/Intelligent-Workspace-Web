@@ -20,8 +20,12 @@ const t = useTranslations(lang);
 const lede = t('trust.lede').replace('{count}', String(permissionCount));
 ---
 
-<section id="permissions" class="trust wrap">
-    <h2 class="section-head">{t('trust.heading')}</h2>
+<section id="permissions" class="trust wrap" data-reveal>
+    <div class="opener">
+        <span class="numeral" aria-hidden="true">06</span>
+        <p class="kicker">{t('trust.heading')}</p>
+        <h2>{t('trust.title')}</h2>
+    </div>
     <p class="trust-lede">{lede}</p>
 
     <dl class="grants">

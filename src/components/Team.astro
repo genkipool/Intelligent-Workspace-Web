@@ -11,8 +11,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="team wrap">
-    <h2 class="section-head">{t('team.heading')}</h2>
+<section class="team wrap" data-reveal>
+    <div class="opener">
+        <span class="numeral" aria-hidden="true">08</span>
+        <p class="kicker">{t('team.heading')}</p>
+        <h2>{t('team.title')}</h2>
+    </div>
     <div class="people">
         {
             team.map((person) => (

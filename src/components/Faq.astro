@@ -18,8 +18,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="faq" class="faq wrap">
-    <h2 class="section-head">{t('faq.heading')}</h2>
+<section id="faq" class="faq wrap" data-reveal>
+    <div class="opener">
+        <span class="numeral" aria-hidden="true">07</span>
+        <p class="kicker">{t('faq.heading')}</p>
+        <h2>{t('faq.title')}</h2>
+    </div>
     <div class="questions">
         {
             questions.map((question) => (
