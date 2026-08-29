@@ -435,3 +435,41 @@ img {
         transform: none;
     }
 }
+
+/* ── Scrollbar ───────────────────────────────────────────────────
+   The same shape the extension draws — a rounded thumb outlined rather than filled,
+   which fills on hover — in this site's own tokens rather than the extension's. The
+   shape is the family resemblance; the colour is the site's. */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--paper);
+    border-radius: 10px;
+    border: 2px solid var(--hair);
+    /* The track is the page ground, so without this the thumb touches the content edge. */
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--paper);
+}
+
+/* Firefox has no ::-webkit pseudo-elements; these two properties are the whole of what
+   it offers, and they land on the same two colours. */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--hair) var(--paper);
+}

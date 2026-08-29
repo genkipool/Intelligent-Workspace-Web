@@ -190,17 +190,22 @@ legend {
  * two bright arrows in the corner of the field were coming from — and the extension
  * removes them on every number input it has, so a payment sheet that kept them stood
  * out as the one control that was not ours.
+ *
+ * `appearance: none` and NOT `appearance: textfield`. The textfield value restores the
+ * native field chrome, border included — which is the second border that survived
+ * removing the fieldset. This sheet only ever renders in Chrome, in the extension's
+ * panel or a Chrome tab, so the vendor-prefixed spinner rules below are the whole job.
  */
+#custom-amount {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 #custom-amount::-webkit-inner-spin-button,
 #custom-amount::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
     margin: 0;
-}
-
-#custom-amount {
-    -moz-appearance: textfield;
-    appearance: textfield;
 }
 
 /* ── Wallets and card ───────────────────────────────────── */
@@ -304,4 +309,43 @@ form {
     font-size: 0.76rem;
     color: var(--muted-color);
     text-align: center;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────
+   The extension's own, copied from `listGroup.css` rather than approximated: a rounded
+   thumb drawn as the page's background inside a 2px outline in the border colour, which
+   fills with the interactive colour on hover.
+
+   It is written here rather than left to `utils/panelScrollbar.js` — the content script
+   that paints framed pages in the panel — because this sheet also renders as an ordinary
+   tab from the about page, where no content script of ours runs. Stating it means the
+   two contexts cannot look different. */
+
+.sheet {
+    scrollbar-width: auto;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--interactive-color);
+    cursor: default;
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg-color);
 }
