@@ -1,5 +1,5 @@
-# The checks this site actually has. `npm run verify` runs the same five locally, so a
-# green run here means the same thing it means on a developer's machine.
+# The checks this site actually has. `pnpm verify` runs the same five locally, so a green
+# run here means the same thing it means on a developer's machine.
 name: CI
 
 on:
@@ -21,32 +21,40 @@ jobs:
         steps:
             - uses: actions/checkout@v5
 
+            # The repository is on a pnpm lockfile, so pnpm is what must install it —
+            # npm would resolve a different tree and check something else. The version
+            # comes from `packageManager` in package.json, so it cannot drift from what
+            # a developer runs locally.
+            - uses: pnpm/action-setup@v6
+
             - uses: actions/setup-node@v5
               with:
-                  # 24 is what Vercel runs the function on. Building on the same major
-                  # is the point: a syntax the local Node accepts and Vercel's does not
-                  # would otherwise only surface after a deploy.
+                  # 24 is what Vercel runs the function on. Building on the same major is
+                  # the point: a syntax the local Node accepts and Vercel's does not would
+                  # otherwise only surface after a deploy.
                   node-version: 24
-                  cache: npm
+                  cache: pnpm
 
+            # --frozen-lockfile makes an install that would change the lockfile a failure
+            # rather than a silent resolution to different versions.
             - name: Install
-              run: npm ci
+              run: pnpm install --frozen-lockfile
 
             - name: Types
-              run: npm run check
+              run: pnpm run check
 
             - name: Tests
-              run: npm run test
+              run: pnpm run test
 
             - name: Build
-              run: npm run build
+              run: pnpm run build
 
             # The one that catches a silent failure. A payment page whose route is not
             # named in vercel.json inherits the landing CSP, whose frame-ancestors is
             # 'none' — the extension's panel would show a blank frame and nobody would
             # know until a donation did not happen.
             - name: Payment routes are covered by the strict CSP
-              run: npm run check:headers
+              run: pnpm run check:headers
 
             - name: Format
-              run: npm run format
+              run: pnpm run format

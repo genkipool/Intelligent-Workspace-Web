@@ -40,12 +40,22 @@ vercel.json           per-route security headers
 
 ## Commands
 
+Package manager is **pnpm** — the same as the extension repository, and the lockfile is
+committed. `npm install` here would resolve a different tree from the one CI checks.
+
 ```bash
-npm run dev      # astro dev
-npm run build    # astro build — static pages + one Vercel function
-npm run check    # astro check — types across .astro and .ts
-npm run preview  # serve the build
+pnpm install     # --frozen-lockfile in CI
+pnpm dev         # astro dev, on :4321
+pnpm build       # static pages + one Vercel function
+pnpm check       # astro check — types across .astro and .ts
+pnpm test        # vitest
+pnpm verify      # everything CI runs, in one command
 ```
+
+`pnpm-workspace.yaml` carries one setting: `allowBuilds`, pnpm's allowlist of packages
+permitted to run install scripts. Only `esbuild` is on it, and it has to be — its
+postinstall fetches the platform binary Astro's build needs. Adding a name there lets a
+package run arbitrary code at install time, so each one needs a reason.
 
 ## Why the payment form is a web page and not part of the extension
 
@@ -121,16 +131,19 @@ Apple's domain-association file. Then enable Google Pay, Apple Pay, PayPal and L
 ## Local development
 
 ```bash
-vercel dev        # http://localhost:3000
+pnpm dev          # http://localhost:4321 — the pages, but /api/intent needs vercel dev
+vercel dev        # http://localhost:3000 — the whole thing, with the endpoint
 ```
 
-Then in the extension, `src/config/payments.js`:
+Then point the extension at it. `.env.local` in the extension repository, which git
+ignores:
 
-```js
-export const PAYMENT_ORIGIN = 'http://localhost:3000';
+```
+VITE_PAYMENT_ORIGIN=http://localhost:4321
 ```
 
-and rebuild the extension. `localhost` counts as a secure origin, so Stripe.js and the
+and rebuild the extension. Production is the default in the source precisely so nobody
+has to remember to switch it back. `localhost` counts as a secure origin, so Stripe.js and the
 framing both work. Note `vercel dev` does not enforce `vercel.json` headers the way
 production does, so `frame-ancestors` is not applied locally — convenient for
 development, and exactly why the production check above matters.

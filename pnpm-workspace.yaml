@@ -1,0 +1,9 @@
+# pnpm 10+ keeps its settings here rather than in .npmrc or package.json, and pnpm 11
+# spells the install-script allowlist `allowBuilds`.
+#
+# Every entry is a package permitted to run arbitrary code at install time, so each one
+# needs a reason. esbuild's is not optional: its postinstall fetches the platform binary
+# that Astro's build needs, and without it the build fails on a missing
+# `@esbuild/linux-x64`. Keep this list short and know why each name is on it.
+allowBuilds:
+    esbuild: true
