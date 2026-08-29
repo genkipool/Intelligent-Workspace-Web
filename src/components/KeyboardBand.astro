@@ -11,7 +11,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div class="band band--deep" id="keyboard">
+<div class="band band--tint" id="keyboard">
     <section class="keys-section wrap">
         <div class="keys-copy">
             <h2>{t('keyboard.title')}</h2>
@@ -53,7 +53,7 @@ const t = useTranslations(lang);
 
     .keys-copy p {
         margin-block-start: clamp(16px, 2vw, 24px);
-        color: var(--deep-soft);
+        color: var(--band-soft);
         font-size: clamp(16px, 1.15vw, 18px);
         max-width: 50ch;
     }
@@ -71,9 +71,9 @@ const t = useTranslations(lang);
         align-items: center;
         gap: clamp(14px, 2vw, 22px);
         padding-block: clamp(13px, 1.6vw, 19px);
-        border-block-start: 1px solid var(--deep-hair);
+        border-block-start: 1px solid var(--band-hair);
         font-size: 0.95rem;
-        color: var(--deep-soft);
+        color: var(--band-soft);
     }
 
     .keys li:first-child {
@@ -91,8 +91,8 @@ const t = useTranslations(lang);
         font-family: var(--mono);
         font-size: 0.74rem;
         font-weight: 600;
-        color: var(--deep-ink);
-        background: var(--deep-2);
+        color: var(--band-ink);
+        background: var(--band-2);
         border-radius: 6px;
         padding: 6px 9px;
         min-width: 30px;

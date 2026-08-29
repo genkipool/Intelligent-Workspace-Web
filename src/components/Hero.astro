@@ -1,7 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
+import logo from '@/assets/logo.png';
 
 interface Props {
     lang: Lang;
@@ -12,6 +14,15 @@ const t = useTranslations(lang);
 ---
 
 <section class="hero wrap">
+    <!--
+        The mark earns its place here rather than being decoration: its four dots are
+        the Chrome tab-group colours, which are the palette the rest of this page is
+        built from — and the group chips directly below it are painted in the same four.
+        `Image` reads its intrinsic size from the file, so it cannot shift the headline
+        while it loads.
+    -->
+    <Image src={logo} alt={site.name} class="mark" width={112} height={112} loading="eager" />
+
     <p class="eyebrow">
         <span>{t('hero.eyebrow.a')}</span>
         <span class="dot" aria-hidden="true"></span>
@@ -46,14 +57,14 @@ const t = useTranslations(lang);
         font-weight: 620;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: var(--deep-soft);
+        color: var(--band-soft);
     }
 
     .eyebrow .dot {
         width: 4px;
         height: 4px;
         border-radius: 50%;
-        background: var(--tg-green);
+        background: var(--c-teal);
     }
 
     h1 {
@@ -67,7 +78,7 @@ const t = useTranslations(lang);
     .lede {
         font-size: clamp(17px, 1.5vw, 22px);
         line-height: 1.5;
-        color: var(--deep-soft);
+        color: var(--band-soft);
         max-width: 54ch;
     }
 
@@ -84,7 +95,7 @@ const t = useTranslations(lang);
         gap: 9px;
         font-size: 0.95rem;
         font-weight: 560;
-        color: var(--deep-ink);
+        color: var(--band-ink);
         text-decoration: none;
     }
 

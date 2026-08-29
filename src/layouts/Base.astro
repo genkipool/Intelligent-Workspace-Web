@@ -45,6 +45,14 @@ const alternates = (['en', 'es'] as const).map((code) => ({
         <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+        <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
+        {
+            /* Served from public/ rather than through astro:assets: a crawler needs a
+            stable absolute URL, and the hashed filename astro:assets produces changes
+            on every build. */
+        }
+        <meta property="og:image" content={new URL('/assets/icon.png', Astro.site).href} />
+        <meta name="twitter:card" content="summary" />
         <slot name="head" />
 
         <!--

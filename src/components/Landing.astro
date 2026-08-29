@@ -10,6 +10,9 @@ import Hero from '@/components/Hero.astro';
 import TabStrip from '@/components/TabStrip.astro';
 import Features from '@/components/Features.astro';
 import Capabilities from '@/components/Capabilities.astro';
+import Problem from '@/components/Problem.astro';
+import HowItWorks from '@/components/HowItWorks.astro';
+import Faq from '@/components/Faq.astro';
 import Trust from '@/components/Trust.astro';
 import Team from '@/components/Team.astro';
 import KeyboardBand from '@/components/KeyboardBand.astro';
@@ -24,21 +27,34 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<div class="band band--deep">
+<div class="band band--tint">
     <Nav lang={lang} />
     <Hero lang={lang} />
     <TabStrip lang={lang} />
 </div>
 
+{
+    /*
+    The order follows the sequence a reader actually needs: agree there is a problem,
+    see how it is solved, understand how much work it is, then the full inventory, then
+    the objections, and only then the ask. Features before Problem reads as a spec sheet
+    to somebody who has not yet agreed anything is wrong.
+*/
+}
 <main id="main">
+    <Problem lang={lang} />
     <Features lang={lang} />
-    <Capabilities lang={lang} />
 </main>
+
+<HowItWorks lang={lang} />
+
+<Capabilities lang={lang} />
 
 <KeyboardBand lang={lang} />
 
 <Statement lang={lang} />
 <Trust lang={lang} />
+<Faq lang={lang} />
 <Team lang={lang} />
 
 <DonateBand lang={lang} />

@@ -1,0 +1,94 @@
+---
+/**
+ * Three steps, because the honest answer to "how much work is this?" is the strongest
+ * argument the product has: you install it, you say what belongs where once, and then
+ * you stop thinking about it.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { steps } from '@/data/story';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="band band--tint">
+    <section class="how wrap">
+        <h2 class="section-head on-band">{t('how.heading')}</h2>
+        <ol class="steps">
+            {
+                steps.map((step, i) => (
+                    <li>
+                        <span class="step-no">{i + 1}</span>
+                        <div>
+                            <h3>{t(step.titleKey)}</h3>
+                            <p>{t(step.bodyKey)}</p>
+                        </div>
+                    </li>
+                ))
+            }
+        </ol>
+    </section>
+</div>
+
+<style>
+    .how {
+        padding-block: clamp(58px, 8vw, 104px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(24px, 3.4vw, 40px);
+    }
+
+    .on-band {
+        color: var(--band-soft);
+    }
+
+    .steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: clamp(24px, 4vw, 56px);
+        counter-reset: step;
+    }
+
+    .steps li {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .step-no {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        border: 1px solid var(--band-hair);
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 640;
+        color: var(--accent);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .steps h3 {
+        font-size: clamp(17px, 1.6vw, 21px);
+        letter-spacing: -0.018em;
+        color: var(--band-ink);
+    }
+
+    .steps p {
+        margin-block-start: 7px;
+        font-size: 15.5px;
+        line-height: 1.55;
+        color: var(--band-soft);
+    }
+</style>

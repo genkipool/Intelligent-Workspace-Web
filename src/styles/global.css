@@ -24,29 +24,44 @@
  */
 
 :root {
-    /* Daylight: the body of the page. */
-    --paper: #fcfcfd;
-    --ink: #0f1117;
-    --ink-soft: #383c4b;
-    --muted: #6b7186;
-    --hair: #e2e4ec;
+    /* Daylight: the body of the page. A paper with a faint green cast rather than a
+       neutral grey, so the accent sits *in* the page instead of on top of it. */
+    --paper: #f5f9f7;
+    --ink: #0c1a15;
+    --ink-soft: #31463f;
+    --muted: #5d7269;
+    --hair: #dce7e2;
 
-    /* Night: the hero and keyboard bands, fixed across both themes. */
-    --deep: #0a0c13;
-    --deep-2: #131725;
-    --deep-ink: #f3f4f9;
-    --deep-soft: #a8aec4;
-    --deep-hair: #232838;
+    /**
+     * The tinted bands — the hero and the keyboard section.
+     *
+     * They used to be fixed dark in both themes, which meant the top of the page looked
+     * identical whichever theme you picked and the toggle appeared to do nothing above
+     * the fold. They now follow the theme: a pale viridian wash in daylight, a near-black
+     * viridian at night. The band still reads as a band, because it is tinted against the
+     * page rather than merely darker than it.
+     */
+    --band: #e8f1ec;
+    --band-2: #d8e8e0;
+    --band-ink: #0a1813;
+    --band-soft: #465c53;
+    --band-hair: #c7dbd2;
 
-    --accent: #3558e9;
+    --accent: #106b50;
     --accent-ink: #ffffff;
 
-    /* Chrome tab-group colours, tuned to hold up on both grounds. */
-    --tg-blue: #4d7cff;
-    --tg-red: #f2647a;
-    --tg-green: #35b57e;
-    --tg-purple: #9d7bff;
-    --tg-orange: #f0954a;
+    /**
+     * The categorical set: four analogous hues walking from teal through viridian to
+     * pine, with brass as the single warm counterpoint that stops the four reading as
+     * one colour. Every one clears 4.5:1 on all three grounds — checked, not assumed.
+     *
+     * They are named for the hue rather than for what uses them, so a feature can change
+     * colour without a variable ending up called `--c-pomodoro`.
+     */
+    --c-teal: #0f6e66;
+    --c-viridian: #106b50;
+    --c-pine: #3a6b22;
+    --c-brass: #8a6410;
 
     --display:
         ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -68,30 +83,48 @@
  */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) {
-        --paper: #0f1117;
-        --ink: #f2f3f8;
-        --ink-soft: #c6cad9;
-        --muted: #8b91a6;
-        --hair: #232838;
+        --paper: #0a1310;
+        --ink: #e7f1ec;
+        --ink-soft: #bccfc7;
+        --muted: #7f958c;
+        --hair: #1e2e28;
 
-        --deep: #07080d;
-        --deep-2: #10131f;
+        --accent: #4fc79c;
+        --accent-ink: #04120d;
 
-        --accent: #5b7bff;
+        --c-teal: #3fbfb3;
+        --c-viridian: #4fc79c;
+        --c-pine: #8fc55a;
+        --c-brass: #d9a63c;
+
+        --band: #061310;
+        --band-2: #0e211c;
+        --band-ink: #eaf4ef;
+        --band-soft: #9bb3aa;
+        --band-hair: #1c302a;
     }
 }
 
 :root[data-theme='dark'] {
-    --paper: #0f1117;
-    --ink: #f2f3f8;
-    --ink-soft: #c6cad9;
-    --muted: #8b91a6;
-    --hair: #232838;
+    --paper: #0a1310;
+    --ink: #e7f1ec;
+    --ink-soft: #bccfc7;
+    --muted: #7f958c;
+    --hair: #1e2e28;
 
-    --deep: #07080d;
-    --deep-2: #10131f;
+    --accent: #4fc79c;
+    --accent-ink: #04120d;
 
-    --accent: #5b7bff;
+    --c-teal: #3fbfb3;
+    --c-viridian: #4fc79c;
+    --c-pine: #8fc55a;
+    --c-brass: #d9a63c;
+
+    --band: #061310;
+    --band-2: #0e211c;
+    --band-ink: #eaf4ef;
+    --band-soft: #9bb3aa;
+    --band-hair: #1c302a;
 }
 
 *,
@@ -153,18 +186,18 @@ img {
     width: 100%;
 }
 
-.band--deep {
-    background: var(--deep);
-    color: var(--deep-ink);
+.band--tint {
+    background: var(--band);
+    color: var(--band-ink);
     /* A hairline of tab-group colours across the seam: the tab strip, reduced to a
        rule. It is the only ornament on the page, and it is the product's own image. */
     border-bottom: 3px solid transparent;
     border-image: linear-gradient(
             90deg,
-            var(--tg-blue) 0 25%,
-            var(--tg-green) 25% 45%,
-            var(--tg-purple) 45% 72%,
-            var(--tg-orange) 72% 100%
+            var(--c-viridian) 0 25%,
+            var(--c-teal) 25% 45%,
+            var(--c-pine) 45% 72%,
+            var(--c-brass) 72% 100%
         )
         1;
 }
@@ -185,7 +218,9 @@ img {
     padding: 14px 28px;
     border-radius: 999px;
     background: var(--accent);
-    color: #fff;
+    /* Not #fff. The accent is a deep viridian in daylight and a bright mint at night;
+       white holds on the first and fails on the second. `--accent-ink` flips with it. */
+    color: var(--accent-ink);
     font-weight: 620;
     font-size: 0.95rem;
     letter-spacing: -0.005em;

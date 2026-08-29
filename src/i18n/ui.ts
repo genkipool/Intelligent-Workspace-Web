@@ -41,17 +41,43 @@ export const ui = {
         'features.heading': 'What it actually does',
 
         'feature.grouping.title': 'Grouping that stays out of the way',
-        'feature.grouping.body':
-            'Tabs sort themselves by domain, subdomain, IP address or rules you write with regex. Groups you stop touching collapse on a timer you choose. Whole groups can be saved, unloaded from memory, and brought back weeks later exactly as they were.',
+        'feature.grouping.lead':
+            'Tabs sort themselves the moment they open, by whatever you decide matters: the domain, the subdomain, the IP address, or a rule you write with a regular expression. You set it up once and then stop thinking about it.',
+        'feature.grouping.d1':
+            'A group you have not touched for a while folds itself. You choose the timer, or turn it off.',
+        'feature.grouping.d2':
+            'Save a whole group, drop it out of memory, and bring it back weeks later with every tab where you left it.',
+        'feature.grouping.d3':
+            'Duplicates are counted and removed in one action, across every window at once.',
+
         'feature.agent.title': 'An agent, not a chatbot',
-        'feature.agent.body':
-            'Ask in plain language and it acts on the browser itself: closes tabs, builds groups, renames them, moves things around. It will also summarise a long article, and it can run tasks on a schedule while you are away from the machine.',
-        'feature.focus.title': 'Deep work, measured',
-        'feature.focus.body':
-            'A floating Pomodoro with tasks grouped by project, and a dashboard that shows the parts nobody tracks: how often you were interrupted, how long the streak lasted, and a heatmap of what you actually got done.',
-        'feature.tools.title': 'And the rest of the toolbox',
-        'feature.tools.body':
-            'Two tabs side by side. Reading modes and a theme creator that paints the browser itself. A cookie editor, full-page and area screenshots with a local gallery, QR codes, and a reader that speaks the page aloud.',
+        'feature.agent.lead':
+            'Most AI in a browser writes you a paragraph. This one changes the browser. Ask it in plain language and it closes tabs, builds groups, renames them and moves things between them — then tells you exactly what it did.',
+        'feature.agent.d1':
+            '“Close the sports tabs and put GitHub in Work” is a sentence it can carry out, not one it explains back to you.',
+        'feature.agent.d2':
+            'It summarises a long article into the side panel, and keeps the conversation so you can find it again.',
+        'feature.agent.d3':
+            'Tasks can run on a schedule — a morning digest that is waiting when you sit down.',
+
+        'feature.focus.title': 'Deep work, and proof of it',
+        'feature.focus.lead':
+            'A floating Pomodoro with tasks grouped by project, and a dashboard that measures the parts nobody measures. Not how long the timer ran: how often something pulled you out of it.',
+        'feature.focus.d1':
+            'Interruptions are counted, so a session that technically lasted an hour does not get to pretend it was an hour of work.',
+        'feature.focus.d2': 'A heatmap of your days, in the shape everyone already knows how to read.',
+        'feature.focus.d3':
+            'Web activity is tracked per site, and any site can be blocked outright while the timer is running.',
+
+        'feature.keyboard.title': 'The whole browser from the keyboard',
+        'feature.keyboard.lead':
+            'Twenty-four commands, every one of them rebindable, plus a hint system that puts a label on every link so you can follow it by typing. The mouse becomes optional rather than merely discouraged.',
+        'feature.keyboard.d1':
+            'Snippets expand rich text with your own variables, in any input field on any site.',
+        'feature.keyboard.d2':
+            'Type “find” in the address bar to search tabs, bookmarks, history and downloads at once.',
+        'feature.keyboard.d3':
+            'Two tabs side by side in one window, and a picture-in-picture that survives switching tabs.',
 
         'keyboard.title': 'Put the mouse down',
         'keyboard.body':
@@ -143,6 +169,46 @@ export const ui = {
         'team.design': 'Design, UX and testing',
         'team.line':
             'No company, no investors, no roadmap written by anyone else. Two people who wanted a browser that behaved.',
+
+        'problem.kicker': 'The problem',
+        'problem.title': 'You did not open forty tabs on purpose.',
+        'problem.s1': 'The tab you need is a four-pixel favicon somewhere in the strip.',
+        'problem.s2': 'You keep three windows open because one stopped being usable.',
+        'problem.s3': 'Closing anything feels risky, so nothing ever gets closed.',
+        'problem.s4': 'The browser is where you work, and it is the least organised thing you own.',
+        'problem.turn':
+            'None of that is a discipline problem. It is a browser that has never been told what belongs together.',
+
+        'how.heading': 'How it goes',
+        'how.s1.title': 'Install it',
+        'how.s1.body':
+            'One click from the Chrome Web Store. Nothing to sign up for, nothing to configure before it starts working — the default rules group by domain from the first tab.',
+        'how.s2.title': 'Say what belongs where',
+        'how.s2.body':
+            'Once. Name a group, drop a domain or a regular expression in it, pick a colour. Or let the AI do it by describing what you want in a sentence.',
+        'how.s3.title': 'Forget about it',
+        'how.s3.body':
+            'New tabs land in the right group on their own. Groups you stop using fold themselves. The strip stays readable without you tending it.',
+
+        'faq.heading': 'Before you install it',
+        'faq.cost.q': 'What does it cost?',
+        'faq.cost.a':
+            'Nothing, and there is no paid tier waiting behind a feature. No ads, no tracking, nothing sold. Donations are the only money involved and they are optional.',
+        'faq.account.q': 'Do I need an account?',
+        'faq.account.a':
+            'No. There is no sign-up, no login, and no server of ours to hold an account on. Everything is stored by your browser, on your machine.',
+        'faq.ai.q': 'Where does the AI come from?',
+        'faq.ai.a':
+            'You bring a free API key from Google AI Studio and paste it in once. It is kept in local storage on your device and is used only for the requests you make. Leave it out and every other feature still works.',
+        'faq.data.q': 'What leaves my computer?',
+        'faq.data.a':
+            'Your groups, notes, screenshots, Pomodoro history and settings: nothing. They live in your browser storage. The only outbound traffic is the AI requests you trigger yourself, and they go to Google, not to us.',
+        'faq.browsers.q': 'Does it work in other browsers?',
+        'faq.browsers.a':
+            'It is built for Chrome and uses the side panel and tab-group APIs, so Chromium browsers with the same APIs — Edge, Brave, Opera — generally work. Firefox and Safari do not.',
+        'faq.source.q': 'Can I read the code?',
+        'faq.source.a':
+            'Yes. The source is public so that anyone can audit what an extension with these permissions actually does. It is not open source in the licensing sense — you can read it and propose fixes, not republish it.',
     },
 
     es: {
@@ -173,17 +239,43 @@ export const ui = {
         'features.heading': 'Lo que hace de verdad',
 
         'feature.grouping.title': 'Agrupado que no molesta',
-        'feature.grouping.body':
-            'Las pestañas se ordenan solas por dominio, subdominio, dirección IP o reglas que tú escribes con regex. Los grupos que dejas de tocar se pliegan con el temporizador que elijas. Puedes guardar grupos enteros, sacarlos de la memoria y recuperarlos semanas después tal y como estaban.',
+        'feature.grouping.lead':
+            'Las pestañas se ordenan solas en cuanto se abren, por lo que tú decidas que importa: el dominio, el subdominio, la dirección IP o una regla que escribas con una expresión regular. Lo configuras una vez y dejas de pensar en ello.',
+        'feature.grouping.d1':
+            'Un grupo que llevas un rato sin tocar se pliega solo. El temporizador lo eliges tú, o lo apagas.',
+        'feature.grouping.d2':
+            'Guarda un grupo entero, sácalo de la memoria y recupéralo semanas después con cada pestaña donde la dejaste.',
+        'feature.grouping.d3':
+            'Las duplicadas se cuentan y se quitan de una vez, en todas las ventanas a la vez.',
+
         'feature.agent.title': 'Un agente, no un chatbot',
-        'feature.agent.body':
-            'Pídeselo en lenguaje llano y actúa sobre el navegador: cierra pestañas, crea grupos, los renombra, mueve cosas de sitio. También resume un artículo largo, y puede ejecutar tareas programadas mientras no estás delante.',
-        'feature.focus.title': 'Trabajo profundo, medido',
-        'feature.focus.body':
-            'Un Pomodoro flotante con tareas agrupadas por proyecto, y un panel que enseña lo que nadie mide: cuántas veces te interrumpieron, cuánto duró la racha y un mapa de calor de lo que sacaste adelante de verdad.',
-        'feature.tools.title': 'Y el resto de la caja de herramientas',
-        'feature.tools.body':
-            'Dos pestañas lado a lado. Modos de lectura y un creador de temas que pinta el propio navegador. Editor de cookies, capturas de página completa y de área con galería local, códigos QR y un lector que te lee la página en voz alta.',
+        'feature.agent.lead':
+            'La mayoría de la IA en un navegador te escribe un párrafo. Esta cambia el navegador. Pídeselo en lenguaje llano y cierra pestañas, crea grupos, los renombra y mueve cosas entre ellos; luego te dice exactamente qué hizo.',
+        'feature.agent.d1':
+            '«Cierra las pestañas de deportes y mete GitHub en Trabajo» es una frase que ejecuta, no una que te explica.',
+        'feature.agent.d2':
+            'Resume un artículo largo en el panel lateral, y guarda la conversación para que puedas volver a ella.',
+        'feature.agent.d3':
+            'Las tareas pueden ir programadas: un resumen de la mañana esperándote cuando te sientas.',
+
+        'feature.focus.title': 'Trabajo profundo, y la prueba',
+        'feature.focus.lead':
+            'Un Pomodoro flotante con tareas agrupadas por proyecto, y un panel que mide lo que nadie mide. No cuánto corrió el temporizador: cuántas veces algo te sacó de él.',
+        'feature.focus.d1':
+            'Las interrupciones se cuentan, así una sesión que técnicamente duró una hora no puede fingir que fue una hora de trabajo.',
+        'feature.focus.d2': 'Un mapa de calor de tus días, con la forma que todo el mundo ya sabe leer.',
+        'feature.focus.d3':
+            'La actividad se registra por sitio, y cualquiera se puede bloquear del todo mientras corre el temporizador.',
+
+        'feature.keyboard.title': 'El navegador entero desde el teclado',
+        'feature.keyboard.lead':
+            'Veinticuatro comandos, todos reasignables, más un sistema de etiquetas que pone una sobre cada enlace para que lo sigas escribiendo. El ratón pasa a ser opcional, no solo desaconsejado.',
+        'feature.keyboard.d1':
+            'Los snippets expanden texto con tus propias variables, en cualquier campo de cualquier web.',
+        'feature.keyboard.d2':
+            'Escribe «find» en la barra de direcciones y busca pestañas, marcadores, historial y descargas a la vez.',
+        'feature.keyboard.d3':
+            'Dos pestañas lado a lado en una ventana, y un picture-in-picture que sobrevive al cambiar de pestaña.',
 
         'keyboard.title': 'Suelta el ratón',
         'keyboard.body':
@@ -276,6 +368,46 @@ export const ui = {
         'team.design': 'Diseño, UX y pruebas',
         'team.line':
             'Sin empresa, sin inversores, sin una hoja de ruta escrita por nadie más. Dos personas que querían un navegador que se portara bien.',
+
+        'problem.kicker': 'El problema',
+        'problem.title': 'No abriste cuarenta pestañas a propósito.',
+        'problem.s1': 'La pestaña que buscas es un favicon de cuatro píxeles en algún punto de la tira.',
+        'problem.s2': 'Tienes tres ventanas abiertas porque una dejó de ser usable.',
+        'problem.s3': 'Cerrar algo da apuro, así que no se cierra nunca nada.',
+        'problem.s4': 'El navegador es donde trabajas, y es lo más desordenado que tienes.',
+        'problem.turn':
+            'Nada de eso es falta de disciplina. Es un navegador al que nadie le ha dicho qué va con qué.',
+
+        'how.heading': 'Cómo va la cosa',
+        'how.s1.title': 'Instálala',
+        'how.s1.body':
+            'Un clic desde la Chrome Web Store. Nada que registrar, nada que configurar antes de que empiece a funcionar: las reglas por defecto agrupan por dominio desde la primera pestaña.',
+        'how.s2.title': 'Di qué va dónde',
+        'how.s2.body':
+            'Una vez. Pon nombre a un grupo, mete dentro un dominio o una expresión regular, elige un color. O deja que la IA lo haga describiéndoselo en una frase.',
+        'how.s3.title': 'Olvídate',
+        'how.s3.body':
+            'Las pestañas nuevas caen solas en su grupo. Los grupos que dejas de usar se pliegan. La tira se mantiene legible sin que la cuides.',
+
+        'faq.heading': 'Antes de instalarla',
+        'faq.cost.q': '¿Cuánto cuesta?',
+        'faq.cost.a':
+            'Nada, y no hay una versión de pago esperando detrás de ninguna función. Sin anuncios, sin rastreo, sin vender nada. Las donaciones son el único dinero que hay de por medio y son opcionales.',
+        'faq.account.q': '¿Necesito una cuenta?',
+        'faq.account.a':
+            'No. No hay registro, ni inicio de sesión, ni un servidor nuestro donde tener una cuenta. Todo lo guarda tu navegador, en tu máquina.',
+        'faq.ai.q': '¿De dónde sale la IA?',
+        'faq.ai.a':
+            'Pones tu propia clave gratuita de Google AI Studio una sola vez. Se guarda en el almacenamiento local de tu dispositivo y se usa solo para las peticiones que hagas tú. Si no la pones, el resto de funciones siguen funcionando igual.',
+        'faq.data.q': '¿Qué sale de mi ordenador?',
+        'faq.data.a':
+            'Tus grupos, notas, capturas, historial de Pomodoro y ajustes: nada. Viven en el almacenamiento de tu navegador. El único tráfico saliente son las peticiones de IA que provocas tú, y van a Google, no a nosotros.',
+        'faq.browsers.q': '¿Funciona en otros navegadores?',
+        'faq.browsers.a':
+            'Está hecha para Chrome y usa las APIs de panel lateral y de grupos de pestañas, así que los navegadores Chromium con las mismas APIs —Edge, Brave, Opera— suelen funcionar. Firefox y Safari no.',
+        'faq.source.q': '¿Puedo leer el código?',
+        'faq.source.a':
+            'Sí. El código es público para que cualquiera pueda auditar qué hace de verdad una extensión con estos permisos. No es open source en el sentido de la licencia: puedes leerlo y proponer arreglos, no republicarlo.',
     },
 } as const;
 

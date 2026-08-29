@@ -47,7 +47,7 @@ const options = (Object.keys(ui) as Lang[]).map((code) => ({
         display: inline-flex;
         padding: 2px;
         border-radius: 999px;
-        border: 1px solid var(--deep-hair);
+        border: 1px solid var(--band-hair);
     }
 
     .lang-option {
@@ -58,7 +58,7 @@ const options = (Object.keys(ui) as Lang[]).map((code) => ({
         font-size: 0.7rem;
         font-weight: 660;
         letter-spacing: 0.08em;
-        color: var(--deep-soft);
+        color: var(--band-soft);
         text-decoration: none;
         transition:
             color 0.16s ease,
@@ -66,11 +66,11 @@ const options = (Object.keys(ui) as Lang[]).map((code) => ({
     }
 
     .lang-option:hover {
-        color: var(--deep-ink);
+        color: var(--band-ink);
     }
 
     .lang-option.current {
-        background: var(--deep-2);
-        color: var(--deep-ink);
+        background: var(--band-2);
+        color: var(--band-ink);
     }
 </style>

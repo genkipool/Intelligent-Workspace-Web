@@ -1,0 +1,108 @@
+---
+/**
+ * The objections, answered before they become reasons not to install.
+ *
+ * `<details>` rather than a scripted accordion: it opens with JavaScript off, the browser
+ * gives it keyboard behaviour for free, and a reader searching the page with Ctrl+F finds
+ * text inside a closed one.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { questions } from '@/data/story';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="faq" class="faq wrap">
+    <h2 class="section-head">{t('faq.heading')}</h2>
+    <div class="questions">
+        {
+            questions.map((question) => (
+                <details>
+                    <summary>
+                        {t(question.qKey)}
+                        <span class="chevron" aria-hidden="true" />
+                    </summary>
+                    <p>{t(question.aKey)}</p>
+                </details>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .faq {
+        padding-block: clamp(56px, 8vw, 104px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(20px, 2.6vw, 30px);
+    }
+
+    .questions {
+        display: flex;
+        flex-direction: column;
+    }
+
+    details {
+        border-block-start: 1px solid var(--hair);
+    }
+
+    details:last-child {
+        border-block-end: 1px solid var(--hair);
+    }
+
+    summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding-block: clamp(16px, 2vw, 22px);
+        font-size: clamp(16px, 1.4vw, 19px);
+        font-weight: 580;
+        letter-spacing: -0.014em;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+
+    summary:hover {
+        color: var(--accent);
+    }
+
+    .chevron {
+        flex-shrink: 0;
+        width: 9px;
+        height: 9px;
+        border-right: 1.8px solid currentColor;
+        border-bottom: 1.8px solid currentColor;
+        transform: rotate(45deg) translate(-2px, -2px);
+        transition: transform 0.18s ease;
+        opacity: 0.55;
+    }
+
+    details[open] .chevron {
+        transform: rotate(-135deg) translate(-2px, -2px);
+    }
+
+    details p {
+        padding-block-end: clamp(18px, 2.2vw, 26px);
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--ink-soft);
+        max-width: 64ch;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .chevron {
+            transition: none;
+        }
+    }
+</style>

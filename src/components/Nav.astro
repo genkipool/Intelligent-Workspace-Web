@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { useTranslations, localisePath } from '@/i18n/utils';
+import logo from '@/assets/logo.png';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
 import ThemeToggle from '@/components/ThemeToggle.astro';
@@ -15,7 +17,7 @@ const t = useTranslations(lang);
 
 <header class="nav wrap">
     <a class="brand" href={localisePath(lang, '/')}>
-        <img src="/assets/icon.png" alt="" width="26" height="26" />
+        <Image src={logo} alt="" width={52} height={52} class="brand-mark" loading="eager" />
         <span>{site.name}</span>
     </a>
     <nav>
@@ -41,6 +43,12 @@ const t = useTranslations(lang);
         padding-block: clamp(20px, 2.4vw, 30px);
     }
 
+    .brand-mark {
+        /* Drawn at 2x and displayed at 26 so it stays crisp on a retina screen. */
+        width: 26px;
+        height: 26px;
+    }
+
     .brand {
         display: inline-flex;
         align-items: center;
@@ -49,7 +57,7 @@ const t = useTranslations(lang);
         font-weight: 620;
         letter-spacing: -0.012em;
         text-decoration: none;
-        color: var(--deep-ink);
+        color: var(--band-ink);
         white-space: nowrap;
     }
 
@@ -61,13 +69,13 @@ const t = useTranslations(lang);
     }
 
     .nav nav a {
-        color: var(--deep-soft);
+        color: var(--band-soft);
         text-decoration: none;
         transition: color 0.16s ease;
     }
 
     .nav nav a:hover {
-        color: var(--deep-ink);
+        color: var(--band-ink);
     }
 
     .controls {

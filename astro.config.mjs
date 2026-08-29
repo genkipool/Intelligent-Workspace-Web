@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { passthroughImageService } from 'astro/config';
 import vercel from '@astrojs/vercel';
 
 /**
@@ -26,6 +27,20 @@ export default defineConfig({
         routing: {
             prefixDefaultLocale: false,
         },
+    },
+
+    image: {
+        /**
+         * The site has exactly one image: a 10 KB logo. Astro's default image service
+         * needs `sharp`, a large native dependency, to transcode it — which is a lot of
+         * install surface for a file that is already small and already a PNG.
+         *
+         * Passthrough keeps what `astro:assets` is actually worth here: the import is
+         * type-checked, a missing file is a build error rather than a 404, the asset is
+         * hashed for caching, and the intrinsic dimensions are read from the file so the
+         * markup cannot shift the layout while it loads. It just does not re-encode.
+         */
+        service: passthroughImageService(),
     },
 
     build: {

@@ -14,10 +14,10 @@ const t = useTranslations(lang);
  * makes the picture read as "a lot of tabs folded into a few named things".
  */
 const groups = [
-    { tone: 'blue', x: 0, w: 268, label: 'Work · 9' },
-    { tone: 'green', x: 284, w: 252, label: 'Docs · 6' },
-    { tone: 'purple', x: 552, w: 300, label: 'Research · 12' },
-    { tone: 'orange', x: 868, w: 332, label: 'Read later · 13' },
+    { tone: 'viridian', x: 0, w: 268, label: 'Work · 9' },
+    { tone: 'teal', x: 284, w: 252, label: 'Docs · 6' },
+    { tone: 'pine', x: 552, w: 300, label: 'Research · 12' },
+    { tone: 'brass', x: 868, w: 332, label: 'Read later · 13' },
 ] as const;
 
 /** Ten loose tabs, evenly spaced. Generated rather than written out ten times. */
@@ -35,7 +35,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
         <g class="groups">
             {
                 groups.map((group) => (
-                    <g style={`--c: var(--tg-${group.tone})`}>
+                    <g style={`--c: var(--c-${group.tone})`}>
                         <rect x={group.x} y="90" width={group.w} height="34" rx="9" />
                         <circle cx={group.x + 22} cy="107" r="5.5" />
                         <text x={group.x + 40} y="112">
@@ -74,12 +74,12 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .loose rect {
-        fill: var(--deep-2);
+        fill: var(--band-2);
     }
 
     .fall {
         fill: none;
-        stroke: var(--deep-soft);
+        stroke: var(--band-soft);
         stroke-width: 1.6;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -87,7 +87,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .groups rect {
-        fill: color-mix(in srgb, var(--c) 17%, var(--deep));
+        fill: color-mix(in srgb, var(--c) 17%, var(--band));
     }
 
     .groups circle {
@@ -95,7 +95,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .groups text {
-        fill: var(--deep-ink);
+        fill: var(--band-ink);
         font-family: var(--display);
         font-size: 14px;
         font-weight: 580;
@@ -110,12 +110,12 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .said {
-        color: var(--deep-soft);
+        color: var(--band-soft);
         font-size: 0.95rem;
     }
 
     .did {
-        color: var(--tg-green);
+        color: var(--c-teal);
         font-family: var(--mono);
         font-size: 0.8rem;
         letter-spacing: 0.01em;
@@ -123,7 +123,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
 
     figcaption {
         font-size: 0.86rem;
-        color: var(--deep-soft);
+        color: var(--band-soft);
         max-width: 62ch;
     }
 </style>
