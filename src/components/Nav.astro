@@ -39,61 +39,61 @@ const switchHref = localisePath(other, bare);
     /* The switcher is a link, not a button: it navigates to a real URL, so it works
        with JavaScript off and search engines can follow it. */
 
-.nav {
-    display: flex;
-    align-items: center;
-    gap: clamp(16px, 3vw, 40px);
-    padding-block: clamp(20px, 2.4vw, 30px);
-}
+    .nav {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 3vw, 40px);
+        padding-block: clamp(20px, 2.4vw, 30px);
+    }
 
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
-    font-weight: 620;
-    letter-spacing: -0.012em;
-    text-decoration: none;
-    color: var(--deep-ink);
-    white-space: nowrap;
-}
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9rem;
+        font-weight: 620;
+        letter-spacing: -0.012em;
+        text-decoration: none;
+        color: var(--deep-ink);
+        white-space: nowrap;
+    }
 
-.nav nav {
-    margin-inline-start: auto;
-    display: flex;
-    gap: clamp(14px, 2vw, 30px);
-    font-size: 0.88rem;
-}
+    .nav nav {
+        margin-inline-start: auto;
+        display: flex;
+        gap: clamp(14px, 2vw, 30px);
+        font-size: 0.88rem;
+    }
 
-.nav nav a {
-    color: var(--deep-soft);
-    text-decoration: none;
-    transition: color 0.16s ease;
-}
+    .nav nav a {
+        color: var(--deep-soft);
+        text-decoration: none;
+        transition: color 0.16s ease;
+    }
 
-.nav nav a:hover {
-    color: var(--deep-ink);
-}
+    .nav nav a:hover {
+        color: var(--deep-ink);
+    }
 
-.lang {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    font-size: 0.72rem;
-    font-weight: 660;
-    letter-spacing: 0.08em;
-    padding: 6px 11px;
-    border-radius: 999px;
-    border: 1px solid var(--deep-hair);
-    background: transparent;
-    color: var(--deep-soft);
-    transition:
-        color 0.16s ease,
-        border-color 0.16s ease;
-}
+    .lang {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        font-size: 0.72rem;
+        font-weight: 660;
+        letter-spacing: 0.08em;
+        padding: 6px 11px;
+        border-radius: 999px;
+        border: 1px solid var(--deep-hair);
+        background: transparent;
+        color: var(--deep-soft);
+        transition:
+            color 0.16s ease,
+            border-color 0.16s ease;
+    }
 
-.lang:hover {
-    color: var(--deep-ink);
-    border-color: var(--deep-soft);
-}
+    .lang:hover {
+        color: var(--deep-ink);
+        border-color: var(--deep-soft);
+    }
 </style>

@@ -19,23 +19,14 @@
 
 import type { APIRoute } from 'astro';
 import { donationCurrency } from '@/data/site';
+// The rules live in a pure module so they can be tested without a server or a Stripe
+// key. See `src/lib/donation.test.ts` — those cases are the guard between a query
+// string and a card charge.
+import { clampAmount, isSupportedCurrency, toMinorUnits, MIN_AMOUNT, MAX_AMOUNT } from '@/lib/donation';
 
 export const prerender = false;
 
 const STRIPE_API = 'https://api.stripe.com/v1/payment_intents';
-
-/** Whole euros. A donation outside this range is a mistake or an attack, not a gift. */
-const MIN_AMOUNT = 1;
-const MAX_AMOUNT = 500;
-const ALLOWED_CURRENCIES = new Set([donationCurrency]);
-
-function clampAmount(raw: unknown): number | null {
-    const amount = Number(raw);
-    if (!Number.isFinite(amount)) return null;
-    const whole = Math.floor(amount);
-    if (whole < MIN_AMOUNT || whole > MAX_AMOUNT) return null;
-    return whole;
-}
 
 function json(body: unknown, status: number): Response {
     return new Response(JSON.stringify(body), {
@@ -65,13 +56,13 @@ export const POST: APIRoute = async ({ request }) => {
     if (amount === null) {
         return json({ error: `Choose an amount between ${MIN_AMOUNT} and ${MAX_AMOUNT}.` }, 400);
     }
-    if (!ALLOWED_CURRENCIES.has(currency)) {
+    if (!isSupportedCurrency(currency)) {
         return json({ error: 'Unsupported currency.' }, 400);
     }
 
     const form = new URLSearchParams({
         // Stripe counts in the currency's smallest unit.
-        amount: String(amount * 100),
+        amount: String(toMinorUnits(amount)),
         currency,
         'automatic_payment_methods[enabled]': 'true',
         description: 'Intelligent Workspace donation',

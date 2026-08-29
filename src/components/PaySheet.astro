@@ -39,7 +39,15 @@ const t = useTranslations(lang);
             <span>{t('pay.otherAmount')}</span>
             <div class="field">
                 <span class="symbol" aria-hidden="true">€</span>
-                <input id="custom-amount" type="number" inputmode="decimal" min="1" max="500" step="1" autocomplete="off" />
+                <input
+                    id="custom-amount"
+                    type="number"
+                    inputmode="decimal"
+                    min="1"
+                    max="500"
+                    step="1"
+                    autocomplete="off"
+                />
             </div>
         </label>
     </fieldset>

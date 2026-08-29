@@ -55,75 +55,75 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
 </figure>
 
 <style>
-/* ── The tab strip ─────────────────────────────────────────────── */
+    /* ── The tab strip ─────────────────────────────────────────────── */
 
-.strip {
-    margin: 0;
-    padding: 0 var(--gutter) clamp(40px, 5vw, 68px);
-    max-width: var(--measure);
-    margin-inline: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
+    .strip {
+        margin: 0;
+        padding: 0 var(--gutter) clamp(40px, 5vw, 68px);
+        max-width: var(--measure);
+        margin-inline: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
 
-.strip svg {
-    display: block;
-    width: 100%;
-    height: auto;
-}
+    .strip svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
 
-.loose rect {
-    fill: var(--deep-2);
-}
+    .loose rect {
+        fill: var(--deep-2);
+    }
 
-.fall {
-    fill: none;
-    stroke: var(--deep-soft);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.65;
-}
+    .fall {
+        fill: none;
+        stroke: var(--deep-soft);
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        opacity: 0.65;
+    }
 
-.groups rect {
-    fill: color-mix(in srgb, var(--c) 17%, var(--deep));
-}
+    .groups rect {
+        fill: color-mix(in srgb, var(--c) 17%, var(--deep));
+    }
 
-.groups circle {
-    fill: var(--c);
-}
+    .groups circle {
+        fill: var(--c);
+    }
 
-.groups text {
-    fill: var(--deep-ink);
-    font-family: var(--display);
-    font-size: 14px;
-    font-weight: 580;
-}
+    .groups text {
+        fill: var(--deep-ink);
+        font-family: var(--display);
+        font-size: 14px;
+        font-weight: 580;
+    }
 
-/* The exchange is HTML, not SVG <text>: inside a 1200-unit viewBox scaled down to a
+    /* The exchange is HTML, not SVG <text>: inside a 1200-unit viewBox scaled down to a
    390px phone, 14px type renders at about 4px. As HTML it reflows and stays legible. */
-.exchange {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
+    .exchange {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 
-.said {
-    color: var(--deep-soft);
-    font-size: 0.95rem;
-}
+    .said {
+        color: var(--deep-soft);
+        font-size: 0.95rem;
+    }
 
-.did {
-    color: var(--tg-green);
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.01em;
-}
+    .did {
+        color: var(--tg-green);
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.01em;
+    }
 
-figcaption {
-    font-size: 0.86rem;
-    color: var(--deep-soft);
-    max-width: 62ch;
-}
+    figcaption {
+        font-size: 0.86rem;
+        color: var(--deep-soft);
+        max-width: 62ch;
+    }
 </style>

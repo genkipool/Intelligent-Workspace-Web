@@ -1,0 +1,52 @@
+# The checks this site actually has. `npm run verify` runs the same five locally, so a
+# green run here means the same thing it means on a developer's machine.
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+# A new push makes the run in progress for the same branch pointless.
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    check:
+        name: Types, tests, build and headers
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v5
+
+            - uses: actions/setup-node@v5
+              with:
+                  # 24 is what Vercel runs the function on. Building on the same major
+                  # is the point: a syntax the local Node accepts and Vercel's does not
+                  # would otherwise only surface after a deploy.
+                  node-version: 24
+                  cache: npm
+
+            - name: Install
+              run: npm ci
+
+            - name: Types
+              run: npm run check
+
+            - name: Tests
+              run: npm run test
+
+            - name: Build
+              run: npm run build
+
+            # The one that catches a silent failure. A payment page whose route is not
+            # named in vercel.json inherits the landing CSP, whose frame-ancestors is
+            # 'none' — the extension's panel would show a blank frame and nobody would
+            # know until a donation did not happen.
+            - name: Payment routes are covered by the strict CSP
+              run: npm run check:headers
+
+            - name: Format
+              run: npm run format
