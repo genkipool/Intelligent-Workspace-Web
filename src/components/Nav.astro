@@ -37,6 +37,11 @@ const t = useTranslations(lang);
        with JavaScript off and search engines can follow it. */
 
     .nav {
+        /* Published as a custom property so the hero can subtract it from 100svh and
+           still fill exactly one screen. Guessing this number is how a hero ends up
+           76px too tall and forces a scroll. */
+        --nav-height: 76px;
+        min-height: var(--nav-height);
         display: flex;
         align-items: center;
         gap: clamp(16px, 3vw, 40px);

@@ -27,9 +27,15 @@ export const ui = {
 
         'hero.eyebrow.a': 'Chrome extension',
         'hero.eyebrow.b': 'Free, no account',
-        'hero.title': 'Forty tabs. Six groups. No effort.',
+        'hero.title': 'A browser that organises itself.',
         'hero.lede':
-            'Intelligent Workspace turns Chrome into a workstation that tidies itself — grouping tabs by your own rules, taking orders in plain language, and handing the whole web over to your keyboard.',
+            'Forty tabs become six groups without you doing anything. Then an AI agent, a focus timer and a keyboard-driven web, all in the panel beside the page.',
+        'hero.scroll': 'See how',
+        'shot.pending': 'Screenshot pending',
+        'shot.window': 'The side panel open beside a page you are reading',
+        'shot.agent': 'The agent being asked to tidy up, and reporting what it did',
+        'shot.focus': 'The Pomodoro panel and the activity dashboard',
+        'shot.keyboard': 'Every link on a page wearing a keyboard label',
         'hero.install': 'Add to Chrome',
         'hero.support': 'Support the project',
 
@@ -229,9 +235,15 @@ export const ui = {
 
         'hero.eyebrow.a': 'Extensión de Chrome',
         'hero.eyebrow.b': 'Gratis, sin cuenta',
-        'hero.title': 'Cuarenta pestañas. Seis grupos. Cero esfuerzo.',
+        'hero.title': 'Un navegador que se ordena solo.',
         'hero.lede':
-            'Intelligent Workspace convierte Chrome en una estación de trabajo que se ordena sola: agrupa pestañas con tus propias reglas, acepta órdenes en lenguaje llano y te entrega toda la web al teclado.',
+            'Cuarenta pestañas se convierten en seis grupos sin que hagas nada. Y luego un agente de IA, un temporizador de foco y toda la web al teclado, en el panel junto a la página.',
+        'hero.scroll': 'Ver cómo',
+        'shot.pending': 'Captura pendiente',
+        'shot.window': 'El panel lateral abierto junto a una página que estás leyendo',
+        'shot.agent': 'El agente recibiendo una orden y contando qué hizo',
+        'shot.focus': 'El panel de Pomodoro y el cuadro de actividad',
+        'shot.keyboard': 'Cada enlace de una página con su etiqueta de teclado',
         'hero.install': 'Añadir a Chrome',
         'hero.support': 'Apoyar el proyecto',
 

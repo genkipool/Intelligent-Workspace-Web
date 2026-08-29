@@ -1,14 +1,16 @@
 ---
 /**
- * The hero.
+ * The hero, sized to fit one screen.
  *
- * Centred, on a wash of viridian light, with the type carrying everything. There is no
- * panel, no frame and no card anywhere in it — the composition is the logo, a line of
- * very large light-weight type, one sentence, and two calls to action, with a great deal
- * of air between them.
+ * `100svh` and not `100vh`: on a phone the large viewport unit measures the window with
+ * the browser's own toolbars hidden, so a `100vh` hero is taller than what is actually
+ * on screen and the reader has to scroll to reach the button. The small unit is the
+ * height that is really visible.
  *
- * The wash is CSS, not an image: two soft radial fields offset from each other, so it
- * costs nothing to load, follows the theme, and cannot pixelate.
+ * Everything here is sized in `svh` fractions and `clamp`s that shrink together, so the
+ * composition holds on a laptop with a short viewport as well as on a desktop. The
+ * headline is kept to at most two lines by its measure — 18ch is narrower than the
+ * shortest sensible headline in either language, so it cannot run to three.
  */
 import { Image } from 'astro:assets';
 import { useTranslations, localisePath } from '@/i18n/utils';
@@ -27,10 +29,10 @@ const t = useTranslations(lang);
 <section class="hero aurora">
     <div class="hero-inner wrap">
         <!--
-            The mark earns its place: its four dots are the tab colours the whole palette
-            is built from, and the group chips further down are painted in the same four.
-            `Image` reads its intrinsic size from the file, so it cannot shift the
-            headline while it loads.
+            The mark's four dots are the tab colours the whole palette is built from, and
+            the group chips further down the page are painted in the same four. `Image`
+            reads its intrinsic size from the file, so it cannot shift the headline while
+            it loads.
         -->
         <Image src={logo} alt={site.name} class="mark" width={176} height={176} loading="eager" />
 
@@ -52,11 +54,25 @@ const t = useTranslations(lang);
             </a>
         </div>
     </div>
+
+    <!-- The cue that there is more below. A link rather than an icon on its own, so it
+         works for the keyboard and says what it does. -->
+    <a class="scroll-cue" href="#what">
+        <span>{t('hero.scroll')}</span>
+        <span class="chev" aria-hidden="true"></span>
+    </a>
 </section>
 
 <style>
     .hero {
-        padding-block: clamp(56px, 9vw, 120px) clamp(40px, 6vw, 72px);
+        /* The nav sits above this inside the same band, so the hero claims the rest of
+           the screen rather than a whole one of its own. */
+        min-height: calc(100svh - var(--nav-height, 76px));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: clamp(20px, 4svh, 56px) clamp(48px, 8svh, 90px);
+        position: relative;
     }
 
     .hero-inner {
@@ -64,20 +80,19 @@ const t = useTranslations(lang);
         flex-direction: column;
         align-items: center;
         text-align: center;
-        gap: clamp(18px, 2.2vw, 28px);
+        gap: clamp(12px, 1.8svh, 24px);
     }
 
     .mark {
-        width: clamp(72px, 8vw, 104px);
+        width: clamp(52px, 7svh, 88px);
         height: auto;
-        margin-block-end: clamp(2px, 1vw, 10px);
     }
 
     .eyebrow {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.76rem;
+        font-size: clamp(0.68rem, 1.4svh, 0.76rem);
         font-weight: 560;
         letter-spacing: 0.14em;
         text-transform: uppercase;
@@ -96,22 +111,22 @@ const t = useTranslations(lang);
     }
 
     h1 {
-        /* The one place the page is loud, and it is loud by size rather than by weight.
-           15ch keeps it to three lines at desktop width in both languages. */
-        font-size: clamp(42px, 7.6vw, 92px);
+        /* 18ch is narrower than the shortest headline either language would sensibly
+           carry, so this can only ever break to two lines — never three. */
+        font-size: clamp(38px, min(7.4vw, 9.4svh), 84px);
         font-weight: 250;
         letter-spacing: -0.042em;
-        line-height: 1;
-        max-width: 15ch;
+        line-height: 1.02;
+        max-width: 18ch;
         color: var(--band-ink);
     }
 
     .lede {
-        font-size: clamp(17px, 1.5vw, 21px);
+        font-size: clamp(16px, min(1.5vw, 2.4svh), 20px);
         font-weight: 350;
-        line-height: 1.55;
+        line-height: 1.5;
         color: var(--band-soft);
-        max-width: 52ch;
+        max-width: 54ch;
     }
 
     .actions {
@@ -119,8 +134,8 @@ const t = useTranslations(lang);
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: clamp(14px, 2.2vw, 26px);
-        padding-block-start: clamp(8px, 1.2vw, 16px);
+        gap: clamp(12px, 2.2vw, 26px);
+        padding-block-start: clamp(4px, 1svh, 14px);
     }
 
     .link-cta {
@@ -141,7 +156,64 @@ const t = useTranslations(lang);
         transform: translateX(5px);
     }
 
+    /* ── Scroll cue ─────────────────────────────────────────────── */
+
+    .scroll-cue {
+        position: absolute;
+        inset-inline: 0;
+        inset-block-end: clamp(16px, 3svh, 34px);
+        margin-inline: auto;
+        width: fit-content;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.72rem;
+        font-weight: 560;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--band-soft);
+        text-decoration: none;
+        opacity: 0.75;
+        transition: opacity 0.2s ease;
+    }
+
+    .scroll-cue:hover {
+        opacity: 1;
+    }
+
+    .chev {
+        width: 8px;
+        height: 8px;
+        border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor;
+        transform: rotate(45deg);
+        animation: nudge 2.4s ease-in-out infinite;
+    }
+
+    @keyframes nudge {
+        0%,
+        100% {
+            transform: rotate(45deg) translate(0, 0);
+        }
+        50% {
+            transform: rotate(45deg) translate(3px, 3px);
+        }
+    }
+
+    /* A short viewport — a laptop in landscape — has no room for the cue, and the hero
+       is already the whole screen. Hiding it is better than letting it collide. */
+    @media (max-height: 620px) {
+        .scroll-cue {
+            display: none;
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
+        .chev {
+            animation: none;
+        }
+
         .link-cta .arrow,
         .link-cta:hover .arrow {
             transition: none;

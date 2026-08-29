@@ -57,7 +57,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
 <style>
     .strip {
         margin: 0;
-        padding: 0 var(--gutter) clamp(48px, 6vw, 84px);
+        padding: clamp(48px, 7vw, 88px) var(--gutter) 0;
         max-width: calc(var(--measure) + 120px);
         margin-inline: auto;
         display: flex;
@@ -77,12 +77,12 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .loose rect {
-        fill: var(--band-2);
+        fill: var(--surface-2, color-mix(in srgb, var(--ink) 6%, transparent));
     }
 
     .fall {
         fill: none;
-        stroke: var(--band-soft);
+        stroke: var(--muted);
         stroke-width: 1.6;
         stroke-linecap: round;
         stroke-linejoin: round;
@@ -90,7 +90,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .groups rect {
-        fill: color-mix(in srgb, var(--c) 15%, var(--band));
+        fill: color-mix(in srgb, var(--c) 14%, transparent);
         stroke: color-mix(in srgb, var(--c) 35%, transparent);
     }
 
@@ -99,7 +99,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .groups text {
-        fill: var(--band-ink);
+        fill: var(--ink);
         font-family: var(--display);
         font-size: 14px;
         font-weight: 500;
@@ -114,7 +114,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
     }
 
     .said {
-        color: var(--band-soft);
+        color: var(--muted);
         font-size: 0.95rem;
         font-weight: 350;
     }
@@ -128,7 +128,7 @@ const loose = Array.from({ length: 10 }, (_, i) => ({ x: i * 122, w: i === 9 ? 1
 
     figcaption {
         font-size: 0.86rem;
-        color: var(--band-soft);
+        color: var(--muted);
         max-width: 60ch;
         opacity: 0.85;
     }

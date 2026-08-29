@@ -1,0 +1,117 @@
+---
+/**
+ * A screenshot of the extension, or the space one will occupy.
+ *
+ * WHY THE PLACEHOLDER EXISTS: the layout around these is split — image on one side, copy
+ * on the other — so the page only composes correctly once the images are the right shape.
+ * Reserving the exact aspect ratio now means dropping the real files in later changes
+ * nothing about the layout, and until then the gap states its own dimensions rather than
+ * being a mystery.
+ *
+ * ADDING A REAL SHOT: put the file in `src/assets/shots/`, import it in the section that
+ * uses it, and pass it as `src`. The placeholder disappears on its own.
+ */
+// `ImageMetadata` is a global Astro type, not an export of astro:assets.
+import { Image } from 'astro:assets';
+import { useTranslations } from '@/i18n/utils';
+import type { Lang, TranslationKey } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+    /** Omit while the screenshot is still to be taken. */
+    src?: ImageMetadata;
+    /** What the shot shows. Doubles as the alt text and the placeholder's label. */
+    captionKey: TranslationKey;
+    /** `16 / 10` for a window, `1 / 2` for the panel on its own. */
+    ratio: string;
+    /** Told to the reader in the placeholder, so the file arrives the right size. */
+    hint: string;
+}
+
+const { lang, src, captionKey, ratio, hint } = Astro.props;
+const t = useTranslations(lang);
+const caption = t(captionKey);
+---
+
+<figure class="shot" style={`--ratio: ${ratio}`}>
+    {
+        src ? (
+            <Image src={src} alt={caption} class="shot-image" loading="lazy" />
+        ) : (
+            <div class="shot-pending" role="img" aria-label={caption}>
+                <span class="pending-label">{t('shot.pending')}</span>
+                <span class="pending-what">{caption}</span>
+                <span class="pending-size">{hint}</span>
+            </div>
+        )
+    }
+    <figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+    .shot {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 0;
+    }
+
+    .shot-image,
+    .shot-pending {
+        width: 100%;
+        aspect-ratio: var(--ratio);
+        border-radius: 14px;
+    }
+
+    .shot-image {
+        height: auto;
+        object-fit: cover;
+        /* A screenshot of a browser is already full of edges. A soft ground behind it and
+           no border keeps it from reading as one more box on a page that has none. */
+        box-shadow:
+            0 2px 6px color-mix(in srgb, var(--ink) 8%, transparent),
+            0 28px 60px -30px color-mix(in srgb, var(--ink) 40%, transparent);
+    }
+
+    .shot-pending {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 24px;
+        text-align: center;
+        background: color-mix(in srgb, var(--accent) 5%, transparent);
+        outline: 1.5px dashed color-mix(in srgb, var(--accent) 35%, transparent);
+        outline-offset: -1.5px;
+    }
+
+    .pending-label {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent);
+    }
+
+    .pending-what {
+        font-size: 15px;
+        line-height: 1.45;
+        color: var(--ink-soft);
+        max-width: 34ch;
+    }
+
+    .pending-size {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted);
+    }
+
+    figcaption {
+        font-size: 13.5px;
+        line-height: 1.45;
+        color: var(--muted);
+        max-width: 46ch;
+    }
+</style>

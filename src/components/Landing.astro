@@ -27,11 +27,17 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<div class="band band--tint">
+<div class="band band--tint hero-band">
     <Nav lang={lang} />
     <Hero lang={lang} />
-    <TabStrip lang={lang} />
 </div>
+
+{
+    /* The strip moved out of the hero: the hero has to fit one screen, and the strip is a
+    diagram that rewards being looked at rather than glanced past. It now introduces the
+    problem section, where the "before and after" it shows is the actual argument. */
+}
+<TabStrip lang={lang} />
 
 {
     /*

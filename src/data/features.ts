@@ -26,6 +26,12 @@ export interface Feature {
     leadKey: TranslationKey;
     /** Three short, checkable specifics. Not marketing lines. */
     detailKeys: readonly TranslationKey[];
+    /** The screenshot beside it: what it shows, what shape it is, and how to take it. */
+    shot: {
+        captionKey: TranslationKey;
+        ratio: string;
+        hint: string;
+    };
 }
 
 export const features: readonly Feature[] = [
@@ -35,6 +41,7 @@ export const features: readonly Feature[] = [
         titleKey: 'feature.grouping.title',
         leadKey: 'feature.grouping.lead',
         detailKeys: ['feature.grouping.d1', 'feature.grouping.d2', 'feature.grouping.d3'],
+        shot: { captionKey: 'shot.window', ratio: '16 / 10', hint: '≥ 1600 × 1000 px' },
     },
     {
         id: 'agent',
@@ -42,6 +49,7 @@ export const features: readonly Feature[] = [
         titleKey: 'feature.agent.title',
         leadKey: 'feature.agent.lead',
         detailKeys: ['feature.agent.d1', 'feature.agent.d2', 'feature.agent.d3'],
+        shot: { captionKey: 'shot.agent', ratio: '1 / 1.6', hint: '≥ 900 × 1440 px' },
     },
     {
         id: 'focus',
@@ -49,6 +57,7 @@ export const features: readonly Feature[] = [
         titleKey: 'feature.focus.title',
         leadKey: 'feature.focus.lead',
         detailKeys: ['feature.focus.d1', 'feature.focus.d2', 'feature.focus.d3'],
+        shot: { captionKey: 'shot.focus', ratio: '16 / 10', hint: '≥ 1600 × 1000 px' },
     },
     {
         id: 'keyboard',
@@ -56,5 +65,6 @@ export const features: readonly Feature[] = [
         titleKey: 'feature.keyboard.title',
         leadKey: 'feature.keyboard.lead',
         detailKeys: ['feature.keyboard.d1', 'feature.keyboard.d2', 'feature.keyboard.d3'],
+        shot: { captionKey: 'shot.keyboard', ratio: '16 / 10', hint: '≥ 1600 × 1000 px' },
     },
 ];
