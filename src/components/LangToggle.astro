@@ -1,0 +1,76 @@
+---
+/**
+ * A segmented EN | ES control whose halves are ordinary links.
+ *
+ * It reads as a toggle and behaves as navigation, which is the point: each language has
+ * a real URL, so it works with JavaScript off, search engines can follow it, and the
+ * page arrives with its copy already correct instead of swapping it after load.
+ *
+ * Each half points at the *current* page in that language, so switching never loses the
+ * reader's place.
+ */
+import { localisePath, useTranslations } from '@/i18n/utils';
+import { ui, type Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
+const options = (Object.keys(ui) as Lang[]).map((code) => ({
+    code,
+    href: localisePath(code, bare),
+    current: code === lang,
+}));
+---
+
+<div class="lang-toggle" role="group" aria-label={t('nav.language')}>
+    {
+        options.map((option) => (
+            <a
+                href={option.href}
+                hreflang={option.code}
+                class:list={['lang-option', { current: option.current }]}
+                aria-current={option.current ? 'true' : undefined}
+            >
+                {option.code.toUpperCase()}
+            </a>
+        ))
+    }
+</div>
+
+<style>
+    .lang-toggle {
+        display: inline-flex;
+        padding: 2px;
+        border-radius: 999px;
+        border: 1px solid var(--deep-hair);
+    }
+
+    .lang-option {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 660;
+        letter-spacing: 0.08em;
+        color: var(--deep-soft);
+        text-decoration: none;
+        transition:
+            color 0.16s ease,
+            background-color 0.16s ease;
+    }
+
+    .lang-option:hover {
+        color: var(--deep-ink);
+    }
+
+    .lang-option.current {
+        background: var(--deep-2);
+        color: var(--deep-ink);
+    }
+</style>

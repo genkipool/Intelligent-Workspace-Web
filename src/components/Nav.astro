@@ -1,7 +1,9 @@
 ---
-import { useTranslations, localisePath, otherLang } from '@/i18n/utils';
+import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+import LangToggle from '@/components/LangToggle.astro';
 
 interface Props {
     lang: Lang;
@@ -9,15 +11,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const other = otherLang(lang);
-
-/**
- * The switcher points at the same page in the other language rather than at its home
- * page, so changing language never loses the reader's place. `Astro.url.pathname` is
- * already localised, so the current prefix is stripped before the new one goes on.
- */
-const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
-const switchHref = localisePath(other, bare);
 ---
 
 <header class="nav wrap">
@@ -27,12 +20,14 @@ const switchHref = localisePath(other, bare);
     </a>
     <nav>
         <a href="#what">{t('nav.what')}</a>
+        <a href="#inside">{t('caps.heading')}</a>
         <a href="#keyboard">{t('nav.keyboard')}</a>
         <a href="#privacy">{t('nav.privacy')}</a>
     </nav>
-    <a class="lang" href={switchHref} hreflang={other} aria-label={t('nav.switchTo')}>
-        {other.toUpperCase()}
-    </a>
+    <div class="controls">
+        <ThemeToggle lang={lang} />
+        <LangToggle lang={lang} />
+    </div>
 </header>
 
 <style>
@@ -75,25 +70,10 @@ const switchHref = localisePath(other, bare);
         color: var(--deep-ink);
     }
 
-    .lang {
-        display: inline-flex;
+    .controls {
+        display: flex;
         align-items: center;
-        text-decoration: none;
-        font-size: 0.72rem;
-        font-weight: 660;
-        letter-spacing: 0.08em;
-        padding: 6px 11px;
-        border-radius: 999px;
-        border: 1px solid var(--deep-hair);
-        background: transparent;
-        color: var(--deep-soft);
-        transition:
-            color 0.16s ease,
-            border-color 0.16s ease;
-    }
-
-    .lang:hover {
-        color: var(--deep-ink);
-        border-color: var(--deep-soft);
+        gap: 8px;
+        flex-shrink: 0;
     }
 </style>

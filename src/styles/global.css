@@ -18,8 +18,9 @@
  *    on the element, and the rules and numerals read that variable.
  *
  * The hero and the keyboard section are inverted in BOTH themes — the page opens on a
- * browser at night and the body of it reads as daylight. That is deliberate, so those
- * bands carry their own fixed tokens rather than the theme's.
+ * browser at night and the body of it reads as daylight. In light mode that is a hard
+ * contrast; in dark mode the band goes *darker* than the page rather than lighter, so
+ * the rhythm survives instead of collapsing into one flat black.
  */
 
 :root {
@@ -56,8 +57,17 @@
     --gutter: clamp(20px, 5vw, 64px);
 }
 
+/**
+ * Three states, not two. An explicit choice stamps `data-theme` on <html>; the default
+ * stamps nothing, and only `prefers-color-scheme` separates light from dark there.
+ *
+ * So the dark palette is written twice: once behind the media query, guarded so an
+ * explicit light choice beats a dark OS, and once behind the attribute so the toggle
+ * wins in the other direction. Defining a colour in only one of them is the classic bug
+ * — the page then renders one theme's text on the other theme's ground.
+ */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme='light']) {
         --paper: #0f1117;
         --ink: #f2f3f8;
         --ink-soft: #c6cad9;
@@ -69,6 +79,19 @@
 
         --accent: #5b7bff;
     }
+}
+
+:root[data-theme='dark'] {
+    --paper: #0f1117;
+    --ink: #f2f3f8;
+    --ink-soft: #c6cad9;
+    --muted: #8b91a6;
+    --hair: #232838;
+
+    --deep: #07080d;
+    --deep-2: #10131f;
+
+    --accent: #5b7bff;
 }
 
 *,

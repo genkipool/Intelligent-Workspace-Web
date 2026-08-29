@@ -1,0 +1,116 @@
+---
+/**
+ * The honest inventory: every panel the extension ships, grouped by what you reach for
+ * it to do. No boxes — the families are separated by a hairline and a label, and the
+ * entries are a two-column list of name and one line.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { capabilities, families } from '@/data/capabilities';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const grouped = families.map((family) => ({
+    family,
+    items: capabilities.filter((capability) => capability.family === family),
+}));
+---
+
+<section id="inside" class="caps wrap">
+    <header class="caps-head">
+        <h2 class="section-head">{t('caps.heading')}</h2>
+        <p class="caps-lede">{t('caps.lede')}</p>
+    </header>
+
+    {
+        grouped.map((group) => (
+            <div class="family">
+                <h3 class="family-name">{t(`family.${group.family}` as never)}</h3>
+                <ul class="family-items">
+                    {group.items.map((capability) => (
+                        <li>
+                            <span class="cap-name">{t(capability.nameKey)}</span>
+                            <span class="cap-line">{t(capability.lineKey)}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))
+    }
+</section>
+
+<style>
+    .caps {
+        padding-block: clamp(56px, 7vw, 96px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(28px, 4vw, 44px);
+    }
+
+    .caps-head {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .caps-lede {
+        font-size: clamp(17px, 1.4vw, 20px);
+        color: var(--ink-soft);
+        max-width: 56ch;
+    }
+
+    .family {
+        display: grid;
+        grid-template-columns: minmax(0, 0.4fr) minmax(0, 1.6fr);
+        gap: clamp(20px, 4vw, 56px);
+        padding-block: clamp(22px, 3vw, 32px);
+        border-block-start: 1px solid var(--hair);
+    }
+
+    .family-name {
+        font-size: clamp(15px, 1.4vw, 19px);
+        font-weight: 620;
+        letter-spacing: -0.018em;
+        color: var(--muted);
+    }
+
+    .family-items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: clamp(16px, 2.2vw, 26px);
+    }
+
+    .family-items li {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .cap-name {
+        font-size: 15.5px;
+        font-weight: 620;
+        letter-spacing: -0.012em;
+        color: var(--ink);
+    }
+
+    .cap-line {
+        font-size: 14.5px;
+        line-height: 1.5;
+        color: var(--muted);
+    }
+
+    @media (max-width: 760px) {
+        .family {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 14px;
+        }
+    }
+</style>

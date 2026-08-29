@@ -1,0 +1,68 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { team } from '@/data/site';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="team wrap">
+    <h2 class="section-head">{t('team.heading')}</h2>
+    <div class="people">
+        {
+            team.map((person) => (
+                <div class="person">
+                    <p class="person-name">{person.name}</p>
+                    <p class="person-role">{t(person.roleKey)}</p>
+                </div>
+            ))
+        }
+    </div>
+    <p class="team-line">{t('team.line')}</p>
+</section>
+
+<style>
+    .team {
+        padding-block: 0 clamp(64px, 9vw, 110px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(20px, 2.6vw, 30px);
+    }
+
+    .people {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: clamp(20px, 3vw, 40px);
+        padding-block-start: clamp(10px, 1.5vw, 18px);
+        border-block-start: 1px solid var(--hair);
+    }
+
+    .person {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-block-start: clamp(14px, 2vw, 22px);
+    }
+
+    .person-name {
+        font-size: clamp(19px, 2.2vw, 26px);
+        font-weight: 640;
+        letter-spacing: -0.022em;
+    }
+
+    .person-role {
+        font-size: 14.5px;
+        color: var(--muted);
+    }
+
+    .team-line {
+        font-size: clamp(16px, 1.3vw, 18px);
+        color: var(--ink-soft);
+        max-width: 56ch;
+    }
+</style>

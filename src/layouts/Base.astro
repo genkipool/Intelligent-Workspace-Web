@@ -46,6 +46,26 @@ const alternates = (['en', 'es'] as const).map((code) => ({
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
         <slot name="head" />
+
+        <!--
+            Stamps the stored theme before the first paint. `is:inline` keeps Astro from
+            bundling and deferring it: a deferred script runs after the browser has
+            already painted, which is exactly the flash of the wrong theme this exists to
+            prevent. Twelve lines in the head is the price of not having one.
+
+            With nothing stored it stamps nothing at all, leaving the page on
+            `prefers-color-scheme` — the third state the stylesheet is written for.
+        -->
+        <script is:inline>
+            try {
+                const stored = localStorage.getItem('iw-theme');
+                if (stored === 'dark' || stored === 'light') {
+                    document.documentElement.dataset.theme = stored;
+                }
+            } catch {
+                /* Private mode. The OS preference decides, which is a fine default. */
+            }
+        </script>
     </head>
     <body>
         <a class="skip" href="#main">{t('nav.skip')}</a>

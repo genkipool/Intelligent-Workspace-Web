@@ -30,7 +30,10 @@ const t = useTranslations(lang);
 
 <style>
     .entries {
-        padding-block: clamp(64px, 9vw, 128px);
+        /* No bottom padding: Capabilities follows inside the same <main> and opens with
+           its own. Both paying in full left a quarter of a screen of nothing between
+           them. */
+        padding-block: clamp(64px, 9vw, 128px) 0;
     }
 
     .section-head {

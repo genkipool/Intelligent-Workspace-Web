@@ -9,6 +9,9 @@ import Nav from '@/components/Nav.astro';
 import Hero from '@/components/Hero.astro';
 import TabStrip from '@/components/TabStrip.astro';
 import Features from '@/components/Features.astro';
+import Capabilities from '@/components/Capabilities.astro';
+import Trust from '@/components/Trust.astro';
+import Team from '@/components/Team.astro';
 import KeyboardBand from '@/components/KeyboardBand.astro';
 import Statement from '@/components/Statement.astro';
 import DonateBand from '@/components/DonateBand.astro';
@@ -29,9 +32,14 @@ const { lang } = Astro.props;
 
 <main id="main">
     <Features lang={lang} />
+    <Capabilities lang={lang} />
 </main>
 
 <KeyboardBand lang={lang} />
+
 <Statement lang={lang} />
+<Trust lang={lang} />
+<Team lang={lang} />
+
 <DonateBand lang={lang} />
 <SiteFooter lang={lang} />

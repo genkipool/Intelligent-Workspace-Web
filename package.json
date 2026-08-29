@@ -11,7 +11,7 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "check:headers": "node scripts/check-headers.mjs",
-        "verify": "npm run check && npm run test && npm run build && npm run check:headers && npm run format",
+        "verify": "pnpm run check && pnpm run test && pnpm run build && pnpm run check:headers && pnpm run format",
         "format": "prettier --check .",
         "format:fix": "prettier --write ."
     },
