@@ -436,6 +436,22 @@ img {
     }
 }
 
+/* ── Selected text ───────────────────────────────────────────────
+   The same idea the extension uses — the accent behind, the ink kept — in this site's
+   tokens. Without it the page falls back to Chrome's default blue, which is the one
+   colour on the page that ignores the theme. */
+
+::selection {
+    background-color: color-mix(in srgb, var(--accent) 30%, transparent);
+    color: var(--ink);
+}
+
+/* On the tinted bands the ink token is the wrong one, so the pair is restated. */
+.band--tint ::selection {
+    background-color: color-mix(in srgb, var(--accent) 32%, transparent);
+    color: var(--band-ink);
+}
+
 /* ── Scrollbar ───────────────────────────────────────────────────
    The same shape the extension draws — a rounded thumb outlined rather than filled,
    which fills on hover — in this site's own tokens rather than the extension's. The

@@ -137,8 +137,25 @@ legend {
 }
 
 .chip:focus-visible,
-#custom-amount:focus-visible,
 #submit:focus-visible {
+    outline: 2px solid var(--interactive-color);
+    outline-offset: 1px;
+}
+
+/**
+ * The amount field's focus ring belongs to the WRAPPER, never to the input.
+ *
+ * This is what looked like two inputs nested inside each other: `.field` carries the
+ * border, so an outline on the `<input>` too drew a second rounded rectangle a pixel
+ * inside the first. The input is borderless and transparent — it is a text cursor in a
+ * box the wrapper draws — so the wrapper is what has to show focus.
+ */
+#custom-amount:focus,
+#custom-amount:focus-visible {
+    outline: none;
+}
+
+.field:focus-within {
     outline: 2px solid var(--interactive-color);
     outline-offset: 1px;
 }
@@ -161,10 +178,6 @@ legend {
     border-radius: 7px;
     background: var(--bg-color);
     transition: border-color 0.13s;
-}
-
-.field:focus-within {
-    border-color: var(--action-color, var(--interactive-color));
 }
 
 .symbol {
@@ -321,8 +334,20 @@ form {
    tab from the about page, where no content script of ours runs. Stating it means the
    two contexts cannot look different. */
 
+/**
+ * Forced back to `auto`, and this is not redundant.
+ *
+ * The site's global stylesheet — which this page also loads — sets
+ * `scrollbar-width: thin` on `html` for the marketing pages. The moment a scroller asks
+ * for the standard scrollbar Chrome stops honouring `::-webkit-scrollbar` on it: the two
+ * ways of styling one cannot be mixed. That is the same trap the extension's own
+ * `utils/panelScrollbar.js` documents, and it is why every rule below was being ignored.
+ */
+html,
+body,
 .sheet {
     scrollbar-width: auto;
+    scrollbar-color: auto;
 }
 
 ::-webkit-scrollbar {
@@ -348,4 +373,27 @@ form {
 
 ::-webkit-scrollbar-corner {
     background: var(--bg-color);
+}
+
+/* ── Selected text ───────────────────────────────────────────────
+   The extension paints a selection with the interactive colour and keeps the text
+   colour, in `about.css` and on every other page. Without this rule the sheet used
+   Chrome's default blue, which is the one colour on it that ignored the theme. */
+
+::selection {
+    /**
+     * A TINT of the interactive colour, not the colour itself.
+     *
+     * `about.css` sets the full interactive colour behind the ordinary text colour, and
+     * in any theme whose interactive colour is light that pair lands near 1.7:1 — the
+     * selected words become unreadable. Both candidates were measured: `--text-color`
+     * gives 1.75 and `--text-on-color` 2.11.
+     *
+     * A translucent tint solves it without a second colour to keep in sync: the text
+     * keeps whatever contrast it already had against the page, and the highlight is
+     * still unmistakably the theme's own colour. This is the one deliberate deviation
+     * from the extension's stylesheet on this page.
+     */
+    background-color: color-mix(in srgb, var(--interactive-color) 35%, transparent);
+    color: inherit;
 }
