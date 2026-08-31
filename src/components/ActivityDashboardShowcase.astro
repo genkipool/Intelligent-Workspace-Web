@@ -1,0 +1,159 @@
+---
+/**
+ * The activity panel: where the time went, and the rules that cap it.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import Showcase from '@/components/Showcase.astro';
+import Icon from '@/components/Icon.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'calendarPlain', titleKey: 'activity.f1.title', descKey: 'activity.f1.desc' },
+    { icon: 'clockLarge', titleKey: 'activity.f2.title', descKey: 'activity.f2.desc' },
+    { icon: 'activity', titleKey: 'activity.f3.title', descKey: 'activity.f3.desc' },
+];
+---
+
+<Showcase
+    id="actividad"
+    lang={lang}
+    eyebrowKey="activity.badge"
+    titleKey="activity.title"
+    subtitleKey="activity.subtitle"
+    bullets={bullets}
+    centreVisual
+>
+    <!--
+        The web activity side panel, rebuilt from the extension's own markup:
+        `ActivityPanel.svelte` for the header and the search row, `PanelSite.svelte`
+        for the boxes. The classes, the order of the rows, the wording of the labels
+        and the palette are the panel's: see `src/styles/extension-ui.css`.
+    -->
+    <div class="iw-shot wa-shot">
+        <header class="header">
+            <h1 class="header-main-title">{t('activity.panel.title')}</h1>
+            <div class="header-actions" aria-hidden="true">
+                <span class="control-btn is-on"><Icon name="pin" /></span>
+                <span class="control-btn"><Icon name="tabGroups" /></span>
+                <span class="control-btn"><Icon name="home" /></span>
+                <span class="control-btn"><Icon name="back" /></span>
+            </div>
+        </header>
+
+        <div class="itg-search-row">
+            <div class="search-container">
+                <span class="search-input">{t('activity.panel.search')}</span>
+            </div>
+            <div class="itg-search-row-controls" aria-hidden="true">
+                <span class="control-btn"><Icon name="resize" /></span>
+                <span class="control-btn"><Icon name="collapseAll" /></span>
+                <span class="control-btn"><Icon name="settings" /></span>
+            </div>
+        </div>
+
+        <div class="iw-body">
+            <!-- One site unfolded: the figures, then one row per part of the rule. -->
+            <div class="wa-panel-box is-open">
+                <div class="wa-panel-head">
+                    <span class="favicon fav-yt"></span>
+                    <span class="wa-panel-domain">youtube.com</span>
+                    <span class="wa-panel-time">1h 12m</span>
+                </div>
+                <div class="wa-panel-figures">
+                    <span class="wa-panel-figure">
+                        <span class="wa-panel-figure-label">{t('activity.panel.visits')}</span>
+                        <span class="wa-panel-figure-val">14</span>
+                    </span>
+                    <span class="wa-panel-figure">
+                        <span class="wa-panel-figure-label">{t('activity.panel.perVisit')}</span>
+                        <span class="wa-panel-figure-val">5m 09s</span>
+                    </span>
+                    <span class="wa-panel-figure">
+                        <span class="wa-panel-figure-label">{t('activity.panel.share')}</span>
+                        <span class="wa-panel-figure-val">23%</span>
+                    </span>
+                </div>
+
+                <div class="wa-panel-row">
+                    <span class="wa-panel-row-label">{t('activity.panel.daily')}</span>
+                    <span class="wa-panel-row-val">1h 30m</span>
+                    <span class="wa-panel-row-pct">80%</span>
+                    <span class="wa-row-controls" aria-hidden="true">
+                        <Icon name="edit" size={13} />
+                        <Icon name="power" size={13} />
+                        <Icon name="close" size={13} />
+                    </span>
+                </div>
+                <div class="wa-panel-row">
+                    <span class="wa-panel-row-label">{t('activity.panel.weekly')}</span>
+                    <span class="wa-panel-row-val">6h 00m</span>
+                    <span class="wa-panel-row-pct">45%</span>
+                    <span class="wa-row-controls" aria-hidden="true">
+                        <Icon name="edit" size={13} />
+                        <Icon name="power" size={13} />
+                        <Icon name="close" size={13} />
+                    </span>
+                </div>
+                <div class="wa-panel-row">
+                    <span class="wa-panel-row-label">{t('activity.panel.schedule')}</span>
+                    <span class="wa-panel-row-val wa-panel-row-val-center">09:00-18:00</span>
+                    <span class="wa-row-controls" aria-hidden="true">
+                        <Icon name="edit" size={13} />
+                        <Icon name="power" size={13} />
+                        <Icon name="close" size={13} />
+                    </span>
+                </div>
+            </div>
+
+            <!-- A site a rule is stopping right now: the badge says which one. -->
+            <div class="wa-panel-box is-blocked">
+                <div class="wa-panel-head">
+                    <span class="favicon fav-rd"></span>
+                    <span class="wa-panel-domain">reddit.com</span>
+                    <span class="wa-badge-blocked">{t('activity.panel.overLimit')}</span>
+                    <span class="wa-panel-time">45m</span>
+                </div>
+            </div>
+
+            <div class="wa-panel-box">
+                <div class="wa-panel-head">
+                    <span class="favicon fav-gh"></span>
+                    <span class="wa-panel-domain">github.com</span>
+                    <span class="wa-panel-time">2h 04m</span>
+                </div>
+            </div>
+
+            <div class="wa-panel-box">
+                <div class="wa-panel-head">
+                    <span class="favicon fav-fg"></span>
+                    <span class="wa-panel-domain">figma.com</span>
+                    <span class="wa-badge-blocked">{t('activity.panel.outsideHours')}</span>
+                    <span class="wa-panel-time">18m</span>
+                </div>
+            </div>
+
+            <div class="wa-panel-box">
+                <div class="wa-panel-head">
+                    <span class="favicon fav-ml"></span>
+                    <span class="wa-panel-domain">mail.google.com</span>
+                    <span class="wa-panel-time">31m</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</Showcase>
+
+<style>
+    /* A side panel is a column a few hundred pixels wide; the shot keeps that shape. */
+    .wa-shot {
+        width: min(400px, 100%);
+    }
+</style>

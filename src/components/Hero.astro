@@ -1,22 +1,10 @@
 ---
-/**
- * The hero, sized to fit one screen.
- *
- * `100svh` and not `100vh`: on a phone the large viewport unit measures the window with
- * the browser's own toolbars hidden, so a `100vh` hero is taller than what is actually
- * on screen and the reader has to scroll to reach the button. The small unit is the
- * height that is really visible.
- *
- * Everything here is sized in `svh` fractions and `clamp`s that shrink together, so the
- * composition holds on a laptop with a short viewport as well as on a desktop. The
- * headline is kept to at most two lines by its measure — 18ch is narrower than the
- * shortest sensible headline in either language, so it cannot run to three.
- */
-import { Image } from 'astro:assets';
-import { useTranslations, localisePath } from '@/i18n/utils';
+import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
-import logo from '@/assets/logo.png';
+import PanelGroupList from '@/components/shots/PanelGroupList.astro';
+import PanelRules from '@/components/shots/PanelRules.astro';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -24,200 +12,761 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+const slides = [
+    {
+        id: 0,
+        tag: t('hero.slide1.tag'),
+        line1: t('hero.slide1.line1'),
+        line2: t('hero.slide1.line2'),
+        lede: t('hero.slide1.lede'),
+    },
+    {
+        id: 1,
+        tag: t('hero.slide2.tag'),
+        line1: t('hero.slide2.line1'),
+        line2: t('hero.slide2.line2'),
+        lede: t('hero.slide2.lede'),
+    },
+    {
+        id: 2,
+        tag: t('hero.slide3.tag'),
+        line1: t('hero.slide3.line1'),
+        line2: t('hero.slide3.line2'),
+        lede: t('hero.slide3.lede'),
+    },
+];
 ---
 
-<section class="hero aurora">
-    <div class="hero-inner wrap">
-        <!--
-            The mark's four dots are the tab colours the whole palette is built from, and
-            the group chips further down the page are painted in the same four. `Image`
-            reads its intrinsic size from the file, so it cannot shift the headline while
-            it loads.
-        -->
-        <Image src={logo} alt={site.name} class="mark" width={176} height={176} loading="eager" />
+<section id="hero" class="hero-section wrap">
+    <div class="hero-grid" id="hero-carousel-root">
+        <!-- Left Column: 3-Slide Content Deck & CTAs -->
+        <div class="hero-content" data-reveal>
+            <!-- Slides Container -->
+            <div class="hero-slides-wrapper">
+                {
+                    slides.map((slide, index) => (
+                        <div
+                            class:list={['hero-slide-item', { active: index === 0 }]}
+                            data-slide-index={index}
+                        >
+                            <div class="hero-slide-badge">
+                                <span class="badge-dot" />
+                                <span>{slide.tag}</span>
+                            </div>
+                            <h1 class="hero-title">
+                                <span class="title-line-1">{slide.line1}</span>
+                                <br />
+                                <span class="text-gradient title-line-2">{slide.line2}</span>
+                            </h1>
+                            <p class="hero-lede">{slide.lede}</p>
+                        </div>
+                    ))
+                }
+            </div>
 
-        <p class="eyebrow">
-            <span class="dot" aria-hidden="true"></span>
-            {t('hero.eyebrow.a')}
-            <span class="sep" aria-hidden="true">·</span>
-            {t('hero.eyebrow.b')}
-        </p>
+            <!-- CTAs and Standard Action Row -->
+            <div class="hero-ctas">
+                <a
+                    href={site.storeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary hero-btn-main"
+                >
+                    <Icon name="chromeStore" size={22} />
+                    <span>{t('hero.btnInstall')}</span>
+                </a>
 
-        <h1>{t('hero.title')}</h1>
-        <p class="lede">{t('hero.lede')}</p>
+                <a
+                    href={site.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary hero-btn-sub"
+                >
+                    <Icon name="github" />
+                    <span>{t('hero.btnSource')}</span>
+                </a>
+            </div>
 
-        <div class="actions">
-            <a class="cta" href={site.storeUrl} rel="noopener">{t('hero.install')}</a>
-            <a class="link-cta" href={localisePath(lang, '/pay')}>
-                {t('hero.support')}
-                <span class="arrow" aria-hidden="true">→</span>
-            </a>
+            <!-- Carousel Progress Controls (3 Radix-style bars + Chevrons) -->
+            <div class="carousel-nav-row" role="region" aria-label="Hero Carousel Navigation">
+                <button
+                    type="button"
+                    class="carousel-arrow-btn"
+                    id="hero-prev-btn"
+                    aria-label={t('hero.carousel.prev')}
+                >
+                    <Icon name="chevronLeft" size={18} />
+                </button>
+
+                <div class="carousel-indicators">
+                    {
+                        slides.map((_, idx) => (
+                            <button
+                                type="button"
+                                class:list={['indicator-track', { active: idx === 0 }]}
+                                data-slide-target={idx}
+                                aria-label={`${t('hero.carousel.slide')} ${idx + 1}`}
+                            >
+                                <span class="indicator-fill" />
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <button
+                    type="button"
+                    class="carousel-arrow-btn"
+                    id="hero-next-btn"
+                    aria-label={t('hero.carousel.next')}
+                >
+                    <Icon name="chevronRightBold" size={18} />
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: the extension's own panels, one per slide -->
+        <div class="hero-media-wrapper" data-reveal>
+            <!--
+                No browser frame around them. These are the extension's interfaces
+                drawn with its own classes from `src/styles/extension-ui.css`: the
+                group list, the floating omnibar, and the side panel's view switcher.
+                A fake window would only put a second, invented chrome in front of the
+                real one.
+            -->
+            <div class="shot-stage">
+                <!-- Screen 1: the rules manager, where the grouping is decided -->
+                <div class="mockup-panel active" data-panel-index="0">
+                    <div class="panel-frame">
+                        <PanelRules
+                            title={t('hero.m1.title')}
+                            footerNote={t('hero.m1.footer')}
+                            rules={[
+                                {
+                                    name: t('hero.m1.r1'),
+                                    color: 'c-green',
+                                    urls: ['github.com', 'jira.atlassian.net', 'ci.genkipool.com'],
+                                },
+                                {
+                                    name: t('hero.m1.r2'),
+                                    color: 'c-cyan',
+                                    urls: ['docs.astro.build', 'svelte.dev/docs', 'developer.mozilla.org'],
+                                },
+                                {
+                                    name: t('hero.m1.r3'),
+                                    color: 'c-purple',
+                                    urls: ['figma.com/file', 'dribbble.com'],
+                                },
+                                {
+                                    name: t('hero.m1.r6'),
+                                    color: 'c-blue',
+                                    off: true,
+                                    urls: ['mail.google.com', 'calendar.google.com'],
+                                },
+                            ]}
+                        />
+                    </div>
+                </div>
+
+                <!-- Screen 2: the floating omnibar, from `hint/omnibar.js` -->
+                <div class="mockup-panel" data-panel-index="1">
+                    <div class="iw-omni">
+                        <div class="hint-omni-input-wrapper">
+                            <span class="hint-omni-input">c: astro<span class="hint-omni-caret"></span></span>
+                            <span class="hint-omni-counter">3/12</span>
+                            <span class="hint-omni-regex-btn">.*</span>
+                        </div>
+                        <ul class="hint-omni-results">
+                            <li class="hint-omni-result-item selected">
+                                <span class="hint-omni-favicon fav-as"></span>
+                                <span class="hint-omni-text-container">
+                                    <span class="hint-omni-title">Routing · Astro Docs</span>
+                                    <span class="hint-omni-url">docs.astro.build/en/guides/routing</span>
+                                </span>
+                            </li>
+                            <li class="hint-omni-result-item">
+                                <span class="hint-omni-favicon fav-gh"></span>
+                                <span class="hint-omni-text-container">
+                                    <span class="hint-omni-title">genkipool/workspace · Issues</span>
+                                    <span class="hint-omni-url">github.com/genkipool/workspace/issues</span>
+                                </span>
+                            </li>
+                            <li class="hint-omni-result-item">
+                                <span class="hint-omni-favicon fav-fg"></span>
+                                <span class="hint-omni-text-container">
+                                    <span class="hint-omni-title">Landing · panel lateral</span>
+                                    <span class="hint-omni-url">figma.com/file/iw-landing</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="hints-preview-bar">
+                        <span class="hint-demo-label">{t('hero.m2.hints')}</span>
+                        <span class="hint-demo-item"
+                            ><kbd class="iw-hint-marker">f</kbd> {t('hero.m2.k1')}</span
+                        >
+                        <span class="hint-demo-item"
+                            ><kbd class="iw-hint-marker">cf</kbd> {t('hero.m2.k2')}</span
+                        >
+                        <span class="hint-demo-item"
+                            ><kbd class="iw-hint-marker">ar</kbd> {t('hero.m2.k3')}</span
+                        >
+                    </div>
+                </div>
+
+                <!-- Screen 3: the group list, the panel all of it ends up in -->
+                <div class="mockup-panel" data-panel-index="2">
+                    <div class="panel-frame">
+                        <PanelGroupList
+                            title={t('hero.m3.title')}
+                            duplicates="3"
+                            groups={[
+                                {
+                                    name: t('hero.m3.g1'),
+                                    color: 'c-green',
+                                    count: '4/6',
+                                    subgroups: [
+                                        {
+                                            domain: 'github.com',
+                                            tabs: [
+                                                {
+                                                    title: 'Intelligent Workspace · Pull requests',
+                                                    fav: 'fav-gh',
+                                                    active: true,
+                                                },
+                                                {
+                                                    title: 'genkipool/workspace · Actions',
+                                                    fav: 'fav-gh',
+                                                    seen: true,
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            domain: 'jira.atlassian.net',
+                                            tabs: [
+                                                { title: 'IW-214 · Panel de actividad web', fav: 'fav-ji' },
+                                            ],
+                                        },
+                                    ],
+                                },
+                                {
+                                    name: t('hero.m3.g2'),
+                                    color: 'c-cyan',
+                                    count: '4/4',
+                                    allSeen: true,
+                                    tabs: [
+                                        { title: 'Routing · Astro Docs', fav: 'fav-as', seen: true },
+                                        { title: 'Server islands · Astro Docs', fav: 'fav-as', seen: true },
+                                    ],
+                                },
+                                {
+                                    name: t('hero.m3.g3'),
+                                    color: 'c-purple',
+                                    count: '0/2',
+                                    tabs: [{ title: 'Landing · panel lateral', fav: 'fav-fg' }],
+                                },
+                            ]}
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- The cue that there is more below. A link rather than an icon on its own, so it
-         works for the keyboard and says what it does. -->
-    <a class="scroll-cue" href="#what">
-        <span>{t('hero.scroll')}</span>
-        <span class="chev" aria-hidden="true"></span>
-    </a>
 </section>
 
+<script>
+    function initHeroCarousel() {
+        const root = document.getElementById('hero-carousel-root');
+        if (!root) return;
+
+        const heroSection = document.getElementById('hero');
+        const slides = root.querySelectorAll<HTMLElement>('.hero-slide-item');
+        const panels = root.querySelectorAll<HTMLElement>('.mockup-panel');
+        const indicators = root.querySelectorAll<HTMLElement>('.indicator-track');
+        const prevBtn = document.getElementById('hero-prev-btn');
+        const nextBtn = document.getElementById('hero-next-btn');
+
+        if (slides.length === 0) return;
+
+        let currentIndex = 0;
+        let autoplayTimer: ReturnType<typeof setInterval> | null = null;
+        let isHeroVisible = false;
+        let isUserHovering = false;
+        const DURATION = 6000;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function goToSlide(index: number) {
+            currentIndex = (index + slides.length) % slides.length;
+
+            slides.forEach((s, idx) => {
+                s.classList.toggle('active', idx === currentIndex);
+            });
+
+            panels.forEach((p, idx) => {
+                p.classList.toggle('active', idx === currentIndex);
+            });
+
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentIndex);
+                const fill = ind.querySelector<HTMLElement>('.indicator-fill');
+                if (fill) {
+                    fill.style.animation = 'none';
+                    if (idx === currentIndex && isHeroVisible && !isUserHovering && !prefersReducedMotion) {
+                        void fill.offsetHeight; // trigger reflow safely
+                        fill.style.animation = `heroProgress ${DURATION}ms linear forwards`;
+                    }
+                }
+            });
+        }
+
+        function startAutoplay() {
+            stopAutoplay();
+            if (
+                prefersReducedMotion ||
+                !isHeroVisible ||
+                isUserHovering ||
+                document.visibilityState === 'hidden'
+            ) {
+                return;
+            }
+            const activeFill = indicators[currentIndex]?.querySelector<HTMLElement>('.indicator-fill');
+            if (activeFill) {
+                activeFill.style.animation = 'none';
+                void activeFill.offsetHeight;
+                activeFill.style.animation = `heroProgress ${DURATION}ms linear forwards`;
+            }
+            autoplayTimer = setInterval(() => {
+                if (isHeroVisible && !isUserHovering && document.visibilityState === 'visible') {
+                    goToSlide(currentIndex + 1);
+                }
+            }, DURATION);
+        }
+
+        function stopAutoplay() {
+            if (autoplayTimer) {
+                clearInterval(autoplayTimer);
+                autoplayTimer = null;
+            }
+            // Clear running animation fills
+            indicators.forEach((ind) => {
+                const fill = ind.querySelector<HTMLElement>('.indicator-fill');
+                if (fill) {
+                    fill.style.animation = 'none';
+                }
+            });
+        }
+
+        prevBtn?.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+            if (isHeroVisible && !isUserHovering) startAutoplay();
+        });
+
+        nextBtn?.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+            if (isHeroVisible && !isUserHovering) startAutoplay();
+        });
+
+        indicators.forEach((ind) => {
+            ind.addEventListener('click', () => {
+                const target = parseInt(ind.getAttribute('data-slide-target') || '0', 10);
+                goToSlide(target);
+                if (isHeroVisible && !isUserHovering) startAutoplay();
+            });
+        });
+
+        root.addEventListener('mouseenter', () => {
+            isUserHovering = true;
+            stopAutoplay();
+        });
+
+        root.addEventListener('mouseleave', () => {
+            isUserHovering = false;
+            if (isHeroVisible) startAutoplay();
+        });
+
+        // Pause when tab is in background, resume when focused
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && isHeroVisible) {
+                startAutoplay();
+            } else {
+                stopAutoplay();
+            }
+        });
+
+        // IntersectionObserver: ONLY run carousel when Hero is visible in the viewport!
+        if (heroSection && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting) {
+                            isHeroVisible = true;
+                            startAutoplay();
+                        } else {
+                            isHeroVisible = false;
+                            stopAutoplay();
+                        }
+                    }
+                },
+                { threshold: 0.15 },
+            );
+            observer.observe(heroSection);
+        } else {
+            isHeroVisible = true;
+            startAutoplay();
+        }
+
+        goToSlide(0);
+    }
+
+    initHeroCarousel();
+    document.addEventListener('astro:page-load', initHeroCarousel);
+</script>
+
 <style>
-    .hero {
-        /* The nav sits above this inside the same band, so the hero claims the rest of
-           the screen rather than a whole one of its own. */
-        min-height: calc(100svh - var(--nav-height, 76px));
+    .hero-section {
+        min-height: clamp(640px, 80vh, 900px);
+        display: flex;
+        align-items: center;
+        padding-top: clamp(48px, 6vw, 88px);
+        padding-bottom: clamp(56px, 7vw, 100px);
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1.12fr 1fr;
+        gap: clamp(40px, 5vw, 80px);
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-content {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        padding-block: clamp(20px, 4svh, 56px) clamp(48px, 8svh, 90px);
+        align-items: flex-start;
+        text-align: left;
+        gap: 24px;
         position: relative;
     }
 
-    .hero-inner {
+    /* ── Hero Slides Container (Stacked Grid for Zero Layout Shift) ── */
+    .hero-slides-wrapper {
+        display: grid;
+        grid-template-areas: 'slide';
+        position: relative;
+        min-height: 280px;
+        width: 100%;
+    }
+
+    .hero-slide-item {
+        grid-area: slide;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: clamp(12px, 1.8svh, 24px);
+        align-items: flex-start;
+        gap: 16px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.35s ease,
+            visibility 0.35s ease;
     }
 
-    .mark {
-        width: clamp(52px, 7svh, 88px);
-        height: auto;
+    .hero-slide-item.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
-    .eyebrow {
+    .hero-slide-badge {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        font-size: clamp(0.68rem, 1.4svh, 0.76rem);
-        font-weight: 560;
-        letter-spacing: 0.14em;
+        gap: 8px;
+        padding: 5px 14px;
+        border-radius: var(--radius-full);
+        background: rgba(22, 160, 133, 0.12);
+        border: 1px solid rgba(22, 160, 133, 0.3);
+        color: var(--action-color);
+        font-size: 0.8rem;
+        font-weight: 700;
         text-transform: uppercase;
-        color: var(--band-soft);
+        letter-spacing: 0.06em;
     }
 
-    .dot {
-        width: 5px;
-        height: 5px;
+    :root[data-theme='light'] .hero-slide-badge {
+        background: #eaf3ee;
+        border: 1px solid #c0d8ce;
+        color: var(--header-color);
+    }
+
+    .badge-dot {
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: var(--accent);
+        background: var(--action-color);
     }
 
-    .sep {
-        opacity: 0.45;
+    .hero-title {
+        font-size: clamp(2.4rem, 4vw, 3.8rem);
+        line-height: 1.12;
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        max-width: 780px;
+        color: var(--text-color);
     }
 
-    h1 {
-        /* 18ch is narrower than the shortest headline either language would sensibly
-           carry, so this can only ever break to two lines — never three. */
-        font-size: clamp(38px, min(7.4vw, 9.4svh), 84px);
-        font-weight: 250;
-        letter-spacing: -0.042em;
-        line-height: 1.02;
-        max-width: 18ch;
-        color: var(--band-ink);
+    .hero-lede {
+        font-size: clamp(1.05rem, 1.25vw, 1.22rem);
+        color: var(--text-soft);
+        line-height: 1.65;
+        max-width: 660px;
     }
 
-    .lede {
-        font-size: clamp(16px, min(1.5vw, 2.4svh), 20px);
-        font-weight: 350;
-        line-height: 1.5;
-        color: var(--band-soft);
-        max-width: 54ch;
-    }
-
-    .actions {
+    .hero-ctas {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
-        gap: clamp(12px, 2.2vw, 26px);
-        padding-block-start: clamp(4px, 1svh, 14px);
+        gap: 16px;
+        margin-top: 4px;
     }
 
-    .link-cta {
+    .hero-btn-main,
+    .hero-btn-sub {
+        min-width: 200px;
+        min-height: 50px;
+        font-size: 1.02rem;
+    }
+
+    /* ── Carousel Progress Navigation ── */
+    .carousel-nav-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .carousel-arrow-btn {
         display: inline-flex;
         align-items: center;
-        gap: 9px;
-        font-size: 0.95rem;
-        font-weight: 480;
-        color: var(--band-ink);
-        text-decoration: none;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
 
-    .link-cta .arrow {
-        transition: transform 0.18s ease;
+    :root[data-theme='light'] .carousel-arrow-btn {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
     }
 
-    .link-cta:hover .arrow {
-        transform: translateX(5px);
+    .carousel-arrow-btn:hover {
+        border-color: var(--action-color);
+        color: var(--action-color);
+        box-shadow: 0 0 12px rgba(22, 160, 133, 0.2);
     }
 
-    /* ── Scroll cue ─────────────────────────────────────────────── */
-
-    .scroll-cue {
-        position: absolute;
-        inset-inline: 0;
-        inset-block-end: clamp(16px, 3svh, 34px);
-        margin-inline: auto;
-        width: fit-content;
-        display: inline-flex;
-        flex-direction: column;
+    .carousel-indicators {
+        display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 0.72rem;
-        font-weight: 560;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--band-soft);
-        text-decoration: none;
-        opacity: 0.75;
-        transition: opacity 0.2s ease;
     }
 
-    .scroll-cue:hover {
+    .indicator-track {
+        width: 52px;
+        height: 4px;
+        border-radius: var(--radius-full);
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+    }
+
+    :root[data-theme='light'] .indicator-track {
+        background: rgba(11, 28, 21, 0.12);
+    }
+
+    .indicator-fill {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: var(--action-color);
+        border-radius: var(--radius-full);
+    }
+
+    @keyframes heroProgress {
+        from {
+            width: 0%;
+        }
+        to {
+            width: 100%;
+        }
+    }
+
+    /* ── Right Showcase Window Frame ── */
+    .hero-media-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /*
+     * The stage the shots sit on. It is deliberately not a window: no title bar, no
+     * traffic lights, no address bar. The extension's own chrome is the subject, and
+     * wrapping it in a second, invented one only competes with it.
+     */
+    .shot-stage {
+        position: relative;
+        width: 100%;
+        display: grid;
+        grid-template-areas: 'panel';
+        align-items: center;
+        min-height: 560px;
+    }
+
+    /*
+     * A side panel is a column a few hundred pixels wide and the shots keep that
+     * shape, so they are centred rather than stretched: a group list blown up to
+     * the width of this column would not be the group list any more.
+     */
+    /*
+     * Both the rules page and the group list open in the side panel, which is a
+     * column a few hundred pixels wide; blown up to the width of this one they would
+     * stop looking like what they are. The cap is on a wrapper this component owns,
+     * because Astro scopes a descendant selector to its last compound and `.iw-shot`
+     * is rendered by another component, so `.mockup-panel .iw-shot` would never match.
+     */
+    .panel-frame {
+        width: min(430px, 100%);
+        margin: 0 auto;
+    }
+
+    /* The omnibar is not a panel: it opens across the page, so it takes the width. */
+    .mockup-panel .iw-omni {
+        width: 100%;
+    }
+
+    .mockup-panel {
+        grid-area: panel;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 14px;
+        width: 100%;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .mockup-panel.active {
         opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
-    .chev {
-        width: 8px;
-        height: 8px;
-        border-right: 1.5px solid currentColor;
-        border-bottom: 1.5px solid currentColor;
-        transform: rotate(45deg);
-        animation: nudge 2.4s ease-in-out infinite;
+    /* ── Favicon stand-ins ──
+       The panel fetches real favicons from Chrome's own store, which a web page
+       cannot reach; these are flat swatches in the same 16px square. */
+
+    /* ── Screen 3: the views the side panel switches between ── */
+    .view-switcher-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
     }
 
-    @keyframes nudge {
-        0%,
-        100% {
-            transform: rotate(45deg) translate(0, 0);
-        }
-        50% {
-            transform: rotate(45deg) translate(3px, 3px);
-        }
+    .view-chip {
+        padding: 7px 6px;
+        border-radius: 6px;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #f5f5f5;
+        background: #233240;
+        border: 1px solid #34495e;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
-    /* A short viewport — a laptop in landscape — has no room for the cue, and the hero
-       is already the whole screen. Hiding it is better than letting it collide. */
-    @media (max-height: 620px) {
-        .scroll-cue {
-            display: none;
-        }
+    /* The pinned view, marked the way the panel marks its own active control. */
+    .view-chip.active {
+        color: #16a085;
+        border-color: #16a085;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-        .chev {
-            animation: none;
+    /* ── The row of page keys under the omnibar ── */
+    .hints-preview-bar {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        padding: 12px 14px;
+        border-radius: var(--radius-sm);
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+    }
+
+    :root[data-theme='light'] .hints-preview-bar {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+    }
+
+    .hint-demo-label {
+        font-size: 0.68rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .hint-demo-label {
+        color: var(--header-color);
+    }
+
+    .hint-demo-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.78rem;
+        color: var(--text-soft);
+    }
+
+    @media (max-width: 1080px) {
+        .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 44px;
         }
 
-        .link-cta .arrow,
-        .link-cta:hover .arrow {
-            transition: none;
-            transform: none;
+        .hero-content {
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-slides-wrapper {
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-slide-item {
+            align-items: center;
+        }
+
+        .hero-title {
+            max-width: 100%;
+        }
+
+        .hero-ctas {
+            justify-content: center;
         }
     }
 </style>

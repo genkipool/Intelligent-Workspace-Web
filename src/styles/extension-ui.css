@@ -1,0 +1,1661 @@
+/**
+ * THE EXTENSION'S OWN INTERFACE, REBUILT FOR THE PAGE.
+ *
+ * Every product shot on this site is drawn with these classes rather than with
+ * something that merely resembles them. The rules below were transcribed from the
+ * extension at /home/lrb85/proyectos/intelligent_workspace/Intelligent_Tab_Group_Svelte:
+ *
+ *   tokens .......... src/styles/themes.css              (`[data-theme='viridian']`)
+ *   group colours ... src/ui/services/constants.js       (`darkThemeColors`)
+ *   panel chrome .... src/ui/components/common/SidePanelHeader.svelte
+ *                     src/ui/components/common/SearchAndControls.svelte
+ *                     src/ui/pages/listGroup/listGroup.css  (.header, .search-input, .control-btn)
+ *   group list ...... src/ui/components/listGroup/GroupCard.svelte + TabItem.svelte
+ *                     src/ui/pages/listGroup/listGroup.css  (.group-item … .tab-title)
+ *   omnibar ......... src/utils/hint/omnibar.js + src/styles/hint_content.css
+ *   web activity .... src/ui/pages/web-activity/panel/{ActivityPanel,PanelSite}.svelte
+ *                     src/ui/pages/web-activity/webActivity.css
+ *
+ * Class names, nesting and numbers are the extension's. If a shot needs a control
+ * the extension does not have, the answer is to change the shot.
+ *
+ * WHY IT IS ALWAYS VIRIDIAN, EVEN IN LIGHT MODE. Viridian is the theme the
+ * extension ships with: `src/utils/theme.js` falls back to it and nothing else , 
+ * so this is what a screenshot of it looks like. The page's "no dark containers in
+ * light mode" rule is about the page's own chrome; a photograph of a dark
+ * application is not the page going dark.
+ */
+
+.iw-shot {
+    /* The extension's Viridian palette, verbatim. */
+    --iw-header: #0e6655;
+    --iw-bg: #1b2631;
+    --iw-panel: #233240;
+    --iw-border: #34495e;
+    --iw-text: #f5f5f5;
+    --iw-accent: #16a085;
+    --iw-error: #e74c3c;
+    --iw-dim: #93a4b3;
+    --iw-radius: 6px;
+    --iw-mono: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+    display: flex;
+    flex-direction: column;
+    background: var(--iw-bg);
+    border: 1px solid var(--iw-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    color: var(--iw-text);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.34);
+    /*
+     * The panel's own text sizes are absolute, so the shot must not inherit the
+     * page's rem scale or every number below drifts. Fifteen rather than the
+     * browser's fourteen: a side panel is read at arm's length inside the browser
+     * and this page shows it at a distance, so everything is scaled up a step
+     * without changing what any of it is.
+     */
+    font-size: 15px;
+    line-height: 1.45;
+}
+
+:root[data-theme='light'] .iw-shot {
+    box-shadow: 0 12px 34px rgba(11, 28, 21, 0.14);
+}
+
+/* ── The bar at the top of every side-panel page ── */
+
+.iw-shot .header {
+    background-color: var(--iw-header);
+    color: var(--iw-text);
+    padding: 10px 12px 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--iw-border);
+    flex-shrink: 0;
+    text-align: left;
+    gap: 8px;
+}
+
+.iw-shot .header-main-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--iw-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-shot .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* The controls are a touch bigger and a touch further apart than in the panel: the
+   row holds eight of them and they have to stay separable at this distance. The
+   button is also the badge's containing block, as it is in the extension. */
+.iw-shot .control-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--iw-text);
+    opacity: 0.75;
+    flex-shrink: 0;
+}
+
+.iw-shot .control-btn.flip svg {
+    transform: scale(-1, 1);
+}
+
+.iw-shot .control-btn.is-on {
+    opacity: 1;
+    color: var(--iw-accent);
+}
+
+/* ── The search row under it ── */
+
+/* `SearchAndControls.svelte`: the field on the left, the controls on the right, one
+   centre line. The padding is the page's rather than the panel's, so the row does
+   not run into the edge of the shot. */
+.iw-shot .itg-search-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.iw-shot .search-container {
+    flex: 1;
+    min-width: 150px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+
+.iw-shot .search-input {
+    width: 100%;
+    padding: 9px 12px 9px 34px;
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    border-radius: var(--iw-radius);
+    color: var(--iw-dim);
+    font-size: 0.88rem;
+    /* The magnifier is a background image on the field itself, exactly as in
+       `listGroup.css`: not a sibling icon element. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23808080' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-shot .itg-search-row-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* When the search row only contains controls, stretch them to occupy 100% of the width */
+.iw-shot .itg-search-row > .itg-search-row-controls:only-child {
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
+}
+
+.iw-shot .itg-search-row > .itg-search-row-controls:only-child .control-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    max-width: 40px;
+}
+
+/* The counter rides the top right corner of its button, as it does in the panel. */
+.iw-shot .duplicate-badge {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--iw-error);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ── The body every panel scrolls ── */
+
+.iw-shot .iw-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 12px 12px;
+    background: var(--iw-bg);
+}
+
+/* ── The group list ── */
+
+.iw-shot .group-item {
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    border-radius: var(--iw-radius);
+}
+
+.iw-shot .group-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    gap: 6px;
+    border-bottom: 2px solid var(--iw-border);
+}
+
+.iw-shot .color-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid var(--iw-border);
+}
+
+/* Chrome's own tab-group colours, in the dark set the Viridian theme uses. */
+.iw-shot .c-blue {
+    background: #8ab4f8;
+}
+.iw-shot .c-red {
+    background: #f28b82;
+}
+.iw-shot .c-yellow {
+    background: #fdd663;
+}
+.iw-shot .c-green {
+    background: #81c995;
+}
+.iw-shot .c-pink {
+    background: #ff8bcb;
+}
+.iw-shot .c-purple {
+    background: #c58af9;
+}
+.iw-shot .c-cyan {
+    background: #78d9ec;
+}
+.iw-shot .c-orange {
+    background: #fcad70;
+}
+.iw-shot .c-grey {
+    background: #dadce0;
+}
+
+.iw-shot .group-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--iw-text);
+}
+
+.iw-shot .group-tab-count {
+    font-size: 0.8rem;
+    background-color: var(--iw-bg);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--iw-text);
+    flex-shrink: 0;
+}
+
+.iw-shot .group-tab-count.all-seen {
+    color: var(--iw-accent);
+    font-weight: 700;
+}
+
+.iw-shot .group-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.iw-shot .group-actions .action-btn {
+    display: inline-flex;
+    color: var(--iw-text);
+    opacity: 0.6;
+}
+
+.iw-shot .tab-list-container {
+    padding: 4px 8px;
+}
+
+.iw-shot .tab-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px;
+    border-radius: 4px;
+    gap: 6px;
+}
+
+.iw-shot .tab-item.active {
+    background-color: var(--iw-bg);
+}
+
+.iw-shot .favicon {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.iw-shot .tab-title {
+    flex-grow: 1;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    padding: 0 2px;
+    color: var(--iw-text);
+}
+
+.iw-shot .tab-item.active .tab-title {
+    color: var(--iw-accent);
+    font-weight: 700;
+}
+
+.iw-shot .tab-item.seen .tab-title {
+    color: var(--iw-accent);
+    opacity: 0.7;
+}
+
+.iw-shot .subgroup-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 4px;
+    font-size: 0.78rem;
+    color: var(--iw-dim);
+}
+
+/* ── The floating omnibar ── */
+
+.iw-omni {
+    --iw-panel: #233240;
+    --iw-border: #34495e;
+    --iw-text: #f5f5f5;
+    --iw-accent: #16a085;
+    --iw-mono: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: var(--iw-text);
+    font-size: 14px;
+}
+
+:root[data-theme='light'] .iw-omni {
+    box-shadow: 0 10px 28px rgba(11, 28, 21, 0.18);
+}
+
+.iw-omni .hint-omni-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.iw-omni .hint-omni-input {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 18px;
+    font-size: 16px;
+    font-family: var(--iw-mono);
+    color: var(--iw-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* The caret the input paints, in the accent colour `hint_content.css` gives it. */
+.iw-omni .hint-omni-caret {
+    display: inline-block;
+    width: 1px;
+    height: 18px;
+    margin-left: 1px;
+    vertical-align: -3px;
+    background: var(--iw-accent);
+    animation: iwCaret 1.05s steps(1) infinite;
+}
+
+@keyframes iwCaret {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .iw-omni .hint-omni-caret {
+        animation: none;
+    }
+}
+
+.iw-omni .hint-omni-counter {
+    margin-right: 18px;
+    font-family: var(--iw-mono);
+    font-size: 12px;
+    color: var(--iw-accent);
+    opacity: 0.8;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.iw-omni .hint-omni-regex-btn {
+    font-family: var(--iw-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--iw-text);
+    opacity: 0.5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-right: 8px;
+    background: transparent;
+}
+
+.iw-omni .hint-omni-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.iw-omni .hint-omni-result-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 18px;
+}
+
+/* The whole row goes accent-coloured when it is the one Enter would run. */
+.iw-omni .hint-omni-result-item.selected {
+    background-color: var(--iw-accent);
+}
+
+.iw-omni .hint-omni-favicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.iw-omni .hint-omni-text-container {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.iw-omni .hint-omni-title {
+    color: var(--iw-text);
+    font-size: 16px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-omni .hint-omni-url {
+    color: var(--iw-accent);
+    opacity: 0.7;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-omni .hint-omni-result-item.selected .hint-omni-title,
+.iw-omni .hint-omni-result-item.selected .hint-omni-url {
+    color: var(--iw-text);
+    opacity: 1;
+}
+
+/* ── The letter labels the hint engine draws on a page ── */
+/* `.hint-hint` in hint_content.css: page background, a border, and an accent glow. */
+
+.iw-hint-marker {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background-color: #1b2631;
+    color: #f5f5f5;
+    border: 1px solid #34495e;
+    box-shadow: 0 0 8px #16a085;
+    font-family: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* ── One item of a list view: bookmarks, history, downloads, recently closed ──
+   `GenericItem.svelte` reuses `.tab-item` and adds a two-line info block. */
+
+.iw-shot .generic-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px;
+    border-radius: 4px;
+    gap: 6px;
+}
+
+.iw-shot .item-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+.iw-shot .item-title {
+    font-size: 0.8rem;
+    color: var(--iw-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-shot .item-url {
+    font-size: 0.72rem;
+    color: var(--iw-accent);
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── The web activity panel ──
+   `PanelSite.svelte`: a box per site, a header that stays when it is folded, then
+   the figures and one row per part of the rule. */
+
+.iw-shot .wa-panel-box {
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.iw-shot .wa-panel-box.is-blocked {
+    border-color: var(--iw-error);
+}
+
+.iw-shot .wa-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 9px 10px;
+}
+
+.iw-shot .wa-panel-box.is-open .wa-panel-head {
+    border-bottom: 2px solid var(--iw-border);
+}
+
+.iw-shot .wa-panel-domain {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.92rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.iw-shot .wa-panel-time {
+    flex-shrink: 0;
+    font-family: var(--iw-mono);
+    font-size: 0.86rem;
+    color: var(--iw-accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.iw-shot .wa-badge-blocked {
+    flex-shrink: 1;
+    min-width: 0;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 6px;
+    border-radius: 999px;
+    color: #ffd9d4;
+    background: rgba(231, 76, 60, 0.22);
+    border: 1px solid rgba(231, 76, 60, 0.55);
+    white-space: nowrap;
+}
+
+.iw-shot .wa-panel-figures {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+    padding: 9px 10px;
+    border-bottom: 1px solid rgba(52, 73, 94, 0.6);
+}
+
+.iw-shot .wa-panel-figure {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    min-width: 0;
+}
+
+.iw-shot .wa-panel-figure-label,
+.iw-shot .wa-panel-row-label {
+    font-family: var(--iw-mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--iw-dim);
+}
+
+.iw-shot .wa-panel-figure-val,
+.iw-shot .wa-panel-row-val {
+    font-family: var(--iw-mono);
+    font-size: 0.86rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.iw-shot .wa-panel-row {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 46px auto;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+}
+
+.iw-shot .wa-panel-row + .wa-panel-row {
+    border-top: 1px solid rgba(52, 73, 94, 0.6);
+}
+
+/* The hours row has no share beside it, so its value takes both tracks: which is
+   what puts it in the middle of the row rather than off to the left. */
+.iw-shot .wa-panel-row-val-center {
+    grid-column: 2 / 4;
+    text-align: center;
+}
+
+.iw-shot .wa-panel-row-pct {
+    font-family: var(--iw-mono);
+    font-size: 0.78rem;
+    color: var(--iw-accent);
+    text-align: right;
+}
+
+.iw-shot .wa-row-controls {
+    display: inline-flex;
+    gap: 5px;
+    color: var(--iw-text);
+}
+
+.iw-shot .wa-row-controls svg {
+    opacity: 0.6;
+}
+
+/* ── The read-aloud player ──
+   `read-aloud.css`: a 50px column of round buttons pinned to the right edge of the
+   viewport. Every glyph is stroked at 1.9 except play, which is the one solid
+   shape; the play/pause control is the only button that is bigger than the rest and
+   carries a 22% tint of the interactive colour. */
+
+.iw-reader-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 7px 4px;
+    width: 50px;
+    border-radius: 14px;
+    background-color: #233240;
+    border: 1px solid #34495e;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    color: #f5f5f5;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.iw-reader-panel .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    flex: none;
+}
+
+.iw-reader-panel .btn svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Play is the one solid triangle; everything else is drawn with strokes. */
+.iw-reader-panel .btn.is-play svg {
+    fill: currentColor;
+    stroke: none;
+}
+
+.iw-reader-panel .btn.toggle {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(22, 160, 133, 0.22);
+}
+
+.iw-reader-panel .btn.toggle svg {
+    width: 19px;
+    height: 19px;
+}
+
+.iw-reader-panel .progress {
+    padding: 1px 0;
+    font-size: 9.5px;
+    letter-spacing: -0.2px;
+    opacity: 0.75;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.iw-reader-panel .speed {
+    font-size: 10px;
+    opacity: 0.85;
+}
+
+.iw-reader-panel .separator {
+    width: 60%;
+    height: 1px;
+    margin: 2px 0;
+    background-color: #34495e;
+}
+
+/* The two page highlights: the paragraph at the action colour and 0.3 alpha, the
+   word at the interactive colour and 0.8, with ink light enough to read on it. */
+.iw-mark-paragraph {
+    background-color: rgba(22, 160, 133, 0.3);
+}
+
+.iw-mark-word {
+    background-color: rgba(22, 160, 133, 0.8);
+    color: #ffffff;
+}
+
+/* ── One exchange with the assistant ──
+   `content-renderer.css` for the card, `GeminiEntry.svelte` for the agent steps.
+   The question is the card's heading, in the accent colour; the steps the agent
+   ran sit between it and the answer. */
+
+.iw-shot .entry-card {
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    border-radius: var(--iw-radius);
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.iw-shot .entry-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--iw-border);
+}
+
+.iw-shot .entry-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.iw-shot .entry-icon-agent {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: var(--iw-accent);
+    opacity: 0.9;
+}
+
+.iw-shot .entry-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--iw-text);
+}
+
+.iw-shot .entry-actions svg {
+    opacity: 0.4;
+}
+
+.iw-shot .entry-title {
+    margin: 0;
+    color: var(--iw-accent);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    overflow-wrap: break-word;
+}
+
+.iw-shot .agent-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px 0 8px;
+    border-bottom: 1px solid var(--iw-border);
+}
+
+.iw-shot .agent-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    opacity: 0.9;
+    background-color: rgba(22, 160, 133, 0.1);
+    border-left: 3px solid var(--iw-accent);
+}
+
+/* A step that finished turns green: `--success-color`, which defaults to #4caf50. */
+.iw-shot .agent-step-indicator.agent-step-done {
+    border-left-color: #4caf50;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.iw-shot .agent-step-icon {
+    font-size: 1em;
+}
+
+.iw-shot .entry-content {
+    font-size: 0.95rem;
+    padding-top: 10px;
+    color: var(--iw-text);
+}
+
+/* ── The floating picture-in-picture player ──
+   `videoPipUi.js` injects this into the PiP document: a gradient bar over the
+   bottom of the video, a progress track whose played part takes the interactive
+   colour, and a row of 34px transparent buttons. */
+
+.iw-pip {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme='light'] .iw-pip {
+    box-shadow: 0 14px 38px rgba(11, 28, 21, 0.18);
+}
+
+.iw-pip .itg-pip-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 24px 8px 4px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+}
+
+.iw-pip .itg-pip-progress {
+    padding: 8px 4px;
+    margin-bottom: 2px;
+}
+
+.iw-pip .itg-pip-progress-track {
+    position: relative;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.iw-pip .itg-pip-buffered,
+.iw-pip .itg-pip-played {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 2px;
+}
+
+.iw-pip .itg-pip-buffered {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* `--interactive-color`, which in the theme the extension ships with is Viridian. */
+.iw-pip .itg-pip-played {
+    background: #16a085;
+}
+
+.iw-pip .itg-pip-knob {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    border-radius: 50%;
+    background: #16a085;
+}
+
+.iw-pip .itg-pip-buttons {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 2px 2px;
+}
+
+.iw-pip .itg-pip-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 6px;
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.iw-pip .itg-pip-btn.is-on {
+    color: #16a085;
+    opacity: 1;
+}
+
+.iw-pip .itg-pip-btn svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.iw-pip .itg-pip-rate {
+    flex: 0 0 44px;
+    width: 44px;
+    padding: 6px 2px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.iw-pip .itg-pip-time {
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.9;
+    padding: 0 6px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.iw-pip .itg-pip-spacer {
+    flex: 1 1 auto;
+}
+
+/* ── The rules manager, in the side panel ──
+   `RulesToolbar.svelte` + `RuleCard.svelte` + `RulesFooter.svelte`, styled from the
+   `@media (width <= 600px)` half of `rules.css`, which is the layout the panel
+   actually uses. A rule is a card on the panel background with a border in the
+   interactive colour, a grid of name / actions / URLs, and no star, drag handle or
+   collapse chevron: that media query hides all three.
+
+   The sizes are a little larger than the extension's own. A side panel is read at
+   arm's length inside the browser; this page shows the same panel at a distance, in
+   a column of its own, so the type and the controls are scaled up to stay legible
+   without changing what any of it is. */
+
+/* Four buttons that share the width, in the action colour, icon only: at panel
+   width `.button-text` is in the media query's `display: none` list. */
+.iw-rules .rules-action-buttons {
+    display: flex;
+    gap: 10px;
+    padding: 10px 10px 0;
+}
+
+.iw-rules .action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 34px;
+    border-radius: var(--iw-radius);
+    background-color: var(--iw-accent);
+    color: var(--iw-text);
+    border: none;
+}
+
+.iw-rules .rules-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px 8px;
+}
+
+.iw-rules .rules-title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--iw-text);
+}
+
+.iw-rules .rules-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.iw-rules .button-rules-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: var(--iw-text);
+    opacity: 0.45;
+}
+
+/* ── The four switches the toolbar keeps beside the search field ── */
+
+.iw-rules .rules-settings {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    padding: 2px 14px 12px;
+    border-bottom: 1px solid var(--iw-border);
+}
+
+.iw-rules .setting-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.iw-rules .setting-label {
+    font-size: 0.76rem;
+    color: var(--iw-dim);
+}
+
+/* The extension's own switch: a track that slides between the action colour and the
+   page background, with a round handle carrying a small accent light. */
+.iw-rules .slider {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 46px;
+    height: 22px;
+    padding: 2px;
+    border-radius: 22px;
+    border: 1px solid var(--iw-border);
+    background: linear-gradient(to right, var(--iw-accent) 50%, var(--iw-bg) 50%);
+    background-size: 205% 105%;
+    background-position: 100% 0;
+    flex-shrink: 0;
+}
+
+.iw-rules .slider.on {
+    background-position: 0 0;
+}
+
+.iw-rules .switch-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--iw-border);
+    background-color: var(--iw-panel);
+}
+
+.iw-rules .slider.on .switch-handle {
+    transform: translateX(24px);
+}
+
+.iw-rules .switch-light {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--iw-accent);
+}
+
+.iw-rules .switch-text {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    transform: translateY(-50%);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--iw-text);
+}
+
+.iw-rules .slider.on .switch-text {
+    right: auto;
+    left: 7px;
+    color: #fff;
+}
+
+/* ── The list ── */
+
+.iw-rules .rules-list {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0;
+}
+
+.iw-rules .rule-item {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-areas:
+        'info info info info info actions actions actions actions'
+        'urls urls urls urls urls urls urls urls urls';
+    align-items: center;
+    background: var(--iw-panel);
+    border: 1px solid var(--iw-accent);
+    border-radius: var(--iw-radius);
+    margin: 7px 10px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+}
+
+.iw-rules .rule-info {
+    grid-area: info;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.iw-rules .rule-name {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--iw-mono);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--iw-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.iw-rules .rule-actions {
+    grid-area: actions;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.iw-rules .rule-actions .rule-actions-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: default;
+}
+
+.iw-rules .svg-edit,
+.iw-rules .svg-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    color: var(--iw-accent);
+    opacity: 0.85;
+    flex-shrink: 0;
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.iw-rules .svg-delete {
+    color: var(--iw-accent);
+}
+
+.iw-rules .svg-edit:hover {
+    color: var(--iw-text);
+    opacity: 1;
+}
+
+.iw-rules .svg-delete:hover {
+    color: var(--iw-error);
+    opacity: 1;
+}
+
+/* The compact SVG toggle button for the side panel layout (strictly 1:1 square) */
+.iw-rules .svg-toggle-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: var(--iw-panel);
+    border: 1px solid var(--iw-border);
+    cursor: default;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.iw-rules .svg-toggle-button .svg-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.iw-rules .svg-toggle-button .svg-toggle-text {
+    font-size: 11px;
+    font-family: var(--iw-mono);
+    font-weight: 700;
+    fill: var(--iw-dim);
+}
+
+.iw-rules .svg-toggle-button.is-on {
+    background-color: var(--iw-bg);
+    border-color: var(--iw-bg);
+    box-shadow: 0 0 10px 1.5px var(--iw-accent);
+}
+
+.iw-rules .svg-toggle-button.is-on .svg-toggle-text {
+    fill: var(--iw-accent);
+}
+
+.iw-rules .rule-urls-container {
+    grid-area: urls;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 9px 0 2px;
+    line-height: 1;
+}
+
+.iw-rules .rule-urls {
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--iw-bg);
+    font-size: 0.74rem;
+    color: var(--iw-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* ── The footer, with the nine tab-group colours in it ── */
+
+.iw-rules .rules-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 14px 12px;
+    border-top: 1px solid var(--iw-border);
+    font-size: 0.66rem;
+    color: var(--iw-text);
+    opacity: 0.7;
+}
+
+.iw-rules .color-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.iw-rules .color-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+}
+
+.iw-rules .rules-footer-note {
+    text-align: center;
+}
+
+/* ── The bookmarks view ──
+   `BookmarksView.svelte` and `bookmarks.js`: a flat scrolling list, folders as
+   `<details>` whose content is indented behind a hairline, and rows that are the
+   group list's `.tab-item` with a wider gap. */
+
+.iw-shot .bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.iw-shot .bookmark-folder-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    border-radius: 4px;
+    color: var(--iw-text);
+}
+
+.iw-shot .bookmark-folder-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.iw-shot .bookmark-folder-content {
+    padding-left: 8px;
+    margin-left: 8px;
+    border-left: 1px solid var(--iw-border);
+}
+
+.iw-shot .bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    border-radius: 4px;
+}
+
+.iw-shot .bookmark-item.is-hovered {
+    background-color: var(--iw-panel);
+}
+
+.iw-shot .bookmark-title {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 0.85rem;
+    color: var(--iw-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* The row's five actions only appear on the row being pointed at. */
+.iw-shot .bookmark-actions,
+.iw-shot .folder-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--iw-text);
+    opacity: 0.55;
+    flex-shrink: 0;
+}
+
+/* ── The $$ snippet menu ──
+   `hint-snippet-popup` in `hint_content.css`: 300px, Roboto Mono, a search field in
+   a tinted header, then the list with the trigger on the left and a preview of the
+   expansion pushed to the right. */
+
+.iw-snippet-popup {
+    width: min(320px, 100%);
+    background-color: #233240;
+    border: 1px solid #34495e;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Roboto Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: #f5f5f5;
+}
+
+.iw-snippet-popup .hint-snippet-search-container {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #34495e;
+}
+
+.iw-snippet-popup .hint-snippet-search-input {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: transparent;
+    border: 1px solid #34495e;
+    border-radius: 6px;
+    color: #f5f5f5;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.iw-snippet-popup .hint-snippet-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+}
+
+.iw-snippet-popup .hint-snippet-item.selected {
+    background-color: #16a085;
+}
+
+.iw-snippet-popup .hint-snippet-item-trigger {
+    font-weight: 700;
+    color: #16a085;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.iw-snippet-popup .hint-snippet-item.selected .hint-snippet-item-trigger {
+    color: #f5f5f5;
+}
+
+.iw-snippet-popup .hint-snippet-item-preview {
+    opacity: 0.7;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+
+/* ── Favicon stand-ins ──
+   The panel asks Chrome's favicon store for the real ones (`_favicon/?pageUrl=…`),
+   which a web page has no access to. These are flat swatches in the same 16px
+   square, so the row keeps its proportions. */
+
+.fav-gh {
+    background: #6a7b8c;
+}
+.fav-ji {
+    background: #3498db;
+}
+.fav-as {
+    background: #e74c3c;
+}
+.fav-fg {
+    background: #9b59b6;
+}
+.fav-yt {
+    background: #e74c3c;
+}
+.fav-rd {
+    background: #e67e22;
+}
+.fav-ml {
+    background: #3498db;
+}
+.fav-sp {
+    background: #1db954;
+}
+.fav-bk {
+    background: #f9ab00;
+}
+.fav-cr {
+    background: #dadce0;
+}
+.fav-old {
+    background: #6a7b8c;
+}
+.fav-mdn {
+    background: #83d0f2;
+}
+.fav-note {
+    background: #16a085;
+}
+.fav-shot {
+    background: #3498db;
+}
+.fav-ai {
+    background: #c58af9;
+}
+
+/* ── A group that has been backed up ──
+   `GroupCard.svelte` with `isBackup`: the header dims, the colour dot carries a B,
+   the tabs are dimmer, and the group's own actions give way to restore. */
+
+.iw-shot .group-item.backed-up .group-header {
+    opacity: 0.6;
+}
+
+.iw-shot .group-item.backed-up .color-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--iw-text);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.iw-shot .tab-item.backup-tab-item {
+    opacity: 0.7;
+}
+
+.iw-shot .action-btn.restore-btn {
+    color: var(--iw-accent);
+    opacity: 1;
+}
+
+/* ── The screenshot gallery ──
+   `ScreenshotGalleryView.svelte` and the `gallery-*` rules of
+   `content-renderer.css`: a grid of 16/10 cards, the title on a gradient at the
+   bottom, and round action buttons that appear on the card being pointed at. */
+
+.iw-shot .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 10px 12px 14px;
+}
+
+.iw-shot .gallery-item {
+    position: relative;
+    border-radius: var(--iw-radius);
+    overflow: hidden;
+    border: 1px solid var(--iw-border);
+    aspect-ratio: 16 / 10;
+}
+
+/* A stand-in for the capture itself: a page has no screenshot store to read. */
+.iw-shot .gallery-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background:
+        linear-gradient(115deg, rgba(22, 160, 133, 0.34), rgba(52, 152, 219, 0.26)),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 9px), #16222c;
+}
+
+.iw-shot .gallery-item-info {
+    position: absolute;
+    inset: auto 0 0 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    padding: 16px 8px 8px;
+    color: var(--iw-text);
+}
+
+.iw-shot .gallery-item-title {
+    margin: 0;
+    font-size: 0.76rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.iw-shot .gallery-action-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: var(--iw-bg);
+    color: var(--iw-text);
+}
+
+.iw-shot .gallery-pin-btn {
+    top: 6px;
+    left: 6px;
+}
+
+.iw-shot .gallery-ocr-btn {
+    top: 6px;
+    right: 6px;
+}
+
+.iw-shot .gallery-pin-btn.active {
+    color: var(--iw-accent);
+}
+
+/* ── The capture menu ──
+   The five things the capture button can do, worded as the extension words them. */
+
+.iw-shot .capture-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    border-top: 1px solid var(--iw-border);
+}
+
+.iw-shot .capture-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--iw-radius);
+    font-size: 0.82rem;
+    color: var(--iw-text);
+}
+
+.iw-shot .capture-option.active {
+    background-color: var(--iw-bg);
+    color: var(--iw-accent);
+    font-weight: 600;
+}
+
+.iw-shot .capture-option .capture-key {
+    margin-left: auto;
+    font-family: var(--iw-mono);
+    font-size: 0.7rem;
+    opacity: 0.7;
+}

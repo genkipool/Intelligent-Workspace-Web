@@ -1,0 +1,97 @@
+---
+/**
+ * The floating player: the picture-in-picture window and the controls the extension
+ * adds to it.
+ */
+import type { Lang } from '@/i18n/ui';
+import Showcase from '@/components/Showcase.astro';
+import Icon from '@/components/Icon.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'pipScreen', titleKey: 'media.f1.title', descKey: 'media.f1.desc' },
+    { icon: 'loopArrows', titleKey: 'media.f2.title', descKey: 'media.f2.desc' },
+    { icon: 'imageFrame', titleKey: 'media.f3.title', descKey: 'media.f3.desc' },
+];
+---
+
+<Showcase
+    id="multimedia"
+    lang={lang}
+    eyebrowKey="media.badge"
+    titleKey="media.title"
+    subtitleKey="media.subtitle"
+    bullets={bullets}
+>
+    <!--
+        The floating player, drawn from the markup `videoPip.js` builds and the
+        stylesheet `videoPipUi.js` injects with it: the gradient bar, the progress
+        track whose played part takes the interactive colour, and the row of 34px
+        transparent buttons. The loop button is the one this extension also adds
+        to YouTube's own control bar, and it is shown switched on.
+    -->
+    <div class="iw-pip">
+        <div class="pip-frame" aria-hidden="true">
+            <span class="pip-frame-glow"></span>
+            <!-- The player is opened from a YouTube tab in this shot, and the
+                     extension puts its own PiP and loop buttons in that player's
+                     own control bar. -->
+            <span class="pip-source"><Icon name="youtube" size={44} /></span>
+        </div>
+        <div class="itg-pip-bar">
+            <div class="itg-pip-progress">
+                <div class="itg-pip-progress-track">
+                    <div class="itg-pip-buffered" style="width: 62%"></div>
+                    <div class="itg-pip-played" style="width: 36%"></div>
+                    <div class="itg-pip-knob" style="left: 36%"></div>
+                </div>
+            </div>
+            <div class="itg-pip-buttons">
+                <span class="itg-pip-btn"><Icon name="pause" size={22} /></span>
+                <span class="itg-pip-btn"><Icon name="rewind" size={22} /></span>
+                <span class="itg-pip-btn"><Icon name="forward" size={22} /></span>
+                <span class="itg-pip-btn"><Icon name="volume" size={22} /></span>
+                <span class="itg-pip-time">18:42 / 52:10</span>
+                <span class="itg-pip-spacer"></span>
+                <span class="itg-pip-btn is-on"><Icon name="loop" size={22} /></span>
+                <span class="itg-pip-btn itg-pip-rate">1x</span>
+                <span class="itg-pip-btn"><Icon name="pip" size={22} /></span>
+                <span class="itg-pip-btn"><Icon name="moreDots" size={22} /></span>
+            </div>
+        </div>
+    </div>
+</Showcase>
+
+<style>
+    /* ── High-End PiP Floating Window Architecture ── */
+    /* The player chrome is in `src/styles/extension-ui.css`. What is left here is the
+       stand-in for the video behind it: a real frame cannot be shipped on a page. */
+    .pip-frame {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(60% 70% at 30% 30%, rgba(22, 160, 133, 0.35), transparent 70%),
+            radial-gradient(50% 60% at 75% 65%, rgba(52, 152, 219, 0.3), transparent 70%), #05090c;
+    }
+
+    .pip-frame-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(closest-side, rgba(255, 255, 255, 0.08), transparent);
+    }
+
+    .pip-source {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: inline-flex;
+        opacity: 0.9;
+    }
+</style>

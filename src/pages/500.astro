@@ -1,0 +1,23 @@
+---
+/**
+ * What Astro renders when an on-demand route throws. `/api/intent` is the one place
+ * that can, so this is the page a reader sees if Stripe or the key behind it fails in a
+ * way the endpoint did not expect.
+ *
+ * The language comes from the address for the same reason it does on the 404: the
+ * reader was already somewhere when this happened, and that somewhere says which
+ * language they were reading.
+ */
+import Base from '@/layouts/Base.astro';
+import ErrorPage from '@/components/ErrorPage.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+export const prerender = false;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={t('errors.server.meta')} description={t('errors.server.desc')} noindex>
+    <ErrorPage lang={lang} status="500" />
+</Base>

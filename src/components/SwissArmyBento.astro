@@ -1,0 +1,429 @@
+---
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { bentoCards, bentoCategories } from '@/data/capabilities';
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="navaja-suiza" class="section-container section-alt">
+    <div class="wrap">
+        <!-- Section Header -->
+        <SectionHeader
+            lang={lang}
+            eyebrowKey="bento.badge"
+            titleKey="bento.title"
+            subtitleKey="bento.subtitle"
+        />
+
+        <!-- Interactive Category Filters -->
+        <div class="bento-filter-bar" role="tablist" aria-label="Arsenal Category Filter" data-reveal>
+            {
+                bentoCategories.map((cat, index) => (
+                    <button
+                        type="button"
+                        class:list={['bento-filter-btn', { active: index === 0 }]}
+                        role="tab"
+                        aria-selected={index === 0 ? 'true' : 'false'}
+                        data-filter={cat.id}
+                    >
+                        {t(cat.labelKey)}
+                    </button>
+                ))
+            }
+        </div>
+
+        <!-- Bento Grid: 18 Modules -->
+        <div class="bento-grid" data-reveal>
+            {
+                bentoCards.map((card) => (
+                    <article
+                        class:list={['bento-card', card.span]}
+                        data-category={card.category}
+                        tabindex="0"
+                    >
+                        <div class="bento-card-header">
+                            <div class="bento-icon" aria-hidden="true">
+                                <Icon name={card.icon} size={22} />
+                            </div>
+                            <div class="bento-badge-group">
+                                <span class="tag-pill">{t(card.tagKey)}</span>
+                                <span class="tech-badge">{t(card.badgeKey)}</span>
+                            </div>
+                        </div>
+
+                        <div class="bento-card-body">
+                            <h3 class="bento-title">{t(card.titleKey)}</h3>
+                            <p class="bento-desc">{t(card.descKey)}</p>
+                        </div>
+
+                        <ul class="bento-highlights">
+                            {card.highlightKeys.map((hKey) => (
+                                <li>
+                                    <span class="highlight-check" aria-hidden="true">
+                                        ✓
+                                    </span>
+                                    <span>{t(hKey)}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </article>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    function initBentoFilters() {
+        const filterBtns = document.querySelectorAll<HTMLButtonElement>('.bento-filter-btn');
+        const bentoCards = document.querySelectorAll<HTMLElement>('.bento-card');
+
+        if (filterBtns.length === 0) return;
+
+        filterBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const filter = btn.getAttribute('data-filter');
+
+                filterBtns.forEach((b) => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+
+                bentoCards.forEach((card) => {
+                    const cardCat = card.getAttribute('data-category');
+                    if (filter === 'all' || cardCat === filter) {
+                        card.style.display = 'flex';
+                        card.classList.remove('is-filtered-out');
+                    } else {
+                        card.style.display = 'none';
+                        card.classList.add('is-filtered-out');
+                    }
+                });
+            });
+        });
+    }
+
+    initBentoFilters();
+    document.addEventListener('astro:page-load', initBentoFilters);
+</script>
+
+<style>
+    /* ── Category Filter Bar ── */
+    /*
+     * A segmented control, so it has to stay on one line: wrapped onto two it stops
+     * reading as one control and the active pill ends up under its neighbours. The
+     * buttons share the width instead of each taking what it wants, and below the
+     * breakpoint the bar scrolls sideways rather than folding.
+     */
+    .bento-filter-bar {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        gap: 4px;
+        flex-wrap: nowrap;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 auto clamp(28px, 4vw, 44px);
+        padding: 5px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-full);
+        box-shadow:
+            0 8px 24px -6px rgba(0, 0, 0, 0.3),
+            inset 0 1px 1px rgba(255, 255, 255, 0.06);
+    }
+
+    @media (max-width: 720px) {
+        .bento-filter-bar {
+            justify-content: flex-start;
+            overflow-x: auto;
+            scrollbar-width: none;
+            border-radius: var(--radius-md);
+        }
+
+        .bento-filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    :root[data-theme='light'] .bento-filter-bar {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 16px rgba(11, 28, 21, 0.05);
+    }
+
+    .bento-filter-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        padding: 9px 20px;
+        font-size: 0.9rem;
+        font-weight: 650;
+        letter-spacing: -0.005em;
+        border-radius: var(--radius-full);
+        background: transparent;
+        border: 1px solid transparent;
+        color: #9eb5ad;
+        cursor: pointer;
+        transition:
+            color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            background-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bento-filter-btn:focus-visible {
+        outline: none;
+        border-color: var(--action-color);
+        box-shadow: 0 0 0 3px rgba(22, 160, 133, 0.28);
+    }
+
+    :root[data-theme='light'] .bento-filter-btn {
+        color: var(--text-muted);
+    }
+
+    .bento-filter-btn:hover {
+        color: #ffffff !important;
+        background: rgba(22, 160, 133, 0.18);
+    }
+
+    :root[data-theme='light'] .bento-filter-btn:hover {
+        color: var(--text-color) !important;
+        background: #dbebe3;
+    }
+
+    .bento-filter-btn.active {
+        background: linear-gradient(135deg, #16a085 0%, #0e6655 100%) !important;
+        color: #ffffff !important;
+        box-shadow: 0 4px 14px rgba(22, 160, 133, 0.35);
+    }
+
+    .bento-filter-btn.active:hover {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%) !important;
+        color: #ffffff !important;
+    }
+
+    /* ── Responsive Bento Grid ── */
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(20px, 2.5vw, 32px);
+    }
+
+    .col-span-2 {
+        grid-column: span 2;
+    }
+
+    .col-span-1 {
+        grid-column: span 1;
+    }
+
+    /* ── Bento Card Molecule (No Bouncing Hover) ── */
+    .bento-card {
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: clamp(22px, 2.6vw, 32px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 18px;
+        position: relative;
+        overflow: hidden;
+        transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background-color 0.25s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    :root[data-theme='light'] .bento-card {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 16px rgba(11, 28, 21, 0.05);
+    }
+
+    .bento-card:hover {
+        border-color: var(--action-color);
+        box-shadow:
+            0 8px 28px rgba(0, 0, 0, 0.2),
+            0 0 20px rgba(22, 160, 133, 0.15);
+    }
+
+    :root[data-theme='light'] .bento-card:hover {
+        border-color: #16a085;
+        box-shadow:
+            0 8px 24px rgba(11, 28, 21, 0.08),
+            0 0 16px rgba(22, 160, 133, 0.12);
+    }
+
+    .bento-card:focus-visible {
+        outline: 2px solid var(--action-color);
+        outline-offset: 2px;
+    }
+
+    :root[data-theme='light'] .bento-card:focus-visible {
+        outline: 2px solid var(--header-color);
+    }
+
+    /* ── Card Header & Badges ── */
+    .bento-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .bento-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: rgba(22, 160, 133, 0.15);
+        color: var(--action-color);
+        border: 1px solid rgba(26, 188, 156, 0.3);
+        flex-shrink: 0;
+    }
+
+    :root[data-theme='light'] .bento-icon {
+        background: #eaf3ee;
+        color: var(--header-color);
+        border: 1px solid var(--border-color);
+    }
+
+    .bento-badge-group {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .tag-pill {
+        font-size: 0.72rem;
+        font-weight: 650;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+    }
+
+    :root[data-theme='light'] .tag-pill {
+        background: #eaf3ee;
+        border: 1px solid var(--border-color);
+        color: #0a5745;
+    }
+
+    .tech-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        background: rgba(22, 160, 133, 0.12);
+        color: var(--accent-bright);
+        border: 1px solid rgba(46, 204, 113, 0.25);
+    }
+
+    :root[data-theme='light'] .tech-badge {
+        background: #def0e7;
+        color: #0a5745;
+        border: 1px solid #b8dacb;
+    }
+
+    /* ── Card Body & Typography ── */
+    .bento-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .bento-title {
+        font-size: clamp(1.15rem, 1.4vw, 1.35rem);
+        font-weight: 700;
+        color: var(--text-color);
+        line-height: 1.25;
+    }
+
+    .bento-desc {
+        font-size: 0.92rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+    }
+
+    /* ── Card Highlights Checklist ── */
+    .bento-highlights {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding-top: 8px;
+        border-top: 1px dashed var(--border-subtle);
+        margin: 0;
+        padding-left: 0;
+    }
+
+    :root[data-theme='light'] .bento-highlights {
+        border-top: 1px dashed var(--border-subtle);
+    }
+
+    .bento-highlights li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        line-height: 1.45;
+    }
+
+    .highlight-check {
+        color: var(--action-color);
+        font-weight: 800;
+        font-size: 0.85rem;
+        line-height: 1.2;
+        flex-shrink: 0;
+    }
+
+    :root[data-theme='light'] .highlight-check {
+        color: var(--header-color);
+    }
+
+    /* ── Responsive Scaling ── */
+    @media (max-width: 1100px) {
+        .bento-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .col-span-2 {
+            grid-column: span 2;
+        }
+
+        .col-span-1 {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .bento-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .col-span-2,
+        .col-span-1 {
+            grid-column: span 1;
+        }
+    }
+</style>

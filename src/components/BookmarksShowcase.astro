@@ -1,0 +1,121 @@
+---
+/**
+ * The bookmarks panel, with the row actions the extension puts on every entry.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import Showcase from '@/components/Showcase.astro';
+import Icon from '@/components/Icon.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'bookmarkPlus', titleKey: 'bookmarks.f1.title', descKey: 'bookmarks.f1.desc' },
+    { icon: 'activity', titleKey: 'bookmarks.f2.title', descKey: 'bookmarks.f2.desc' },
+    { icon: 'downloadTray', titleKey: 'bookmarks.f3.title', descKey: 'bookmarks.f3.desc' },
+];
+---
+
+<Showcase
+    id="marcadores"
+    lang={lang}
+    eyebrowKey="bookmarks.badge"
+    titleKey="bookmarks.title"
+    subtitleKey="bookmarks.subtitle"
+    bullets={bullets}
+    reverse
+    alt
+>
+    <!--
+        The bookmarks view of the side panel: `BookmarksView.svelte` and the
+        renderer in `bookmarks.js`. It is a flat scrolling list, not a set of
+        cards: folders are `<details>` whose contents are indented behind a
+        hairline, and each row carries the five actions the item template
+        holds. The filters underneath are the scan dialog's own.
+    -->
+    <div class="iw-shot">
+        <header class="header">
+            <h1 class="header-main-title">{t('bookmarks.m.title')}</h1>
+            <div class="header-actions" aria-hidden="true">
+                <span class="control-btn is-on"><Icon name="pin" /></span>
+                <span class="control-btn"><Icon name="rules" /></span>
+                <span class="control-btn"><Icon name="home" /></span>
+                <span class="control-btn"><Icon name="back" /></span>
+            </div>
+        </header>
+
+        <div class="itg-search-row">
+            <div class="search-container">
+                <span class="search-input">{t('bookmarks.m.search')}</span>
+            </div>
+            <div class="itg-search-row-controls" aria-hidden="true">
+                <span class="control-btn"><Icon name="addFolder" /></span>
+                <span class="control-btn"><Icon name="duplicates" /></span>
+                <span class="control-btn"><Icon name="expandAll" /></span>
+                <span class="control-btn"><Icon name="more" /></span>
+            </div>
+        </div>
+
+        <div class="bookmarks-list">
+            <div class="bookmark-folder-title">
+                <Icon name="chevronRight" size={14} />
+                <Icon name="folder" size={16} />
+                <span class="bookmark-folder-name">{t('bookmarks.m.folder1')}</span>
+                <span class="folder-actions" aria-hidden="true">
+                    <Icon name="addFolder" size={14} />
+                    <Icon name="openAll" size={14} />
+                    <Icon name="editPencil" size={14} />
+                    <Icon name="trash" size={14} />
+                </span>
+            </div>
+
+            <div class="bookmark-folder-content">
+                <div class="bookmark-item is-hovered">
+                    <span class="favicon fav-as"></span>
+                    <span class="bookmark-title">{t('bookmarks.m.i1')}</span>
+                    <span class="bookmark-actions" aria-hidden="true">
+                        <Icon name="createRule" size={14} />
+                        <Icon name="addToRule" size={14} />
+                        <Icon name="editPencil" size={14} />
+                        <Icon name="copy" size={14} />
+                        <Icon name="close" size={14} />
+                    </span>
+                </div>
+                <div class="bookmark-item">
+                    <span class="favicon fav-as"></span>
+                    <span class="bookmark-title">{t('bookmarks.m.i2')}</span>
+                </div>
+                <div class="bookmark-item">
+                    <span class="favicon fav-mdn"></span>
+                    <span class="bookmark-title">{t('bookmarks.m.i3b')}</span>
+                </div>
+            </div>
+
+            <div class="bookmark-folder-title">
+                <Icon name="chevronRight" size={14} />
+                <Icon name="folder" size={16} />
+                <span class="bookmark-folder-name">{t('bookmarks.m.folder2')}</span>
+            </div>
+            <div class="bookmark-folder-title">
+                <Icon name="chevronRight" size={14} />
+                <Icon name="folder" size={16} />
+                <span class="bookmark-folder-name">{t('bookmarks.m.folder3')}</span>
+            </div>
+            <div class="bookmark-folder-title">
+                <Icon name="chevronRight" size={14} />
+                <Icon name="folder" size={16} />
+                <span class="bookmark-folder-name">{t('bookmarks.m.folder4')}</span>
+            </div>
+            <div class="bookmark-item">
+                <span class="favicon fav-gh"></span>
+                <span class="bookmark-title">{t('bookmarks.m.i4')}</span>
+            </div>
+        </div>
+    </div>
+</Showcase>

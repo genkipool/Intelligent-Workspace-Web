@@ -1,7 +1,8 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
-import { shortcuts } from '@/data/shortcuts';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { keyboardZones } from '@/data/shortcuts';
 
 interface Props {
     lang: Lang;
@@ -11,92 +12,260 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<div class="band band--tint" id="keyboard">
-    <section class="keys-section wrap">
-        <div class="keys-copy">
-            <h2>{t('keyboard.title')}</h2>
-            <p>{t('keyboard.body')}</p>
-        </div>
-        <ul class="keys" aria-label={t('keyboard.legend')}>
-            {
-                shortcuts.map((shortcut) => (
-                    <li>
-                        <span class="combo">
-                            {shortcut.keys.map((key) => (
-                                <kbd>{key}</kbd>
-                            ))}
-                        </span>
-                        <span>{t(shortcut.labelKey)}</span>
-                    </li>
-                ))
-            }
-        </ul>
-    </section>
-</div>
+<section id="teclado" class="section-container wrap">
+    <!-- Clean Section Header (No Nested Outer Box) -->
+    <SectionHeader lang={lang} titleKey="kb.title" subtitleKey="kb.desc" />
+
+    <!-- One column per way in: the omnibar, the page itself, and the browser -->
+    <div class="keyboard-columns-grid" data-reveal>
+        {
+            keyboardZones.map((zone) => (
+                <div class="keyboard-stream">
+                    <div class="stream-header">
+                        <div class="stream-badge-row">
+                            <span class:list={['stream-badge', `zone-${zone.id}`]}>{t(zone.badgeKey)}</span>
+                        </div>
+                        <h3 class="stream-title">{t(zone.titleKey)}</h3>
+                        <p class="stream-desc">{t(zone.descKey)}</p>
+                    </div>
+
+                    <div class="shortcut-list">
+                        {zone.items.map((item) => (
+                            <div class="shortcut-row">
+                                <div class="shortcut-meta">
+                                    <span class="shortcut-action-text">{t(item.actionKey)}</span>
+                                    <span class="shortcut-category-tag">{t(item.categoryKey)}</span>
+                                </div>
+                                <div class="shortcut-keys-group">
+                                    {item.keys.map((k) =>
+                                        k === '/' ? (
+                                            <span class="key-sep">/</span>
+                                        ) : (
+                                            <kbd
+                                                class:list={[
+                                                    'key-cap',
+                                                    { 'hint-key-cap': zone.id !== 'browser' },
+                                                ]}
+                                            >
+                                                {k}
+                                            </kbd>
+                                        ),
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
 
 <style>
-    /* ── Keyboard band ─────────────────────────────────────────────── */
-
-    .keys-section {
-        padding-block: clamp(64px, 9vw, 120px);
+    .keyboard-columns-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-        gap: clamp(36px, 6vw, 88px);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(28px, 3.5vw, 48px);
+    }
+
+    @media (max-width: 1180px) {
+        .keyboard-columns-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .keyboard-stream {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .stream-header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .stream-badge-row {
+        display: flex;
         align-items: center;
     }
 
-    .keys-copy h2 {
-        font-size: clamp(28px, 4vw, 52px);
-        letter-spacing: -0.032em;
-        max-width: 14ch;
+    .stream-badge {
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 3px 10px;
+        border-radius: var(--radius-full);
     }
 
-    .keys-copy p {
-        margin-block-start: clamp(16px, 2vw, 24px);
-        color: var(--band-soft);
-        font-size: clamp(16px, 1.15vw, 18px);
-        max-width: 50ch;
+    .zone-omnibar {
+        background: rgba(22, 160, 133, 0.12);
+        color: var(--action-color);
+        border: 1px solid rgba(22, 160, 133, 0.3);
     }
 
-    .keys {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+    :root[data-theme='light'] .zone-omnibar {
+        background: #eaf5f0;
+        color: var(--header-color);
+        border: 1px solid #c0d8ce;
+    }
+
+    .zone-hints {
+        background: rgba(26, 188, 156, 0.14);
+        color: #1abc9c;
+        border: 1px solid rgba(26, 188, 156, 0.35);
+    }
+
+    :root[data-theme='light'] .zone-hints {
+        background: #edf6f2;
+        color: #0a5745;
+        border: 1px solid #b8dacb;
+    }
+
+    .zone-browser {
+        background: rgba(230, 176, 60, 0.13);
+        color: #d8a13a;
+        border: 1px solid rgba(230, 176, 60, 0.32);
+    }
+
+    :root[data-theme='light'] .zone-browser {
+        background: #fbf4e6;
+        color: #7a5410;
+        border: 1px solid #e3d3ae;
+    }
+
+    .stream-title {
+        font-size: clamp(1.3rem, 2vw, 1.55rem);
+        font-weight: 750;
+        color: var(--text-color);
+    }
+
+    .stream-desc {
+        font-size: 0.94rem;
+        color: var(--text-soft);
+        line-height: 1.55;
+    }
+
+    :root[data-theme='light'] .stream-desc {
+        color: var(--text-muted);
+    }
+
+    /* Streamlined Shortcut Rows */
+    .shortcut-list {
         display: flex;
         flex-direction: column;
     }
 
-    .keys li {
+    .shortcut-row {
         display: flex;
         align-items: center;
-        gap: clamp(14px, 2vw, 22px);
-        padding-block: clamp(13px, 1.6vw, 19px);
-        border-block-start: 1px solid var(--band-hair);
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 10px;
+        margin-inline: -10px;
+        border-radius: 8px;
+        border-bottom: 1px solid var(--border-subtle);
+        transition: background-color 0.15s ease;
+    }
+
+    .shortcut-row:last-child {
+        border-bottom: none;
+    }
+
+    .shortcut-row:hover {
+        background-color: var(--bg-card-hover);
+    }
+
+    .shortcut-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .shortcut-action-text {
         font-size: 0.95rem;
-        color: var(--band-soft);
+        font-weight: 650;
+        color: var(--text-color);
     }
 
-    .keys li:first-child {
-        border-block-start: 0;
+    .shortcut-category-tag {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 
-    .combo {
-        display: inline-flex;
+    :root[data-theme='light'] .shortcut-category-tag {
+        color: var(--text-dim);
+    }
+
+    .shortcut-keys-group {
+        display: flex;
+        align-items: center;
         gap: 5px;
         flex-shrink: 0;
-        min-width: 11ch;
     }
 
-    kbd {
-        font-family: var(--mono);
-        font-size: 0.74rem;
-        font-weight: 600;
-        color: var(--band-ink);
-        background: var(--band-2);
+    .key-cap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3px 8px;
+        min-width: 26px;
+        height: 28px;
         border-radius: 6px;
-        padding: 6px 9px;
-        min-width: 30px;
-        text-align: center;
-        box-shadow: inset 0 -2px 0 rgb(0 0 0 / 35%);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-bottom: 2px solid var(--action-color);
+        color: var(--text-color);
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 700;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    :root[data-theme='light'] .key-cap {
+        background: #ffffff;
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        border-bottom: 2px solid var(--action-color);
+        box-shadow:
+            0 1px 2px rgba(11, 28, 21, 0.08),
+            0 2px 4px rgba(11, 28, 21, 0.04);
+    }
+
+    .hint-key-cap {
+        background: rgba(22, 160, 133, 0.08);
+        border-bottom: 2px solid #1abc9c;
+    }
+
+    :root[data-theme='light'] .hint-key-cap {
+        background: #f0f7f4;
+        color: var(--text-color);
+        border: 1px solid #b8dacb;
+        border-bottom: 2px solid var(--header-color);
+    }
+
+    .key-sep {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        padding: 0 2px;
+    }
+
+    :root[data-theme='light'] .key-sep {
+        color: var(--text-dim);
+    }
+
+    @media (max-width: 860px) {
+        .keyboard-columns-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
     }
 </style>

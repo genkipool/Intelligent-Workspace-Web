@@ -65,4 +65,29 @@ describe('the dictionary', () => {
         expect(useTranslations('es')('donate.cta')).toBe('Donar');
         expect(useTranslations('en')('donate.cta')).toBe('Donate');
     });
+
+    it('contains zero occurrences of "Vimium" or "Vim" across all language dictionaries', () => {
+        for (const [lang, dict] of Object.entries(ui)) {
+            for (const [key, value] of Object.entries(dict)) {
+                expect(value, `Key ${lang}.${key} contains forbidden term`).not.toMatch(/\bvim(ium)?\b/i);
+            }
+        }
+    });
+
+    it('contains valid translations for comparison and trust table column headers in all supported languages', () => {
+        const requiredKeys = ['comp.colFeature', 'trust.colPermissions', 'trust.colPurpose'] as const;
+        for (const lang of Object.keys(ui) as (keyof typeof ui)[]) {
+            for (const key of requiredKeys) {
+                const val = ui[lang][key];
+                expect(val, `${lang}.${key} must exist`).toBeDefined();
+                expect(val.trim().length, `${lang}.${key} must not be empty`).toBeGreaterThan(0);
+            }
+        }
+        expect(ui.en['comp.colFeature']).toBe('Capability');
+        expect(ui.es['comp.colFeature']).toBe('Capacidad');
+        expect(ui.en['trust.colPermissions']).toBe('Manifest V3 Permissions');
+        expect(ui.es['trust.colPermissions']).toBe('Permisos del Manifest V3');
+        expect(ui.en['trust.colPurpose']).toBe('Purpose & Justification');
+        expect(ui.es['trust.colPurpose']).toBe('Finalidad y Justificación');
+    });
 });

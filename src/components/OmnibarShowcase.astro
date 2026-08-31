@@ -1,0 +1,99 @@
+---
+/**
+ * The floating omnibar, and the prefixes that decide what it is searching.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import Showcase from '@/components/Showcase.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'search', titleKey: 'omnibar.f1.title', descKey: 'omnibar.f1.desc' },
+    { icon: 'terminal', titleKey: 'omnibar.f2.title', descKey: 'omnibar.f2.desc' },
+    { icon: 'keyboardSmall', titleKey: 'omnibar.f3.title', descKey: 'omnibar.f3.desc' },
+];
+---
+
+<Showcase
+    id="omnibar"
+    lang={lang}
+    eyebrowKey="omnibar.badge"
+    titleKey="omnibar.title"
+    subtitleKey="omnibar.subtitle"
+    bullets={bullets}
+>
+    <!--
+        The floating omnibar itself: `hint/omnibar.js` builds this markup and
+        `hint_content.css` styles it, so the classes below are the extension's.
+        The row Enter would run takes the accent colour across its whole width,
+        which is what the real bar does.
+    -->
+    <div class="iw-omni">
+        <div class="hint-omni-input-wrapper">
+            <span class="hint-omni-input">c: astro<span class="hint-omni-caret"></span></span>
+            <span class="hint-omni-counter">3/12</span>
+            <span class="hint-omni-regex-btn">.*</span>
+        </div>
+        <ul class="hint-omni-results">
+            <li class="hint-omni-result-item selected">
+                <span class="hint-omni-favicon fav-as"></span>
+                <span class="hint-omni-text-container">
+                    <span class="hint-omni-title">Routing · Astro Docs</span>
+                    <span class="hint-omni-url">docs.astro.build/en/guides/routing</span>
+                </span>
+            </li>
+            <li class="hint-omni-result-item">
+                <span class="hint-omni-favicon fav-as"></span>
+                <span class="hint-omni-text-container">
+                    <span class="hint-omni-title">Server islands · Astro Docs</span>
+                    <span class="hint-omni-url">docs.astro.build/en/guides/server-islands</span>
+                </span>
+            </li>
+            <li class="hint-omni-result-item">
+                <span class="hint-omni-favicon fav-gh"></span>
+                <span class="hint-omni-text-container">
+                    <span class="hint-omni-title">genkipool/workspace · Issues</span>
+                    <span class="hint-omni-url">github.com/genkipool/workspace/issues</span>
+                </span>
+            </li>
+            <li class="hint-omni-result-item">
+                <span class="hint-omni-favicon fav-fg"></span>
+                <span class="hint-omni-text-container">
+                    <span class="hint-omni-title">Landing · panel lateral</span>
+                    <span class="hint-omni-url">figma.com/file/iw-landing</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="syntax-chips">
+        <span class="omni-prefix-label">{t('omnibar.m.footer')}</span>
+        <span class="syntax-chip"><code>lnt:</code> {t('omnibar.m.f1')}</span>
+        <span class="syntax-chip"><code>limg:</code> {t('omnibar.m.f2')}</span>
+        <span class="syntax-chip"><code>rl:</code> {t('omnibar.m.f3')}</span>
+        <span class="syntax-chip"><code>bgr:</code> {t('omnibar.m.f4')}</span>
+    </div>
+</Showcase>
+
+<style>
+    /* Favicon stand-ins: the bar loads the real ones from Chrome's favicon store. */
+
+    .omni-prefix-label {
+        font-size: 0.72rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .omni-prefix-label {
+        color: var(--header-color);
+    }
+</style>

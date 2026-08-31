@@ -1,0 +1,204 @@
+---
+/**
+ * The two-column section the page uses six times: a column of copy with three bullets,
+ * and beside it one shot of the interface being described.
+ *
+ * Every one of those six was a copy of the same eighty lines of markup and the same
+ * hundred and twenty lines of CSS, with only the words and the shot different. They are
+ * this component now, so the shape is defined once and a change to it lands in all six.
+ * What stays in each section is what is actually its own: the shot, and the styles that
+ * only that shot needs.
+ *
+ * The shot goes in the default slot. `reverse` puts it on the left — the page alternates
+ * so the eye is not walked down one edge — and `alt` sits the section on the banded
+ * background, which it also alternates.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang, TranslationKey } from '@/i18n/ui';
+import type { IconName } from '@/data/icons';
+import Icon from '@/components/Icon.astro';
+
+export interface ShowcaseBullet {
+    icon: IconName;
+    titleKey: TranslationKey;
+    descKey: TranslationKey;
+}
+
+interface Props {
+    /** The anchor `Nav.astro` and the footer link to. */
+    id: string;
+    lang: Lang;
+    eyebrowKey: TranslationKey;
+    titleKey: TranslationKey;
+    subtitleKey: TranslationKey;
+    bullets: readonly ShowcaseBullet[];
+    /** Put the shot on the left and the copy on the right. */
+    reverse?: boolean;
+    /** Sit the section on the banded background. */
+    alt?: boolean;
+    /** Centre a shot that is narrower than its column, such as a side panel. */
+    centreVisual?: boolean;
+}
+
+const {
+    id,
+    lang,
+    eyebrowKey,
+    titleKey,
+    subtitleKey,
+    bullets,
+    reverse = false,
+    alt = false,
+    centreVisual = false,
+} = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id={id} class:list={['section-container', alt ? 'section-alt' : 'wrap']}>
+    <div class:list={[alt && 'wrap']}>
+        <div class:list={['showcase-grid', { reverse }]}>
+            <div class="showcase-info" data-reveal>
+                <span class="showcase-eyebrow">{t(eyebrowKey)}</span>
+                <h2 class="showcase-title">{t(titleKey)}</h2>
+                <p class="showcase-subtitle">{t(subtitleKey)}</p>
+
+                <div class="feature-bullets-list">
+                    {
+                        bullets.map((bullet) => (
+                            <div class="bullet-item">
+                                <div class="bullet-icon-box">
+                                    <Icon name={bullet.icon} />
+                                </div>
+                                <div class="bullet-text">
+                                    <h4>{t(bullet.titleKey)}</h4>
+                                    <p>{t(bullet.descKey)}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class:list={['showcase-visual', { centre: centreVisual }]} data-reveal>
+                <slot />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* One column on a phone, two from 901px up. The wider of the two always holds the
+       copy. `reverse` swaps the sides with `order` rather than with the source, so a
+       stacked phone shows the same sequence the wide layout reads left to right. */
+    .showcase-grid {
+        display: grid;
+        gap: clamp(40px, 6vw, 84px);
+        align-items: center;
+    }
+
+    .showcase-grid.reverse .showcase-visual {
+        order: 1;
+    }
+
+    .showcase-grid.reverse .showcase-info {
+        order: 2;
+    }
+
+    @media (min-width: 901px) {
+        .showcase-grid {
+            grid-template-columns: 1.1fr 1fr;
+        }
+
+        .showcase-grid.reverse {
+            grid-template-columns: 1fr 1.1fr;
+        }
+    }
+
+    .showcase-info {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .showcase-eyebrow {
+        font-size: 0.8rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .showcase-eyebrow {
+        color: var(--header-color);
+    }
+
+    .showcase-title {
+        font-size: clamp(2rem, 3.5vw, 2.8rem);
+        line-height: 1.18;
+        color: var(--text-color);
+    }
+
+    .showcase-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-soft);
+        line-height: 1.65;
+    }
+
+    .feature-bullets-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-top: 8px;
+    }
+
+    .bullet-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .bullet-icon-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(22, 160, 133, 0.14);
+        color: var(--action-color);
+        border: 1px solid rgba(26, 188, 156, 0.3);
+        flex-shrink: 0;
+    }
+
+    :root[data-theme='light'] .bullet-icon-box {
+        background: #eaf3ee;
+        color: var(--header-color);
+        border-color: var(--border-color);
+    }
+
+    .bullet-text h4 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 3px;
+    }
+
+    .bullet-text p {
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+    }
+
+    /* The shot's own styles live with the shot, in the section that slots it in. What is
+       here is only the column it sits in. */
+    .showcase-visual {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .showcase-visual.centre {
+        align-items: center;
+    }
+</style>

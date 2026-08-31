@@ -1,14 +1,9 @@
 ---
-/**
- * The pain, before the pitch.
- *
- * A reader who has not agreed there is a problem will not read a feature list. These are
- * symptoms in the first person, deliberately mundane — the point is recognition, not
- * persuasion.
- */
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
-import { symptoms } from '@/data/story';
+import SectionHeader from '@/components/SectionHeader.astro';
+import type { IconName } from '@/data/icons';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -16,52 +11,254 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+/**
+ * The four symptoms, then the four answers. Each carries a glyph from `@/data/icons`,
+ * so a name that is not in the registry is a build error rather than a blank square.
+ */
+const problems: readonly { icon: IconName; title: string; desc: string }[] = [
+    {
+        icon: 'alertTriangle',
+        title: t('problem.p1.title'),
+        desc: t('problem.p1.desc'),
+    },
+    {
+        icon: 'memory',
+        title: t('problem.p2.title'),
+        desc: t('problem.p2.desc'),
+    },
+    {
+        icon: 'close',
+        title: t('problem.p3.title'),
+        desc: t('problem.p3.desc'),
+    },
+    {
+        icon: 'clock',
+        title: t('problem.p4.title'),
+        desc: t('problem.p4.desc'),
+    },
+];
+
+const solutions: readonly { icon: IconName; title: string; desc: string }[] = [
+    {
+        icon: 'gridFour',
+        title: t('problem.s1.title'),
+        desc: t('problem.s1.desc'),
+    },
+    {
+        icon: 'shieldCheck',
+        title: t('problem.s2.title'),
+        desc: t('problem.s2.desc'),
+    },
+    {
+        icon: 'bolt',
+        title: t('problem.s3.title'),
+        desc: t('problem.s3.desc'),
+    },
+    {
+        icon: 'gauge',
+        title: t('problem.s4.title'),
+        desc: t('problem.s4.desc'),
+    },
+];
 ---
 
-<section class="problem wrap" data-reveal>
-    <div class="opener">
-        <span class="numeral" aria-hidden="true">01</span>
-        <p class="kicker">{t('problem.kicker')}</p>
-        <h2>{t('problem.title')}</h2>
+<section id="problema" class="section-container wrap">
+    <!-- Section Header (No Pill Badge) -->
+    <SectionHeader lang={lang} titleKey="problem.title" subtitleKey="problem.subtitle" />
+
+    <!-- 3 Problem Cards -->
+    <div class="problem-grid" data-reveal>
+        {
+            problems.map((item) => (
+                <div class="problem-card">
+                    <div class="problem-icon-wrap">
+                        <Icon name={item.icon} size={22} />
+                    </div>
+                    <h3 class="card-title">{item.title}</h3>
+                    <p class="card-desc">{item.desc}</p>
+                </div>
+            ))
+        }
     </div>
-    <ul class="symptoms">
-        {symptoms.map((key) => <li>{t(key)}</li>)}
-    </ul>
-    <p class="turn">{t('problem.turn')}</p>
+
+    <!-- Central VS Section Indicator -->
+    <div class="vs-divider-row" data-reveal>
+        <span class="vs-label">{t('problem.vs')}</span>
+    </div>
+
+    <!-- 3 Solution Cards -->
+    <div class="solution-grid" data-reveal>
+        {
+            solutions.map((item) => (
+                <div class="solution-card">
+                    <div class="solution-icon-wrap">
+                        <Icon name={item.icon} size={22} />
+                    </div>
+                    <h3 class="card-title text-solution">{item.title}</h3>
+                    <p class="card-desc">{item.desc}</p>
+                </div>
+            ))
+        }
+    </div>
 </section>
 
 <style>
-    .problem {
-        padding-block: clamp(64px, 9vw, 116px);
-        display: flex;
-        flex-direction: column;
-        gap: clamp(14px, 1.8vw, 22px);
-    }
-
-    .symptoms {
-        list-style: none;
-        margin: clamp(10px, 1.6vw, 18px) 0 0;
-        padding: 0;
+    .problem-grid,
+    .solution-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: clamp(14px, 2vw, 24px);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
     }
 
-    .symptoms li {
-        font-size: clamp(16px, 1.3vw, 18.5px);
-        line-height: 1.5;
-        color: var(--ink-soft);
-        padding-inline-start: 18px;
-        /* A hairline instead of a bullet: the list reads as evidence, not as a menu. */
-        border-inline-start: 2px solid var(--c-brass);
+    @media (max-width: 1180px) {
+        .problem-grid,
+        .solution-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
-    .turn {
-        margin-block-start: clamp(12px, 2vw, 22px);
-        font-size: clamp(18px, 1.6vw, 23px);
-        font-weight: 560;
-        letter-spacing: -0.014em;
-        color: var(--ink);
-        max-width: 46ch;
+    .problem-card {
+        background: var(--bg-panel-color);
+        border: 1px solid rgba(231, 76, 60, 0.25);
+        border-radius: var(--radius-md);
+        padding: 28px 24px;
+        position: relative;
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    :root[data-theme='light'] .problem-card {
+        background: #ffffff;
+        border: 1px solid rgba(231, 76, 60, 0.3);
+        box-shadow: 0 4px 16px rgba(231, 76, 60, 0.05);
+    }
+
+    .problem-card:hover {
+        border-color: rgba(231, 76, 60, 0.5);
+        transform: translateY(-2px);
+    }
+
+    .problem-icon-wrap {
+        margin-bottom: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(231, 76, 60, 0.12);
+        color: var(--error-color);
+        border: 1px solid rgba(231, 76, 60, 0.25);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--text-color);
+    }
+
+    .card-title.text-solution {
+        color: var(--text-color);
+    }
+
+    .card-desc {
+        font-size: 0.94rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+    }
+
+    /* Central Divider */
+    .vs-divider-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-block: clamp(24px, 3.5vw, 40px);
+        position: relative;
+    }
+
+    .vs-divider-row::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 1px;
+        background: var(--border-subtle);
+        z-index: 0;
+    }
+
+    .vs-label {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        padding: 4px 16px;
+        border-radius: var(--radius-full);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        font-size: 0.8rem;
+        font-weight: 750;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .vs-label {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        color: var(--header-color);
+    }
+
+    /* Solution Cards */
+    .solution-card {
+        background: var(--bg-panel-color);
+        border: 1px solid rgba(26, 188, 156, 0.4);
+        border-radius: var(--radius-md);
+        padding: 28px 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    :root[data-theme='light'] .solution-card {
+        background: #ffffff;
+        border: 1px solid rgba(22, 160, 133, 0.35);
+        box-shadow: 0 4px 16px rgba(22, 160, 133, 0.08);
+    }
+
+    .solution-card:hover {
+        border-color: var(--action-color);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(22, 160, 133, 0.18);
+    }
+
+    .solution-icon-wrap {
+        margin-bottom: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba(22, 160, 133, 0.15);
+        color: var(--action-color);
+        border: 1px solid rgba(26, 188, 156, 0.35);
+    }
+
+    :root[data-theme='light'] .solution-icon-wrap {
+        background: #eaf3ee;
+        color: var(--header-color);
+        border: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 900px) {
+        .problem-grid,
+        .solution-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
     }
 </style>

@@ -1,8 +1,9 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Landing from '@/components/Landing.astro';
+import { allIconNames } from '@/data/icons';
 ---
 
-<Base lang="es">
+<Base lang="es" icons={allIconNames}>
     <Landing lang="es" />
 </Base>

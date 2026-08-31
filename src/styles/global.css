@@ -1,191 +1,236 @@
 /**
- * Intelligent Workspace — global tokens, resets and the two layout primitives.
- *
- * Everything here is genuinely global: the palette, the type stack, the measure, and
- * the `.wrap` / `.band` primitives every section is built from. Anything that belongs
- * to one section lives in that component's own <style> block, where Astro scopes it —
- * so a rule can only ever affect the component it was written for.
- *
- * TWO RULES THIS SHEET IS BUILT ON.
- *
- * 1. No boxes. Nothing on this page is a bordered card. Sections are separated by
- *    full-bleed bands of ground colour and by hairline rules; hierarchy comes from type
- *    size and space, not from outlines. If you find yourself adding `border: 1px solid`
- *    around a block of content, that is the thing this design exists to avoid.
- *
- * 2. The colour system is Chrome's own tab-group palette, because that is what the
- *    product makes. Each feature entry claims one group colour through `--c`, set inline
- *    on the element, and the rules and numerals read that variable.
- *
- * The hero and the keyboard section are inverted in BOTH themes — the page opens on a
- * browser at night and the body of it reads as daylight. In light mode that is a hard
- * contrast; in dark mode the band goes *darker* than the page rather than lighter, so
- * the rhythm survives instead of collapsing into one flat black.
+ * Intelligent Workspace — Premium Viridian Design System
+ * High-performance widescreen canvas (1560px), GPU-accelerated rendering & zero-flash transitions.
  */
 
 :root {
-    /* Daylight: the body of the page. A paper with a faint green cast rather than a
-       neutral grey, so the accent sits *in* the page instead of on top of it. */
-    --paper: #f5f9f7;
-    --ink: #0c1a15;
-    --ink-soft: #31463f;
-    --muted: #5d7269;
-    --hair: #dce7e2;
+    /* ── Canonical Viridian Dark Theme (Default) ── */
+    --bg-color: #1b2631;
+    --bg-surface: #151f28;
+    --bg-panel-color: #233240;
+    --bg-card-hover: #2a3d4f;
+    --border-color: #34495e;
+    --border-subtle: rgba(52, 73, 94, 0.6);
+    --border-glow: rgba(26, 188, 156, 0.4);
 
-    /**
-     * The tinted bands — the hero and the keyboard section.
-     *
-     * They used to be fixed dark in both themes, which meant the top of the page looked
-     * identical whichever theme you picked and the toggle appeared to do nothing above
-     * the fold. They now follow the theme: a pale viridian wash in daylight, a near-black
-     * viridian at night. The band still reads as a band, because it is tinted against the
-     * page rather than merely darker than it.
-     */
-    --band: #e8f1ec;
-    --band-2: #d8e8e0;
-    --band-ink: #0a1813;
-    --band-soft: #465c53;
-    --band-hair: #c7dbd2;
+    --action-color: #16a085;
+    --interactive-color: #16a085;
+    --header-color: #0e6655;
+    --accent-glow: #1abc9c;
+    --accent-bright: #2ecc71;
+    --error-color: #e74c3c;
 
-    --accent: #106b50;
+    --text-color: #ffffff;
+    --text-soft: #e2ece8;
+    --text-muted: #9eb5ad;
+    --text-dim: #7f9990;
+
+    /* Legacy Tokens Mapping */
+    --paper: var(--bg-color);
+    --ink: var(--text-color);
+    --ink-soft: var(--text-soft);
+    --muted: var(--text-muted);
+    --hair: var(--border-color);
+    --accent: var(--action-color);
     --accent-ink: #ffffff;
+    --band: var(--bg-surface);
+    --band-ink: var(--text-color);
+    --band-soft: var(--text-soft);
+    --band-hair: var(--border-color);
 
-    /**
-     * The categorical set: four analogous hues walking from teal through viridian to
-     * pine, with brass as the single warm counterpoint that stops the four reading as
-     * one colour. Every one clears 4.5:1 on all three grounds — checked, not assumed.
-     *
-     * They are named for the hue rather than for what uses them, so a feature can change
-     * colour without a variable ending up called `--c-pomodoro`.
-     */
-    --c-teal: #0f6e66;
-    --c-viridian: #106b50;
-    --c-pine: #3a6b22;
-    --c-brass: #8a6410;
+    --c-viridian: #16a085;
+    --c-teal: #1abc9c;
+    --c-pine: #0e6655;
+    --c-emerald: #2ecc71;
 
-    --display:
-        ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+    /* Typography */
+    --font-display:
+        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
 
-    /* One measure for every band, so nothing on the page is off-axis. */
-    --measure: 1160px;
+    /* Layout Primitives — Widescreen 1560px */
+    --measure: 1560px;
     --gutter: clamp(20px, 5vw, 64px);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-full: 9999px;
+
+    /* Ambient Atmosphere */
+    --ambient-glow-1: rgba(22, 160, 133, 0.16);
+    --ambient-glow-2: rgba(26, 188, 156, 0.1);
+    --grid-dot-color: rgba(26, 188, 156, 0.07);
+
+    /* The wash behind a chip or an inline key, and the hairline round it. */
+    --accent-tint: rgba(22, 160, 133, 0.12);
+    --accent-tint-line: rgba(22, 160, 133, 0.32);
+
+    /* Text Gradient */
+    --grad-start: #1abc9c;
+    --grad-mid: #16a085;
+    --grad-end: #2ecc71;
+
+    color-scheme: dark;
 }
 
-/**
- * Three states, not two. An explicit choice stamps `data-theme` on <html>; the default
- * stamps nothing, and only `prefers-color-scheme` separates light from dark there.
- *
- * So the dark palette is written twice: once behind the media query, guarded so an
- * explicit light choice beats a dark OS, and once behind the attribute so the toggle
- * wins in the other direction. Defining a colour in only one of them is the classic bug
- * — the page then renders one theme's text on the other theme's ground.
- */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-        --paper: #0a1310;
-        --ink: #e7f1ec;
-        --ink-soft: #bccfc7;
-        --muted: #7f958c;
-        --hair: #1e2e28;
+/* ── Crisp Light Theme (Zero Dark Colors, 100% Contrast) ── */
+:root[data-theme='light'] {
+    --bg-color: #f7faf8;
+    --bg-surface: #edf4f0;
+    --bg-panel-color: #ffffff;
+    --bg-card-hover: #f0f7f3;
+    --border-color: #c8dcd2;
+    --border-subtle: #dbe8e0;
+    --border-glow: rgba(22, 160, 133, 0.45);
 
-        --accent: #4fc79c;
-        --accent-ink: #04120d;
+    --action-color: #16a085;
+    --interactive-color: #16a085;
+    --header-color: #0e6655;
+    --accent-glow: #0e6655;
+    --accent-bright: #0a5745;
+    --error-color: #c0392b;
 
-        --c-teal: #3fbfb3;
-        --c-viridian: #4fc79c;
-        --c-pine: #8fc55a;
-        --c-brass: #d9a63c;
+    --text-color: #0b1c15;
+    --text-soft: #1e382e;
+    --text-muted: #3d5a4e;
+    --text-dim: #5c786d;
 
-        --band: #061310;
-        --band-2: #0e211c;
-        --band-ink: #eaf4ef;
-        --band-soft: #9bb3aa;
-        --band-hair: #1c302a;
-    }
+    --paper: var(--bg-color);
+    --ink: var(--text-color);
+    --ink-soft: var(--text-soft);
+    --muted: var(--text-muted);
+    --hair: var(--border-color);
+    --accent: var(--action-color);
+    --accent-ink: #ffffff;
+    --band: var(--bg-surface);
+    --band-ink: var(--text-color);
+    --band-soft: var(--text-soft);
+    --band-hair: var(--border-color);
+
+    --ambient-glow-1: rgba(22, 160, 133, 0.06);
+    --ambient-glow-2: rgba(14, 102, 85, 0.03);
+    --grid-dot-color: rgba(22, 160, 133, 0.07);
+
+    --accent-tint: #eaf5f0;
+    --accent-tint-line: #c0d8ce;
+
+    --grad-start: #0a5745;
+    --grad-mid: #107560;
+    --grad-end: #064032;
+
+    color-scheme: light;
 }
 
-:root[data-theme='dark'] {
-    --paper: #0a1310;
-    --ink: #e7f1ec;
-    --ink-soft: #bccfc7;
-    --muted: #7f958c;
-    --hair: #1e2e28;
-
-    --accent: #4fc79c;
-    --accent-ink: #04120d;
-
-    --c-teal: #3fbfb3;
-    --c-viridian: #4fc79c;
-    --c-pine: #8fc55a;
-    --c-brass: #d9a63c;
-
-    --band: #061310;
-    --band-2: #0e211c;
-    --band-ink: #eaf4ef;
-    --band-soft: #9bb3aa;
-    --band-hair: #1c302a;
-}
-
+/* ── Base Resets & Performance Tuning ── */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
 }
 
 body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--display);
-    font-size: clamp(16px, 1.05vw, 18px);
-    line-height: 1.62;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-display);
+    font-size: 16px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 }
 
-/**
- * The display register.
- *
- * Weight 300 at large sizes rather than 660: the page used to shout, and shouting is
- * what made it feel dense. Elegance here is light weight, tight tracking and a lot of
- * air — the size does the emphasis, not the stroke.
- *
- * `font-optical-sizing` and the negative tracking only look right above ~28px, so the
- * smaller headings step the weight back up in their own rules.
- */
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--action-color);
+}
+
+::selection {
+    background-color: var(--action-color);
+    color: #ffffff;
+}
+
+:focus-visible {
+    outline: 2px solid var(--action-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ── Typography Scale ── */
 h1,
 h2,
-h3 {
-    margin: 0;
-    font-weight: 300;
-    letter-spacing: -0.036em;
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-color);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
     text-wrap: balance;
-    line-height: 1.04;
-    font-optical-sizing: auto;
+}
+
+h1 {
+    font-size: clamp(2.8rem, 5.2vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+}
+
+h2 {
+    font-size: clamp(2rem, 3.8vw, 3rem);
+    font-weight: 750;
+    letter-spacing: -0.03em;
+}
+
+h3 {
+    font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+    font-weight: 650;
 }
 
 p {
-    margin: 0;
+    color: var(--text-soft);
     text-wrap: pretty;
 }
 
 a {
     color: inherit;
+    text-decoration: none;
 }
 
-img {
+img,
+svg {
+    display: block;
     max-width: 100%;
 }
 
-:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 4px;
-    border-radius: 4px;
-}
-
-/* ── Bands and the shared measure ──────────────────────────────── */
-
+/* ── Layout Primitives & High Rendering Performance ── */
 .wrap {
     width: 100%;
     max-width: var(--measure);
@@ -193,299 +238,260 @@ img {
     padding-inline: var(--gutter);
 }
 
-.band {
-    width: 100%;
+.section-container {
+    padding-block: clamp(64px, 8vw, 120px);
+    position: relative;
+    z-index: 1;
+    content-visibility: auto;
+    /* `auto` makes the browser remember each section's real height once it has drawn it,
+       so the scrollbar stops jumping when a section that is nothing like 800px tall
+       scrolls back out of view. */
+    contain-intrinsic-size: auto 800px;
 }
 
-.band--tint {
-    background: var(--band);
-    color: var(--band-ink);
-    /* A hairline of tab-group colours across the seam: the tab strip, reduced to a
-       rule. It is the only ornament on the page, and it is the product's own image. */
-    border-bottom: 3px solid transparent;
-    border-image: linear-gradient(
-            90deg,
-            var(--c-viridian) 0 25%,
-            var(--c-teal) 25% 45%,
-            var(--c-pine) 45% 72%,
-            var(--c-brass) 72% 100%
-        )
-        1;
+.section-alt {
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
-.band--accent {
-    background: var(--accent);
-    color: var(--accent-ink);
+/* ── Lightweight Ambient GPU Background ── */
+.ambient-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
 }
 
-/* ── The call to action ─────────────────────────────────────────
-   Global because two different bands use it, and a shared button that lives inside one
-   of them would be a component reaching into another. */
+.ambient-gradient-1 {
+    position: absolute;
+    top: -200px;
+    left: 20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--ambient-glow-1) 0%, transparent 68%);
+    border-radius: 50%;
+    pointer-events: none;
+}
 
-.cta {
+.ambient-gradient-2 {
+    position: absolute;
+    top: 40%;
+    right: -150px;
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, var(--ambient-glow-2) 0%, transparent 68%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.dot-grid {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(var(--grid-dot-color) 1.5px, transparent 1.5px);
+    background-size: 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(circle at center, black, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at center, black, transparent 85%);
+}
+
+/* ── Section Header Molecule ── */
+.section-header {
+    text-align: center;
+    max-width: 880px;
+    margin: 0 auto clamp(36px, 5vw, 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 750;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--action-color);
+    margin-bottom: 6px;
+}
+
+:root[data-theme='light'] .section-eyebrow {
+    color: var(--header-color);
+}
+
+.section-title {
+    font-size: clamp(2.2rem, 3.8vw, 3rem);
+    font-weight: 750;
+    line-height: 1.15;
+    color: var(--text-color);
+}
+
+.section-subtitle {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+    color: var(--text-muted);
+    line-height: 1.65;
+}
+
+/* ── A row of literal syntax under a shot ──
+   The omnibar's prefixes and the snippet expander's tokens are the same object: a
+   short piece of the thing the reader would actually type, followed by what it does.
+   Both sections drew it, so it lives here. */
+.syntax-chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+}
+
+.syntax-chip {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 14px 28px;
-    border-radius: 999px;
-    background: var(--accent);
-    /* Not #fff. The accent is a deep viridian in daylight and a bright mint at night;
-       white holds on the first and fails on the second. `--accent-ink` flips with it. */
-    color: var(--accent-ink);
-    font-weight: 620;
-    font-size: 0.95rem;
-    letter-spacing: -0.005em;
-    text-decoration: none;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--text-soft);
+}
+
+.syntax-chip code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--action-color);
+    background: var(--accent-tint);
+    border: 1px solid var(--accent-tint-line);
+    border-radius: 4px;
+    padding: 2px 7px;
+}
+
+:root[data-theme='light'] .syntax-chip code {
+    color: var(--header-color);
+}
+
+/* ── Gradient Text ── */
+.text-gradient {
+    background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-mid) 50%, var(--grad-end) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Glass Cards & Elevation (Minimalist, Non-Bouncing Transitions) ── */
+.glass-card {
+    background: var(--bg-panel-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: clamp(24px, 3.5vw, 40px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-    box-shadow: 0 8px 28px -12px color-mix(in srgb, var(--accent) 90%, transparent);
-}
-
-.cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 34px -12px color-mix(in srgb, var(--accent) 90%, transparent);
-}
-
-.cta--invert {
-    background: #fff;
-    color: var(--accent);
-    box-shadow: none;
-}
-
-.cta--invert:hover {
-    box-shadow: 0 12px 30px -14px rgb(0 0 0 / 45%);
-}
-
-/* ── Narrow ─────────────────────────────────────────────────────
-   These stay global on purpose: each block retunes several components at once, and
-   splitting them would mean the same breakpoint written out five times, free to drift. */
-
-@media (max-width: 640px) {
-    .groups text {
-        display: none;
-    }
-
-    .eyebrow {
-        flex-wrap: wrap;
-        gap: 6px 10px;
-    }
-}
-
-@media (max-width: 820px) {
-    .entry,
-    .keys-section {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .entry {
-        gap: 14px;
-    }
-
-    .nav nav {
-        display: none;
-    }
-
-    .nav {
-        justify-content: space-between;
-    }
-
-    .lang {
-        margin-inline-start: auto;
-    }
-
-    h1 {
-        max-width: 100%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cta,
-    .cta:hover,
-    .link-cta .arrow {
-        transition: none;
-        transform: none;
-    }
-}
-
-/* ── Light ───────────────────────────────────────────────────────
-   The hero's wash. Two soft radial fields in the viridian family, offset from each
-   other and from the centre, painted with CSS rather than an image so they cost
-   nothing and follow the theme. `-1` keeps them behind content without a stacking
-   context of their own. */
-
-.aurora {
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
     position: relative;
-    isolation: isolate;
     overflow: hidden;
 }
 
-.aurora::before,
-.aurora::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    border-radius: 50%;
-    pointer-events: none;
-    /* Large, very soft, very low opacity: a wash, not a blob. Anything more saturated
-       reads as a decorative shape rather than as light. */
-    filter: blur(90px);
+:root[data-theme='light'] .glass-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(11, 28, 21, 0.05);
 }
 
-.aurora::before {
-    inset-block-start: -28%;
-    inset-inline-start: 8%;
-    width: min(62vw, 760px);
-    aspect-ratio: 1;
-    background: radial-gradient(
-        circle,
-        color-mix(in srgb, var(--c-viridian) 40%, transparent),
-        transparent 68%
-    );
-    opacity: 0.5;
+.glass-card:hover {
+    border-color: var(--border-glow);
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(22, 160, 133, 0.15);
 }
 
-.aurora::after {
-    inset-block-start: 6%;
-    inset-inline-end: -12%;
-    width: min(48vw, 600px);
-    aspect-ratio: 1;
-    background: radial-gradient(circle, color-mix(in srgb, var(--c-teal) 34%, transparent), transparent 70%);
-    opacity: 0.38;
+/* ── Dimension-Stabilized Buttons (Consistent Height & Proportional Width) ── */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 190px;
+    min-height: 50px;
+    gap: 10px;
+    padding: 14px 30px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #16a085 0%, #0e6655 100%);
+    color: #ffffff;
+    font-weight: 650;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    border: 1px solid rgba(26, 188, 156, 0.4);
+    box-shadow: 0 4px 18px rgba(22, 160, 133, 0.3);
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    text-decoration: none;
 }
 
-/* ── Rules ───────────────────────────────────────────────────────
-   A hairline that fades out at both ends instead of stopping dead. The old hard
-   1px lines were what made the page read as a grid of compartments. */
-
-.rule {
-    height: 1px;
-    border: 0;
-    margin: 0;
-    background: linear-gradient(90deg, transparent, var(--hair) 12%, var(--hair) 88%, transparent);
+.btn-primary:hover {
+    border-color: rgba(26, 188, 156, 0.7);
+    box-shadow: 0 6px 26px rgba(22, 160, 133, 0.48);
+    color: #ffffff;
 }
 
-/* ── Section openers ─────────────────────────────────────────────
-   A large, very faint numeral sitting behind the heading. It carries the sequence
-   without a coloured chip or a rule doing it, and at 8% opacity it is texture rather
-   than information — the heading below is what the reader actually reads. */
-
-.opener {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(10px, 1.4vw, 16px);
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 190px;
+    min-height: 50px;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius-full);
+    background: var(--bg-panel-color);
+    color: var(--text-color);
+    font-weight: 650;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease;
+    text-decoration: none;
 }
 
-.opener .numeral {
-    position: absolute;
-    /* Sits above and behind the kicker as a corner watermark. Any lower and its
-       counters crowd the label that has to be read. */
-    inset-block-start: -0.58em;
-    inset-inline-start: -0.1em;
-    z-index: -1;
-    font-size: clamp(88px, 13vw, 190px);
-    font-weight: 200;
-    letter-spacing: -0.05em;
-    line-height: 1;
-    color: var(--ink);
-    opacity: 0.06;
-    font-variant-numeric: tabular-nums;
-    user-select: none;
+.btn-secondary:hover {
+    border-color: var(--action-color);
+    background: var(--bg-card-hover);
+    color: var(--action-color);
+    box-shadow: 0 0 16px rgba(22, 160, 133, 0.15);
 }
 
-.opener h2 {
-    font-size: clamp(28px, 4.4vw, 54px);
-    max-width: 20ch;
+/* ── Reveal on Scroll ── */
+/* No `will-change` here. Around forty elements carry `data-reveal`, and promising the
+   compositor a layer for each of them costs memory on every one for an animation that
+   runs once, at most, and never again after `.is-in` lands. */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+        opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.opener .kicker,
-.section-head {
-    font-size: clamp(11px, 1vw, 12.5px);
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
+[data-reveal].is-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.opener .lede {
-    font-size: clamp(17px, 1.4vw, 20px);
-    font-weight: 350;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 58ch;
-}
-
-/* ── Reveal ──────────────────────────────────────────────────────
-   Sections lift in as they arrive. Off entirely for anyone who asked for less
-   motion, and the initial state is only applied by the script — so with JavaScript
-   disabled nothing is ever left invisible. */
-
-@media (prefers-reduced-motion: no-preference) {
-    .js-reveal {
-        opacity: 0;
-        transform: translateY(18px);
-        transition:
-            opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-            transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+@media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
     }
-
-    .js-reveal.is-in {
-        opacity: 1;
-        transform: none;
-    }
-}
-
-/* ── Selected text ───────────────────────────────────────────────
-   The same idea the extension uses — the accent behind, the ink kept — in this site's
-   tokens. Without it the page falls back to Chrome's default blue, which is the one
-   colour on the page that ignores the theme. */
-
-::selection {
-    background-color: color-mix(in srgb, var(--accent) 30%, transparent);
-    color: var(--ink);
-}
-
-/* On the tinted bands the ink token is the wrong one, so the pair is restated. */
-.band--tint ::selection {
-    background-color: color-mix(in srgb, var(--accent) 32%, transparent);
-    color: var(--band-ink);
-}
-
-/* ── Scrollbar ───────────────────────────────────────────────────
-   The same shape the extension draws — a rounded thumb outlined rather than filled,
-   which fills on hover — in this site's own tokens rather than the extension's. The
-   shape is the family resemblance; the colour is the site's. */
-
-::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--paper);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--paper);
-    border-radius: 10px;
-    border: 2px solid var(--hair);
-    /* The track is the page ground, so without this the thumb touches the content edge. */
-    background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent);
-    border-color: var(--accent);
-}
-
-::-webkit-scrollbar-corner {
-    background: var(--paper);
-}
-
-/* Firefox has no ::-webkit pseudo-elements; these two properties are the whole of what
-   it offers, and they land on the same two colours. */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--hair) var(--paper);
 }

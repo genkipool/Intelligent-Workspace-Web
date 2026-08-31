@@ -1,32 +1,57 @@
 ---
 import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import IconSprite from '@/components/IconSprite.astro';
+import { chromeIconNames, type IconName } from '@/data/icons';
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
 
 interface Props {
     lang: Lang;
     title?: string;
     description?: string;
-    /** The payment page is framed and indexed by nobody. */
     noindex?: boolean;
+    /**
+     * The glyphs this page's sprite carries. A page pays for the whole set only if it
+     * draws enough of them to be worth it, so the default is the chrome's own pair and
+     * the landing pages ask for everything. A name left out here renders an empty icon,
+     * which is why `icon-sprite.test.ts` checks every `<use>` against the built HTML.
+     */
+    icons?: readonly IconName[];
 }
 
-const { lang, title, description, noindex = false } = Astro.props;
+const { lang, title, description, noindex = false, icons = chromeIconNames } = Astro.props;
 const t = useTranslations(lang);
 
 const pageTitle = title ?? t('meta.title');
 const pageDescription = description ?? t('meta.description');
 
-/**
- * Alternate links for both languages, so a search engine knows the pages are the same
- * document rather than duplicate content. Derived from the current path, which means a
- * new page gets them for free.
- */
 const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
 const alternates = (['en', 'es'] as const).map((code) => ({
     code,
     href: new URL(localisePath(code, bare), Astro.site).href,
 }));
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: site.name,
+    operatingSystem: 'Google Chrome, Brave, Microsoft Edge, Opera, Vivaldi',
+    applicationCategory: 'ProductivityApplication',
+    description: pageDescription,
+    url: new URL(Astro.url.pathname, Astro.site).href,
+    offers: {
+        '@type': 'Offer',
+        price: '0.00',
+        priceCurrency: 'USD',
+    },
+    author: {
+        '@type': 'Organization',
+        name: site.owner,
+        url: site.sourceUrl,
+    },
+};
 ---
 
 <!doctype html>
@@ -36,54 +61,95 @@ const alternates = (['en', 'es'] as const).map((code) => ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="icon" href="/assets/icon.png" />
+        <link rel="icon" type="image/png" href="/assets/icon.png" />
         <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
         {noindex && <meta name="robots" content="noindex, nofollow" />}
         {!noindex && alternates.map((alt) => <link rel="alternate" hreflang={alt.code} href={alt.href} />)}
         {!noindex && <link rel="alternate" hreflang="x-default" href={alternates[0]!.href} />}
+
+        <!-- OpenGraph & Twitter Cards -->
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
         <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
-        {
-            /* Served from public/ rather than through astro:assets: a crawler needs a
-            stable absolute URL, and the hashed filename astro:assets produces changes
-            on every build. */
-        }
         <meta property="og:image" content={new URL('/assets/icon.png', Astro.site).href} />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
         <slot name="head" />
 
-        <!--
-            Stamps the stored theme before the first paint. `is:inline` keeps Astro from
-            bundling and deferring it: a deferred script runs after the browser has
-            already painted, which is exactly the flash of the wrong theme this exists to
-            prevent. Twelve lines in the head is the price of not having one.
+        <!-- ClientRouter: Zero-flash seamless client-side page transitions for language switching -->
+        <ClientRouter />
 
-            With nothing stored it stamps nothing at all, leaving the page on
-            `prefers-color-scheme` — the third state the stylesheet is written for.
-        -->
+        <!-- Instantaneous theme synchronization & Zero-Jump Scroll Retention -->
         <script is:inline>
-            try {
-                const stored = localStorage.getItem('iw-theme');
-                if (stored === 'dark' || stored === 'light') {
-                    document.documentElement.dataset.theme = stored;
-                }
-            } catch {
-                /* Private mode. The OS preference decides, which is a fine default. */
+            function applyTheme() {
+                try {
+                    const stored = localStorage.getItem('iw-theme') || localStorage.getItem('theme-mirror');
+                    if (stored === 'light') {
+                        document.documentElement.dataset.theme = 'light';
+                    } else if (stored === 'dark') {
+                        document.documentElement.dataset.theme = 'dark';
+                    } else if (
+                        window.matchMedia &&
+                        window.matchMedia('(prefers-color-scheme: light)').matches
+                    ) {
+                        document.documentElement.dataset.theme = 'light';
+                    } else {
+                        document.documentElement.dataset.theme = 'dark';
+                    }
+                } catch {}
             }
+            applyTheme();
+            document.addEventListener('astro:after-swap', applyTheme);
+            document.addEventListener('astro:page-load', applyTheme);
+
+            // Synchronous scroll retention on language toggle so the page never jumps to 0
+            document.addEventListener('click', (e) => {
+                const target = e.target && e.target.closest && e.target.closest('.lang-pill');
+                if (target) {
+                    sessionStorage.setItem('iw_lang_scroll', String(window.scrollY));
+                }
+            });
+
+            document.addEventListener('astro:before-swap', (e) => {
+                const saved = sessionStorage.getItem('iw_lang_scroll');
+                if (saved !== null) {
+                    const y = parseInt(saved, 10);
+                    e.newDocument.documentElement.scrollTop = y;
+                    e.newDocument.body.scrollTop = y;
+                }
+            });
+
+            document.addEventListener('astro:after-swap', () => {
+                const saved = sessionStorage.getItem('iw_lang_scroll');
+                if (saved !== null) {
+                    const y = parseInt(saved, 10);
+                    window.scrollTo({ top: y, behavior: 'instant' });
+                    sessionStorage.removeItem('iw_lang_scroll');
+                }
+            });
         </script>
     </head>
     <body>
         <a class="skip" href="#main">{t('nav.skip')}</a>
+
+        <!-- Ambient Background Canvas: High-performance CSS GPU rendering -->
+        <div class="ambient-bg" aria-hidden="true">
+            <div class="ambient-gradient-1"></div>
+            <div class="ambient-gradient-2"></div>
+            <div class="dot-grid"></div>
+        </div>
+
         <slot />
+
+        <IconSprite names={icons} />
+
         <script src="@/scripts/reveal.ts"></script>
     </body>
 </html>
 
-<!-- `is:global` because the slotted page owns this markup, not the layout: scoping
-     would attach the hash to the layout and never match what the page renders. -->
 <style is:global>
     .skip {
         position: absolute;
@@ -93,10 +159,12 @@ const alternates = (['en', 'es'] as const).map((code) => ({
     .skip:focus {
         left: var(--gutter);
         top: 16px;
-        z-index: 20;
-        background: var(--paper);
-        color: var(--ink);
-        padding: 10px 16px;
-        border-radius: 8px;
+        z-index: 100;
+        background: var(--bg-panel-color);
+        color: var(--text-color);
+        padding: 10px 18px;
+        border: 1px solid var(--action-color);
+        border-radius: var(--radius-sm);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 </style>

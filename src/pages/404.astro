@@ -1,0 +1,27 @@
+---
+/**
+ * Every address that matches no route ends here.
+ *
+ * It is rendered on demand rather than prerendered, and that is the whole point: a
+ * static `404.html` is one file, so it can only be written in one language, and the
+ * Vercel adapter would hand the same English copy to a reader who followed a broken
+ * link under `/es/`. Rendering it per request gives the page the address that was
+ * actually asked for, so `getLangFromUrl` can answer in the language that reader was
+ * already reading. The status code is set by the adapter either way.
+ *
+ * The site is otherwise static; this route and `/api/intent` are the only two that run
+ * on a server.
+ */
+import Base from '@/layouts/Base.astro';
+import ErrorPage from '@/components/ErrorPage.astro';
+import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+
+export const prerender = false;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Base lang={lang} title={t('errors.notFound.meta')} description={t('errors.notFound.desc')} noindex>
+    <ErrorPage lang={lang} status="404" />
+</Base>

@@ -1,11 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import { useTranslations, localisePath } from '@/i18n/utils';
-import logo from '@/assets/logo.png';
-import type { Lang } from '@/i18n/ui';
+import type { Lang, TranslationKey } from '@/i18n/ui';
 import { site } from '@/data/site';
-import ThemeToggle from '@/components/ThemeToggle.astro';
 import LangToggle from '@/components/LangToggle.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -13,80 +12,361 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const homeUrl = localisePath(lang, '/');
+
+/**
+ * The bar and the drawer are the same five links, so they are one list. They were two
+ * copies of the same markup, which is exactly the kind of pair that drifts: a section
+ * added to one and forgotten in the other is invisible until someone opens the site on
+ * a phone.
+ */
+const links: readonly { href: string; labelKey: TranslationKey }[] = [
+    { href: '#pilares', labelKey: 'nav.features' },
+    { href: '#navaja-suiza', labelKey: 'nav.tools' },
+    { href: '#comparativa', labelKey: 'comp.badge' },
+    { href: '#privacidad', labelKey: 'nav.privacy' },
+    { href: '#faq', labelKey: 'nav.faq' },
+];
 ---
 
-<header class="nav wrap">
-    <a class="brand" href={localisePath(lang, '/')}>
-        <Image src={logo} alt="" width={52} height={52} class="brand-mark" loading="eager" />
-        <span>{site.name}</span>
-    </a>
-    <nav>
-        <a href="#what">{t('nav.what')}</a>
-        <a href="#inside">{t('caps.heading')}</a>
-        <a href="#keyboard">{t('nav.keyboard')}</a>
-        <a href="#privacy">{t('nav.privacy')}</a>
-    </nav>
-    <div class="controls">
-        <ThemeToggle lang={lang} />
-        <LangToggle lang={lang} />
+<header class="site-header" id="top">
+    <div class="header-inner wrap">
+        <!-- Brand identity with seamless Extension Logo -->
+        <a href={homeUrl} class="brand-link" id="nav-brand-logo" aria-label="Intelligent Workspace">
+            <img
+                src="/assets/icon.png"
+                alt="Intelligent Workspace Logo"
+                width="32"
+                height="32"
+                class="brand-logo-img"
+                fetchpriority="high"
+                decoding="async"
+            />
+            <div class="brand-text-block">
+                <span class="brand-name">Intelligent Workspace</span>
+                <span class="version-tag">{t('nav.version')}</span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Clean & Essential) -->
+        <nav class="nav-links" aria-label="Main Navigation">
+            {
+                links.map((link) => (
+                    <a href={link.href} class="nav-item">
+                        {t(link.labelKey)}
+                    </a>
+                ))
+            }
+        </nav>
+
+        <!-- Right Side Controls & CTA -->
+        <div class="nav-actions">
+            <LangToggle lang={lang} />
+            <ThemeToggle lang={lang} />
+
+            <a
+                href={site.storeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary nav-install-btn"
+            >
+                <Icon name="chromeStore" size={18} />
+                <span>{t('nav.install')}</span>
+            </a>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button
+                id="mobile-menu-btn"
+                type="button"
+                class="mobile-toggle-btn"
+                aria-label="Toggle navigation menu"
+                aria-expanded="false"
+            >
+                <Icon name="menu" size={22} class="icon-open" />
+                <Icon name="close" size={22} class="icon-close" />
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer" class="mobile-drawer">
+        <div class="mobile-drawer-inner">
+            {
+                links.map((link) => (
+                    <a href={link.href} class="mobile-link">
+                        {t(link.labelKey)}
+                    </a>
+                ))
+            }
+            <div class="mobile-drawer-cta">
+                <a href={site.storeUrl} target="_blank" rel="noopener noreferrer" class="btn-primary w-full">
+                    {t('nav.install')}
+                </a>
+            </div>
+        </div>
     </div>
 </header>
 
-<style>
-    /* The switcher is a link, not a button: it navigates to a real URL, so it works
-       with JavaScript off and search engines can follow it. */
+<script>
+    function initNavHandlers() {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const drawer = document.getElementById('mobile-drawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const brandLink = document.getElementById('nav-brand-logo');
 
-    .nav {
-        /* Published as a custom property so the hero can subtract it from 100svh and
-           still fill exactly one screen. Guessing this number is how a hero ends up
-           76px too tall and forces a scroll. */
-        --nav-height: 76px;
-        min-height: var(--nav-height);
+        function toggleMenu() {
+            const isOpen = drawer?.classList.contains('is-open');
+            if (isOpen) {
+                drawer?.classList.remove('is-open');
+                menuBtn?.setAttribute('aria-expanded', 'false');
+            } else {
+                drawer?.classList.add('is-open');
+                menuBtn?.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        menuBtn?.addEventListener('click', toggleMenu);
+        mobileLinks.forEach((link) => {
+            link.addEventListener('click', () => {
+                drawer?.classList.remove('is-open');
+                menuBtn?.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Logo click smooth scroll to top
+        brandLink?.addEventListener('click', (e) => {
+            const path = window.location.pathname;
+            const isHome = path === '/' || path === '/es/' || path === '/es';
+            if (isHome) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.pushState(null, '', path);
+            }
+        });
+    }
+
+    initNavHandlers();
+    document.addEventListener('astro:page-load', initNavHandlers);
+</script>
+
+<style>
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        background: rgba(27, 38, 49, 0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-color);
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    :root[data-theme='light'] .site-header {
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-inner {
         display: flex;
         align-items: center;
-        gap: clamp(16px, 3vw, 40px);
-        padding-block: clamp(20px, 2.4vw, 30px);
+        justify-content: space-between;
+        gap: 20px;
+        height: 70px;
     }
 
-    .brand-mark {
-        /* Drawn at 2x and displayed at 26 so it stays crisp on a retina screen. */
-        width: 26px;
-        height: 26px;
-    }
-
-    .brand {
-        display: inline-flex;
+    .brand-link {
+        display: flex;
         align-items: center;
         gap: 10px;
-        font-size: 0.9rem;
-        font-weight: 620;
-        letter-spacing: -0.012em;
         text-decoration: none;
-        color: var(--band-ink);
-        white-space: nowrap;
+        color: var(--text-color);
+        flex-shrink: 0;
+        cursor: pointer;
     }
 
-    .nav nav {
-        margin-inline-start: auto;
+    .brand-logo-img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .brand-text-block {
         display: flex;
-        gap: clamp(14px, 2vw, 30px);
-        font-size: 0.88rem;
+        flex-direction: column;
+        line-height: 1.15;
     }
 
-    .nav nav a {
-        color: var(--band-soft);
-        text-decoration: none;
-        transition: color 0.16s ease;
+    .brand-name {
+        font-weight: 750;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+        color: var(--text-color);
     }
 
-    .nav nav a:hover {
-        color: var(--band-ink);
+    .version-tag {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--action-color);
+        letter-spacing: 0.02em;
     }
 
-    .controls {
+    :root[data-theme='light'] .version-tag {
+        color: var(--header-color);
+    }
+
+    .nav-links {
         display: flex;
         align-items: center;
         gap: 8px;
-        flex-shrink: 0;
+    }
+
+    .nav-item {
+        padding: 8px 14px;
+        border-radius: var(--radius-full);
+        font-size: 0.9rem;
+        font-weight: 550;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: all 0.18s ease;
+    }
+
+    .nav-item:hover {
+        color: var(--text-color);
+        background: var(--bg-card-hover);
+    }
+
+    :root[data-theme='light'] .nav-item:hover {
+        color: var(--text-color);
+        background: var(--bg-surface);
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-install-btn {
+        padding: 9px 20px;
+        font-size: 0.88rem;
+        min-width: unset;
+        min-height: unset;
+    }
+
+    .mobile-toggle-btn {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        color: var(--text-color);
+        cursor: pointer;
+    }
+
+    :root[data-theme='light'] .mobile-toggle-btn {
+        background: #ffffff;
+        border-color: var(--border-color);
+        color: var(--text-color);
+    }
+
+    :root[data-theme='light'] .mobile-toggle-btn:hover {
+        background: var(--bg-card-hover);
+        border-color: #16a085;
+        color: var(--header-color);
+    }
+
+    /* `:global` because the glyph is rendered by `Icon.astro`, so it carries that
+       component's scope and not this one's. Astro scopes every part of a selector, and
+       an unscoped element here would otherwise never be matched. */
+    .mobile-toggle-btn :global(.icon-close),
+    .mobile-toggle-btn[aria-expanded='true'] :global(.icon-open) {
+        display: none;
+    }
+
+    .mobile-toggle-btn[aria-expanded='true'] :global(.icon-close) {
+        display: block;
+    }
+
+    .mobile-drawer {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--bg-panel-color);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+        padding: 20px var(--gutter);
+        z-index: 60;
+    }
+
+    :root[data-theme='light'] .mobile-drawer {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 16px 40px rgba(11, 28, 21, 0.08);
+    }
+
+    .mobile-drawer.is-open {
+        display: block;
+    }
+
+    .mobile-drawer-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: var(--measure);
+        margin: 0 auto;
+    }
+
+    .mobile-link {
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-color);
+        transition: background 0.15s;
+    }
+
+    .mobile-link:hover {
+        background: var(--bg-card-hover);
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .mobile-link:hover {
+        background: var(--bg-card-hover);
+        color: var(--header-color);
+    }
+
+    .mobile-drawer-cta {
+        margin-top: 8px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .w-full {
+        width: 100%;
+    }
+
+    @media (max-width: 920px) {
+        .nav-links {
+            display: none;
+        }
+
+        .nav-install-btn {
+            display: none;
+        }
+
+        .mobile-toggle-btn {
+            display: flex;
+        }
     }
 </style>

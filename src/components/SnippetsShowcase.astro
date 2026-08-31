@@ -1,0 +1,154 @@
+---
+/**
+ * The snippet expander: a field, the menu it opens, and the syntax it understands.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import Showcase from '@/components/Showcase.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'fileLines', titleKey: 'snippets.f1.title', descKey: 'snippets.f1.desc' },
+    { icon: 'windowTop', titleKey: 'snippets.f2.title', descKey: 'snippets.f2.desc' },
+    { icon: 'typeTool', titleKey: 'snippets.f3.title', descKey: 'snippets.f3.desc' },
+];
+---
+
+<Showcase
+    id="snippets"
+    lang={lang}
+    eyebrowKey="snippets.badge"
+    titleKey="snippets.title"
+    subtitleKey="snippets.subtitle"
+    bullets={bullets}
+    centreVisual
+>
+    <!--
+        What `$$` opens: `hint-snippet-popup` from `hint_content.css`, with its
+        search field in a tinted header and the trigger and the expansion pushed
+        to opposite ends of each row. Centered and balanced within the right column.
+    -->
+    <div class="snippet-stage-card">
+        <div class="field-header-row">
+            <span class="field-label">{t('snippets.m.triggerLabel')}</span>
+        </div>
+        <div class="fake-field">
+            <span class="fake-field-text">$$</span>
+            <span class="fake-caret"></span>
+        </div>
+
+        <div class="iw-snippet-popup">
+            <div class="hint-snippet-search-container">
+                <span class="hint-snippet-search-input">{t('snippets.m.search')}</span>
+            </div>
+            <div class="hint-snippet-item selected">
+                <span class="hint-snippet-item-trigger">;pr</span>
+                <span class="hint-snippet-item-preview">{t('snippets.m.result')}</span>
+            </div>
+            <div class="hint-snippet-item">
+                <span class="hint-snippet-item-trigger">;mail</span>
+                <span class="hint-snippet-item-preview">{t('snippets.m.s2')}</span>
+            </div>
+            <div class="hint-snippet-item">
+                <span class="hint-snippet-item-trigger">;fecha#</span>
+                <span class="hint-snippet-item-preview">{t('snippets.m.s3')}</span>
+            </div>
+        </div>
+
+        <div class="syntax-chips snippet-presets-row">
+            <span class="syntax-chip"><code>;pr#</code> {t('snippets.m.p1')}</span>
+            <span class="syntax-chip"><code>$$</code> {t('snippets.m.p2')}</span>
+            <span class="syntax-chip"><code>{t('snippets.m.p3code')}</code> {t('snippets.m.p3')}</span>
+        </div>
+    </div>
+</Showcase>
+
+<style>
+    .snippet-stage-card {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        width: 100%;
+        max-width: 460px;
+        margin: 0 auto;
+    }
+
+    .field-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .field-label {
+        font-size: 0.74rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .field-label {
+        color: var(--header-color);
+    }
+
+    .fake-field {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 6px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        color: var(--text-color);
+        box-sizing: border-box;
+    }
+
+    :root[data-theme='light'] .fake-field {
+        background: var(--bg-color);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-color);
+    }
+
+    .iw-snippet-popup {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* The three pieces of real syntax, under the menu they belong to. */
+    /* The shared row, centred under a shot that is centred itself. */
+    .snippet-presets-row {
+        justify-content: center;
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .fake-caret {
+        display: inline-block;
+        width: 1px;
+        height: 16px;
+        background: var(--action-color);
+        animation: snipCaret 1.05s steps(1) infinite;
+    }
+    @keyframes snipCaret {
+        50% {
+            opacity: 0;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .fake-caret {
+            animation: none;
+        }
+    }
+</style>

@@ -2,6 +2,7 @@
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -9,45 +10,257 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-// Rendered at build time, so this is the year the site was deployed rather than the
-// year the reader is in. Redeploy annually, or accept the drift — it beats shipping
-// JavaScript for a number nobody reads.
-const year = new Date().getFullYear();
+const homeUrl = localisePath(lang, '/');
 ---
 
-<footer class="wrap">
-    <p>© {year} {site.owner} · {site.name}</p>
-    <nav>
-        <a href={localisePath(lang, '/pay')}>{t('donate.cta')}</a>
-        <a href={site.storeUrl} rel="noopener">{t('footer.store')}</a>
-    </nav>
+<footer class="site-footer">
+    <div class="footer-top-glow"></div>
+    <div class="wrap footer-inner">
+        <div class="footer-grid">
+            <!-- Brand Column -->
+            <div class="footer-brand-col">
+                <a href={homeUrl} class="footer-brand-link">
+                    <img
+                        src="/assets/icon.png"
+                        alt="Intelligent Workspace Logo"
+                        width="30"
+                        height="30"
+                        class="footer-logo-img"
+                    />
+                    <span class="footer-brand-name">Intelligent Workspace</span>
+                </a>
+                <p class="footer-brand-desc">{t('footer.desc')}</p>
+                <div class="footer-store-pill">
+                    <a
+                        href={site.storeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="store-badge-link"
+                    >
+                        <Icon name="chromeStore" size={18} />
+                        <span>{t('footer.store')}</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Col 1: Product -->
+            <div class="footer-col">
+                <h4 class="footer-col-title">{t('footer.prodTitle')}</h4>
+                <ul class="footer-links">
+                    <li><a href="#pilares">{t('nav.features')}</a></li>
+                    <li><a href="#pilares">{t('fhub.tab1')}</a></li>
+                    <li><a href="#pilares">{t('fhub.tab2')}</a></li>
+                    <li><a href="#pilares">{t('fhub.tab3')}</a></li>
+                    <li><a href="#teclado">{t('nav.keyboard')}</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 2: Utilities -->
+            <div class="footer-col">
+                <h4 class="footer-col-title">{t('footer.toolsTitle')}</h4>
+                <ul class="footer-links">
+                    <li><a href="#navaja-suiza">{t('bento.c1.title')}</a></li>
+                    <li><a href="#navaja-suiza">{t('bento.c2.title')}</a></li>
+                    <li><a href="#navaja-suiza">{t('bento.c3.title')}</a></li>
+                    <li><a href="#navaja-suiza">{t('bento.c4.title')}</a></li>
+                    <li><a href="#navaja-suiza">{t('bento.c6.title')}</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Community & Trust -->
+            <div class="footer-col">
+                <h4 class="footer-col-title">{t('footer.privacyTitle')}</h4>
+                <ul class="footer-links">
+                    <li><a href="#privacidad">{t('nav.privacy')}</a></li>
+                    <li><a href="#faq">{t('nav.faq')}</a></li>
+                    <li><a href="#equipo">{t('team.heading')}</a></li>
+                    <li>
+                        <a href={site.sourceUrl} target="_blank" rel="noopener noreferrer"
+                            >{t('footer.github')}</a
+                        >
+                    </li>
+                    <li><a href={localisePath(lang, '/pay')}>{t('hero.support')}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom-bar">
+            <span class="footer-copy">{t('footer.copyright')}</span>
+            <span class="footer-lic">{t('footer.license')}</span>
+        </div>
+    </div>
 </footer>
 
 <style>
-    /* ── Footer ────────────────────────────────────────────────────── */
+    .site-footer {
+        background: #111a22;
+        border-top: 1px solid var(--border-color);
+        position: relative;
+        margin-top: auto;
+        padding-top: clamp(48px, 6vw, 72px);
+        padding-bottom: 40px;
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease;
+    }
 
-    footer {
-        padding-block: clamp(28px, 3.5vw, 44px);
+    :root[data-theme='light'] .site-footer {
+        background: #eaf3ee;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .footer-top-glow {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--action-color), transparent);
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: clamp(32px, 4vw, 56px);
+        margin-bottom: 48px;
+    }
+
+    .footer-brand-col {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .footer-brand-link {
+        display: flex;
         align-items: center;
-        gap: 14px;
-        font-size: 0.85rem;
-        color: var(--muted);
-    }
-
-    footer nav {
-        display: flex;
-        gap: 22px;
-    }
-
-    footer a {
-        color: var(--muted);
+        gap: 10px;
         text-decoration: none;
+        color: var(--text-color);
     }
 
-    footer a:hover {
-        color: var(--ink);
+    .footer-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .footer-brand-name {
+        font-weight: 750;
+        font-size: 1.1rem;
+        color: var(--text-color);
+    }
+
+    .footer-brand-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        max-width: 320px;
+    }
+
+    .store-badge-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .store-badge-link:hover {
+        border-color: var(--action-color);
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .store-badge-link:hover {
+        border-color: var(--header-color);
+        color: var(--header-color);
+        background: var(--bg-card-hover);
+    }
+
+    .footer-col {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .footer-col-title {
+        font-size: 0.85rem;
+        font-weight: 750;
+        color: var(--text-color);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    .footer-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .footer-links a {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.18s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .footer-links a:hover {
+        color: var(--header-color);
+    }
+
+    .footer-bottom-bar {
+        padding-top: 32px;
+        border-top: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 0.82rem;
+        color: var(--text-dim);
+    }
+
+    :root[data-theme='light'] .footer-bottom-bar {
+        color: var(--text-dim);
+        border-top: 1px solid #d5e4dc;
+    }
+
+    @media (max-width: 900px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 36px 24px;
+        }
+
+        .footer-brand-col {
+            grid-column: span 2;
+        }
+    }
+
+    @media (max-width: 580px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-brand-col {
+            grid-column: span 1;
+        }
+
+        .footer-bottom-bar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
     }
 </style>

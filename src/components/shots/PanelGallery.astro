@@ -1,0 +1,62 @@
+---
+/**
+ * THE SCREENSHOT GALLERY, AND THE MENU THE CAPTURE BUTTON OPENS.
+ *
+ * The grid is `ScreenshotGalleryView.svelte` with the `gallery-*` rules of
+ * `content-renderer.css`: 16/10 cards, the title on a gradient along the bottom, and
+ * the pin and OCR buttons in the top corners. The menu underneath lists the five
+ * things the capture button can actually do, worded as `_locales` words them.
+ */
+import Icon from '@/components/Icon.astro';
+
+interface Props {
+    title: string;
+    shots: { title: string; pinned?: boolean }[];
+    options: { label: string; key?: string; active?: boolean }[];
+}
+
+const { title, shots, options } = Astro.props;
+---
+
+<div class="iw-shot">
+    <header class="header">
+        <h1 class="header-main-title">{title}</h1>
+        <div class="header-actions" aria-hidden="true">
+            <span class="control-btn"><Icon name="camera" /></span>
+            <span class="control-btn"><Icon name="download" /></span>
+            <span class="control-btn"><Icon name="home" /></span>
+            <span class="control-btn"><Icon name="back" /></span>
+        </div>
+    </header>
+
+    <div class="gallery-grid">
+        {
+            shots.map((shot) => (
+                <div class="gallery-item">
+                    <span class="gallery-image" />
+                    <span class:list={['gallery-action-btn', 'gallery-pin-btn', { active: shot.pinned }]}>
+                        <Icon name="pinArchive" size={14} />
+                    </span>
+                    <span class="gallery-action-btn gallery-ocr-btn">
+                        <Icon name="ocr" size={14} />
+                    </span>
+                    <span class="gallery-item-info">
+                        <p class="gallery-item-title">{shot.title}</p>
+                    </span>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="capture-menu">
+        {
+            options.map((option) => (
+                <span class:list={['capture-option', { active: option.active }]}>
+                    <Icon name="camera" size={15} />
+                    {option.label}
+                    {option.key && <span class="capture-key">{option.key}</span>}
+                </span>
+            ))
+        }
+    </div>
+</div>

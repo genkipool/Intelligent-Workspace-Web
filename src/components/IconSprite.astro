@@ -1,0 +1,37 @@
+---
+/**
+ * Every glyph the page can draw, written once.
+ *
+ * Rendered near the end of `<body>` in `Base.astro`; each `<Icon>` on the page is a
+ * `<use href="#iw-…">` pointing back into it. A `<symbol>` is never painted where it
+ * is defined, so the sprite carries the whole set at the cost of one copy.
+ *
+ * `viewBox` stays on the symbol, which is what lets `Icon.astro` render an `<svg>`
+ * with only a width and a height and still get the right crop.
+ */
+import { icons, type IconName } from '@/data/icons';
+
+interface Props {
+    /** Narrow the sprite when a page only draws a handful. Defaults to the whole set. */
+    names?: readonly IconName[];
+}
+
+const { names } = Astro.props;
+const entries = (names ?? (Object.keys(icons) as IconName[])).map((name) => ({ name, ...icons[name] }));
+---
+
+{
+    entries.length > 0 && (
+        <svg class="icon-sprite" aria-hidden="true" width="0" height="0">
+            {entries.map((icon) => (
+                <symbol id={`iw-${icon.name}`} viewBox={icon.viewBox} set:html={icon.body} />
+            ))}
+        </svg>
+    )
+}
+
+<style is:global>
+    .icon-sprite {
+        display: none;
+    }
+</style>

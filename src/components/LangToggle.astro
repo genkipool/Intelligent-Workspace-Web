@@ -1,14 +1,4 @@
 ---
-/**
- * A segmented EN | ES control whose halves are ordinary links.
- *
- * It reads as a toggle and behaves as navigation, which is the point: each language has
- * a real URL, so it works with JavaScript off, search engines can follow it, and the
- * page arrives with its copy already correct instead of swapping it after load.
- *
- * Each half points at the *current* page in that language, so switching never loses the
- * reader's place.
- */
 import { localisePath, useTranslations } from '@/i18n/utils';
 import { ui, type Lang } from '@/i18n/ui';
 
@@ -27,13 +17,14 @@ const options = (Object.keys(ui) as Lang[]).map((code) => ({
 }));
 ---
 
-<div class="lang-toggle" role="group" aria-label={t('nav.language')}>
+<div class="lang-toggle-wrap" role="group" aria-label={t('nav.language')}>
     {
         options.map((option) => (
             <a
                 href={option.href}
                 hreflang={option.code}
-                class:list={['lang-option', { current: option.current }]}
+                data-astro-history="replace"
+                class:list={['lang-pill', { active: option.current }]}
                 aria-current={option.current ? 'true' : undefined}
             >
                 {option.code.toUpperCase()}
@@ -43,34 +34,37 @@ const options = (Object.keys(ui) as Lang[]).map((code) => ({
 </div>
 
 <style>
-    .lang-toggle {
-        display: inline-flex;
-        padding: 2px;
-        border-radius: 999px;
-        border: 1px solid var(--band-hair);
-    }
-
-    .lang-option {
+    .lang-toggle-wrap {
         display: inline-flex;
         align-items: center;
+        padding: 3px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-color);
+        background: var(--bg-panel-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .lang-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 0.7rem;
-        font-weight: 660;
-        letter-spacing: 0.08em;
-        color: var(--band-soft);
+        border-radius: var(--radius-full);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
         text-decoration: none;
-        transition:
-            color 0.16s ease,
-            background-color 0.16s ease;
+        transition: all 0.18s ease;
     }
 
-    .lang-option:hover {
-        color: var(--band-ink);
+    .lang-pill:hover {
+        color: var(--text-color);
     }
 
-    .lang-option.current {
-        background: var(--band-2);
-        color: var(--band-ink);
+    .lang-pill.active {
+        background: linear-gradient(135deg, #16a085 0%, #0e6655 100%);
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(22, 160, 133, 0.3);
     }
 </style>

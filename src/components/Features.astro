@@ -1,21 +1,9 @@
 ---
-/**
- * The four features, each as a split: the screenshot on one side, the writing on the
- * other, alternating sides down the page.
- *
- * This is the page's main structural device. A stack of text blocks can only vary by
- * type and space; a split alternating against a screenshot gives the eye somewhere to
- * land on every scroll, and lets the copy be short because the picture is carrying the
- * "what does it look like" half of the job.
- *
- * The alternation comes from the index, so inserting a feature re-alternates the rest by
- * itself — and the numbering, the colour and the screenshot slot all come from
- * `data/features.ts` for the same reason.
- */
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
-import { features } from '@/data/features';
-import ProductShot from '@/components/ProductShot.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Icon from '@/components/Icon.astro';
+import PanelGroupList from '@/components/shots/PanelGroupList.astro';
 
 interface Props {
     lang: Lang;
@@ -25,123 +13,1001 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="what" class="entries wrap" data-reveal>
-    <div class="opener">
-        <span class="numeral" aria-hidden="true">02</span>
-        <p class="kicker">{t('features.heading')}</p>
-        <h2>{t('features.title')}</h2>
-    </div>
+<section id="pilares" class="section-container wrap">
+    <!-- Section Header (No Pill Badge) -->
+    <SectionHeader lang={lang} titleKey="fhub.title" subtitleKey="fhub.subtitle" />
 
-    {
-        features.map((feature, i) => (
-            <article class:list={['entry', { flipped: i % 2 === 1 }]} style={`--c: var(--c-${feature.tone})`}>
-                <div class="entry-shot">
-                    <ProductShot
-                        lang={lang}
-                        captionKey={feature.shot.captionKey}
-                        ratio={feature.shot.ratio}
-                        hint={feature.shot.hint}
-                    />
-                </div>
+    <!-- Interactive Tabs Hub -->
+    <div class="feature-hub-container" data-tabs-container data-reveal>
+        <!-- Tab Navigation (Clean SVG Icons) -->
+        <div class="tab-nav" role="tablist" aria-label={t('fhub.tablistLabel')} aria-orientation="horizontal">
+            <button
+                type="button"
+                id="tab-btn-agent"
+                class="tab-btn active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="tab-agent"
+                tabindex="0"
+                data-tab="tab-agent"
+            >
+                <Icon name="botFace" size={18} />
+                <span>{t('fhub.tab1')}</span>
+            </button>
 
-                <div class="entry-copy">
-                    <span class="idx">{String(i + 1).padStart(2, '0')}</span>
-                    <h3>{t(feature.titleKey)}</h3>
-                    <p class="lead">{t(feature.leadKey)}</p>
-                    <ul class="details">
-                        {feature.detailKeys.map((key) => (
-                            <li>{t(key)}</li>
-                        ))}
+            <button
+                type="button"
+                id="tab-btn-tabs"
+                class="tab-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="tab-tabs"
+                tabindex="-1"
+                data-tab="tab-tabs"
+            >
+                <Icon name="browserTabs" size={18} />
+                <span>{t('fhub.tab2')}</span>
+            </button>
+
+            <button
+                type="button"
+                id="tab-btn-focus"
+                class="tab-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="tab-focus"
+                tabindex="-1"
+                data-tab="tab-focus"
+            >
+                <Icon name="timer" size={18} />
+                <span>{t('fhub.tab3')}</span>
+            </button>
+
+            <button
+                type="button"
+                id="tab-btn-keys"
+                class="tab-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="tab-keys"
+                tabindex="-1"
+                data-tab="tab-keys"
+            >
+                <Icon name="keyboardKeys" size={18} />
+                <span>{t('fhub.tab4')}</span>
+            </button>
+        </div>
+
+        <!-- Autonomous Agent Panel -->
+        <div
+            id="tab-agent"
+            class="tab-panel active"
+            role="tabpanel"
+            aria-labelledby="tab-btn-agent"
+            tabindex="0"
+        >
+            <div class="panel-grid">
+                <div class="panel-info">
+                    <h3 class="panel-title">{t('fhub.agent.title')}</h3>
+                    <p class="panel-lead">{t('fhub.agent.lead')}</p>
+                    <ul class="feature-checklist">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.agent.f1')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.agent.f2')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.agent.f3')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.agent.f4')}</span>
+                        </li>
                     </ul>
                 </div>
-            </article>
-        ))
-    }
+                <div class="panel-preview">
+                    <!-- One exchange in the assistant's own card: the question as the
+                                         heading, the tools it ran as agent steps, then the answer. -->
+                    <div class="iw-shot">
+                        <header class="header">
+                            <h1 class="header-main-title">{t('fhub.agent.mockup.badge')}</h1>
+                            <div class="header-actions" aria-hidden="true">
+                                <span class="control-btn"><Icon name="clock" /></span>
+                                <span class="control-btn is-on"><Icon name="gemini" /></span>
+                                <span class="control-btn"><Icon name="more" /></span>
+                            </div>
+                        </header>
+                        <div class="iw-body">
+                            <div class="entry-card">
+                                <div class="entry-header">
+                                    <div class="entry-header-top">
+                                        <span class="entry-icon-agent"><Icon name="gemini" size={24} /></span>
+                                        <span class="entry-actions" aria-hidden="true">
+                                            <Icon name="reader" size={16} />
+                                            <Icon name="note" size={16} />
+                                            <Icon name="trash" size={16} />
+                                        </span>
+                                    </div>
+                                    <h2 class="entry-title">{t('fhub.agent.mockup.userMsg')}</h2>
+                                </div>
+                                <div class="agent-steps">
+                                    <div class="agent-step-indicator agent-step-done">
+                                        <span class="agent-step-icon">✓</span>
+                                        <span>{t('fhub.agent.mockup.actionDiscard')}</span>
+                                    </div>
+                                    <div class="agent-step-indicator agent-step-done">
+                                        <span class="agent-step-icon">✓</span>
+                                        <span>{t('fhub.agent.mockup.actionGroup')}</span>
+                                    </div>
+                                    <div class="agent-step-indicator agent-step-done">
+                                        <span class="agent-step-icon">✓</span>
+                                        <span>{t('fhub.agent.mockup.actionRam')}</span>
+                                    </div>
+                                </div>
+                                <div class="entry-content">{t('fhub.agent.mockup.agentReply')}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs, groups and rules -->
+        <div
+            id="tab-tabs"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-btn-tabs"
+            tabindex="0"
+            hidden
+        >
+            <div class="panel-grid">
+                <div class="panel-info">
+                    <h3 class="panel-title">{t('fhub.tabs.title')}</h3>
+                    <p class="panel-lead">{t('fhub.tabs.lead')}</p>
+                    <ul class="feature-checklist">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.tabs.f1')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.tabs.f2')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.tabs.f3')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.tabs.f4')}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-preview">
+                    <!--
+                        The same panel the hero shows, with another window's worth of
+                        groups in it: one component, two sets of content.
+                    -->
+                    <PanelGroupList
+                        title={t('fhub.tabs.mockup.badge')}
+                        duplicates="5"
+                        groups={[
+                            {
+                                name: t('fhub.tabs.mockup.c1Title'),
+                                color: 'c-red',
+                                count: '2/5',
+                                subgroups: [
+                                    {
+                                        domain: 'youtube.com',
+                                        tabs: [
+                                            {
+                                                title: 'Astro 6 en veinte minutos',
+                                                fav: 'fav-yt',
+                                                active: true,
+                                            },
+                                            {
+                                                title: 'Svelte 5 runes, explicadas',
+                                                fav: 'fav-yt',
+                                                seen: true,
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        domain: 'open.spotify.com',
+                                        tabs: [{ title: 'Focus · Deep work', fav: 'fav-sp' }],
+                                    },
+                                ],
+                            },
+                            {
+                                name: t('fhub.tabs.mockup.c2Title'),
+                                color: 'c-yellow',
+                                count: '3/3',
+                                allSeen: true,
+                                tabs: [
+                                    { title: 'Reserva de vuelos · Julio', fav: 'fav-bk', seen: true },
+                                    { title: 'Apartamento en Lisboa', fav: 'fav-bk', seen: true },
+                                ],
+                            },
+                            {
+                                name: t('fhub.tabs.mockup.c3Title'),
+                                color: 'c-grey',
+                                count: '0/4',
+                                tabs: [
+                                    { title: 'chrome://extensions', fav: 'fav-cr' },
+                                    { title: 'chrome://downloads', fav: 'fav-cr' },
+                                ],
+                            },
+                        ]}
+                    />
+                </div>
+            </div>
+        </div>
+
+        <!-- Time, limits and focus -->
+        <div
+            id="tab-focus"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-btn-focus"
+            tabindex="0"
+            hidden
+        >
+            <div class="panel-grid">
+                <div class="panel-info">
+                    <h3 class="panel-title">{t('fhub.focus.title')}</h3>
+                    <p class="panel-lead">{t('fhub.focus.lead')}</p>
+                    <ul class="feature-checklist">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.focus.f1')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.focus.f2')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.focus.f3')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.focus.f4')}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-preview">
+                    <!-- The web activity panel's own box for one site, with the three
+                                         rules it is under, and the timer that runs beside it. -->
+                    <div class="iw-shot">
+                        <header class="header">
+                            <h1 class="header-main-title">{t('fhub.focus.mockup.badge')}</h1>
+                            <div class="header-actions" aria-hidden="true">
+                                <span class="control-btn is-on"><Icon name="pin" /></span>
+                                <span class="control-btn"><Icon name="tabGroups" /></span>
+                                <span class="control-btn"><Icon name="home" /></span>
+                                <span class="control-btn"><Icon name="back" /></span>
+                            </div>
+                        </header>
+
+                        <div class="iw-body">
+                            <div class="wa-panel-box is-open">
+                                <div class="wa-panel-head">
+                                    <span class="favicon fav-yt"></span>
+                                    <span class="wa-panel-domain">youtube.com</span>
+                                    <span class="wa-panel-time">1h 12m</span>
+                                </div>
+                                <div class="wa-panel-figures">
+                                    <span class="wa-panel-figure">
+                                        <span class="wa-panel-figure-label">{t('activity.panel.visits')}</span
+                                        >
+                                        <span class="wa-panel-figure-val">14</span>
+                                    </span>
+                                    <span class="wa-panel-figure">
+                                        <span class="wa-panel-figure-label"
+                                            >{t('activity.panel.perVisit')}</span
+                                        >
+                                        <span class="wa-panel-figure-val">5m 09s</span>
+                                    </span>
+                                    <span class="wa-panel-figure">
+                                        <span class="wa-panel-figure-label">{t('activity.panel.share')}</span>
+                                        <span class="wa-panel-figure-val">23%</span>
+                                    </span>
+                                </div>
+                                <div class="wa-panel-row">
+                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowDaily')}</span>
+                                    <span class="wa-panel-row-val">1h 30m</span>
+                                    <span class="wa-panel-row-pct">80%</span>
+                                    <span class="wa-row-controls" aria-hidden="true">
+                                        <Icon name="edit" size={13} />
+                                        <Icon name="power" size={13} />
+                                        <Icon name="close" size={13} />
+                                    </span>
+                                </div>
+                                <div class="wa-panel-row">
+                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowWeekly')}</span>
+                                    <span class="wa-panel-row-val">6h 00m</span>
+                                    <span class="wa-panel-row-pct">45%</span>
+                                    <span class="wa-row-controls" aria-hidden="true">
+                                        <Icon name="edit" size={13} />
+                                        <Icon name="power" size={13} />
+                                        <Icon name="close" size={13} />
+                                    </span>
+                                </div>
+                                <div class="wa-panel-row">
+                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowHours')}</span>
+                                    <span class="wa-panel-row-val wa-panel-row-val-center">09:00-18:00</span>
+                                    <span class="wa-row-controls" aria-hidden="true">
+                                        <Icon name="edit" size={13} />
+                                        <Icon name="power" size={13} />
+                                        <Icon name="close" size={13} />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="wa-panel-box is-blocked">
+                                <div class="wa-panel-head">
+                                    <span class="favicon fav-rd"></span>
+                                    <span class="wa-panel-domain">reddit.com</span>
+                                    <span class="wa-badge-blocked">{t('activity.panel.overLimit')}</span>
+                                    <span class="wa-panel-time">45m</span>
+                                </div>
+                            </div>
+
+                            <!-- And the Pomodoro panel the toolbar's tomato opens. -->
+                            <div class="group-item pomo-box">
+                                <div class="group-header">
+                                    <span class="pomo-icon"><Icon name="pomodoro" size={18} /></span>
+                                    <h3 class="group-title">{t('fhub.focus.mockup.timerMode')}</h3>
+                                    <span class="group-tab-count all-seen"
+                                        >{t('fhub.focus.mockup.timer')}</span
+                                    >
+                                </div>
+                                <div class="tab-list-container pomo-stats">
+                                    <span class="pomo-stat"
+                                        ><b>0</b> {t('fhub.focus.mockup.statInterrupt')}</span
+                                    >
+                                    <span class="pomo-stat"
+                                        ><b>4h 05m</b> {t('fhub.focus.mockup.statDaily')}</span
+                                    >
+                                    <span class="pomo-stat"
+                                        ><b>96%</b> {t('fhub.focus.mockup.heatmapTitle')}</span
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard, omnibar and snippets -->
+        <div
+            id="tab-keys"
+            class="tab-panel"
+            role="tabpanel"
+            aria-labelledby="tab-btn-keys"
+            tabindex="0"
+            hidden
+        >
+            <div class="panel-grid">
+                <div class="panel-info">
+                    <h3 class="panel-title">{t('fhub.keys.title')}</h3>
+                    <p class="panel-lead">{t('fhub.keys.lead')}</p>
+                    <ul class="feature-checklist">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.keys.f1')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.keys.f2')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.keys.f3')}</span>
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t('fhub.keys.f4')}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-preview">
+                    <!--
+                        A page, with what the two engines put on top of it. The links
+                        are spans that only look like links: nothing here is clickable,
+                        and an anchor would promise a destination this page has not
+                        got. The depth comes from the overlays, not from a card around
+                        the whole thing.
+                    -->
+                    <div class="keys-preview">
+                        <article class="keys-page">
+                            <nav class="keys-nav">
+                                <span class="looks-like-link"
+                                    >{t('fhub.keys.mockup.linkDoc')}<kbd class="iw-hint-marker">sa</kbd></span
+                                >
+                                <span class="looks-like-link"
+                                    >{t('fhub.keys.mockup.linkSettings')}<kbd class="iw-hint-marker">sd</kbd
+                                    ></span
+                                >
+                                <span class="looks-like-link"
+                                    >{t('fhub.keys.mockup.linkDeploy')}<kbd class="iw-hint-marker">sf</kbd
+                                    ></span
+                                >
+                            </nav>
+
+                            <h4 class="keys-page-title">{t('fhub.keys.mockup.pageTitle')}</h4>
+                            <p class="keys-page-body">
+                                {t('fhub.keys.mockup.pageBodyA')}<span class="looks-like-link"
+                                    >{t('fhub.keys.mockup.pageLink')}<kbd class="iw-hint-marker">gj</kbd
+                                    ></span
+                                >{t('fhub.keys.mockup.pageBodyB')}
+                            </p>
+
+                            <div class="keys-field">
+                                <span class="keys-field-text">$$</span>
+                                <span class="keys-field-caret"></span>
+                            </div>
+
+                            <div class="iw-snippet-popup keys-popup">
+                                <div class="hint-snippet-search-container">
+                                    <span class="hint-snippet-search-input"
+                                        >{t('fhub.keys.mockup.snippetSearch')}</span
+                                    >
+                                </div>
+                                <div class="hint-snippet-item selected">
+                                    <span class="hint-snippet-item-trigger">;pr</span>
+                                    <span class="hint-snippet-item-preview">
+                                        {t('fhub.keys.mockup.snippetResult')}
+                                    </span>
+                                </div>
+                                <div class="hint-snippet-item">
+                                    <span class="hint-snippet-item-trigger">;mail</span>
+                                    <span class="hint-snippet-item-preview">{t('snippets.m.s2')}</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+<script>
+    function initFeatureTabs() {
+        const containers = document.querySelectorAll<HTMLElement>('[data-tabs-container]');
+
+        containers.forEach((container) => {
+            if (container.dataset.tabsInitialized === 'true') return;
+            container.dataset.tabsInitialized = 'true';
+
+            const tablist = container.querySelector<HTMLElement>('[role="tablist"]');
+            const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+            const panels = Array.from(container.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+            if (!tablist || tabs.length === 0) return;
+
+            function switchTab(targetTab: HTMLButtonElement, shouldFocus = true) {
+                const targetPanelId =
+                    targetTab.getAttribute('aria-controls') || targetTab.getAttribute('data-tab');
+
+                tabs.forEach((tab) => {
+                    const isSelected = tab === targetTab;
+                    tab.classList.toggle('active', isSelected);
+                    tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+                    tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+                });
+
+                panels.forEach((panel) => {
+                    const isTarget = panel.id === targetPanelId;
+                    panel.classList.toggle('active', isTarget);
+                    if (isTarget) {
+                        panel.removeAttribute('hidden');
+                    } else {
+                        panel.setAttribute('hidden', '');
+                    }
+                });
+
+                if (shouldFocus) {
+                    targetTab.focus();
+                }
+            }
+
+            // Click handling
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => {
+                    switchTab(tab, false);
+                });
+            });
+
+            // WAI-ARIA Keyboard navigation with roving tabindex and cyclic wrap-around
+            tablist.addEventListener('keydown', (e: KeyboardEvent) => {
+                const activeElement = document.activeElement as HTMLButtonElement;
+                const currentIndex = tabs.indexOf(activeElement);
+                if (currentIndex === -1) return;
+
+                let nextIndex = -1;
+
+                switch (e.key) {
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        nextIndex = (currentIndex + 1) % tabs.length;
+                        break;
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        nextIndex = 0;
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        nextIndex = tabs.length - 1;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (nextIndex !== -1 && tabs[nextIndex]) {
+                    switchTab(tabs[nextIndex], true);
+                }
+            });
+        });
+    }
+
+    // Initialize on direct script execution & Astro View Transitions
+    initFeatureTabs();
+    document.addEventListener('astro:page-load', initFeatureTabs);
+</script>
+
 <style>
-    .entries {
-        padding-block: clamp(56px, 8vw, 104px) clamp(64px, 9vw, 116px);
+    .feature-hub-container {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
     }
 
-    .opener {
-        margin-block-end: clamp(36px, 5vw, 64px);
-    }
-
-    .entry {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-        gap: clamp(28px, 5vw, 76px);
+    /* Tab Controls: Floating Premium Segmented Control */
+    .tab-nav {
+        display: flex;
         align-items: center;
-        padding-block: clamp(36px, 5vw, 72px);
+        justify-content: center;
+        gap: 6px;
+        /* One row. The bar is a segmented control: wrapped onto two lines it stops
+           reading as one, and the active pill ends up sitting under the others.
+           Below the breakpoint the labels go and the icons carry it instead. */
+        flex-wrap: nowrap;
+        background: rgba(27, 38, 49, 0.75);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        padding: 6px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-color);
+        box-shadow:
+            0 10px 30px -5px rgba(0, 0, 0, 0.35),
+            0 0 20px -4px rgba(22, 160, 133, 0.12),
+            inset 0 1px 1px rgba(255, 255, 255, 0.08);
+        max-width: 920px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 10;
     }
 
-    /* Order rather than direction: `direction: rtl` would also flip the text inside. */
-    .entry.flipped .entry-shot {
-        order: 2;
+    :root[data-theme='light'] .tab-nav {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid var(--border-color);
+        box-shadow:
+            0 10px 28px -4px rgba(11, 28, 21, 0.08),
+            0 2px 8px rgba(22, 160, 133, 0.06),
+            inset 0 1px 2px rgba(255, 255, 255, 0.8);
     }
 
-    .entry-copy {
+    .tab-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 10px 22px;
+        border-radius: var(--radius-full);
+        background: transparent;
+        border: 1px solid transparent;
+        color: var(--text-muted);
+        font-size: 0.93rem;
+        font-weight: 650;
+        cursor: pointer;
+        position: relative;
+        user-select: none;
+        transition:
+            color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+            background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+            box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* `:global` because the glyph is rendered by `Icon.astro`, so it carries that
+       component's scope and not this one's. Astro scopes every part of a selector, and
+       an unscoped element here would otherwise never be matched. */
+    .tab-btn :global(svg) {
+        flex-shrink: 0;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-btn:hover:not(.active) {
+        color: var(--text-color);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+    }
+
+    :root[data-theme='light'] .tab-btn:hover:not(.active) {
+        color: var(--text-color);
+        background: rgba(22, 160, 133, 0.08);
+        border-color: rgba(22, 160, 133, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .tab-btn:hover:not(.active) :global(svg) {
+        transform: scale(1.08);
+    }
+
+    .tab-btn:active {
+        transform: scale(0.97);
+    }
+
+    .tab-btn:focus-visible {
+        outline: 2px solid var(--action-color);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.25);
+    }
+
+    :root[data-theme='light'] .tab-btn:focus-visible {
+        outline: 2px solid var(--header-color);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(14, 102, 85, 0.2);
+    }
+
+    .tab-btn.active {
+        background: linear-gradient(135deg, #16a085 0%, #0e6655 100%);
+        color: #ffffff;
+        border: 1px solid rgba(46, 204, 113, 0.35);
+        box-shadow:
+            0 4px 18px rgba(22, 160, 133, 0.4),
+            0 1px 3px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    :root[data-theme='light'] .tab-btn.active {
+        background: linear-gradient(135deg, #16a085 0%, var(--header-color) 100%);
+        color: #ffffff;
+        border: 1px solid rgba(22, 160, 133, 0.4);
+        box-shadow:
+            0 4px 16px rgba(14, 102, 85, 0.3),
+            0 1px 3px rgba(22, 160, 133, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .tab-btn.active :global(svg) {
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+        display: none;
+    }
+
+    .tab-panel.active {
+        display: block;
+        animation: tabFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .tab-panel[hidden] {
+        display: none !important;
+    }
+
+    .tab-panel:focus-visible {
+        outline: 2px solid var(--action-color);
+        outline-offset: 4px;
+        border-radius: var(--radius-lg);
+    }
+
+    @keyframes tabFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .tab-panel.active {
+            animation: none;
+        }
+        .tab-btn {
+            transition: none;
+        }
+    }
+
+    .panel-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: clamp(32px, 5vw, 64px);
+        align-items: center;
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: clamp(32px, 5vw, 56px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    :root[data-theme='light'] .panel-grid {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(11, 28, 21, 0.05);
+    }
+
+    .panel-info {
         display: flex;
         flex-direction: column;
-        gap: clamp(10px, 1.4vw, 16px);
-        min-width: 0;
+        gap: 20px;
     }
 
-    .idx {
-        font-family: var(--mono);
-        font-size: 12px;
-        font-weight: 620;
-        letter-spacing: 0.1em;
-        color: var(--c);
-        font-variant-numeric: tabular-nums;
+    .panel-title {
+        font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+        color: var(--text-color);
     }
 
-    .entry h3 {
-        font-size: clamp(24px, 2.8vw, 38px);
-        font-weight: 300;
-        letter-spacing: -0.034em;
-        max-width: 18ch;
+    .panel-lead {
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        line-height: 1.65;
     }
 
-    .lead {
-        font-size: clamp(16px, 1.15vw, 18px);
-        font-weight: 350;
-        line-height: 1.6;
-        color: var(--ink-soft);
-        max-width: 52ch;
-    }
-
-    /* The specifics. A hairline in the feature's own colour rather than bullets: it ties
-       each detail back to the numeral without adding a second kind of list marker. */
-    .details {
+    .feature-checklist {
         list-style: none;
-        margin: clamp(4px, 0.8vw, 10px) 0 0;
-        padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 11px;
-        max-width: 52ch;
+        gap: 12px;
     }
 
-    .details li {
-        font-size: 14.5px;
-        line-height: 1.55;
-        color: var(--muted);
-        padding-inline-start: 15px;
-        border-inline-start: 2px solid color-mix(in srgb, var(--c) 45%, transparent);
+    .feature-checklist li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.5;
     }
 
-    @media (max-width: 860px) {
-        .entry {
-            grid-template-columns: minmax(0, 1fr);
-            gap: 24px;
-            padding-block: clamp(30px, 6vw, 44px);
+    .check-icon {
+        color: var(--action-color);
+        font-weight: 800;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+
+    :root[data-theme='light'] .check-icon {
+        color: var(--header-color);
+    }
+
+    /* ── The shots inside a panel ──
+       The chrome, the group list, the activity boxes and the assistant's card all
+       come from `src/styles/extension-ui.css`, which mirrors the extension. Only
+       what is particular to this section lives here. */
+
+    .panel-preview .iw-shot {
+        width: 100%;
+    }
+
+    /* Favicon stand-ins: the panel fetches the real ones from Chrome's favicon
+       store, which a web page cannot reach. */
+
+    /* The Pomodoro panel, drawn as the card the toolbar's tomato opens. */
+    .pomo-icon {
+        display: inline-flex;
+        color: #e74c3c;
+        flex-shrink: 0;
+    }
+
+    .pomo-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        padding: 10px 8px;
+    }
+
+    .pomo-stat {
+        font-size: 0.78rem;
+        color: #f5f5f5;
+        opacity: 0.85;
+    }
+
+    .pomo-stat b {
+        color: #16a085;
+        font-weight: 800;
+    }
+
+    /* ── Tab 4: a page, with what the two engines put on top of it ── */
+
+    .keys-preview {
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    /*
+     * A scrap of page rather than a card: the ground is the section's own, and the
+     * only thing that lifts off it is the snippet menu, because that is the one part
+     * the extension actually draws over the page.
+     */
+    .keys-page {
+        position: relative;
+        width: 100%;
+        max-width: 460px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding-bottom: 6px;
+    }
+
+    .keys-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    :root[data-theme='light'] .keys-nav {
+        border-bottom-color: var(--border-subtle);
+    }
+
+    .keys-page-title {
+        font-size: 1.15rem;
+        font-weight: 750;
+        line-height: 1.3;
+        color: var(--text-color);
+    }
+
+    .keys-page-body {
+        font-size: 0.94rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+    }
+
+    /*
+     * A span that looks like a page link and is not one. The hint labels only make
+     * sense over something link-shaped, but a real anchor here would promise a
+     * destination this page does not have, so the cursor stays an arrow and there is
+     * no href to follow. The label sits on the link the way the engine puts it: at
+     * the start of the element's box, overlapping it.
+     */
+    .looks-like-link {
+        position: relative;
+        display: inline;
+        color: #6cb6ff;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: default;
+        white-space: nowrap;
+    }
+
+    :root[data-theme='light'] .looks-like-link {
+        color: #1155cc;
+    }
+
+    .looks-like-link .iw-hint-marker {
+        position: absolute;
+        top: -0.55em;
+        left: -0.35em;
+        z-index: 2;
+    }
+
+    /* An ordinary text field on that page, with the two characters being typed. */
+    .keys-field {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 6px;
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        color: var(--text-color);
+    }
+
+    :root[data-theme='light'] .keys-field {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+    }
+
+    .keys-field-caret {
+        display: inline-block;
+        width: 1px;
+        height: 16px;
+        background: var(--action-color);
+        animation: keysCaret 1.05s steps(1) infinite;
+    }
+
+    @keyframes keysCaret {
+        50% {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .keys-field-caret {
+            animation: none;
+        }
+    }
+
+    /* The menu is an overlay on the page, so it carries the shadow and sits slightly
+       inset from the field it opened under, the way the caret places it. */
+    .keys-popup {
+        margin-left: 18px;
+        margin-top: -8px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+    }
+
+    :root[data-theme='light'] .keys-popup {
+        box-shadow: 0 14px 34px rgba(11, 28, 21, 0.18);
+    }
+
+    @media (max-width: 900px) {
+        .tab-nav {
+            gap: 4px;
+            padding: 5px;
         }
 
-        /* One column: the picture always leads, whichever side it would have taken. */
-        .entry.flipped .entry-shot {
-            order: 0;
+        .tab-btn {
+            padding: 8px 14px;
+            font-size: 0.86rem;
+            gap: 7px;
+        }
+
+        .panel-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Narrower than this the four labels cannot share a line, so the icons carry
+       the bar on their own and the label is left to the panel heading below. */
+    @media (max-width: 640px) {
+        .tab-nav {
+            justify-content: space-between;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .tab-btn {
+            justify-content: center;
+            padding: 10px 14px;
+        }
+
+        .tab-btn span {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
         }
     }
 </style>

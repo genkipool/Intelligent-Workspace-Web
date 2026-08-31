@@ -1,0 +1,327 @@
+---
+/**
+ * The one screen behind every error route, in the shape `radix-next` gives its
+ * `NotFoundContent`: the status code set enormous and almost invisible behind the
+ * content, a single coloured glow under it, the brand mark turned upside down to say
+ * "this failed", a status pill, the sentence, and two buttons.
+ *
+ * Only the palette is ours. The reference draws it in its own accent; here the surface
+ * tokens come from `global.css`, so the page follows the Viridian theme and the
+ * light/dark toggle like every other page on the site.
+ *
+ * It carries its own header and footer rather than `Nav.astro` and `SiteFooter.astro`:
+ * every link in those two is an anchor into a section of the landing page, and an
+ * anchor to a section that is not on this page is a dead link. What is left here goes
+ * somewhere real.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+import LangToggle from '@/components/LangToggle.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+
+interface Props {
+    lang: Lang;
+    /** The HTTP status this page is served with. Also the figure drawn behind it. */
+    status: '404' | '500';
+}
+
+const { lang, status } = Astro.props;
+const t = useTranslations(lang);
+
+const notFound = status === '404';
+const title = notFound ? t('errors.notFound.title') : t('errors.server.title');
+const description = notFound ? t('errors.notFound.desc') : t('errors.server.desc');
+const cta = notFound ? t('errors.notFound.cta') : t('errors.server.cta');
+
+const homeUrl = localisePath(lang, '/');
+const payUrl = localisePath(lang, '/pay');
+---
+
+<header class="error-topbar">
+    <div class="wrap error-topbar-inner">
+        <a href={homeUrl} class="error-brand" aria-label={site.name}>
+            <img
+                src="/assets/icon.png"
+                alt=""
+                width="32"
+                height="32"
+                class="error-brand-logo"
+                aria-hidden="true"
+                decoding="async"
+            />
+            <span class="error-brand-name">{site.name}</span>
+        </a>
+
+        <div class="error-topbar-actions">
+            <LangToggle lang={lang} />
+            <ThemeToggle lang={lang} />
+        </div>
+    </div>
+</header>
+
+<main class="error-main" id="main">
+    <!-- The status code, set as scenery. `aria-hidden` because the pill below already
+         says it in words, and a screen reader should hear it once. -->
+    <div class="error-ghost" aria-hidden="true">{status}</div>
+    <div class="error-glow" aria-hidden="true"></div>
+
+    <div class="wrap error-content">
+        <p class="error-pill">
+            <span class="error-pill-dot" aria-hidden="true"></span>
+            {t('errors.badge')}: {status}
+        </p>
+
+        <h1 class="error-title">{title}</h1>
+        <p class="error-lede">{description}</p>
+
+        <div class="error-actions">
+            {
+                !notFound && (
+                    <button id="error-retry" type="button" class="btn-secondary">
+                        {t('errors.server.retry')}
+                    </button>
+                )
+            }
+            <a href={homeUrl} class="btn-primary">{cta}</a>
+        </div>
+
+        <p class="error-links">
+            <a href={payUrl}>{t('errors.support')}</a>
+            <span class="error-links-sep" aria-hidden="true">·</span>
+            <a href={site.sourceUrl} target="_blank" rel="noopener noreferrer">{t('errors.source')}</a>
+        </p>
+    </div>
+</main>
+
+<footer class="error-footer">
+    <div class="wrap error-footer-inner">
+        <span>{t('footer.copyright')}</span>
+        <span>{t('footer.license')}</span>
+    </div>
+</footer>
+
+{
+    /* Astro has no `reset()` to hand a button, so "try again" is a reload: the whole
+       point of a 500 is that the render, not the client, is what failed. */
+}
+<script>
+    document.getElementById('error-retry')?.addEventListener('click', () => {
+        window.location.reload();
+    });
+</script>
+
+<style>
+    /* ── Header ── */
+    .error-topbar {
+        position: relative;
+        z-index: 2;
+        padding-block: 18px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .error-topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .error-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .error-brand-logo {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    .error-brand-name {
+        font-weight: 750;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+    }
+
+    .error-topbar-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* ── The stage ── */
+    .error-main {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding-block: clamp(48px, 9vh, 110px);
+        text-align: center;
+    }
+
+    /* The status code, enormous and nearly transparent, dead centre and behind
+       everything. `blur` keeps it from reading as a heading. */
+    .error-ghost {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        font-size: clamp(14rem, 34vw, 30rem);
+        font-weight: 900;
+        line-height: 0.8;
+        letter-spacing: -0.06em;
+        color: var(--text-color);
+        opacity: 0.07;
+        filter: blur(1px);
+        user-select: none;
+        pointer-events: none;
+    }
+
+    :root[data-theme='light'] .error-ghost {
+        opacity: 0.05;
+    }
+
+    .error-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -2;
+        width: min(520px, 90vw);
+        aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(22, 160, 133, 0.18) 0%, transparent 70%);
+        filter: blur(60px);
+        pointer-events: none;
+    }
+
+    :root[data-theme='light'] .error-glow {
+        background: radial-gradient(circle, rgba(22, 160, 133, 0.12) 0%, transparent 70%);
+    }
+
+    .error-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        max-width: 760px;
+    }
+
+    /* Upside down, and lit in the error colour: the mark itself says the request did
+       not land, before a single word is read. */
+    .error-mark {
+        width: clamp(96px, 14vw, 140px);
+        height: auto;
+        object-fit: contain;
+        transform: scaleY(-1);
+        filter: drop-shadow(0 0 30px rgba(231, 76, 60, 0.45));
+        opacity: 0.9;
+    }
+
+    .error-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(231, 76, 60, 0.35);
+        background: rgba(231, 76, 60, 0.08);
+        color: var(--error-color);
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        backdrop-filter: blur(6px);
+    }
+
+    .error-pill-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--error-color);
+        box-shadow: 0 0 8px var(--error-color);
+    }
+
+    .error-title {
+        font-size: clamp(2.2rem, 5vw, 3.6rem);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        color: var(--text-color);
+    }
+
+    .error-lede {
+        max-width: 620px;
+        font-size: clamp(1rem, 1.3vw, 1.15rem);
+        line-height: 1.7;
+        color: var(--text-muted);
+    }
+
+    .error-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 6px;
+    }
+
+    .error-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.88rem;
+        color: var(--text-dim);
+    }
+
+    .error-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .error-links a:hover {
+        color: var(--action-color);
+        border-bottom-color: var(--action-color);
+    }
+
+    /* ── Footer ── */
+    .error-footer {
+        position: relative;
+        z-index: 2;
+        margin-top: auto;
+        padding-block: 22px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .error-footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+        .error-brand-name {
+            display: none;
+        }
+
+        .error-footer-inner {
+            justify-content: center;
+            text-align: center;
+        }
+    }
+</style>

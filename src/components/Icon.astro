@@ -1,0 +1,42 @@
+---
+/**
+ * One glyph, as a reference into the page's sprite.
+ *
+ * The paths live in `@/data/icons`; `IconSprite.astro` writes each of them into the
+ * document once as a `<symbol>`, and this renders a `<use>` that points at one. The
+ * landing page draws around 250 icons, and inlining their path data at every one of
+ * those cost about 100 KB of the HTML — four times what the whole sprite costs.
+ *
+ * `<use>` inherits colour and stroke from the `<svg>` here, so the stylesheets that
+ * size and colour an icon (`.iw-reader-panel .btn svg`, `.iw-pip .itg-pip-btn svg`)
+ * keep working untouched: every one of them targets the `<svg>` element rather than
+ * its children.
+ *
+ * The `viewBox` is repeated here even though the symbol already carries one.
+ * `transform-box` defaults to `view-box`, and an `<svg>` without a `viewBox` has no
+ * reference box to resolve a rotation against, so a rule like the FAQ's
+ * `.faq-item[open] .faq-chevron { transform: rotate(180deg) }` computes to the identity
+ * matrix and the chevron simply never turns. Twenty bytes an icon buys that back.
+ *
+ * A scoped style in the calling component cannot reach this `<svg>`: it carries this
+ * component's scope, not the caller's. Consumers that style a glyph use `:global()`.
+ */
+import { icons, type IconName } from '@/data/icons';
+
+interface Props {
+    name: IconName;
+    size?: number;
+    class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+---
+
+<svg
+    width={size}
+    height={size}
+    viewBox={icons[name].viewBox}
+    class={className}
+    aria-hidden="true"
+    focusable="false"><use href={`#iw-${name}`}></use></svg
+>

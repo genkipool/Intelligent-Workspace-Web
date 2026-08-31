@@ -1,0 +1,120 @@
+---
+/**
+ * Reader mode and the read-aloud player, drawn on a scrap of the page they act on.
+ */
+import type { Lang } from '@/i18n/ui';
+import { useTranslations } from '@/i18n/utils';
+import Showcase from '@/components/Showcase.astro';
+import Icon from '@/components/Icon.astro';
+import type { ShowcaseBullet } from '@/components/Showcase.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const bullets: readonly ShowcaseBullet[] = [
+    { icon: 'mic', titleKey: 'reader.f1.title', descKey: 'reader.f1.desc' },
+    { icon: 'bookOpen', titleKey: 'reader.f2.title', descKey: 'reader.f2.desc' },
+    { icon: 'globe', titleKey: 'reader.f3.title', descKey: 'reader.f3.desc' },
+];
+---
+
+<Showcase
+    id="modo-lectura"
+    lang={lang}
+    eyebrowKey="reader.badge"
+    titleKey="reader.title"
+    subtitleKey="reader.subtitle"
+    bullets={bullets}
+    reverse
+    alt
+>
+    <!--
+        What the reader actually puts on a page. The player is a 50px column of
+        round buttons pinned to the right edge (`read-aloud.css`), not a
+        toolbar; the two marks are the ones `paintHighlights()` writes: the
+        paragraph at the action colour and 0.3 alpha, the word at 0.8 with ink
+        light enough to read on it.
+    -->
+    <div class="reader-stage">
+        <article class="reader-page">
+            <h3 class="reader-page-title">{t('reader.m.articleTitle')}</h3>
+            <p class="reader-page-meta">{t('reader.m.articleMeta')}</p>
+            <p class="reader-page-body iw-mark-paragraph">
+                {t('reader.m.bodyA')}<mark class="iw-mark-word">{t('reader.m.mark')}</mark>{
+                    t('reader.m.bodyB')
+                }
+            </p>
+            <p class="reader-page-body">{t('reader.m.tail')}</p>
+        </article>
+
+        <div class="iw-reader-panel" aria-hidden="true">
+            <span class="btn"><Icon name="readerCollapse" size={16} /></span>
+            <span class="separator"></span>
+            <span class="btn"><Icon name="readerPrev" size={16} /></span>
+            <span class="btn toggle"><Icon name="readerPause" size={19} /></span>
+            <span class="btn"><Icon name="readerNext" size={16} /></span>
+            <span class="progress">4 / 17</span>
+            <span class="speed">1.25x</span>
+            <span class="separator"></span>
+            <span class="btn"><Icon name="readerSettings" size={16} /></span>
+            <span class="btn"><Icon name="readerClose" size={16} /></span>
+        </div>
+    </div>
+</Showcase>
+
+<style>
+    /* ── Reader Simulation Card ── */
+    /* A scrap of page with the player floating on it, the way it really sits. */
+    .reader-stage {
+        position: relative;
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        padding: clamp(20px, 3vw, 30px);
+        padding-right: clamp(78px, 8vw, 96px);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    :root[data-theme='light'] .reader-stage {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 30px rgba(11, 28, 21, 0.08);
+    }
+
+    .reader-page {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .reader-page-title {
+        font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+        font-weight: 700;
+        line-height: 1.3;
+        color: var(--text-color);
+    }
+
+    .reader-page-meta {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+
+    .reader-page-body {
+        font-size: 0.94rem;
+        line-height: 1.7;
+        color: var(--text-soft);
+    }
+
+    /* The player is fixed to the right edge of the viewport in the browser; here it
+       is pinned to the right edge of the page it is reading. */
+    .iw-reader-panel {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>

@@ -1,0 +1,123 @@
+---
+/**
+ * THE RULES MANAGER, AS IT OPENS IN THE SIDE PANEL.
+ *
+ * `rules.html` at panel width, which is what `manifest.json` opens the panel on by default.
+ * The classes live in `src/styles/extension-ui.css`.
+ */
+import Icon from '@/components/Icon.astro';
+
+export interface RuleRow {
+    name: string;
+    /** One of Chrome's nine tab-group colours, as `c-blue`, `c-green` and so on. */
+    color: string;
+    /** The URL fragments the rule owns. A tab whose address contains one lands here. */
+    urls: string[];
+    /** A rule that has been switched off keeps its URLs but stops grouping. */
+    off?: boolean;
+}
+
+interface Props {
+    /** The green bar's heading: the page is called "Manage rules" there. */
+    title: string;
+    rules: RuleRow[];
+    footerNote: string;
+}
+
+const { title, rules, footerNote } = Astro.props;
+
+/** Chrome's nine tab-group colours, in the order the footer lists them. */
+const dots = [
+    '#5f6368',
+    '#1a73e8',
+    '#d93025',
+    '#f9ab00',
+    '#188038',
+    '#d01884',
+    '#a142f4',
+    '#007b83',
+    '#fa903e',
+];
+---
+
+<div class="iw-shot iw-rules">
+    <!-- The bar every side-panel page carries, which the wide layout does not have. -->
+    <header class="header">
+        <h1 class="header-main-title">{title}</h1>
+        <div class="header-actions" aria-hidden="true">
+            <span class="control-btn is-on"><Icon name="pin" /></span>
+            <span class="control-btn"><Icon name="tabGroups" /></span>
+            <span class="control-btn"><Icon name="home" /></span>
+            <span class="control-btn"><Icon name="back" /></span>
+        </div>
+    </header>
+
+    <!-- Four buttons sharing the width, icon only: the labels are hidden at this size. -->
+    <div class="rules-action-buttons" aria-hidden="true">
+        <span class="action-button"><Icon name="plus" size={19} /></span>
+        <span class="action-button"><Icon name="export" size={19} /></span>
+        <span class="action-button"><Icon name="importFile" size={19} /></span>
+        <span class="action-button"><Icon name="settings" size={19} /></span>
+    </div>
+
+    <div class="rules-list">
+        {
+            rules.map((rule) => (
+                <div class="rule-item">
+                    <div class="rule-info">
+                        <span class:list={['color-indicator', rule.color]} />
+                        <h3 class="rule-name">{rule.name}</h3>
+                    </div>
+                    <div class="rule-actions" aria-hidden="true">
+                        <span class="edit-button rule-actions-button">
+                            <span class="svg-edit">
+                                <Icon name="ruleEdit" size={18} />
+                            </span>
+                        </span>
+                        <span class="delete-button rule-actions-button">
+                            <span class="svg-delete">
+                                <Icon name="ruleDelete" size={18} />
+                            </span>
+                        </span>
+                        <span
+                            class:list={['svg-toggle-button', 'rule-actions-button', { 'is-on': !rule.off }]}
+                        >
+                            <span class="svg-toggle">
+                                <svg
+                                    width="100%"
+                                    height="100%"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                    focusable="false"
+                                >
+                                    <text
+                                        class="svg-toggle-text"
+                                        x="50%"
+                                        y="55%"
+                                        text-anchor="middle"
+                                        dominant-baseline="middle"
+                                    >
+                                        {rule.off ? 'OFF' : 'ON'}
+                                    </text>
+                                </svg>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="rule-urls-container">
+                        {rule.urls.map((url) => (
+                            <span class="rule-urls">{url}</span>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+
+    <footer class="rules-footer" aria-hidden="true">
+        <span>Intelligent Workspace v1.0.0</span>
+        <span class="color-dots">
+            {dots.map((dot) => <span class="color-dot" style={`background-color: ${dot}`} />)}
+        </span>
+        <span class="rules-footer-note">{footerNote}</span>
+    </footer>
+</div>

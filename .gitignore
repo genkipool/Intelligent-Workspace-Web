@@ -16,3 +16,6 @@ node_modules/
 # OS / editor
 .DS_Store
 *.log
+
+# Scratch from agent sessions. Already excluded from Prettier for the same reason.
+.agents/

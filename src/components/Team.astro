@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
 import { team } from '@/data/site';
 
 interface Props {
@@ -11,62 +12,135 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section class="team wrap" data-reveal>
-    <div class="opener">
-        <span class="numeral" aria-hidden="true">08</span>
-        <p class="kicker">{t('team.heading')}</p>
-        <h2>{t('team.title')}</h2>
-    </div>
-    <div class="people">
+<section id="equipo" class="section-container wrap">
+    <!-- Section Header -->
+    <SectionHeader lang={lang} titleKey="team.heading" subtitleKey="team.subtitle" />
+
+    <!-- Team Cards Grid -->
+    <div class="team-grid" data-reveal>
         {
-            team.map((person) => (
-                <div class="person">
-                    <p class="person-name">{person.name}</p>
-                    <p class="person-role">{t(person.roleKey)}</p>
+            team.map((member) => (
+                <div class="glass-card team-card">
+                    <div class="avatar-ring">
+                        <span class="avatar-initials">
+                            {member.name
+                                .split(' ')
+                                .map((n) => n[0])
+                                .join('')}
+                        </span>
+                    </div>
+                    <h3 class="member-name">{member.name}</h3>
+                    <span class="member-role">{t(member.roleKey)}</span>
                 </div>
             ))
         }
     </div>
-    <p class="team-line">{t('team.line')}</p>
+
+    <!-- Philosophy Quote Box -->
+    <div class="quote-box" data-reveal>
+        <p class="quote-text">“{t('team.quote')}”</p>
+        <p class="quote-sub">{t('team.acknowledgement')}</p>
+    </div>
 </section>
 
 <style>
-    .team {
-        padding-block: 0 clamp(64px, 9vw, 110px);
-        display: flex;
-        flex-direction: column;
-        gap: clamp(20px, 2.6vw, 30px);
-    }
-
-    .people {
+    .team-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: clamp(20px, 3vw, 40px);
-        padding-block-start: clamp(10px, 1.5vw, 18px);
-        border-block-start: 1px solid var(--hair);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        max-width: 1080px;
+        margin: 0 auto 36px;
     }
 
-    .person {
+    .team-card {
         display: flex;
         flex-direction: column;
-        gap: 2px;
-        padding-block-start: clamp(14px, 2vw, 22px);
+        align-items: center;
+        text-align: center;
+        padding: 40px 32px;
+        gap: 14px;
     }
 
-    .person-name {
-        font-size: clamp(19px, 2.2vw, 26px);
-        font-weight: 640;
-        letter-spacing: -0.022em;
+    .avatar-ring {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(22, 160, 133, 0.15);
+        border: 2px solid var(--action-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 16px rgba(22, 160, 133, 0.2);
     }
 
-    .person-role {
-        font-size: 14.5px;
-        color: var(--muted);
+    :root[data-theme='light'] .avatar-ring {
+        background: #edf6f2;
+        border: 2px solid #16a085;
+        box-shadow: 0 4px 14px rgba(22, 160, 133, 0.12);
     }
 
-    .team-line {
-        font-size: clamp(16px, 1.3vw, 18px);
-        color: var(--ink-soft);
-        max-width: 56ch;
+    .avatar-initials {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--action-color);
+        letter-spacing: 0.05em;
+    }
+
+    :root[data-theme='light'] .avatar-initials {
+        color: var(--header-color);
+    }
+
+    .member-name {
+        font-size: 1.35rem;
+        font-weight: 750;
+        color: var(--text-color);
+    }
+
+    .member-role {
+        font-size: 0.94rem;
+        color: var(--action-color);
+        font-weight: 600;
+    }
+
+    :root[data-theme='light'] .member-role {
+        color: var(--header-color);
+    }
+
+    .quote-box {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 28px 36px;
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    :root[data-theme='light'] .quote-box {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 16px rgba(12, 29, 23, 0.04);
+    }
+
+    .quote-text {
+        font-size: 1.15rem;
+        font-style: italic;
+        color: var(--text-color);
+        line-height: 1.65;
+    }
+
+    .quote-sub {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    @media (max-width: 680px) {
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

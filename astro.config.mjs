@@ -31,14 +31,13 @@ export default defineConfig({
 
     image: {
         /**
-         * The site has exactly one image: a 10 KB logo. Astro's default image service
-         * needs `sharp`, a large native dependency, to transcode it — which is a lot of
-         * install surface for a file that is already small and already a PNG.
+         * The site has exactly one image: a 10 KB logo, and it lives in `public/` because
+         * the same file is the favicon and the OpenGraph card, both of which need a
+         * stable URL that a content hash would take away.
          *
-         * Passthrough keeps what `astro:assets` is actually worth here: the import is
-         * type-checked, a missing file is a build error rather than a 404, the asset is
-         * hashed for caching, and the intrinsic dimensions are read from the file so the
-         * markup cannot shift the layout while it loads. It just does not re-encode.
+         * So nothing here is ever transcoded, and Astro's default image service would
+         * pull in `sharp` — a large native dependency — to do nothing. Passthrough keeps
+         * `astro:assets` available for a future import without paying that install cost.
          */
         service: passthroughImageService(),
     },
@@ -47,5 +46,31 @@ export default defineConfig({
         // One stylesheet instead of a <style> block per component. The page is small
         // enough that a single request beats a dozen inlined ones.
         inlineStylesheets: 'never',
+    },
+
+    vite: {
+        build: {
+            /**
+             * Never inline a component script into the HTML.
+             *
+             * Astro's default is to paste any bundled script under 4 KB straight into
+             * the page, and almost every script this site has is under 4 KB: the theme
+             * toggle, the mobile drawer, the hero carousel, the tab strips, the bento
+             * filter, the scroll reveal. Under the `script-src 'self'` policy in
+             * `vercel.json` the browser refuses to run an inline script, so all of that
+             * silently stops working in production while it keeps working in `dev`,
+             * where no policy is served.
+             *
+             * The alternative is a `'sha256-…'` in the policy for each one, but those
+             * hashes change every time anyone edits a component, and a stale hash fails
+             * the same silent way. A file under `/_astro/` is covered by `'self'`
+             * forever. The one script that is deliberately inline, the theme sync in
+             * `Base.astro`, is hand-written and stable, so it gets the single hash.
+             *
+             * Returning `undefined` for everything else leaves images and fonts on
+             * Vite's own 4 KB rule.
+             */
+            assetsInlineLimit: (filePath) => (filePath.endsWith('.js') ? false : undefined),
+        },
     },
 });

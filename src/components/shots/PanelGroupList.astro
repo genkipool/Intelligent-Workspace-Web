@@ -1,0 +1,155 @@
+---
+/**
+ * THE "LISTAR GRUPOS" SIDE PANEL, AS THE EXTENSION DRAWS IT.
+ *
+ * Rebuilt from `GroupCard.svelte`, `TabItem.svelte`, `Subgroup.svelte` and the
+ * `.group-*` / `.tab-*` rules of `listGroup.css`; the chrome around it comes from
+ * `SidePanelHeader.svelte` and `SearchAndControls.svelte`. The classes live in
+ * `src/styles/extension-ui.css`.
+ *
+ * WHY THERE IS NO SEARCH FIELD. In the groups view the bar starts collapsed:
+ * `listGroup.css` says `body.groups-view-active .search-and-controls:not(.search-expanded)
+ * .search-container { display: none }`, and the magnifier on the left of the control
+ * row is what opens it. Drawing a field there would be drawing a state the panel is
+ * not in when you open it.
+ *
+ * THE CONTROLS ARE THE EIGHT THAT ARE ACTUALLY VISIBLE. `ListGroupToolbar.svelte`
+ * declares far more than that, but the rest carry `hidden` in this view: the Gemini
+ * conversation buttons, the API key, the scheduler, the note button, read-aloud,
+ * reader, screenshot and the download buttons all belong to other views. Mute is
+ * hidden too until something is actually playing.
+ *
+ * It takes its groups as a prop so the same panel can appear more than once on the
+ * page showing different content: the hero shows one window's worth, the tab engine
+ * section another. Nothing about the panel itself changes between them.
+ */
+import Icon from '@/components/Icon.astro';
+
+export interface PanelTab {
+    title: string;
+    /** Which colour swatch stands in for the favicon Chrome would serve. */
+    fav: string;
+    /** The tab in front. Its title goes accent-coloured and bold. */
+    active?: boolean;
+    /** Already looked at: the title keeps the accent but drops to 0.7 opacity. */
+    seen?: boolean;
+}
+
+export interface PanelGroup {
+    name: string;
+    /**
+     * A group that has been backed up: the header dims, the colour dot carries a B,
+     * and the group actions become the single restore button. `GroupCard.svelte`
+     * plus the `.group-item.backed-up` rules of `listGroup.css`.
+     */
+    backup?: boolean;
+    /** One of Chrome's nine tab-group colours, as `c-blue`, `c-green` and so on. */
+    color: string;
+    /** Seen out of total, the way the header pill reads. */
+    count: string;
+    /** True when every tab has been seen: the pill turns accent and bold. */
+    allSeen?: boolean;
+    /** Domain headings inside the group, when it has subgroups. */
+    subgroups?: { domain: string; tabs: PanelTab[] }[];
+    tabs?: PanelTab[];
+}
+
+interface Props {
+    title: string;
+    groups: PanelGroup[];
+    /** The number on the duplicate-counter badge, when there is one. */
+    duplicates?: string;
+}
+
+const { title, groups, duplicates } = Astro.props;
+---
+
+<div class="iw-shot">
+    <header class="header">
+        <h1 class="header-main-title">{title}</h1>
+        <div class="header-actions" aria-hidden="true">
+            <span class="control-btn is-on"><Icon name="pin" /></span>
+            <span class="control-btn"><Icon name="rules" /></span>
+            <span class="control-btn"><Icon name="home" /></span>
+            <span class="control-btn"><Icon name="back" /></span>
+        </div>
+    </header>
+
+    <div class="itg-search-row">
+        <div class="itg-search-row-controls" aria-hidden="true">
+            <span class="control-btn flip"><Icon name="searchGlobal" size={18} /></span>
+            <span class="control-btn"><Icon name="gemini" size={16} /></span>
+            <span class="control-btn"><Icon name="music" size={18} /></span>
+            <span class="control-btn"><Icon name="pomodoro" size={17} /></span>
+            <span class="control-btn">
+                <Icon name="duplicates" size={18} />
+                {duplicates && <span class="duplicate-badge">{duplicates}</span>}
+            </span>
+            <span class="control-btn"><Icon name="expandAll" size={17} /></span>
+            <span class="control-btn"><Icon name="trash" size={18} /></span>
+            <span class="control-btn"><Icon name="more" size={18} /></span>
+        </div>
+    </div>
+
+    <div class="iw-body">
+        {
+            groups.map((group) => (
+                <div class:list={['group-item', { 'backed-up': group.backup }]}>
+                    <div class="group-header">
+                        <span class:list={['color-indicator', group.color]}>{group.backup ? 'B' : ''}</span>
+                        <h3 class="group-title">{group.name}</h3>
+                        <span class:list={['group-tab-count', { 'all-seen': group.allSeen }]}>
+                            {group.count}
+                        </span>
+                        <span class="group-actions" aria-hidden="true">
+                            {group.backup ? (
+                                <span class="action-btn restore-btn">
+                                    <Icon name="restore" size={16} />
+                                </span>
+                            ) : (
+                                <Fragment>
+                                    <span class="action-btn">
+                                        <Icon name="camera" size={16} />
+                                    </span>
+                                    <span class="action-btn">
+                                        <Icon name="backup" size={16} />
+                                    </span>
+                                </Fragment>
+                            )}
+                            <span class="action-btn">
+                                <Icon name="trash" size={16} />
+                            </span>
+                        </span>
+                    </div>
+                    <div class="tab-list-container">
+                        {group.subgroups?.map((sub) => (
+                            <Fragment>
+                                <div class="subgroup-header">
+                                    <Icon name="chevronRight" size={12} />
+                                    {sub.domain}
+                                </div>
+                                {sub.tabs.map((tab) => (
+                                    <div class:list={['tab-item', { active: tab.active, seen: tab.seen }]}>
+                                        <span class:list={['favicon', tab.fav]} />
+                                        <span class="tab-title">{tab.title}</span>
+                                    </div>
+                                ))}
+                            </Fragment>
+                        ))}
+                        {group.tabs?.map((tab) => (
+                            <div
+                                class:list={[
+                                    'tab-item',
+                                    { active: tab.active, seen: tab.seen, 'backup-tab-item': group.backup },
+                                ]}
+                            >
+                                <span class:list={['favicon', tab.fav]} />
+                                <span class="tab-title">{tab.title}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</div>

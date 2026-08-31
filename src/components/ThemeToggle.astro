@@ -1,13 +1,7 @@
 ---
-/**
- * Light / dark, with the OS preference as the starting point.
- *
- * This is the one control on the landing page that genuinely needs JavaScript: a theme
- * choice is per-person, not per-URL, so it cannot be a link the way the language switch
- * is. The script is a dozen lines and ships nothing else.
- */
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -17,29 +11,14 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<button id="theme-toggle" type="button" class="theme-toggle" aria-label={t('nav.theme')}>
-    <svg class="sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-        <circle cx="12" cy="12" r="4.2"></circle>
-        <g stroke-linecap="round">
-            <path
-                d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"
-            ></path>
-        </g>
-    </svg>
-    <svg class="moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-        <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2z"></path>
-    </svg>
+<button id="theme-toggle" type="button" class="theme-toggle-btn" aria-label={t('nav.theme')}>
+    <Icon name="sun" size={16} class="sun" />
+    <Icon name="moon" size={16} class="moon" />
 </button>
 
 <script>
-    /**
-     * The stored choice wins; with none stored the page follows the OS, and no attribute
-     * is stamped at all. That three-state behaviour is why the stylesheet defines the
-     * dark palette twice — see the comment in global.css.
-     */
     const KEY = 'iw-theme';
     const root = document.documentElement;
-    const button = document.getElementById('theme-toggle');
 
     function currentlyDark(): boolean {
         const stamped = root.dataset.theme;
@@ -48,62 +27,82 @@ const t = useTranslations(lang);
         return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
-    function paint(): void {
-        button?.setAttribute('aria-pressed', String(currentlyDark()));
+    function initThemeToggle() {
+        const button = document.getElementById('theme-toggle');
+        if (!button) return;
+
+        const paint = () => {
+            button.setAttribute('aria-pressed', String(currentlyDark()));
+        };
+
+        button.onclick = () => {
+            const next = currentlyDark() ? 'light' : 'dark';
+            root.dataset.theme = next;
+            try {
+                localStorage.setItem(KEY, next);
+                localStorage.setItem('theme-mirror', next === 'dark' ? 'viridian' : 'light');
+            } catch {}
+            paint();
+        };
+
+        paint();
     }
 
-    button?.addEventListener('click', () => {
-        const next = currentlyDark() ? 'light' : 'dark';
-        root.dataset.theme = next;
-        try {
-            localStorage.setItem(KEY, next);
-        } catch {
-            // Private mode. The choice simply will not survive a reload.
-        }
-        paint();
-    });
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            try {
+                if (!localStorage.getItem(KEY) && !localStorage.getItem('theme-mirror')) {
+                    root.dataset.theme = e.matches ? 'dark' : 'light';
+                    initThemeToggle();
+                }
+            } catch {}
+        });
+    }
 
-    paint();
+    initThemeToggle();
+    document.addEventListener('astro:page-load', initThemeToggle);
 </script>
 
 <style>
-    .theme-toggle {
+    .theme-toggle-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         padding: 0;
-        border-radius: 999px;
-        border: 1px solid var(--band-hair);
-        background: transparent;
-        color: var(--band-soft);
+        border-radius: var(--radius-full);
+        border: 1px solid var(--border-color);
+        background: var(--bg-panel-color);
+        color: var(--text-soft);
         cursor: pointer;
-        transition:
-            color 0.16s ease,
-            border-color 0.16s ease;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .theme-toggle:hover {
-        color: var(--band-ink);
-        border-color: var(--band-soft);
+    .theme-toggle-btn:hover {
+        color: var(--accent-glow);
+        border-color: var(--action-color);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(22, 160, 133, 0.15);
     }
 
-    .theme-toggle svg {
+    /* `:global` because the glyph is rendered by `Icon.astro`, so it carries that
+       component's scope and not this one's. Astro scopes every part of a selector, and
+       an unscoped element here would otherwise never be matched. */
+    .theme-toggle-btn :global(svg) {
         fill: none;
         stroke: currentColor;
-        stroke-width: 1.7;
+        stroke-width: 1.75;
     }
 
-    .moon {
+    .theme-toggle-btn :global(.moon) {
         fill: currentColor;
         stroke: none;
     }
 
-    /* One icon at a time: the sun when the page is dark (press it for light), the moon
-       when it is light. `aria-pressed` carries the state for anyone not looking. */
-    .theme-toggle[aria-pressed='true'] .moon,
-    .theme-toggle[aria-pressed='false'] .sun {
+    /* Pressed means the page is dark, so the button offers the sun. */
+    .theme-toggle-btn[aria-pressed='true'] :global(.moon),
+    .theme-toggle-btn[aria-pressed='false'] :global(.sun) {
         display: none;
     }
 </style>

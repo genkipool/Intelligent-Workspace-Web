@@ -1,6 +1,7 @@
 ---
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -8,35 +9,105 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+const payUrl = localisePath(lang, '/pay');
 ---
 
-<div class="band band--accent">
-    <section class="donate wrap">
-        <h2>{t('donate.title')}</h2>
-        <p>{t('donate.body')}</p>
-        <a class="cta cta--invert" href={localisePath(lang, '/pay')}>{t('donate.cta')}</a>
-    </section>
-</div>
+<section class="section-container wrap donate-section">
+    <!-- Open Fluid Banner without Box Container -->
+    <div class="donate-fluid-inner" data-reveal>
+        <div class="donate-accent-glow" aria-hidden="true"></div>
+        <div class="donate-content">
+            <span class="donate-eyebrow">{t('donate.eyebrow')}</span>
+            <h2 class="donate-headline">{t('donate.title')}</h2>
+            <p class="donate-body-text">{t('donate.body')}</p>
+            <div class="donate-actions-row">
+                <a href={payUrl} class="btn-primary donate-cta-btn">
+                    <Icon name="heart" />
+                    <span>{t('donate.cta')}</span>
+                </a>
+            </div>
+            <span class="donate-security-note">
+                <Icon name="lock" size={15} />
+                <span>{t('donate.secured')}</span>
+            </span>
+        </div>
+    </div>
+</section>
 
 <style>
-    /* ── Donate ────────────────────────────────────────────────────── */
+    .donate-section {
+        position: relative;
+    }
 
-    .donate {
-        padding-block: clamp(56px, 8vw, 104px);
+    .donate-fluid-inner {
+        position: relative;
+        padding: clamp(40px, 6vw, 72px) 0;
+    }
+
+    .donate-accent-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: clamp(300px, 60vw, 700px);
+        height: 250px;
+        background: radial-gradient(circle, var(--ambient-glow-1) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .donate-content {
+        position: relative;
+        z-index: 1;
+        max-width: 840px;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        gap: clamp(16px, 2vw, 26px);
+        align-items: center;
+        text-align: center;
+        gap: 16px;
     }
 
-    .donate h2 {
-        font-size: clamp(28px, 4.2vw, 54px);
-        letter-spacing: -0.032em;
+    .donate-eyebrow {
+        font-size: 0.78rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--action-color);
     }
 
-    .donate p {
-        font-size: clamp(16px, 1.2vw, 19px);
-        max-width: 52ch;
-        color: color-mix(in srgb, var(--accent-ink) 82%, transparent);
+    :root[data-theme='light'] .donate-eyebrow {
+        color: var(--header-color);
+    }
+
+    .donate-headline {
+        font-size: clamp(2.2rem, 3.8vw, 3rem);
+        color: var(--text-color);
+        line-height: 1.15;
+    }
+
+    .donate-body-text {
+        font-size: 1.12rem;
+        color: var(--text-soft);
+        line-height: 1.65;
+        max-width: 720px;
+    }
+
+    .donate-actions-row {
+        margin-top: 8px;
+    }
+
+    .donate-cta-btn {
+        min-width: 220px;
+        min-height: 52px;
+        font-size: 1.05rem;
+    }
+
+    .donate-security-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.84rem;
+        color: var(--text-muted);
     }
 </style>

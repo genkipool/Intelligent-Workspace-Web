@@ -8,7 +8,7 @@ const lang = 'es' as const;
 const t = useTranslations(lang);
 ---
 
-<Base lang={lang} title={t('pay.title')} description={t('pay.secured')} noindex>
+<Base lang={lang} title={t('pay.title')} description={t('pay.secured')} noindex icons={[]}>
     <!-- Stripe.js must be the real remote script: it refuses to run when served from
          another origin, and bundling it would break card tokenisation. `is:inline`
          keeps Astro from trying to process it. -->

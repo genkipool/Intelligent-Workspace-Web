@@ -1,14 +1,9 @@
 ---
-/**
- * The objections, answered before they become reasons not to install.
- *
- * `<details>` rather than a scripted accordion: it opens with JavaScript off, the browser
- * gives it keyboard behaviour for free, and a reader searching the page with Ctrl+F finds
- * text inside a closed one.
- */
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import SectionHeader from '@/components/SectionHeader.astro';
 import { questions } from '@/data/story';
+import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
@@ -18,21 +13,22 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<section id="faq" class="faq wrap" data-reveal>
-    <div class="opener">
-        <span class="numeral" aria-hidden="true">07</span>
-        <p class="kicker">{t('faq.heading')}</p>
-        <h2>{t('faq.title')}</h2>
-    </div>
-    <div class="questions">
+<section id="faq" class="section-container wrap">
+    <!-- Section Header -->
+    <SectionHeader lang={lang} titleKey="faq.heading" subtitleKey="faq.subtitle" />
+
+    <!-- Accordion List -->
+    <div class="faq-list" data-reveal>
         {
-            questions.map((question) => (
-                <details>
-                    <summary>
-                        {t(question.qKey)}
-                        <span class="chevron" aria-hidden="true" />
+            questions.map((item) => (
+                <details class="faq-item">
+                    <summary class="faq-question">
+                        <span>{t(item.qKey)}</span>
+                        <Icon name="chevronDown" class="faq-chevron" />
                     </summary>
-                    <p>{t(question.aKey)}</p>
+                    <div class="faq-answer">
+                        <p>{t(item.aKey)}</p>
+                    </div>
                 </details>
             ))
         }
@@ -40,73 +36,84 @@ const t = useTranslations(lang);
 </section>
 
 <style>
-    .faq {
-        padding-block: clamp(56px, 8vw, 104px);
+    .faq-list {
+        max-width: 1100px;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: clamp(20px, 2.6vw, 30px);
+        gap: 16px;
     }
 
-    .questions {
-        display: flex;
-        flex-direction: column;
+    .faq-item {
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
     }
 
-    details {
-        border-block-start: 1px solid var(--hair);
+    :root[data-theme='light'] .faq-item {
+        background: #ffffff;
+        box-shadow: 0 4px 16px rgba(12, 29, 23, 0.04);
     }
 
-    details:last-child {
-        border-block-end: 1px solid var(--hair);
+    .faq-item[open] {
+        border-color: var(--action-color);
+        box-shadow: 0 4px 20px rgba(22, 160, 133, 0.15);
     }
 
-    summary {
+    .faq-question {
+        padding: 22px 28px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-color);
+        cursor: pointer;
+        list-style: none;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
-        padding-block: clamp(16px, 2vw, 22px);
-        font-size: clamp(16px, 1.4vw, 19px);
-        font-weight: 580;
-        letter-spacing: -0.014em;
-        cursor: pointer;
-        list-style: none;
+        gap: 16px;
+        user-select: none;
+        transition: color 0.18s ease;
     }
 
-    summary::-webkit-details-marker {
+    .faq-question:hover {
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .faq-question:hover {
+        color: var(--header-color);
+    }
+
+    .faq-question::-webkit-details-marker {
         display: none;
     }
 
-    summary:hover {
-        color: var(--accent);
-    }
-
-    .chevron {
+    /* `:global` because the chevron is rendered by `Icon.astro`, so it carries that
+       component's scope and not this one's. Astro scopes every part of a selector, and
+       an unscoped element here would otherwise never be matched. */
+    .faq-question :global(.faq-chevron) {
+        color: var(--action-color);
+        transition: transform 0.2s ease;
         flex-shrink: 0;
-        width: 9px;
-        height: 9px;
-        border-right: 1.8px solid currentColor;
-        border-bottom: 1.8px solid currentColor;
-        transform: rotate(45deg) translate(-2px, -2px);
-        transition: transform 0.18s ease;
-        opacity: 0.55;
     }
 
-    details[open] .chevron {
-        transform: rotate(-135deg) translate(-2px, -2px);
+    :root[data-theme='light'] .faq-question :global(.faq-chevron) {
+        color: var(--header-color);
     }
 
-    details p {
-        padding-block-end: clamp(18px, 2.2vw, 26px);
-        font-size: 16px;
-        line-height: 1.6;
-        color: var(--ink-soft);
-        max-width: 64ch;
+    .faq-item[open] :global(.faq-chevron) {
+        transform: rotate(180deg);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-        .chevron {
-            transition: none;
-        }
+    .faq-answer {
+        padding: 0 28px 24px;
+        font-size: 1rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 16px;
     }
 </style>

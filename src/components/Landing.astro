@@ -1,22 +1,32 @@
 ---
 /**
- * The landing page itself, once. `src/pages/index.astro` and `src/pages/es/index.astro`
- * are three lines each and both render this — so a change to the page is one edit, and
- * adding a third language never means copying the layout again.
+ * Intelligent Workspace — Main Landing Page Orchestrator.
+ * Complete premium layout with dedicated, unmixed marketing showcases and zero-warning architecture.
  */
+/*
+ * The extension's own stylesheet, imported here rather than in `Base.astro`: every
+ * class in it belongs to a shot on this page, and the donation sheet and the error
+ * pages were downloading all 25 KB of it to draw none.
+ */
+import '@/styles/extension-ui.css';
 import type { Lang } from '@/i18n/ui';
 import Nav from '@/components/Nav.astro';
 import Hero from '@/components/Hero.astro';
-import TabStrip from '@/components/TabStrip.astro';
-import Features from '@/components/Features.astro';
-import Capabilities from '@/components/Capabilities.astro';
 import Problem from '@/components/Problem.astro';
-import HowItWorks from '@/components/HowItWorks.astro';
-import Faq from '@/components/Faq.astro';
-import Trust from '@/components/Trust.astro';
-import Team from '@/components/Team.astro';
+import Features from '@/components/Features.astro';
+import OmnibarShowcase from '@/components/OmnibarShowcase.astro';
+import ReaderTTSShowcase from '@/components/ReaderTTSShowcase.astro';
+import MediaShowcase from '@/components/MediaShowcase.astro';
+import BackupCaptureShowcase from '@/components/BackupCaptureShowcase.astro';
+import ActivityDashboardShowcase from '@/components/ActivityDashboardShowcase.astro';
+import BookmarksShowcase from '@/components/BookmarksShowcase.astro';
+import SnippetsShowcase from '@/components/SnippetsShowcase.astro';
+import SwissArmyBento from '@/components/SwissArmyBento.astro';
+import Comparison from '@/components/Comparison.astro';
 import KeyboardBand from '@/components/KeyboardBand.astro';
-import Statement from '@/components/Statement.astro';
+import Trust from '@/components/Trust.astro';
+import Faq from '@/components/Faq.astro';
+import Team from '@/components/Team.astro';
 import DonateBand from '@/components/DonateBand.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 
@@ -27,41 +37,26 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<div class="band band--tint hero-band">
-    <Nav lang={lang} />
-    <Hero lang={lang} />
-</div>
+<Nav lang={lang} />
 
-{
-    /* The strip moved out of the hero: the hero has to fit one screen, and the strip is a
-    diagram that rewards being looked at rather than glanced past. It now introduces the
-    problem section, where the "before and after" it shows is the actual argument. */
-}
-<TabStrip lang={lang} />
-
-{
-    /*
-    The order follows the sequence a reader actually needs: agree there is a problem,
-    see how it is solved, understand how much work it is, then the full inventory, then
-    the objections, and only then the ask. Features before Problem reads as a spec sheet
-    to somebody who has not yet agreed anything is wrong.
-*/
-}
 <main id="main">
+    <Hero lang={lang} />
     <Problem lang={lang} />
     <Features lang={lang} />
+    <OmnibarShowcase lang={lang} />
+    <ReaderTTSShowcase lang={lang} />
+    <MediaShowcase lang={lang} />
+    <BackupCaptureShowcase lang={lang} />
+    <ActivityDashboardShowcase lang={lang} />
+    <BookmarksShowcase lang={lang} />
+    <SnippetsShowcase lang={lang} />
+    <SwissArmyBento lang={lang} />
+    <Comparison lang={lang} />
+    <KeyboardBand lang={lang} />
+    <Trust lang={lang} />
+    <Faq lang={lang} />
+    <Team lang={lang} />
+    <DonateBand lang={lang} />
 </main>
 
-<HowItWorks lang={lang} />
-
-<Capabilities lang={lang} />
-
-<KeyboardBand lang={lang} />
-
-<Statement lang={lang} />
-<Trust lang={lang} />
-<Faq lang={lang} />
-<Team lang={lang} />
-
-<DonateBand lang={lang} />
 <SiteFooter lang={lang} />

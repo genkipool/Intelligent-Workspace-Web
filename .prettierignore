@@ -2,7 +2,9 @@ dist
 .vercel
 .astro
 node_modules
+.agents
 
 # Generated. Prettier reformatting a lockfile only creates noise in diffs and can
 # confuse the resolver that wrote it.
 pnpm-lock.yaml
+
