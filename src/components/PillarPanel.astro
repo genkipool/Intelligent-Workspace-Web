@@ -1,0 +1,58 @@
+---
+/**
+ * One tab panel: the copy on one side, the shot of the thing it describes on the other.
+ *
+ * The shot goes in the default slot, because it is the only part that differs beyond a
+ * key prefix. Everything else — the panel's ids, its ARIA wiring, the title, the lead and
+ * the four checks — comes from the `Pillar` entry, so the tab strip in `Features.astro`
+ * and the panel it controls are generated from the same row and cannot disagree.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import type { Pillar } from '@/data/pillars';
+
+interface Props {
+    lang: Lang;
+    pillar: Pillar;
+    /** The first panel is the one open on arrival. */
+    active?: boolean;
+}
+
+/*
+ * The three closed panels carry `hidden` in the markup, not only `display: none` from
+ * the stylesheet. Before the tab script runs — and if it never does — `hidden` is what
+ * keeps their headings and their four checks out of the accessibility tree, so a screen
+ * reader is not read all four pillars at once as though they were one long section.
+ */
+
+const { lang, pillar, active = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div
+    id={`tab-${pillar.id}`}
+    class:list={['tab-panel', { active }]}
+    role="tabpanel"
+    aria-labelledby={`tab-btn-${pillar.id}`}
+    tabindex="0"
+    hidden={!active}
+>
+    <div class="panel-grid">
+        <div class="panel-info">
+            <h3 class="panel-title">{t(pillar.titleKey)}</h3>
+            <p class="panel-lead">{t(pillar.leadKey)}</p>
+            <ul class="feature-checklist">
+                {
+                    pillar.checkKeys.map((key) => (
+                        <li>
+                            <span class="check-icon">✓</span>
+                            <span>{t(key)}</span>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <slot />
+    </div>
+</div>

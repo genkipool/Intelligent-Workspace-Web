@@ -7,7 +7,7 @@
 - **Styling**: Pure CSS Custom Properties with Viridian design system (`#16a085`, `#0e6655`, `#1b2631`), seamless Light/Dark mode switching with zero-FOUC inline theme script
 - **i18n**: Type-safe bilingual URL routing (`/` English, `/es/` Spanish) powered by `src/i18n/ui.ts` and `src/i18n/utils.ts`
 - **Data Flow**: Static component assembly in `src/components/` rendering typed data from `src/data/` and dictionary strings from `src/i18n/ui.ts`
-- **Shared shapes**: `Showcase.astro` (the six two-column feature sections), `SectionHeader.astro` (the nine centred headings), `Icon.astro` + `IconSprite.astro` (every glyph written once per page as a `<symbol>`, referenced with `<use>`)
+- **Shared shapes**: `Showcase.astro` (the six two-column feature sections), `SectionHeader.astro` (the nine centred headings), `PillarPanel.astro` + `src/data/pillars.ts` (the four tabs and the four panels, from one list), `shots/PanelChrome.astro` (the side panel's title bar and search row, drawn in six shots), `Icon.astro` + `IconSprite.astro` (every glyph written once per page as a `<symbol>`, referenced with `<use>`)
 
 ## Feature Inventory
 
@@ -102,6 +102,20 @@
 - `src/styles/`: Global CSS and design tokens. `global.css` holds the tokens and the shared molecules (`.section-header`, `.syntax-chip`, buttons); `extension-ui.css` is imported by `Landing.astro` alone, since only the shots use it
 - Tests sit beside what they test as `*.test.ts`
 
+## Measurement Contract
+
+- `pnpm run perf` builds, serves the build the way the host serves it, and runs Lighthouse on mobile and desktop. Measure with it before claiming a change made the site faster or slower.
+- Serve the build compressed or do not serve it at all. The same build scored 91 on mobile behind `python -m http.server` and 100 behind gzip, and the report blamed a 74 KB stylesheet that is 12 KB on the wire. `scripts/serve-built.mjs` exists so that number is never measured again.
+- The performance score is five metrics: FCP (10), Speed Index (10), LCP (25), TBT (30), CLS (25). Every other line in the report — unused CSS, render-blocking resources, forced reflow, cache policy — carries weight zero. Fix them because they are real, not to move the number; when all five are at 1.00 the number cannot move at all.
+- `site` in `astro.config.mjs` is `https://genkipool.com`. That host currently serves a different, older project, so a Lighthouse run against it is not measuring this code.
+
+## Accessibility Contract
+
+- A shot is a picture of the extension, so nothing in it is a heading. `header-main-title`, `group-title`, `rule-name`, `entry-title` and `keys-page-title` are spans: as headings they entered the document outline, and a screen reader announced "Manage rules, Work, Documentation, Design" as though they were sections of this page.
+- Heading levels never skip. The page runs `h1` → `h2` → `h3` and stops there.
+- A control that is only a picture of a control is `aria-hidden`. Offering a reader eight nameless buttons that do nothing serves them worse than offering none.
+- An accessible name contains the visible text. The brand link is named by the words inside it, not by an `aria-label` that omits half of them.
+
 ## Duplication Contract
 
 - A section that looks like another section is the same component with different props. The six showcases and the nine section headings each have exactly one definition; a second copy of either is a bug.
@@ -109,3 +123,4 @@
 - A translation key nothing renders is deleted, not kept. `src/i18n/coverage.test.ts` fails the build on one.
 - A glyph nothing draws is deleted from the registry. `src/components/icon-sprite.test.ts` fails the build on an unused symbol, and on a `<use>` whose symbol the page's sprite was never asked for.
 - A scoped style cannot reach an `<Icon>`: the `<svg>` carries `Icon.astro`'s scope. Use `:global()` and say why.
+- A glyph is named for what it draws. `magnifierKey` and `moonPhase` were guesses made while pulling icons out of markup, and both drew something that was neither: a key with a gap in its shaft, and a circle with a stray arc in it. They are `key` and `contrast`.

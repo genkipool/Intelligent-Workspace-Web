@@ -7,6 +7,7 @@ import { useTranslations } from '@/i18n/utils';
 import Showcase from '@/components/Showcase.astro';
 import Icon from '@/components/Icon.astro';
 import type { ShowcaseBullet } from '@/components/Showcase.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 interface Props {
     lang: Lang;
@@ -40,27 +41,17 @@ const bullets: readonly ShowcaseBullet[] = [
         holds. The filters underneath are the scan dialog's own.
     -->
     <div class="iw-shot">
-        <header class="header">
-            <h1 class="header-main-title">{t('bookmarks.m.title')}</h1>
-            <div class="header-actions" aria-hidden="true">
-                <span class="control-btn is-on"><Icon name="pin" /></span>
-                <span class="control-btn"><Icon name="rules" /></span>
-                <span class="control-btn"><Icon name="home" /></span>
-                <span class="control-btn"><Icon name="back" /></span>
-            </div>
-        </header>
-
-        <div class="itg-search-row">
-            <div class="search-container">
-                <span class="search-input">{t('bookmarks.m.search')}</span>
-            </div>
-            <div class="itg-search-row-controls" aria-hidden="true">
-                <span class="control-btn"><Icon name="addFolder" /></span>
-                <span class="control-btn"><Icon name="duplicates" /></span>
-                <span class="control-btn"><Icon name="expandAll" /></span>
-                <span class="control-btn"><Icon name="more" /></span>
-            </div>
-        </div>
+        <PanelChrome
+            title={t('bookmarks.m.title')}
+            actions={[{ icon: 'pin', on: true }, { icon: 'rules' }, { icon: 'home' }, { icon: 'back' }]}
+            search={t('bookmarks.m.search')}
+            searchActions={[
+                { icon: 'addFolder' },
+                { icon: 'duplicates' },
+                { icon: 'expandAll' },
+                { icon: 'more' },
+            ]}
+        />
 
         <div class="bookmarks-list">
             <div class="bookmark-folder-title">

@@ -6,6 +6,7 @@
  * The classes live in `src/styles/extension-ui.css`.
  */
 import Icon from '@/components/Icon.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 export interface RuleRow {
     name: string;
@@ -41,16 +42,10 @@ const dots = [
 ---
 
 <div class="iw-shot iw-rules">
-    <!-- The bar every side-panel page carries, which the wide layout does not have. -->
-    <header class="header">
-        <h1 class="header-main-title">{title}</h1>
-        <div class="header-actions" aria-hidden="true">
-            <span class="control-btn is-on"><Icon name="pin" /></span>
-            <span class="control-btn"><Icon name="tabGroups" /></span>
-            <span class="control-btn"><Icon name="home" /></span>
-            <span class="control-btn"><Icon name="back" /></span>
-        </div>
-    </header>
+    <PanelChrome
+        title={title}
+        actions={[{ icon: 'pin', on: true }, { icon: 'tabGroups' }, { icon: 'home' }, { icon: 'back' }]}
+    />
 
     <!-- Four buttons sharing the width, icon only: the labels are hidden at this size. -->
     <div class="rules-action-buttons" aria-hidden="true">
@@ -66,7 +61,7 @@ const dots = [
                 <div class="rule-item">
                     <div class="rule-info">
                         <span class:list={['color-indicator', rule.color]} />
-                        <h3 class="rule-name">{rule.name}</h3>
+                        <span class="rule-name">{rule.name}</span>
                     </div>
                     <div class="rule-actions" aria-hidden="true">
                         <span class="edit-button rule-actions-button">

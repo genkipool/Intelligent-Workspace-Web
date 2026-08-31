@@ -8,6 +8,7 @@
  * things the capture button can actually do, worded as `_locales` words them.
  */
 import Icon from '@/components/Icon.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 interface Props {
     title: string;
@@ -19,15 +20,10 @@ const { title, shots, options } = Astro.props;
 ---
 
 <div class="iw-shot">
-    <header class="header">
-        <h1 class="header-main-title">{title}</h1>
-        <div class="header-actions" aria-hidden="true">
-            <span class="control-btn"><Icon name="camera" /></span>
-            <span class="control-btn"><Icon name="download" /></span>
-            <span class="control-btn"><Icon name="home" /></span>
-            <span class="control-btn"><Icon name="back" /></span>
-        </div>
-    </header>
+    <PanelChrome
+        title={title}
+        actions={[{ icon: 'camera' }, { icon: 'download' }, { icon: 'home' }, { icon: 'back' }]}
+    />
 
     <div class="gallery-grid">
         {

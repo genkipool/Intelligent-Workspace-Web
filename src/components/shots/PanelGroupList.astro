@@ -24,6 +24,7 @@
  * section another. Nothing about the panel itself changes between them.
  */
 import Icon from '@/components/Icon.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 export interface PanelTab {
     title: string;
@@ -65,31 +66,20 @@ const { title, groups, duplicates } = Astro.props;
 ---
 
 <div class="iw-shot">
-    <header class="header">
-        <h1 class="header-main-title">{title}</h1>
-        <div class="header-actions" aria-hidden="true">
-            <span class="control-btn is-on"><Icon name="pin" /></span>
-            <span class="control-btn"><Icon name="rules" /></span>
-            <span class="control-btn"><Icon name="home" /></span>
-            <span class="control-btn"><Icon name="back" /></span>
-        </div>
-    </header>
-
-    <div class="itg-search-row">
-        <div class="itg-search-row-controls" aria-hidden="true">
-            <span class="control-btn flip"><Icon name="searchGlobal" size={18} /></span>
-            <span class="control-btn"><Icon name="gemini" size={16} /></span>
-            <span class="control-btn"><Icon name="music" size={18} /></span>
-            <span class="control-btn"><Icon name="pomodoro" size={17} /></span>
-            <span class="control-btn">
-                <Icon name="duplicates" size={18} />
-                {duplicates && <span class="duplicate-badge">{duplicates}</span>}
-            </span>
-            <span class="control-btn"><Icon name="expandAll" size={17} /></span>
-            <span class="control-btn"><Icon name="trash" size={18} /></span>
-            <span class="control-btn"><Icon name="more" size={18} /></span>
-        </div>
-    </div>
+    <PanelChrome
+        title={title}
+        actions={[{ icon: 'pin', on: true }, { icon: 'rules' }, { icon: 'home' }, { icon: 'back' }]}
+        searchActions={[
+            { icon: 'searchGlobal', size: 18, flip: true },
+            { icon: 'gemini', size: 16 },
+            { icon: 'music', size: 18 },
+            { icon: 'pomodoro', size: 17 },
+            { icon: 'duplicates', size: 18, badge: duplicates || undefined },
+            { icon: 'expandAll', size: 17 },
+            { icon: 'trash', size: 18 },
+            { icon: 'more', size: 18 },
+        ]}
+    />
 
     <div class="iw-body">
         {
@@ -97,7 +87,7 @@ const { title, groups, duplicates } = Astro.props;
                 <div class:list={['group-item', { 'backed-up': group.backup }]}>
                     <div class="group-header">
                         <span class:list={['color-indicator', group.color]}>{group.backup ? 'B' : ''}</span>
-                        <h3 class="group-title">{group.name}</h3>
+                        <span class="group-title">{group.name}</span>
                         <span class:list={['group-tab-count', { 'all-seen': group.allSeen }]}>
                             {group.count}
                         </span>

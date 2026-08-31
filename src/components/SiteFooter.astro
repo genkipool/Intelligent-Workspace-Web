@@ -21,11 +21,13 @@ const homeUrl = localisePath(lang, '/');
             <div class="footer-brand-col">
                 <a href={homeUrl} class="footer-brand-link">
                     <img
-                        src="/assets/icon.png"
-                        alt="Intelligent Workspace Logo"
+                        src="/assets/logo-64.png"
+                        alt=""
                         width="30"
                         height="30"
                         class="footer-logo-img"
+                        loading="lazy"
+                        decoding="async"
                     />
                     <span class="footer-brand-name">Intelligent Workspace</span>
                 </a>
@@ -45,7 +47,7 @@ const homeUrl = localisePath(lang, '/');
 
             <!-- Col 1: Product -->
             <div class="footer-col">
-                <h4 class="footer-col-title">{t('footer.prodTitle')}</h4>
+                <h3 class="footer-col-title">{t('footer.prodTitle')}</h3>
                 <ul class="footer-links">
                     <li><a href="#pilares">{t('nav.features')}</a></li>
                     <li><a href="#pilares">{t('fhub.tab1')}</a></li>
@@ -57,7 +59,7 @@ const homeUrl = localisePath(lang, '/');
 
             <!-- Col 2: Utilities -->
             <div class="footer-col">
-                <h4 class="footer-col-title">{t('footer.toolsTitle')}</h4>
+                <h3 class="footer-col-title">{t('footer.toolsTitle')}</h3>
                 <ul class="footer-links">
                     <li><a href="#navaja-suiza">{t('bento.c1.title')}</a></li>
                     <li><a href="#navaja-suiza">{t('bento.c2.title')}</a></li>
@@ -69,7 +71,7 @@ const homeUrl = localisePath(lang, '/');
 
             <!-- Col 3: Community & Trust -->
             <div class="footer-col">
-                <h4 class="footer-col-title">{t('footer.privacyTitle')}</h4>
+                <h3 class="footer-col-title">{t('footer.privacyTitle')}</h3>
                 <ul class="footer-links">
                     <li><a href="#privacidad">{t('nav.privacy')}</a></li>
                     <li><a href="#faq">{t('nav.faq')}</a></li>

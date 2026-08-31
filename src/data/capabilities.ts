@@ -235,7 +235,7 @@ export const bentoCards: readonly BentoCard[] = [
     {
         id: 'theme-studio',
         category: 'tools',
-        icon: 'moonPhase',
+        icon: 'contrast',
         titleKey: 'bento.themeStudio.title',
         descKey: 'bento.themeStudio.desc',
         tagKey: 'bento.themeStudio.tag',

@@ -363,11 +363,11 @@ export const icons = {
     },
     eyedropper: {
         viewBox: '0 0 24 24',
-        body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 22 1-1h3l9-9"/><path d="M19.4 4.6a2 2 0 0 0-2.8 0L14 7.2l2.8 2.8 2.6-2.6a2 2 0 0 0 0-2.8Z"/></g>',
+        body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 22 1-1h3l9-9"></path><path d="M3 21v-3l9-9"></path><path d="m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a1 1 0 1 1-3 3l-3.8-3.8a1 1 0 1 1 3-3z"></path></g>',
     },
-    moonPhase: {
+    contrast: {
         viewBox: '0 0 24 24',
-        body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 1 0 7 7"/></g>',
+        body: '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 3.2a8.8 8.8 0 0 1 0 17.6z" fill="currentColor"></path>',
     },
     layoutGrid: {
         viewBox: '0 0 24 24',
@@ -377,9 +377,9 @@ export const icons = {
         viewBox: '0 0 24 24',
         body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></g>',
     },
-    magnifierKey: {
+    key: {
         viewBox: '0 0 24 24',
-        body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-1.5 1.5L14 9"/><path d="M15.5 7.5 18 10"/><circle cx="7.5" cy="15.5" r="5.5"/></g>',
+        body: '<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"></circle><path d="m21 2-9.6 9.6"></path><path d="m15.5 7.5 3 3L22 7l-3-3"></path></g>',
     },
     shield: {
         viewBox: '0 0 24 24',

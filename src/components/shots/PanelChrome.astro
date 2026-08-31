@@ -1,0 +1,80 @@
+---
+/**
+ * The bar every side-panel view opens with, and the row under it.
+ *
+ * `panel.css` gives each of the extension's panel pages the same two strips: a coloured
+ * title bar with a row of round controls on the right, and, on the pages that have a
+ * search, a field with its own controls beside it. Six shots on this page drew both by
+ * hand, which meant six chances for a control to end up the wrong size or in the wrong
+ * order — and the point of these shots is that they are the extension rather than a
+ * drawing of it.
+ *
+ * Only the glyphs differ between panels, so only the glyphs are props. Everything is
+ * `aria-hidden`: these are pictures of buttons, and a reader offered eight nameless
+ * controls that do nothing is worse served than one that is told nothing at all.
+ */
+import type { IconName } from '@/data/icons';
+import Icon from '@/components/Icon.astro';
+
+export interface PanelAction {
+    icon: IconName;
+    /** The extension draws its controls at a few different sizes; 20 is the default. */
+    size?: number;
+    /** `is-on`: the control the panel is currently in. */
+    on?: boolean;
+    /** `flip`: the mirrored variant, which the global search uses. */
+    flip?: boolean;
+    /** The count the deduplicator carries on its own button. */
+    badge?: string | number;
+}
+
+interface Props {
+    title: string;
+    actions: readonly PanelAction[];
+    /** The placeholder of the search field. Omitted on the panels that have no search. */
+    search?: string;
+    /** The controls beside the search field. A search row can have none. */
+    searchActions?: readonly PanelAction[];
+}
+
+const { title, actions, search, searchActions } = Astro.props;
+const hasSearchRow = search !== undefined || (searchActions?.length ?? 0) > 0;
+---
+
+<header class="header">
+    <span class="header-main-title">{title}</span>
+    <div class="header-actions" aria-hidden="true">
+        {
+            actions.map((action) => (
+                <span class:list={['control-btn', { 'is-on': action.on, flip: action.flip }]}>
+                    <Icon name={action.icon} size={action.size ?? 20} />
+                    {action.badge !== undefined && <span class="duplicate-badge">{action.badge}</span>}
+                </span>
+            ))
+        }
+    </div>
+</header>
+
+{
+    hasSearchRow && (
+        <div class="itg-search-row">
+            {search !== undefined && (
+                <div class="search-container">
+                    <span class="search-input">{search}</span>
+                </div>
+            )}
+            {searchActions && (
+                <div class="itg-search-row-controls" aria-hidden="true">
+                    {searchActions.map((action) => (
+                        <span class:list={['control-btn', { 'is-on': action.on, flip: action.flip }]}>
+                            <Icon name={action.icon} size={action.size ?? 20} />
+                            {action.badge !== undefined && (
+                                <span class="duplicate-badge">{action.badge}</span>
+                            )}
+                        </span>
+                    ))}
+                </div>
+            )}
+        </div>
+    )
+}

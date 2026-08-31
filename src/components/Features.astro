@@ -1,9 +1,12 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import { pillars } from '@/data/pillars';
+import PillarPanel from '@/components/PillarPanel.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import Icon from '@/components/Icon.astro';
 import PanelGroupList from '@/components/shots/PanelGroupList.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 interface Props {
     lang: Lang;
@@ -21,461 +24,287 @@ const t = useTranslations(lang);
     <div class="feature-hub-container" data-tabs-container data-reveal>
         <!-- Tab Navigation (Clean SVG Icons) -->
         <div class="tab-nav" role="tablist" aria-label={t('fhub.tablistLabel')} aria-orientation="horizontal">
-            <button
-                type="button"
-                id="tab-btn-agent"
-                class="tab-btn active"
-                role="tab"
-                aria-selected="true"
-                aria-controls="tab-agent"
-                tabindex="0"
-                data-tab="tab-agent"
-            >
-                <Icon name="botFace" size={18} />
-                <span>{t('fhub.tab1')}</span>
-            </button>
-
-            <button
-                type="button"
-                id="tab-btn-tabs"
-                class="tab-btn"
-                role="tab"
-                aria-selected="false"
-                aria-controls="tab-tabs"
-                tabindex="-1"
-                data-tab="tab-tabs"
-            >
-                <Icon name="browserTabs" size={18} />
-                <span>{t('fhub.tab2')}</span>
-            </button>
-
-            <button
-                type="button"
-                id="tab-btn-focus"
-                class="tab-btn"
-                role="tab"
-                aria-selected="false"
-                aria-controls="tab-focus"
-                tabindex="-1"
-                data-tab="tab-focus"
-            >
-                <Icon name="timer" size={18} />
-                <span>{t('fhub.tab3')}</span>
-            </button>
-
-            <button
-                type="button"
-                id="tab-btn-keys"
-                class="tab-btn"
-                role="tab"
-                aria-selected="false"
-                aria-controls="tab-keys"
-                tabindex="-1"
-                data-tab="tab-keys"
-            >
-                <Icon name="keyboardKeys" size={18} />
-                <span>{t('fhub.tab4')}</span>
-            </button>
+            {
+                pillars.map((pillar, index) => (
+                    <button
+                        type="button"
+                        id={`tab-btn-${pillar.id}`}
+                        class:list={['tab-btn', { active: index === 0 }]}
+                        role="tab"
+                        aria-selected={index === 0 ? 'true' : 'false'}
+                        aria-controls={`tab-${pillar.id}`}
+                        tabindex={index === 0 ? 0 : -1}
+                        data-tab={`tab-${pillar.id}`}
+                    >
+                        <Icon name={pillar.icon} size={18} />
+                        <span>{t(pillar.tabKey)}</span>
+                    </button>
+                ))
+            }
         </div>
 
         <!-- Autonomous Agent Panel -->
-        <div
-            id="tab-agent"
-            class="tab-panel active"
-            role="tabpanel"
-            aria-labelledby="tab-btn-agent"
-            tabindex="0"
-        >
-            <div class="panel-grid">
-                <div class="panel-info">
-                    <h3 class="panel-title">{t('fhub.agent.title')}</h3>
-                    <p class="panel-lead">{t('fhub.agent.lead')}</p>
-                    <ul class="feature-checklist">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.agent.f1')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.agent.f2')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.agent.f3')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.agent.f4')}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-preview">
-                    <!-- One exchange in the assistant's own card: the question as the
+
+        <!-- Autonomous agent -->
+        <PillarPanel lang={lang} pillar={pillars[0]} active>
+            <div class="panel-preview">
+                <!-- One exchange in the assistant's own card: the question as the
                                          heading, the tools it ran as agent steps, then the answer. -->
-                    <div class="iw-shot">
-                        <header class="header">
-                            <h1 class="header-main-title">{t('fhub.agent.mockup.badge')}</h1>
-                            <div class="header-actions" aria-hidden="true">
-                                <span class="control-btn"><Icon name="clock" /></span>
-                                <span class="control-btn is-on"><Icon name="gemini" /></span>
-                                <span class="control-btn"><Icon name="more" /></span>
-                            </div>
-                        </header>
-                        <div class="iw-body">
-                            <div class="entry-card">
-                                <div class="entry-header">
-                                    <div class="entry-header-top">
-                                        <span class="entry-icon-agent"><Icon name="gemini" size={24} /></span>
-                                        <span class="entry-actions" aria-hidden="true">
-                                            <Icon name="reader" size={16} />
-                                            <Icon name="note" size={16} />
-                                            <Icon name="trash" size={16} />
-                                        </span>
-                                    </div>
-                                    <h2 class="entry-title">{t('fhub.agent.mockup.userMsg')}</h2>
+                <div class="iw-shot">
+                    <PanelChrome
+                        title={t('fhub.agent.mockup.badge')}
+                        actions={[{ icon: 'clock' }, { icon: 'gemini', on: true }, { icon: 'more' }]}
+                    />
+                    <div class="iw-body">
+                        <div class="entry-card">
+                            <div class="entry-header">
+                                <div class="entry-header-top">
+                                    <span class="entry-icon-agent"><Icon name="gemini" size={24} /></span>
+                                    <span class="entry-actions" aria-hidden="true">
+                                        <Icon name="reader" size={16} />
+                                        <Icon name="note" size={16} />
+                                        <Icon name="trash" size={16} />
+                                    </span>
                                 </div>
-                                <div class="agent-steps">
-                                    <div class="agent-step-indicator agent-step-done">
-                                        <span class="agent-step-icon">✓</span>
-                                        <span>{t('fhub.agent.mockup.actionDiscard')}</span>
-                                    </div>
-                                    <div class="agent-step-indicator agent-step-done">
-                                        <span class="agent-step-icon">✓</span>
-                                        <span>{t('fhub.agent.mockup.actionGroup')}</span>
-                                    </div>
-                                    <div class="agent-step-indicator agent-step-done">
-                                        <span class="agent-step-icon">✓</span>
-                                        <span>{t('fhub.agent.mockup.actionRam')}</span>
-                                    </div>
-                                </div>
-                                <div class="entry-content">{t('fhub.agent.mockup.agentReply')}</div>
+                                <span class="entry-title">{t('fhub.agent.mockup.userMsg')}</span>
                             </div>
+                            <div class="agent-steps">
+                                <div class="agent-step-indicator agent-step-done">
+                                    <span class="agent-step-icon">✓</span>
+                                    <span>{t('fhub.agent.mockup.actionDiscard')}</span>
+                                </div>
+                                <div class="agent-step-indicator agent-step-done">
+                                    <span class="agent-step-icon">✓</span>
+                                    <span>{t('fhub.agent.mockup.actionGroup')}</span>
+                                </div>
+                                <div class="agent-step-indicator agent-step-done">
+                                    <span class="agent-step-icon">✓</span>
+                                    <span>{t('fhub.agent.mockup.actionRam')}</span>
+                                </div>
+                            </div>
+                            <div class="entry-content">{t('fhub.agent.mockup.agentReply')}</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </PillarPanel>
 
         <!-- Tabs, groups and rules -->
-        <div
-            id="tab-tabs"
-            class="tab-panel"
-            role="tabpanel"
-            aria-labelledby="tab-btn-tabs"
-            tabindex="0"
-            hidden
-        >
-            <div class="panel-grid">
-                <div class="panel-info">
-                    <h3 class="panel-title">{t('fhub.tabs.title')}</h3>
-                    <p class="panel-lead">{t('fhub.tabs.lead')}</p>
-                    <ul class="feature-checklist">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.tabs.f1')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.tabs.f2')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.tabs.f3')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.tabs.f4')}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-preview">
-                    <!--
-                        The same panel the hero shows, with another window's worth of
-                        groups in it: one component, two sets of content.
-                    -->
-                    <PanelGroupList
-                        title={t('fhub.tabs.mockup.badge')}
-                        duplicates="5"
-                        groups={[
-                            {
-                                name: t('fhub.tabs.mockup.c1Title'),
-                                color: 'c-red',
-                                count: '2/5',
-                                subgroups: [
-                                    {
-                                        domain: 'youtube.com',
-                                        tabs: [
-                                            {
-                                                title: 'Astro 6 en veinte minutos',
-                                                fav: 'fav-yt',
-                                                active: true,
-                                            },
-                                            {
-                                                title: 'Svelte 5 runes, explicadas',
-                                                fav: 'fav-yt',
-                                                seen: true,
-                                            },
-                                        ],
-                                    },
-                                    {
-                                        domain: 'open.spotify.com',
-                                        tabs: [{ title: 'Focus · Deep work', fav: 'fav-sp' }],
-                                    },
-                                ],
-                            },
-                            {
-                                name: t('fhub.tabs.mockup.c2Title'),
-                                color: 'c-yellow',
-                                count: '3/3',
-                                allSeen: true,
-                                tabs: [
-                                    { title: 'Reserva de vuelos · Julio', fav: 'fav-bk', seen: true },
-                                    { title: 'Apartamento en Lisboa', fav: 'fav-bk', seen: true },
-                                ],
-                            },
-                            {
-                                name: t('fhub.tabs.mockup.c3Title'),
-                                color: 'c-grey',
-                                count: '0/4',
-                                tabs: [
-                                    { title: 'chrome://extensions', fav: 'fav-cr' },
-                                    { title: 'chrome://downloads', fav: 'fav-cr' },
-                                ],
-                            },
-                        ]}
-                    />
-                </div>
+        <PillarPanel lang={lang} pillar={pillars[1]}>
+            <div class="panel-preview">
+                <!--
+                            The same panel the hero shows, with another window's worth of
+                            groups in it: one component, two sets of content.
+                        -->
+                <PanelGroupList
+                    title={t('fhub.tabs.mockup.badge')}
+                    duplicates="5"
+                    groups={[
+                        {
+                            name: t('fhub.tabs.mockup.c1Title'),
+                            color: 'c-red',
+                            count: '2/5',
+                            subgroups: [
+                                {
+                                    domain: 'youtube.com',
+                                    tabs: [
+                                        {
+                                            title: 'Astro 6 en veinte minutos',
+                                            fav: 'fav-yt',
+                                            active: true,
+                                        },
+                                        {
+                                            title: 'Svelte 5 runes, explicadas',
+                                            fav: 'fav-yt',
+                                            seen: true,
+                                        },
+                                    ],
+                                },
+                                {
+                                    domain: 'open.spotify.com',
+                                    tabs: [{ title: 'Focus · Deep work', fav: 'fav-sp' }],
+                                },
+                            ],
+                        },
+                        {
+                            name: t('fhub.tabs.mockup.c2Title'),
+                            color: 'c-yellow',
+                            count: '3/3',
+                            allSeen: true,
+                            tabs: [
+                                { title: 'Reserva de vuelos · Julio', fav: 'fav-bk', seen: true },
+                                { title: 'Apartamento en Lisboa', fav: 'fav-bk', seen: true },
+                            ],
+                        },
+                        {
+                            name: t('fhub.tabs.mockup.c3Title'),
+                            color: 'c-grey',
+                            count: '0/4',
+                            tabs: [
+                                { title: 'chrome://extensions', fav: 'fav-cr' },
+                                { title: 'chrome://downloads', fav: 'fav-cr' },
+                            ],
+                        },
+                    ]}
+                />
             </div>
-        </div>
+        </PillarPanel>
 
         <!-- Time, limits and focus -->
-        <div
-            id="tab-focus"
-            class="tab-panel"
-            role="tabpanel"
-            aria-labelledby="tab-btn-focus"
-            tabindex="0"
-            hidden
-        >
-            <div class="panel-grid">
-                <div class="panel-info">
-                    <h3 class="panel-title">{t('fhub.focus.title')}</h3>
-                    <p class="panel-lead">{t('fhub.focus.lead')}</p>
-                    <ul class="feature-checklist">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.focus.f1')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.focus.f2')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.focus.f3')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.focus.f4')}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-preview">
-                    <!-- The web activity panel's own box for one site, with the three
-                                         rules it is under, and the timer that runs beside it. -->
-                    <div class="iw-shot">
-                        <header class="header">
-                            <h1 class="header-main-title">{t('fhub.focus.mockup.badge')}</h1>
-                            <div class="header-actions" aria-hidden="true">
-                                <span class="control-btn is-on"><Icon name="pin" /></span>
-                                <span class="control-btn"><Icon name="tabGroups" /></span>
-                                <span class="control-btn"><Icon name="home" /></span>
-                                <span class="control-btn"><Icon name="back" /></span>
-                            </div>
-                        </header>
+        <PillarPanel lang={lang} pillar={pillars[2]}>
+            <div class="panel-preview">
+                <!-- The web activity panel's own box for one site, with the three
+                                                 rules it is under, and the timer that runs beside it. -->
+                <div class="iw-shot">
+                    <PanelChrome
+                        title={t('fhub.focus.mockup.badge')}
+                        actions={[
+                            { icon: 'pin', on: true },
+                            { icon: 'tabGroups' },
+                            { icon: 'home' },
+                            { icon: 'back' },
+                        ]}
+                    />
 
-                        <div class="iw-body">
-                            <div class="wa-panel-box is-open">
-                                <div class="wa-panel-head">
-                                    <span class="favicon fav-yt"></span>
-                                    <span class="wa-panel-domain">youtube.com</span>
-                                    <span class="wa-panel-time">1h 12m</span>
-                                </div>
-                                <div class="wa-panel-figures">
-                                    <span class="wa-panel-figure">
-                                        <span class="wa-panel-figure-label">{t('activity.panel.visits')}</span
-                                        >
-                                        <span class="wa-panel-figure-val">14</span>
-                                    </span>
-                                    <span class="wa-panel-figure">
-                                        <span class="wa-panel-figure-label"
-                                            >{t('activity.panel.perVisit')}</span
-                                        >
-                                        <span class="wa-panel-figure-val">5m 09s</span>
-                                    </span>
-                                    <span class="wa-panel-figure">
-                                        <span class="wa-panel-figure-label">{t('activity.panel.share')}</span>
-                                        <span class="wa-panel-figure-val">23%</span>
-                                    </span>
-                                </div>
-                                <div class="wa-panel-row">
-                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowDaily')}</span>
-                                    <span class="wa-panel-row-val">1h 30m</span>
-                                    <span class="wa-panel-row-pct">80%</span>
-                                    <span class="wa-row-controls" aria-hidden="true">
-                                        <Icon name="edit" size={13} />
-                                        <Icon name="power" size={13} />
-                                        <Icon name="close" size={13} />
-                                    </span>
-                                </div>
-                                <div class="wa-panel-row">
-                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowWeekly')}</span>
-                                    <span class="wa-panel-row-val">6h 00m</span>
-                                    <span class="wa-panel-row-pct">45%</span>
-                                    <span class="wa-row-controls" aria-hidden="true">
-                                        <Icon name="edit" size={13} />
-                                        <Icon name="power" size={13} />
-                                        <Icon name="close" size={13} />
-                                    </span>
-                                </div>
-                                <div class="wa-panel-row">
-                                    <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowHours')}</span>
-                                    <span class="wa-panel-row-val wa-panel-row-val-center">09:00-18:00</span>
-                                    <span class="wa-row-controls" aria-hidden="true">
-                                        <Icon name="edit" size={13} />
-                                        <Icon name="power" size={13} />
-                                        <Icon name="close" size={13} />
-                                    </span>
-                                </div>
+                    <div class="iw-body">
+                        <div class="wa-panel-box is-open">
+                            <div class="wa-panel-head">
+                                <span class="favicon fav-yt"></span>
+                                <span class="wa-panel-domain">youtube.com</span>
+                                <span class="wa-panel-time">1h 12m</span>
                             </div>
-
-                            <div class="wa-panel-box is-blocked">
-                                <div class="wa-panel-head">
-                                    <span class="favicon fav-rd"></span>
-                                    <span class="wa-panel-domain">reddit.com</span>
-                                    <span class="wa-badge-blocked">{t('activity.panel.overLimit')}</span>
-                                    <span class="wa-panel-time">45m</span>
-                                </div>
+                            <div class="wa-panel-figures">
+                                <span class="wa-panel-figure">
+                                    <span class="wa-panel-figure-label">{t('activity.panel.visits')}</span>
+                                    <span class="wa-panel-figure-val">14</span>
+                                </span>
+                                <span class="wa-panel-figure">
+                                    <span class="wa-panel-figure-label">{t('activity.panel.perVisit')}</span>
+                                    <span class="wa-panel-figure-val">5m 09s</span>
+                                </span>
+                                <span class="wa-panel-figure">
+                                    <span class="wa-panel-figure-label">{t('activity.panel.share')}</span>
+                                    <span class="wa-panel-figure-val">23%</span>
+                                </span>
                             </div>
+                            <div class="wa-panel-row">
+                                <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowDaily')}</span>
+                                <span class="wa-panel-row-val">1h 30m</span>
+                                <span class="wa-panel-row-pct">80%</span>
+                                <span class="wa-row-controls" aria-hidden="true">
+                                    <Icon name="edit" size={13} />
+                                    <Icon name="power" size={13} />
+                                    <Icon name="close" size={13} />
+                                </span>
+                            </div>
+                            <div class="wa-panel-row">
+                                <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowWeekly')}</span>
+                                <span class="wa-panel-row-val">6h 00m</span>
+                                <span class="wa-panel-row-pct">45%</span>
+                                <span class="wa-row-controls" aria-hidden="true">
+                                    <Icon name="edit" size={13} />
+                                    <Icon name="power" size={13} />
+                                    <Icon name="close" size={13} />
+                                </span>
+                            </div>
+                            <div class="wa-panel-row">
+                                <span class="wa-panel-row-label">{t('fhub.focus.mockup.rowHours')}</span>
+                                <span class="wa-panel-row-val wa-panel-row-val-center">09:00-18:00</span>
+                                <span class="wa-row-controls" aria-hidden="true">
+                                    <Icon name="edit" size={13} />
+                                    <Icon name="power" size={13} />
+                                    <Icon name="close" size={13} />
+                                </span>
+                            </div>
+                        </div>
 
-                            <!-- And the Pomodoro panel the toolbar's tomato opens. -->
-                            <div class="group-item pomo-box">
-                                <div class="group-header">
-                                    <span class="pomo-icon"><Icon name="pomodoro" size={18} /></span>
-                                    <h3 class="group-title">{t('fhub.focus.mockup.timerMode')}</h3>
-                                    <span class="group-tab-count all-seen"
-                                        >{t('fhub.focus.mockup.timer')}</span
-                                    >
-                                </div>
-                                <div class="tab-list-container pomo-stats">
-                                    <span class="pomo-stat"
-                                        ><b>0</b> {t('fhub.focus.mockup.statInterrupt')}</span
-                                    >
-                                    <span class="pomo-stat"
-                                        ><b>4h 05m</b> {t('fhub.focus.mockup.statDaily')}</span
-                                    >
-                                    <span class="pomo-stat"
-                                        ><b>96%</b> {t('fhub.focus.mockup.heatmapTitle')}</span
-                                    >
-                                </div>
+                        <div class="wa-panel-box is-blocked">
+                            <div class="wa-panel-head">
+                                <span class="favicon fav-rd"></span>
+                                <span class="wa-panel-domain">reddit.com</span>
+                                <span class="wa-badge-blocked">{t('activity.panel.overLimit')}</span>
+                                <span class="wa-panel-time">45m</span>
+                            </div>
+                        </div>
+
+                        <!-- And the Pomodoro panel the toolbar's tomato opens. -->
+                        <div class="group-item pomo-box">
+                            <div class="group-header">
+                                <span class="pomo-icon"><Icon name="pomodoro" size={18} /></span>
+                                <span class="group-title">{t('fhub.focus.mockup.timerMode')}</span>
+                                <span class="group-tab-count all-seen">{t('fhub.focus.mockup.timer')}</span>
+                            </div>
+                            <div class="tab-list-container pomo-stats">
+                                <span class="pomo-stat"><b>0</b> {t('fhub.focus.mockup.statInterrupt')}</span>
+                                <span class="pomo-stat"><b>4h 05m</b> {t('fhub.focus.mockup.statDaily')}</span
+                                >
+                                <span class="pomo-stat"><b>96%</b> {t('fhub.focus.mockup.heatmapTitle')}</span
+                                >
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </PillarPanel>
 
         <!-- Keyboard, omnibar and snippets -->
-        <div
-            id="tab-keys"
-            class="tab-panel"
-            role="tabpanel"
-            aria-labelledby="tab-btn-keys"
-            tabindex="0"
-            hidden
-        >
-            <div class="panel-grid">
-                <div class="panel-info">
-                    <h3 class="panel-title">{t('fhub.keys.title')}</h3>
-                    <p class="panel-lead">{t('fhub.keys.lead')}</p>
-                    <ul class="feature-checklist">
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.keys.f1')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.keys.f2')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.keys.f3')}</span>
-                        </li>
-                        <li>
-                            <span class="check-icon">✓</span>
-                            <span>{t('fhub.keys.f4')}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-preview">
-                    <!--
-                        A page, with what the two engines put on top of it. The links
-                        are spans that only look like links: nothing here is clickable,
-                        and an anchor would promise a destination this page has not
-                        got. The depth comes from the overlays, not from a card around
-                        the whole thing.
-                    -->
-                    <div class="keys-preview">
-                        <article class="keys-page">
-                            <nav class="keys-nav">
-                                <span class="looks-like-link"
-                                    >{t('fhub.keys.mockup.linkDoc')}<kbd class="iw-hint-marker">sa</kbd></span
-                                >
-                                <span class="looks-like-link"
-                                    >{t('fhub.keys.mockup.linkSettings')}<kbd class="iw-hint-marker">sd</kbd
-                                    ></span
-                                >
-                                <span class="looks-like-link"
-                                    >{t('fhub.keys.mockup.linkDeploy')}<kbd class="iw-hint-marker">sf</kbd
-                                    ></span
-                                >
-                            </nav>
+        <PillarPanel lang={lang} pillar={pillars[3]}>
+            <div class="panel-preview">
+                <!--
+                                A page, with what the two engines put on top of it. The links
+                                are spans that only look like links: nothing here is clickable,
+                                and an anchor would promise a destination this page has not
+                                got. The depth comes from the overlays, not from a card around
+                                the whole thing.
+                            -->
+                <div class="keys-preview">
+                    <article class="keys-page">
+                        <nav class="keys-nav">
+                            <span class="looks-like-link"
+                                >{t('fhub.keys.mockup.linkDoc')}<kbd class="iw-hint-marker">sa</kbd></span
+                            >
+                            <span class="looks-like-link"
+                                >{t('fhub.keys.mockup.linkSettings')}<kbd class="iw-hint-marker">sd</kbd
+                                ></span
+                            >
+                            <span class="looks-like-link"
+                                >{t('fhub.keys.mockup.linkDeploy')}<kbd class="iw-hint-marker">sf</kbd></span
+                            >
+                        </nav>
 
-                            <h4 class="keys-page-title">{t('fhub.keys.mockup.pageTitle')}</h4>
-                            <p class="keys-page-body">
-                                {t('fhub.keys.mockup.pageBodyA')}<span class="looks-like-link"
-                                    >{t('fhub.keys.mockup.pageLink')}<kbd class="iw-hint-marker">gj</kbd
-                                    ></span
-                                >{t('fhub.keys.mockup.pageBodyB')}
-                            </p>
+                        <span class="keys-page-title">{t('fhub.keys.mockup.pageTitle')}</span>
+                        <p class="keys-page-body">
+                            {t('fhub.keys.mockup.pageBodyA')}<span class="looks-like-link"
+                                >{t('fhub.keys.mockup.pageLink')}<kbd class="iw-hint-marker">gj</kbd></span
+                            >{t('fhub.keys.mockup.pageBodyB')}
+                        </p>
 
-                            <div class="keys-field">
-                                <span class="keys-field-text">$$</span>
-                                <span class="keys-field-caret"></span>
+                        <div class="keys-field">
+                            <span class="keys-field-text">$$</span>
+                            <span class="keys-field-caret"></span>
+                        </div>
+
+                        <div class="iw-snippet-popup keys-popup">
+                            <div class="hint-snippet-search-container">
+                                <span class="hint-snippet-search-input"
+                                    >{t('fhub.keys.mockup.snippetSearch')}</span
+                                >
                             </div>
-
-                            <div class="iw-snippet-popup keys-popup">
-                                <div class="hint-snippet-search-container">
-                                    <span class="hint-snippet-search-input"
-                                        >{t('fhub.keys.mockup.snippetSearch')}</span
-                                    >
-                                </div>
-                                <div class="hint-snippet-item selected">
-                                    <span class="hint-snippet-item-trigger">;pr</span>
-                                    <span class="hint-snippet-item-preview">
-                                        {t('fhub.keys.mockup.snippetResult')}
-                                    </span>
-                                </div>
-                                <div class="hint-snippet-item">
-                                    <span class="hint-snippet-item-trigger">;mail</span>
-                                    <span class="hint-snippet-item-preview">{t('snippets.m.s2')}</span>
-                                </div>
+                            <div class="hint-snippet-item selected">
+                                <span class="hint-snippet-item-trigger">;pr</span>
+                                <span class="hint-snippet-item-preview">
+                                    {t('fhub.keys.mockup.snippetResult')}
+                                </span>
                             </div>
-                        </article>
-                    </div>
+                            <div class="hint-snippet-item">
+                                <span class="hint-snippet-item-trigger">;mail</span>
+                                <span class="hint-snippet-item-preview">{t('snippets.m.s2')}</span>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
-        </div>
+        </PillarPanel>
     </div>
 </section>
 
@@ -874,7 +703,10 @@ const t = useTranslations(lang);
         border-bottom-color: var(--border-subtle);
     }
 
+    /* A span, not a heading: this is the headline of the imaginary article the shot is
+       drawn on, and it has no place in this page's outline. */
     .keys-page-title {
+        display: block;
         font-size: 1.15rem;
         font-weight: 750;
         line-height: 1.3;

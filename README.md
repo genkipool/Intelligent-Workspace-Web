@@ -50,6 +50,24 @@ pnpm build       # static pages + one Vercel function
 pnpm check       # astro check — types across .astro and .ts
 pnpm test        # vitest
 pnpm verify      # everything CI runs, in one command
+pnpm perf        # Lighthouse against the real build, mobile and desktop
+```
+
+`pnpm perf` builds, serves the output the way the host serves it — gzipped, with
+`immutable` on the hashed assets — and runs Lighthouse twice. Both of those matter. The
+same build scores 91 on mobile behind a plain static server and 100 behind compression,
+and the report blames a 74 KB stylesheet that is 12 KB on the wire; and a site at 100 on
+desktop can sit well below it on mobile, which is the number people quote.
+
+It also prints which audits actually count. The score is five metrics — FCP, Speed Index,
+LCP, TBT, CLS — and everything else in the report carries weight zero. Unused CSS,
+render-blocking resources and forced reflow are worth fixing on their own merits; they
+cannot move the number by a point.
+
+To measure something already deployed, give it a URL:
+
+```bash
+node scripts/lighthouse.mjs https://example.com
 ```
 
 `pnpm-workspace.yaml` carries one setting: `allowBuilds`, pnpm's allowlist of packages

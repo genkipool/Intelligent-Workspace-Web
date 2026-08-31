@@ -677,33 +677,6 @@ const slides = [
        The panel fetches real favicons from Chrome's own store, which a web page
        cannot reach; these are flat swatches in the same 16px square. */
 
-    /* ── Screen 3: the views the side panel switches between ── */
-    .view-switcher-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 6px;
-    }
-
-    .view-chip {
-        padding: 7px 6px;
-        border-radius: 6px;
-        text-align: center;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #f5f5f5;
-        background: #233240;
-        border: 1px solid #34495e;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    /* The pinned view, marked the way the panel marks its own active control. */
-    .view-chip.active {
-        color: #16a085;
-        border-color: #16a085;
-    }
-
     /* ── The row of page keys under the omnibar ── */
     .hints-preview-bar {
         display: flex;

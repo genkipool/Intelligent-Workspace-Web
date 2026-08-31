@@ -78,6 +78,7 @@
 }
 
 .iw-shot .header-main-title {
+    display: block;
     margin: 0;
     font-size: 1rem;
     font-weight: 600;
@@ -256,9 +257,6 @@
 .iw-shot .c-green {
     background: #81c995;
 }
-.iw-shot .c-pink {
-    background: #ff8bcb;
-}
 .iw-shot .c-purple {
     background: #c58af9;
 }
@@ -273,6 +271,7 @@
 }
 
 .iw-shot .group-title {
+    display: block;
     margin: 0;
     font-size: 1rem;
     font-weight: 500;
@@ -529,38 +528,6 @@
 /* ── One item of a list view: bookmarks, history, downloads, recently closed ──
    `GenericItem.svelte` reuses `.tab-item` and adds a two-line info block. */
 
-.iw-shot .generic-item {
-    display: flex;
-    align-items: center;
-    padding: 8px 4px;
-    border-radius: 4px;
-    gap: 6px;
-}
-
-.iw-shot .item-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    flex-grow: 1;
-}
-
-.iw-shot .item-title {
-    font-size: 0.8rem;
-    color: var(--iw-text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.iw-shot .item-url {
-    font-size: 0.72rem;
-    color: var(--iw-accent);
-    opacity: 0.75;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 /* ── The web activity panel ──
    `PanelSite.svelte`: a box per site, a header that stays when it is folded, then
    the figures and one row per part of the rule. */
@@ -738,12 +705,6 @@
     stroke-linejoin: round;
 }
 
-/* Play is the one solid triangle; everything else is drawn with strokes. */
-.iw-reader-panel .btn.is-play svg {
-    fill: currentColor;
-    stroke: none;
-}
-
 .iw-reader-panel .btn.toggle {
     width: 36px;
     height: 36px;
@@ -835,6 +796,7 @@
 }
 
 .iw-shot .entry-title {
+    display: block;
     margin: 0;
     color: var(--iw-accent);
     font-size: 1.1rem;
@@ -1034,120 +996,7 @@
     border: none;
 }
 
-.iw-rules .rules-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 14px 8px;
-}
-
-.iw-rules .rules-title {
-    flex: 1;
-    min-width: 0;
-    margin: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--iw-text);
-}
-
-.iw-rules .rules-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-}
-
-.iw-rules .button-rules-header {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    color: var(--iw-text);
-    opacity: 0.45;
-}
-
 /* ── The four switches the toolbar keeps beside the search field ── */
-
-.iw-rules .rules-settings {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px 16px;
-    padding: 2px 14px 12px;
-    border-bottom: 1px solid var(--iw-border);
-}
-
-.iw-rules .setting-switch {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.iw-rules .setting-label {
-    font-size: 0.76rem;
-    color: var(--iw-dim);
-}
-
-/* The extension's own switch: a track that slides between the action colour and the
-   page background, with a round handle carrying a small accent light. */
-.iw-rules .slider {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 46px;
-    height: 22px;
-    padding: 2px;
-    border-radius: 22px;
-    border: 1px solid var(--iw-border);
-    background: linear-gradient(to right, var(--iw-accent) 50%, var(--iw-bg) 50%);
-    background-size: 205% 105%;
-    background-position: 100% 0;
-    flex-shrink: 0;
-}
-
-.iw-rules .slider.on {
-    background-position: 0 0;
-}
-
-.iw-rules .switch-handle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid var(--iw-border);
-    background-color: var(--iw-panel);
-}
-
-.iw-rules .slider.on .switch-handle {
-    transform: translateX(24px);
-}
-
-.iw-rules .switch-light {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: var(--iw-accent);
-}
-
-.iw-rules .switch-text {
-    position: absolute;
-    top: 50%;
-    right: 7px;
-    transform: translateY(-50%);
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--iw-text);
-}
-
-.iw-rules .slider.on .switch-text {
-    right: auto;
-    left: 7px;
-    color: #fff;
-}
 
 /* ── The list ── */
 
@@ -1181,6 +1030,7 @@
 }
 
 .iw-rules .rule-name {
+    display: block;
     flex: 1;
     min-width: 0;
     margin: 0;
@@ -1512,20 +1362,8 @@
 .fav-cr {
     background: #dadce0;
 }
-.fav-old {
-    background: #6a7b8c;
-}
 .fav-mdn {
     background: #83d0f2;
-}
-.fav-note {
-    background: #16a085;
-}
-.fav-shot {
-    background: #3498db;
-}
-.fav-ai {
-    background: #c58af9;
 }
 
 /* ── A group that has been backed up ──

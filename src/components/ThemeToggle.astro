@@ -76,13 +76,18 @@ const t = useTranslations(lang);
         background: var(--bg-panel-color);
         color: var(--text-soft);
         cursor: pointer;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
     }
 
+    /* Colour and a glow on hover, and nothing that moves: the button sits in a row with
+       the language pills and the install button, and lifting only this one made the row
+       twitch under the cursor. */
     .theme-toggle-btn:hover {
         color: var(--accent-glow);
         border-color: var(--action-color);
-        transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(22, 160, 133, 0.15);
     }
 

@@ -1,6 +1,7 @@
 ---
 import { useTranslations } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import type { IconName } from '@/data/icons';
 import SectionHeader from '@/components/SectionHeader.astro';
 import { grants, permissionCount } from '@/data/trust';
 import { site } from '@/data/site';
@@ -14,19 +15,19 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const lede = t('trust.lede').replace('{count}', String(permissionCount));
 
-const trustCards = [
+const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
     {
-        iconType: 'lock',
+        icon: 'lock',
         title: t('trust.card1.title'),
         desc: t('trust.card1.desc'),
     },
     {
-        iconType: 'key',
+        icon: 'key',
         title: t('trust.card2.title'),
         desc: t('trust.card2.desc'),
     },
     {
-        iconType: 'shield',
+        icon: 'shield',
         title: t('trust.card3.title'),
         desc: t('trust.card3.desc'),
     },
@@ -43,9 +44,7 @@ const trustCards = [
             trustCards.map((card) => (
                 <div class="glass-card">
                     <div class="trust-icon-box">
-                        {card.iconType === 'lock' && <Icon name="lock" size={22} />}
-                        {card.iconType === 'key' && <Icon name="magnifierKey" size={22} />}
-                        {card.iconType === 'shield' && <Icon name="shield" size={22} />}
+                        <Icon name={card.icon} size={22} />
                     </div>
                     <h3 class="trust-card-title">{card.title}</h3>
                     <p class="trust-card-desc">{card.desc}</p>

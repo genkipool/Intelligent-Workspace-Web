@@ -7,6 +7,7 @@ import { useTranslations } from '@/i18n/utils';
 import Showcase from '@/components/Showcase.astro';
 import Icon from '@/components/Icon.astro';
 import type { ShowcaseBullet } from '@/components/Showcase.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
 
 interface Props {
     lang: Lang;
@@ -38,26 +39,12 @@ const bullets: readonly ShowcaseBullet[] = [
         and the palette are the panel's: see `src/styles/extension-ui.css`.
     -->
     <div class="iw-shot wa-shot">
-        <header class="header">
-            <h1 class="header-main-title">{t('activity.panel.title')}</h1>
-            <div class="header-actions" aria-hidden="true">
-                <span class="control-btn is-on"><Icon name="pin" /></span>
-                <span class="control-btn"><Icon name="tabGroups" /></span>
-                <span class="control-btn"><Icon name="home" /></span>
-                <span class="control-btn"><Icon name="back" /></span>
-            </div>
-        </header>
-
-        <div class="itg-search-row">
-            <div class="search-container">
-                <span class="search-input">{t('activity.panel.search')}</span>
-            </div>
-            <div class="itg-search-row-controls" aria-hidden="true">
-                <span class="control-btn"><Icon name="resize" /></span>
-                <span class="control-btn"><Icon name="collapseAll" /></span>
-                <span class="control-btn"><Icon name="settings" /></span>
-            </div>
-        </div>
+        <PanelChrome
+            title={t('activity.panel.title')}
+            actions={[{ icon: 'pin', on: true }, { icon: 'tabGroups' }, { icon: 'home' }, { icon: 'back' }]}
+            search={t('activity.panel.search')}
+            searchActions={[{ icon: 'resize' }, { icon: 'collapseAll' }, { icon: 'settings' }]}
+        />
 
         <div class="iw-body">
             <!-- One site unfolded: the figures, then one row per part of the rule. -->
