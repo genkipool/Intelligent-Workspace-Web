@@ -1,6 +1,8 @@
 ---
 import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 import IconSprite from '@/components/IconSprite.astro';
 import { chromeIconNames, type IconName } from '@/data/icons';
 import { useTranslations, localisePath } from '@/i18n/utils';
@@ -143,6 +145,9 @@ const jsonLd = {
         </div>
 
         <slot />
+
+        <Analytics />
+        <SpeedInsights />
 
         <IconSprite names={icons} />
 

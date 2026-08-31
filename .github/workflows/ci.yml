@@ -4,9 +4,9 @@ name: CI
 
 on:
     push:
-        branches: [main]
+        branches: [main, develop]
     pull_request:
-        branches: [main]
+        branches: [main, develop]
 
 # A new push makes the run in progress for the same branch pointless.
 concurrency:
@@ -43,11 +43,11 @@ jobs:
             - name: Types
               run: pnpm run check
 
-            - name: Tests
-              run: pnpm run test
-
             - name: Build
               run: pnpm run build
+
+            - name: Tests
+              run: pnpm run test
 
             # The one that catches a silent failure. A payment page whose route is not
             # named in vercel.json inherits the landing CSP, whose frame-ancestors is
