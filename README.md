@@ -136,9 +136,19 @@ folder moves or if you build on another machine**. Read the real one at
 is a blank frame in the panel and a console message about the ancestor violating the CSP
 directive — that is the guard working, not a bug.
 
-The proper fix is to put the extension's real RSA public key in the extension's
-`manifest.json` `key` field, so unpacked and Web Store builds share one ID. What is in
-there today is the _ID_ in the field that expects a _key_, which Chrome quietly ignores.
+The extension's `manifest.json` used to carry
+`"key": "ahdppjdbnhpnkphnmogldfgcngekhfgb"` — the extension _ID_ in the field that expects
+a base64 RSA _public key_. This file used to say Chrome quietly ignored it. **It does
+not**, and that mistaken belief is what kept the resulting bug invisible: the ID is
+thirty-two characters of `a`–`p`, which is valid base64, so Chrome decoded it to 24 bytes
+of nothing in particular and derived a third ID from them —
+`hkhhkopgecahfoileckcppkkchclljoa`, which appears in neither row above. Every attempt to
+frame `/pay` was refused, and the panel showed "refused to connect".
+
+The field is gone now, so an unpacked build is path-derived again and matches the second
+row. The proper long-term fix is still to put the _real_ public key there, so unpacked and
+Web Store builds share one ID — but a wrong value is worse than none, because it invents
+an ID no allowlist will ever contain.
 
 **Register the domain with Stripe.** Dashboard → Settings → **Payment method domains** →
 add `intelligentworkspace.genkipool.com`, in test mode and in live mode. Google Pay and Apple Pay both refuse
