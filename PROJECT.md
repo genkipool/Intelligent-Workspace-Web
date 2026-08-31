@@ -107,7 +107,7 @@
 - `pnpm run perf` builds, serves the build the way the host serves it, and runs Lighthouse on mobile and desktop. Measure with it before claiming a change made the site faster or slower.
 - Serve the build compressed or do not serve it at all. The same build scored 91 on mobile behind `python -m http.server` and 100 behind gzip, and the report blamed a 74 KB stylesheet that is 12 KB on the wire. `scripts/serve-built.mjs` exists so that number is never measured again.
 - The performance score is five metrics: FCP (10), Speed Index (10), LCP (25), TBT (30), CLS (25). Every other line in the report — unused CSS, render-blocking resources, forced reflow, cache policy — carries weight zero. Fix them because they are real, not to move the number; when all five are at 1.00 the number cannot move at all.
-- `site` in `astro.config.mjs` is `https://genkipool.com`. That host currently serves a different, older project, so a Lighthouse run against it is not measuring this code.
+- The deployed origin is `https://intelligentworkspace.genkipool.com`, which is what `site` in `astro.config.mjs` names and what the extension's `PAYMENT_ORIGIN` has to match. The bare `genkipool.com` serves an older, unrelated project: a Lighthouse run against it is not measuring this code, and pointing the extension at it breaks every donation silently.
 
 ## Accessibility Contract
 

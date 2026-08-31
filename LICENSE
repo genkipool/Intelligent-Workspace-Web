@@ -1,0 +1,81 @@
+# PROPRIETARY LICENSE / LICENCIA PROPIETARIA
+
+## English (Primary)
+
+Copyright (c) 2026 GENKI Organization. All rights reserved.
+
+The source code of the "Intelligent Workspace" website (this repository,
+`Intelligent-Workspace-Web`, deployed at `intelligentworkspace.genkipool.com`) is made
+available on GitHub for the sole purpose of code review (security auditing), personal
+learning, and to allow the community to contribute via Pull Requests.
+
+The site is the public face of the "Intelligent Tab Group" / "Intelligent Workspace"
+browser extension and hosts its donation form. It is covered by the same terms as the
+extension itself.
+
+IT IS STRICTLY PROHIBITED TO:
+
+1. Copy, clone, fork (for external or separate project use), or reproduce this code to
+   create derivative products or competing sites.
+2. Deploy this code, in whole or in part, to any public host under any domain.
+3. Use this code or any of its components for commercial purposes.
+4. Reuse the name "Intelligent Workspace", the "GENKI" and "GenkiPool" names, the logo in
+   `public/assets/`, or the copy in `src/i18n/ui.ts`, in any project other than this one.
+   The trade marks and the written copy are not covered by any permission granted below.
+
+GRANTED PERMISSIONS:
+
+1. You may download, inspect, and build this code on your local machine exclusively for
+   personal and private use.
+2. You may create a "Fork" on GitHub solely and exclusively for the purpose of proposing
+   improvements or fixing bugs via Pull Requests submitted back to this original
+   repository.
+
+THIRD-PARTY COMPONENTS: the dependencies declared in `package.json` are the property of
+their respective authors and remain under their own licences. Nothing here alters them.
+
+NO WARRANTY: this software is provided "as is", without warranty of any kind, express or
+implied. In no event shall the copyright holders be liable for any claim, damages or
+other liability arising from the software or its use.
+
+---
+
+## Español
+
+Copyright (c) 2026 GENKI Organización. Todos los derechos reservados.
+
+El código fuente del sitio web "Intelligent Workspace" (este repositorio,
+`Intelligent-Workspace-Web`, desplegado en `intelligentworkspace.genkipool.com`) se
+publica en GitHub con el único fin de permitir su revisión (auditoría de seguridad), el
+aprendizaje personal y las contribuciones de la comunidad mediante Pull Requests.
+
+El sitio es la cara pública de la extensión de navegador "Intelligent Tab Group" /
+"Intelligent Workspace" y aloja su formulario de donaciones. Queda sujeto a las mismas
+condiciones que la propia extensión.
+
+QUEDA ESTRICTAMENTE PROHIBIDO:
+
+1. Copiar, clonar, bifurcar (para uso en un proyecto externo o distinto) o reproducir
+   este código con el fin de crear productos derivados o sitios competidores.
+2. Desplegar este código, en todo o en parte, en cualquier alojamiento público bajo
+   cualquier dominio.
+3. Utilizar este código o cualquiera de sus componentes con fines comerciales.
+4. Reutilizar el nombre "Intelligent Workspace", los nombres "GENKI" y "GenkiPool", el
+   logotipo de `public/assets/` o los textos de `src/i18n/ui.ts` en ningún proyecto
+   distinto de este. Las marcas y los textos no quedan cubiertos por ninguno de los
+   permisos concedidos a continuación.
+
+PERMISOS CONCEDIDOS:
+
+1. Puedes descargar, inspeccionar y compilar este código en tu máquina local
+   exclusivamente para uso personal y privado.
+2. Puedes crear un "Fork" en GitHub única y exclusivamente para proponer mejoras o
+   corregir errores mediante Pull Requests dirigidos a este repositorio original.
+
+COMPONENTES DE TERCEROS: las dependencias declaradas en `package.json` pertenecen a sus
+respectivos autores y se mantienen bajo sus propias licencias. Nada de lo aquí dispuesto
+las modifica.
+
+SIN GARANTÍA: este software se proporciona "tal cual", sin garantía de ningún tipo,
+expresa o implícita. En ningún caso los titulares del copyright serán responsables de
+reclamaciones, daños u otras responsabilidades derivadas del software o de su uso.

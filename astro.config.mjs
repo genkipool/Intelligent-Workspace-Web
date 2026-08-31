@@ -12,7 +12,16 @@ import vercel from '@astrojs/vercel';
  * adapter turns exactly that one route into a function and leaves the rest as files.
  */
 export default defineConfig({
-    site: 'https://genkipool.com',
+    /*
+     * The deployed origin, and the one every canonical URL, `hreflang` and OpenGraph tag
+     * is built from. It is a subdomain of its own: `genkipool.com` serves an older,
+     * unrelated site, so pointing this at the parent would advertise canonicals that
+     * resolve to something else entirely.
+     *
+     * `PAYMENT_ORIGIN` in the extension has to match it exactly — the panel frames
+     * `/pay` from here and the postMessage bridge compares origins string for string.
+     */
+    site: 'https://intelligentworkspace.genkipool.com',
     adapter: vercel(),
 
     /**

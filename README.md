@@ -107,7 +107,7 @@ marketing page needs, which is always the looser of the two. Keep them separate.
 
 ```bash
 vercel link
-vercel domains add genkipool.com
+vercel domains add intelligentworkspace.genkipool.com
 vercel env add STRIPE_SECRET_KEY production     # sk_live_…
 vercel env add STRIPE_SECRET_KEY preview        # sk_test_…
 vercel --prod
@@ -141,7 +141,7 @@ The proper fix is to put the extension's real RSA public key in the extension's
 there today is the _ID_ in the field that expects a _key_, which Chrome quietly ignores.
 
 **Register the domain with Stripe.** Dashboard → Settings → **Payment method domains** →
-add `genkipool.com`, in test mode and in live mode. Google Pay and Apple Pay both refuse
+add `intelligentworkspace.genkipool.com`, in test mode and in live mode. Google Pay and Apple Pay both refuse
 to render on an unregistered domain, and Stripe's registration is also what handles
 Apple's domain-association file. Then enable Google Pay, Apple Pay, PayPal and Link under
 **Payment methods**.

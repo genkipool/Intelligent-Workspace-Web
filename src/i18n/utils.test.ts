@@ -8,17 +8,17 @@ import { ui } from '@/i18n/ui';
 
 describe('getLangFromUrl', () => {
     it('reads the prefix when there is one', () => {
-        expect(getLangFromUrl(new URL('https://genkipool.com/es/'))).toBe('es');
-        expect(getLangFromUrl(new URL('https://genkipool.com/es/pay'))).toBe('es');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/es/'))).toBe('es');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/es/pay'))).toBe('es');
     });
 
     it('falls back to the default for the unprefixed root', () => {
-        expect(getLangFromUrl(new URL('https://genkipool.com/'))).toBe('en');
-        expect(getLangFromUrl(new URL('https://genkipool.com/pay'))).toBe('en');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/'))).toBe('en');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/pay'))).toBe('en');
     });
 
     it('falls back rather than trusting an unknown prefix', () => {
-        expect(getLangFromUrl(new URL('https://genkipool.com/fr/'))).toBe('en');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/fr/'))).toBe('en');
     });
 });
 
