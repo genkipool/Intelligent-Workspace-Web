@@ -13,7 +13,7 @@
         "check:headers": "node scripts/check-headers.mjs",
         "perf": "node scripts/lighthouse.mjs",
         "serve:built": "node scripts/serve-built.mjs",
-        "verify": "pnpm run check && pnpm run test && pnpm run build && pnpm run check:headers && pnpm run format",
+        "verify": "pnpm run check && pnpm run build && pnpm run test && pnpm run check:headers && pnpm run format",
         "format": "prettier --check .",
         "format:fix": "prettier --write ."
     },

@@ -738,7 +738,7 @@ export const ui = {
         // Team Section
         'team.heading': 'Made by a couple',
         'team.subtitle':
-            'No investors, no bloated roadmap. Built with craft for users who demand a browser that behaves.',
+            'No investors, no bloated roadmap. Built with craft for users who demand peak performance and complete control over their browser.',
         'team.dev': 'Architecture, AI & Core Engineering',
         'team.design': 'UX/UI Design & Quality Assurance',
         'team.quote':
@@ -1551,7 +1551,7 @@ export const ui = {
         // Team Section
         'team.heading': 'Hecho por una pareja',
         'team.subtitle':
-            'Sin inversores ni hojas de ruta dictadas por terceros. Hecho con mimo para quienes exigen un navegador que se porte bien.',
+            'Sin inversores ni hojas de ruta dictadas por terceros. Desarrollado con dedicación para quienes exigen un rendimiento impecable y control total en su navegador.',
         'team.dev': 'Arquitectura, IA y Desarrollo Core',
         'team.design': 'Diseño UX/UI y Control de Calidad',
         'team.quote':

@@ -25,8 +25,13 @@ export interface ShortcutZone {
     readonly items: readonly ShortcutItem[];
 }
 
+/*
+ * The three zones. They are not exported: `keyboardZones` below is what anything outside
+ * this file reads, and a second way in is a second thing to keep in step.
+ */
+
 /** Zone 1: the floating omnibar, and the prefix in front of each source. */
-export const omnibarShortcuts: readonly ShortcutItem[] = [
+const omnibarShortcuts: readonly ShortcutItem[] = [
     { keys: ['o'], actionKey: 'shortcut.omnibar.search', categoryKey: 'shortcut.cat.omnibar' },
     { keys: ['@'], actionKey: 'shortcut.omnibar.tab', categoryKey: 'shortcut.cat.omnibar' },
     { keys: ['b:'], actionKey: 'shortcut.omnibar.mute', categoryKey: 'shortcut.cat.organise' },
@@ -38,7 +43,7 @@ export const omnibarShortcuts: readonly ShortcutItem[] = [
 ] as const;
 
 /** Zone 2: the letter labels and the page keys, typed on the page itself. */
-export const hintNavigationShortcuts: readonly ShortcutItem[] = [
+const hintNavigationShortcuts: readonly ShortcutItem[] = [
     { keys: ['f'], actionKey: 'shortcut.hint.open', categoryKey: 'shortcut.cat.hints' },
     { keys: ['cf'], actionKey: 'shortcut.hint.newtab', categoryKey: 'shortcut.cat.clipboard' },
     { keys: ['j', '/', 'k'], actionKey: 'shortcut.hint.scroll', categoryKey: 'shortcut.cat.navigation' },
@@ -50,7 +55,7 @@ export const hintNavigationShortcuts: readonly ShortcutItem[] = [
 ] as const;
 
 /** Zone 3: the manifest's own commands, and the keys that open a panel view. */
-export const browserShortcuts: readonly ShortcutItem[] = [
+const browserShortcuts: readonly ShortcutItem[] = [
     { keys: ['Ctrl', 'Shift', 'Z'], actionKey: 'shortcut.global.fold', categoryKey: 'shortcut.cat.tabs' },
     { keys: ['Ctrl', 'Shift', 'Q'], actionKey: 'shortcut.global.dedup', categoryKey: 'shortcut.cat.tabs' },
     {
