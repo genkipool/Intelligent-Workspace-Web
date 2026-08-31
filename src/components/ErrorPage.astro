@@ -215,17 +215,6 @@ const payUrl = localisePath(lang, '/pay');
         max-width: 760px;
     }
 
-    /* Upside down, and lit in the error colour: the mark itself says the request did
-       not land, before a single word is read. */
-    .error-mark {
-        width: clamp(96px, 14vw, 140px);
-        height: auto;
-        object-fit: contain;
-        transform: scaleY(-1);
-        filter: drop-shadow(0 0 30px rgba(231, 76, 60, 0.45));
-        opacity: 0.9;
-    }
-
     .error-pill {
         display: inline-flex;
         align-items: center;

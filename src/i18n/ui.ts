@@ -118,7 +118,7 @@ export const ui = {
         'fhub.agent.f3':
             'Scheduled queries: a question that asks itself on the day and at the time you choose, and leaves the answer waiting.',
         'fhub.agent.f4':
-            "Bring your own Google AI Studio key, several if you like. When they run out of quota, Chrome's on-device model (Gemini Nano) answers instead, offline and free.",
+            "Bring your own Google AI Studio key, several if you like. When they run out of quota, Chrome's on-device model (Gemini local) answers instead, offline and free.",
 
         // Tab 2: Tab Engine
         'fhub.tabs.title': 'Rules you write once, and never file a tab again',
@@ -174,7 +174,7 @@ export const ui = {
             'Closed 6 sports tabs, made the group Work with the GitHub and Jira tabs in it, and set it red.',
         'fhub.tabs.mockup.badge': 'List groups',
         'fhub.tabs.mockup.latency': 'Auto-collapse on',
-        'fhub.tabs.mockup.c1Title': 'Watch later',
+        'fhub.tabs.mockup.c1Title': 'Entertainment',
         'fhub.tabs.mockup.c1Timer': 'folds in 15 min',
         'fhub.tabs.mockup.activeBadge': 'Active',
         'fhub.tabs.mockup.hibernatedBadge': 'Suspended',
@@ -931,7 +931,7 @@ export const ui = {
         'fhub.agent.f3':
             'Consultas programadas: una pregunta que se lanza sola el día y a la hora que elijas y te deja la respuesta esperando.',
         'fhub.agent.f4':
-            'Pones tu clave de Google AI Studio, varias si quieres. Cuando se agota la cuota responde el modelo local de Chrome (Gemini Nano), sin conexión y sin coste.',
+            'Pones tu clave de Google AI Studio, varias si quieres. Cuando se agota la cuota responde el modelo local de Chrome (Gemini local), sin conexión y sin coste.',
 
         // Tab 2: Tab Engine
         'fhub.tabs.title': 'Reglas que escribes una vez y no vuelves a archivar una pestaña',
@@ -987,7 +987,7 @@ export const ui = {
             'He cerrado 6 pestañas de deportes, he creado el grupo Trabajo con las de GitHub y Jira dentro y lo he puesto en rojo.',
         'fhub.tabs.mockup.badge': 'Listar grupos',
         'fhub.tabs.mockup.latency': 'Plegado automático activo',
-        'fhub.tabs.mockup.c1Title': 'Ver luego',
+        'fhub.tabs.mockup.c1Title': 'Entretenimiento',
         'fhub.tabs.mockup.c1Timer': 'se pliega en 15 min',
         'fhub.tabs.mockup.activeBadge': 'Activa',
         'fhub.tabs.mockup.hibernatedBadge': 'Suspendida',

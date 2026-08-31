@@ -528,106 +528,10 @@ const t = useTranslations(lang);
         filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.25));
     }
 
-    /* Tab Panels */
-    .tab-panel {
-        display: none;
-    }
-
-    .tab-panel.active {
-        display: block;
-        animation: tabFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .tab-panel[hidden] {
-        display: none !important;
-    }
-
-    .tab-panel:focus-visible {
-        outline: 2px solid var(--action-color);
-        outline-offset: 4px;
-        border-radius: var(--radius-lg);
-    }
-
-    @keyframes tabFadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(12px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-        .tab-panel.active {
-            animation: none;
-        }
         .tab-btn {
             transition: none;
         }
-    }
-
-    .panel-grid {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: clamp(32px, 5vw, 64px);
-        align-items: center;
-        background: var(--bg-panel-color);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-lg);
-        padding: clamp(32px, 5vw, 56px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    :root[data-theme='light'] .panel-grid {
-        background: #ffffff;
-        border: 1px solid var(--border-color);
-        box-shadow: 0 4px 20px rgba(11, 28, 21, 0.05);
-    }
-
-    .panel-info {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .panel-title {
-        font-size: clamp(1.8rem, 2.6vw, 2.3rem);
-        color: var(--text-color);
-    }
-
-    .panel-lead {
-        font-size: 1.05rem;
-        color: var(--text-soft);
-        line-height: 1.65;
-    }
-
-    .feature-checklist {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .feature-checklist li {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        font-size: 0.95rem;
-        color: var(--text-soft);
-        line-height: 1.5;
-    }
-
-    .check-icon {
-        color: var(--action-color);
-        font-weight: 800;
-        font-size: 1rem;
-        line-height: 1.2;
-    }
-
-    :root[data-theme='light'] .check-icon {
-        color: var(--header-color);
     }
 
     /* ── The shots inside a panel ──
@@ -810,10 +714,6 @@ const t = useTranslations(lang);
             padding: 8px 14px;
             font-size: 0.86rem;
             gap: 7px;
-        }
-
-        .panel-grid {
-            grid-template-columns: 1fr;
         }
     }
 
