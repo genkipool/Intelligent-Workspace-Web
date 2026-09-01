@@ -10,12 +10,25 @@
  */
 
 :root {
-    --bg-color: #f6f7f9;
+    /*
+     * VIRIDIAN, NOT STRIPE'S PURPLE. These are the fallbacks, used whenever the panel is
+     * not the one opening this page: a link from the about page, a PayPal redirect coming
+     * back, or somebody visiting /pay directly. They used to be Stripe's own palette,
+     * which meant the donation page of this project greeted anyone arriving on their own
+     * in `#635bff` — a colour that appears nowhere else on the site.
+     *
+     * The values are `global.css`'s, so the sheet is the site's page when it stands alone
+     * and the extension's panel when the panel opens it.
+     */
+    --bg-color: #f7faf8;
     --bg-panel-color: #ffffff;
-    --text-color: #1a1c1e;
-    --interactive-color: #635bff;
-    --border-color: #e3e6ea;
-    --error-color: #df1b41;
+    --text-color: #0b1c15;
+    --text-dim: #5c786d;
+    --interactive-color: #16a085;
+    --action-color: #16a085;
+    --border-color: #c8dcd2;
+    --error-color: #c0392b;
+
     /* The panel's own dim ink when it sends one; otherwise the text colour faded towards
        the ground. `pay.ts` computes the same thing as a literal for Stripe, which cannot
        evaluate `color-mix` inside its own iframes. */
@@ -24,10 +37,12 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg-color: #17181b;
-        --bg-panel-color: #1f2125;
-        --text-color: #e8eaed;
-        --border-color: #33363b;
+        --bg-color: #1b2631;
+        --bg-panel-color: #233240;
+        --text-color: #ffffff;
+        --text-dim: #7f9990;
+        --border-color: #34495e;
+        --error-color: #e74c3c;
     }
 }
 
