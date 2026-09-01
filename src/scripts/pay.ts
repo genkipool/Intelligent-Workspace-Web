@@ -255,10 +255,10 @@ let submitting = false;
 /**
  * TWO SETS OF ELEMENTS, AND IT HAS TO BE TWO.
  *
- * The sheet is one card form with the available wallets as buttons above it. Getting the
- * method list out of the card form needs `paymentMethodTypes: ['card']`, and that option
- * belongs to the `elements()` instance rather than to the element — so setting it on a
- * shared instance would take PayPal, Klarna and Amazon Pay out of the wallet buttons too.
+ * The sheet is a short list of ways to pay with the available wallets as buttons above
+ * it. Keeping that list short needs `paymentMethodTypes`, and that option belongs to the
+ * `elements()` instance rather than to the element — so setting it on a shared instance
+ * would take PayPal, Klarna and Amazon Pay out of the wallet buttons too.
  *
  * I collapsed these into one instance once, chasing Stripe's "reuse an instance to save
  * time" advice, and it put the method list straight back: Card, Revolut Pay, Bancontact,
@@ -276,7 +276,7 @@ let cardElements: any = null;
  * has to send the browser away to finish them.
  *
  * PayPal is the one that matters — it has always been the exception this architecture
- * bends around — and Klarna and Amazon Pay behave the same way. Confirming one of these
+ * bends around — and Klarna, Amazon Pay and Revolut Pay behave the same way. Confirming one of these
  * inside the panel navigates the panel's iframe to a page that then refuses to be framed,
  * and the reader gets a blank rectangle with no idea what happened.
  *
@@ -284,7 +284,7 @@ let cardElements: any = null;
  * use the browser's own payment sheet, which is drawn over the panel rather than in it,
  * so they need no window of their own either.
  */
-const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay']);
+const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay', 'revolut_pay']);
 
 /** Whether this page is being framed, i.e. it is the panel's sheet and not a tab. */
 const FRAMED = window.parent !== window;
@@ -409,13 +409,29 @@ function mount(): void {
      * above it a moment later, which reads as the page filling in rather than the page
      * being stuck.
      *
-     * `paymentMethodTypes: ['card']` is what removes the method list. It is an option of
-     * the instance, not of the element, which is why this is its own instance: putting it
-     * on a shared one would strip PayPal out of the wallet buttons as well.
+     * `paymentMethodTypes` is what keeps the list short. Left to itself the account
+     * offers Revolut Pay, Bancontact, MB WAY, Satispay and EPS as well, which in a 400px
+     * panel is a scrolling menu in front of a donation. Two entries is the whole list.
+     *
+     * It is an option of the instance, not of the element, which is why this is its own
+     * instance: putting it on the shared one would strip PayPal out of the wallet buttons
+     * as well.
      */
-    cardElements = stripe.elements({ ...base, paymentMethodTypes: ['card'] });
+    cardElements = stripe.elements({ ...base, paymentMethodTypes: ['card', 'revolut_pay'] });
 
-    const payment = cardElements.create('payment');
+    /*
+     * Tabs, because two of them fit across the panel on one row.
+     *
+     * A tab strip is one horizontal row that Stripe will not wrap, which is why the long
+     * list had to be an accordion: six entries do not fit and the last ones are simply cut
+     * off. Two do fit, and two tabs read faster than two stacked rows with radios beside
+     * them. If a third method is ever added here, check it still fits before leaving this
+     * as tabs.
+     */
+    const payment = cardElements.create('payment', {
+        layout: { type: 'tabs' },
+        paymentMethodOrder: ['card', 'revolut_pay'],
+    });
     payment.on('ready', () => {
         $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
