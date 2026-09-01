@@ -243,13 +243,19 @@ function stripeAppearance() {
             },
             '.Error': { fontSize: '0.85rem' },
             /*
-             * The mandate block. `terms: 'never'` covers the agreements Stripe knows to
-             * gate that way and left this one on screen, so it is named here as well.
-             * `.Block` is the container and `.FadeWrapper` is what Stripe animates it in
-             * with; hiding only one of them leaves the other holding its space.
+             * NO RULE HERE HIDES THE MANDATE, AND NONE CAN.
+             *
+             * `.Block { display: none }` sat here and did nothing: `display` is not one of
+             * the properties the Appearance API accepts, so Stripe dropped the rule
+             * without a word. `.FadeWrapper` is not one of its selectors either. Both
+             * looked like they worked and neither did, which is why the block kept coming
+             * back after each attempt.
+             *
+             * `terms` above is the only supported way to switch these off, and it is
+             * already set to `never` for every key it takes. Whatever is still on screen
+             * is either Link's own legal agreement — which Stripe states cannot be
+             * removed — or a method with no `terms` key of its own.
              */
-            '.Block': { display: 'none' },
-            '.FadeWrapper': { display: 'none' },
         },
     };
 }
@@ -550,16 +556,14 @@ function mount(): void {
          * `always` tells Stripe to offer a wallet anyway, so it goes on waiting for an
          * answer the browser has already refused to give — that is the hang.
          *
-         * But the default is not enough either: Stripe still *asks*, and the asking is
-         * what prints that warning in the panel's console on every open. `never` is the
-         * only value that stops the question being put. Nothing is lost by it — those two
-         * wallets cannot run in this frame whatever we request — and Link, which is not a
-         * Payment Request wallet, still appears, so the buttons above the divider do not
-         * go empty.
+         * DO NOT ANSWER THAT WARNING WITH `never`. I tried, to silence the console line,
+         * and it took Google Pay and Apple Pay out of the panel — where they had been
+         * working. The warning is Chrome describing one probe it declined; it is not a
+         * statement that the wallets are unavailable, and the buttons prove it. Leaving
+         * the option off lets Stripe decide from what it can actually reach, which is the
+         * only party here with the full picture.
          */
-        paymentMethods: FRAMED
-            ? { applePay: 'never', googlePay: 'never' }
-            : { applePay: 'always', googlePay: 'always' },
+        ...(FRAMED ? {} : { paymentMethods: { applePay: 'always', googlePay: 'always' } }),
     });
 
     /*
