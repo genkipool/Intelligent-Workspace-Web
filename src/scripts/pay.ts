@@ -42,8 +42,17 @@ const PUBLISHABLE_KEY =
     import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY ||
     'pk_test_51U86TNRxpp4Vcyc0qjfgquKeor0aCVQYGTiOlHlSZOBNMvxpxqw8YN0b3nf7QdtuofTGdhoAeGink2NeJ4dzjMYY00YgqqL9yl';
 
-/** Which wallet the clicked tile asked for. Only used to rank the buttons. */
+/**
+ * Which wallet the clicked tile asked for. Only used to rank the buttons.
+ *
+ * `card` is here deliberately. The Stripe tile sends `method=card`, which used to map to
+ * nothing, so the order was left empty and Stripe led with whatever it preferred — and
+ * from the moment PayPal was switched on in the Dashboard, that was PayPal. Pressing the
+ * Stripe tile and being offered PayPal is the tile lying about where it goes. Link is
+ * Stripe's own wallet, so that is what the Stripe tile ranks first.
+ */
 const WALLET_FOR_METHOD: Record<string, string> = {
+    card: 'link',
     paypal: 'paypal',
     google_pay: 'googlePay',
     apple_pay: 'applePay',
@@ -116,9 +125,41 @@ function applyTheme(): void {
 
 applyTheme();
 
+/**
+ * A theme token, as a value Stripe can actually use.
+ *
+ * The guard matters. Stripe's Appearance API is handed these as plain strings and applies
+ * them inside its own iframes, where our custom properties do not exist — so a token whose
+ * value is still an expression, `color-mix(in srgb, var(--text-color) 60%, transparent)`,
+ * arrives as nonsense and the rule is dropped. That is what left the labels and
+ * placeholders in Stripe's default grey while the rest of the sheet wore the panel's
+ * colours: `--muted-color` is derived in `pay.css` and never resolves to a literal here.
+ *
+ * `getComputedStyle` does not resolve custom properties for us, so anything still holding
+ * a `var()` or a colour function is treated as absent and the caller's fallback is used.
+ */
 function readToken(token: string, fallback: string): string {
     const value = getComputedStyle(document.documentElement).getPropertyValue(`--${token}`).trim();
-    return value || fallback;
+    if (!value || /var\(|color-mix\(/.test(value)) return fallback;
+    return value;
+}
+
+/**
+ * Blends two hex colours. Used for the muted ink, which has to be a literal for Stripe
+ * and therefore cannot be the `color-mix` the stylesheet uses for the same purpose.
+ */
+function blend(from: string, to: string, ratio: number): string {
+    const parse = (hex: string): [number, number, number] | null => {
+        const clean = hex.trim().replace('#', '');
+        const full = clean.length === 3 ? [...clean].map((c) => c + c).join('') : clean;
+        if (!/^[0-9a-f]{6}$/i.test(full)) return null;
+        return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16)) as [number, number, number];
+    };
+    const a = parse(from);
+    const b = parse(to);
+    if (!a || !b) return from;
+    const mix = a.map((channel, i) => Math.round(channel + (b[i]! - channel) * ratio));
+    return `#${mix.map((c) => c.toString(16).padStart(2, '0')).join('')}`;
 }
 
 /**
@@ -138,7 +179,12 @@ function stripeAppearance() {
     const focus = readToken('action-color', readToken('interactive-color', '#635bff'));
     const ground = readToken('bg-color', '#ffffff');
     const text = readToken('text-color', '#1a1a1a');
-    const muted = readToken('muted-color', '#6b7280');
+    /*
+     * The panel's own dim ink when it sends one, otherwise the text colour faded towards
+     * the ground — which is what `pay.css` does for the same job, computed here so Stripe
+     * receives a literal rather than an expression it cannot evaluate.
+     */
+    const muted = readToken('text-dim', blend(text, ground, 0.4));
 
     return {
         theme: 'stripe' as const,
@@ -204,14 +250,24 @@ function stripeAppearance() {
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T;
 
 let amount: number = defaultDonationAmount;
-let elements: any = null;
 let submitting = false;
 
 /**
- * The row selected in the accordion. Needed because some methods cannot be completed
- * here at all, and the only way to know which one is in play is to watch the element.
+ * TWO SETS OF ELEMENTS, ON PURPOSE.
+ *
+ * The sheet is one card form with the available wallets as buttons above it, and that is
+ * not a layout the Payment Element can be asked for: it lists every method the account
+ * has, and the only way to stop it is to tell it card is the only one it may collect.
+ * Doing that to a single `elements` instance would silence the wallets too, since the
+ * Express Checkout Element is created from the same instance and reads the same list.
+ *
+ * So there are two. `walletElements` knows about everything and paints the buttons;
+ * `cardElements` knows only about cards and paints the form. Both carry the same amount —
+ * `setAmount` updates both, and forgetting one is how a wallet ends up charging the old
+ * total — and whichever one the reader used is the one that confirms.
  */
-let selectedType = 'card';
+let walletElements: any = null;
+let cardElements: any = null;
 
 /**
  * Methods whose provider refuses to authenticate inside someone else's frame, so Stripe
@@ -248,8 +304,10 @@ function setAmount(value: number, { fromChip = false } = {}): void {
     if (fromChip) $<HTMLInputElement>('custom-amount').value = '';
     syncChips();
     // Stripe re-evaluates which wallets are eligible for the new total, which is why
-    // this is not just a label change.
-    elements?.update({ amount: amount * 100 });
+    // this is not just a label change. Both sets, always: a wallet left on the old amount
+    // would charge the old amount.
+    walletElements?.update({ amount: amount * 100 });
+    cardElements?.update({ amount: amount * 100 });
     updateSubmitLabel();
 }
 
@@ -280,13 +338,15 @@ async function createIntent(): Promise<string> {
 const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
 
 /**
- * Finishes a payment. Shared by both Elements.
+ * Finishes a payment.
  *
- * `redirect: 'if_required'` keeps card and Google Pay inside this frame. PayPal is the
- * exception the whole architecture bends around: it cannot authenticate in a
- * third-party frame, so Stripe hands back a redirect and the browser leaves.
+ * `source` is the element set the reader actually used, and it has to be that one:
+ * confirming with the other set submits fields nobody filled in. `methodType` is what
+ * they picked — `'card'` from the form, or the wallet's own name from the buttons.
+ *
+ * `redirect: 'if_required'` keeps card and the browser-sheet wallets inside this frame.
  */
-async function finish(): Promise<void> {
+async function finish(source: any, methodType: string): Promise<void> {
     if (submitting) return;
 
     /*
@@ -295,13 +355,13 @@ async function finish(): Promise<void> {
      * the redirect is just a redirect. `pay:external` is the only message that asks the
      * panel to do something rather than telling it what happened.
      */
-    if (FRAMED && LEAVES_THE_FRAME.has(selectedType)) {
+    if (FRAMED && LEAVES_THE_FRAME.has(methodType)) {
         const away = new URL(window.location.href);
         away.searchParams.set('amount', String(amount));
-        away.searchParams.set('method', selectedType);
+        away.searchParams.set('method', methodType);
         away.searchParams.delete('nonce');
         away.searchParams.delete('theme');
-        notifyPanel('pay:external', { url: away.toString(), method: selectedType });
+        notifyPanel('pay:external', { url: away.toString(), method: methodType });
         setStatus(strings.opensOutside, 'success');
         return;
     }
@@ -310,12 +370,12 @@ async function finish(): Promise<void> {
     setStatus('');
 
     try {
-        const { error: submitError } = await elements.submit();
+        const { error: submitError } = await source.submit();
         if (submitError) throw new Error(submitError.message);
 
         const clientSecret = await createIntent();
         const { error } = await stripe.confirmPayment({
-            elements,
+            elements: source,
             clientSecret,
             confirmParams: { return_url: window.location.href },
             redirect: 'if_required',
@@ -334,16 +394,14 @@ async function finish(): Promise<void> {
 }
 
 function mount(): void {
-    elements = stripe.elements({
-        mode: 'payment',
-        amount: amount * 100,
-        currency: CURRENCY,
-        appearance: stripeAppearance(),
-    });
+    const appearance = stripeAppearance();
+    const base = { mode: 'payment' as const, amount: amount * 100, currency: CURRENCY, appearance };
+
+    // ── The wallets, as buttons above the divider ──
+    walletElements = stripe.elements(base);
 
     const wanted = WALLET_FOR_METHOD[METHOD];
-
-    const express = elements.create('expressCheckout', {
+    const express = walletElements.create('expressCheckout', {
         buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
         paymentMethodOrder: wanted ? [wanted] : [],
     });
@@ -355,44 +413,43 @@ function mount(): void {
             $('express').hidden = !hasWallets;
             $('divider').hidden = !hasWallets;
 
-            // The tile the user pressed named a wallet. If that one is not available, say so
-            // rather than leaving them hunting for a button that will never appear — the
-            // Apple Pay tile on a Linux machine, typically.
+            // The tile the reader pressed named a wallet. If that one is not available,
+            // say so rather than leaving them hunting for a button that will never appear
+            // — the Apple Pay tile on anything that is not an Apple device, typically.
             $('wallet-note').hidden = !(wanted && !availablePaymentMethods?.[wanted]);
         },
     );
 
-    express.on('confirm', finish);
+    /*
+     * The wallet reports which of itself was pressed, and that is the only way to know:
+     * a wallet button is not a form field and there is nothing to read afterwards. PayPal
+     * arriving here is what triggers the handoff to a tab.
+     */
+    express.on('confirm', (event: { expressPaymentType?: string }) =>
+        finish(walletElements, event?.expressPaymentType ?? 'wallet'),
+    );
     express.mount('#express');
 
+    // ── The card form, and nothing else ──
     /*
-     * NO TABS, ANYWHERE. `layout: 'tabs'` is one horizontal strip and Stripe gives no way
-     * to wrap it, so in a 400px panel the last methods are cut off and cannot be reached
-     * at all. There used to be a width check here that kept the tabs on a wide viewport,
-     * and it was the wrong shape twice over: it made the sheet two different interfaces
-     * depending on where it opened, and it had to guess a width from a frame that has not
-     * been laid out yet.
-     *
-     * The accordion is one row per method, stacked, with radios. It fits any width, it is
-     * the same sheet everywhere, and there is nothing to measure.
+     * `paymentMethodTypes: ['card']` is what removes the method list. With it the Payment
+     * Element has one method to offer, so it renders the fields directly instead of a row
+     * per method with a radio beside it. That is the whole of the "cleaner sheet": the
+     * wallets are already buttons above, and repeating them as a list underneath was
+     * offering the same choice twice in two different shapes.
      */
-    const payment = elements.create('payment', {
-        layout: { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: false },
-    });
+    cardElements = stripe.elements({ ...base, paymentMethodTypes: ['card'] });
 
-    payment.on('change', (event: { value?: { type?: string } }) => {
-        selectedType = event?.value?.type ?? selectedType;
-        setStatus('');
-    });
+    const payment = cardElements.create('payment');
     payment.on('ready', () => {
         $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
         notifyPanel('pay:ready');
     });
     /*
-     * If Stripe never reports ready — blocked script, dead network, a wallet frame that
-     * hangs — the sheet must say so rather than spin for ever. Twenty seconds is longer
-     * than the worst cold load measured in the panel and shorter than anyone's patience.
+     * If Stripe never reports ready — blocked script, dead network, a frame that hangs —
+     * the sheet must say so rather than spin for ever. Twenty seconds is longer than the
+     * worst cold load measured in the panel and shorter than anyone's patience.
      */
     const readyTimeout = window.setTimeout(() => {
         if (!$('payment-loading').hidden) {
@@ -411,7 +468,7 @@ function mount(): void {
 
     $('payment-form').addEventListener('submit', (event) => {
         event.preventDefault();
-        void finish();
+        void finish(cardElements, 'card');
     });
 }
 

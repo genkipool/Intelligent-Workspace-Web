@@ -16,7 +16,10 @@
     --interactive-color: #635bff;
     --border-color: #e3e6ea;
     --error-color: #df1b41;
-    --muted-color: color-mix(in srgb, var(--text-color) 60%, transparent);
+    /* The panel's own dim ink when it sends one; otherwise the text colour faded towards
+       the ground. `pay.ts` computes the same thing as a literal for Stripe, which cannot
+       evaluate `color-mix` inside its own iframes. */
+    --muted-color: var(--text-dim, color-mix(in srgb, var(--text-color) 60%, transparent));
 }
 
 @media (prefers-color-scheme: dark) {
