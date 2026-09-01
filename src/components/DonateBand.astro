@@ -21,7 +21,7 @@ const payUrl = localisePath(lang, '/pay');
             <h2 class="donate-headline">{t('donate.title')}</h2>
             <p class="donate-body-text">{t('donate.body')}</p>
             <div class="donate-actions-row">
-                <a href={payUrl} class="btn-primary donate-cta-btn">
+                <a href={payUrl} class="btn-primary donate-cta-btn" data-astro-reload>
                     <Icon name="heart" />
                     <span>{t('donate.cta')}</span>
                 </a>

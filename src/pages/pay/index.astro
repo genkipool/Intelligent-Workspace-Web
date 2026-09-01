@@ -8,7 +8,14 @@ const lang = 'en' as const;
 const t = useTranslations(lang);
 ---
 
-<Base lang={lang} title={t('pay.title')} description={t('pay.secured')} noindex icons={[]}>
+<Base
+    lang={lang}
+    title={t('pay.title')}
+    description={t('pay.secured')}
+    noindex
+    icons={[]}
+    transitions={false}
+>
     <!--
         Stripe's first load is the whole cost of this page. `js.stripe.com/v3` pulls in a
         controller frame, a metrics frame and the Elements themselves, each on its own

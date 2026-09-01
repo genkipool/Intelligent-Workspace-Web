@@ -242,6 +242,14 @@ function stripeAppearance() {
                 color: focus,
             },
             '.Error': { fontSize: '0.85rem' },
+            /*
+             * The mandate block. `terms: 'never'` covers the agreements Stripe knows to
+             * gate that way and left this one on screen, so it is named here as well.
+             * `.Block` is the container and `.FadeWrapper` is what Stripe animates it in
+             * with; hiding only one of them leaves the other holding its space.
+             */
+            '.Block': { display: 'none' },
+            '.FadeWrapper': { display: 'none' },
         },
     };
 }
@@ -524,17 +532,28 @@ function mount(): void {
         buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
         paymentMethodOrder: wanted ? [wanted] : [],
         /*
-         * `always` is what makes the Apple Pay button exist at all outside Safari.
+         * `always` ONLY WHERE THE PAYMENT REQUEST API EXISTS, which is not inside the
+         * panel.
          *
-         * Stripe's browser table says Apple Pay is supported on desktop Chrome, Edge,
-         * Firefox and Opera "only when `paymentMethods.applePay` is set to `always`" — the
-         * default offers it solely where the device already has it configured, which off
-         * Apple hardware is nowhere. Google Pay is the same story on Safari and the iOS
-         * browsers. Neither setting conjures a button on a platform that genuinely cannot
-         * pay that way, or in an unsupported currency; it only stops us hiding one that
-         * would have worked.
+         * Stripe's browser table says Apple Pay works on desktop Chrome, Edge, Firefox
+         * and Opera "only when `paymentMethods.applePay` is set to `always`" — the default
+         * offers it solely where the device already has it configured. So `always` is
+         * right in a tab.
+         *
+         * In the panel it is worse than useless. Chrome refuses the Payment Request API
+         * to a frame whose ancestor is a `chrome-extension://` page and says so:
+         *
+         *     Only localhost, file://, and cryptographic scheme origins allowed.
+         *     No UI will be shown. CanMakePayment and hasEnrolledInstrument will
+         *     always return false. Show will be rejected with NotSupportedError.
+         *
+         * `always` tells Stripe to offer a wallet anyway, so it goes on waiting for an
+         * answer that the browser has already said it will never give — and the sheet sits
+         * on "Loading the secure payment form" until the timeout. Letting the default
+         * decide means the wallets are simply absent there, which is the truth: they
+         * cannot run in that frame whatever we ask for.
          */
-        paymentMethods: { applePay: 'always', googlePay: 'always' },
+        ...(FRAMED ? {} : { paymentMethods: { applePay: 'always', googlePay: 'always' } }),
     });
 
     /*

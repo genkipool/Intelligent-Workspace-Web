@@ -21,9 +21,27 @@ interface Props {
      * which is why `icon-sprite.test.ts` checks every `<use>` against the built HTML.
      */
     icons?: readonly IconName[];
+    /**
+     * Whether this page joins the client-side router.
+     *
+     * The donation sheet must not. A view transition swaps the DOM without re-running
+     * module scripts, so arriving at `/pay` from a link inside the site left `pay.ts`
+     * unexecuted: Stripe was never initialised and the sheet sat on "Loading the secure
+     * payment form" for ever, while opening the same URL directly worked perfectly. The
+     * links into it carry `data-astro-reload` for the same reason; this is the other half,
+     * and it also saves the sheet the router's 16 KB, which it has no links to spend on.
+     */
+    transitions?: boolean;
 }
 
-const { lang, title, description, noindex = false, icons = chromeIconNames } = Astro.props;
+const {
+    lang,
+    title,
+    description,
+    noindex = false,
+    icons = chromeIconNames,
+    transitions = true,
+} = Astro.props;
 const t = useTranslations(lang);
 
 const pageTitle = title ?? t('meta.title');
@@ -81,8 +99,11 @@ const jsonLd = {
         <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
         <slot name="head" />
 
-        <!-- ClientRouter: Zero-flash seamless client-side page transitions for language switching -->
-        <ClientRouter />
+        {
+            /* Zero-flash client-side transitions for the language switch. Off on the
+               donation sheet, which has no links and cannot survive a DOM swap. */
+            transitions && <ClientRouter />
+        }
 
         <!-- Instantaneous theme synchronization & Zero-Jump Scroll Retention -->
         <script is:inline>
