@@ -150,6 +150,20 @@ row. The proper long-term fix is still to put the _real_ public key there, so un
 Web Store builds share one ID — but a wrong value is worse than none, because it invents
 an ID no allowlist will ever contain.
 
+**The payment CSP has to name four Stripe origins, not one.** `js.stripe.com` is the
+obvious one and it is not enough: Stripe stands up a controller and a metrics frame on
+`m.stripe.network`, reports to `q.stripe.com`, and loads every card-brand and wallet logo
+from `*.stripe.com`. Leaving those out does not produce an error anyone sees — the sheet
+simply sits on "Loading the secure payment form" and never finishes, and it only happens
+in production, because `astro dev` serves no headers at all and so cannot reproduce it.
+
+| Directive     | Must include                                                                    |
+| ------------- | ------------------------------------------------------------------------------- |
+| `script-src`  | `https://js.stripe.com`                                                         |
+| `frame-src`   | `https://js.stripe.com`, `https://hooks.stripe.com`, `https://m.stripe.network` |
+| `connect-src` | `https://api.stripe.com`, `https://m.stripe.network`, `https://q.stripe.com`    |
+| `img-src`     | `https://*.stripe.com`                                                          |
+
 **Register the domain with Stripe.** Dashboard → Settings → **Payment method domains** →
 add `intelligentworkspace.genkipool.com`, in test mode and in live mode. Google Pay and Apple Pay both refuse
 to render on an unregistered domain, and Stripe's registration is also what handles
