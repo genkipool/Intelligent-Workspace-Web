@@ -1,7 +1,28 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { passthroughImageService } from 'astro/config';
+import fs from 'node:fs';
 import vercel from '@astrojs/vercel';
+
+/**
+ * HTTPS in development, when the certificate is there.
+ *
+ * Chrome refuses to autofill a payment form served over plain HTTP — "autofill is
+ * disabled because this form does not use a secure connection" — so the card fields
+ * cannot be tested locally the way a reader will meet them. The deployed site is HTTPS
+ * and has never had the problem; `astro dev` did.
+ *
+ * `pnpm run cert` writes a self-signed pair into `.certs/`, which git ignores. With it
+ * present `pnpm dev` serves https://localhost:4321 and autofill works; without it,
+ * nothing changes and dev stays on HTTP. Point the extension at the same scheme in its
+ * `.env.local`, or the panel's frame will be blocked as mixed content.
+ */
+const KEY = new URL('./.certs/localhost-key.pem', import.meta.url);
+const CERT = new URL('./.certs/localhost-cert.pem', import.meta.url);
+const devHttps =
+    fs.existsSync(KEY) && fs.existsSync(CERT)
+        ? { key: fs.readFileSync(KEY), cert: fs.readFileSync(CERT) }
+        : undefined;
 
 /**
  * The site is static except for one endpoint.
@@ -58,6 +79,7 @@ export default defineConfig({
     },
 
     vite: {
+        server: { https: devHttps },
         build: {
             /**
              * Never inline a component script into the HTML.

@@ -19,3 +19,6 @@ node_modules/
 
 # Scratch from agent sessions. Already excluded from Prettier for the same reason.
 .agents/
+
+# Self-signed certificate for `pnpm dev --https`. Regenerated on demand, never shared.
+.certs/

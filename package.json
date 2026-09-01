@@ -6,6 +6,7 @@
     "type": "module",
     "scripts": {
         "dev": "astro dev",
+        "cert": "mkdir -p .certs && openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 825 -keyout .certs/localhost-key.pem -out .certs/localhost-cert.pem -subj /CN=localhost -addext subjectAltName=DNS:localhost,IP:127.0.0.1",
         "build": "astro build",
         "preview": "astro preview",
         "check": "astro check",

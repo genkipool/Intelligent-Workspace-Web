@@ -39,3 +39,28 @@ export function isSupportedCurrency(raw: unknown): boolean {
 export function toMinorUnits(amount: number): number {
     return amount * 100;
 }
+
+/**
+ * The methods the card form is allowed to collect.
+ *
+ * It exists in two places by necessity: `pay.ts` passes it to `elements()` as
+ * `paymentMethodTypes`, and the endpoint has to create the PaymentIntent with the same
+ * list. Stripe rejects the confirmation outright if they disagree — "payment details were
+ * collected through Stripe Elements using payment_method_types and cannot be confirmed
+ * through the API configured with automatic payment methods" — so this is the one list
+ * and both sides import it.
+ */
+export const CARD_FORM_METHODS = ['card', 'revolut_pay'] as const;
+
+/**
+ * Whether a request is confirming from the card form or from a wallet button.
+ *
+ * The two need different PaymentIntents. The card form restricts itself with
+ * `paymentMethodTypes`, so its intent must name the same types; the wallet buttons are
+ * unrestricted, so theirs must use automatic payment methods and let the Dashboard decide.
+ * Anything unrecognised is treated as a wallet, which is the safer default: an automatic
+ * intent can confirm more, not less.
+ */
+export function isCardFormSource(source: unknown): boolean {
+    return source === 'card-form';
+}

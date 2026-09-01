@@ -12,9 +12,21 @@
  *     logged, or returned. Only the PaymentIntent's `client_secret` goes back, which is
  *     scoped to that one payment and is safe in the browser.
  *
- * NOT PASSING `payment_method_types` IS DELIBERATE. Omitting it enables dynamic payment
- * methods, so which wallets appear is decided in the Stripe Dashboard rather than here.
- * Hardcoding `['card']` is the classic way to make Google Pay and PayPal disappear.
+ * WHICH ELEMENT COLLECTED THE DETAILS DECIDES HOW THE INTENT IS BUILT, and it is not a
+ * preference. Stripe refuses to confirm details gathered by an Element that was given
+ * `paymentMethodTypes` against an intent created with automatic payment methods, and says
+ * so in as many words. The sheet has two elements with two different configurations, so
+ * this has two branches:
+ *
+ *   - the card form restricts itself to `CARD_FORM_METHODS`, so its intent names exactly
+ *     those types;
+ *   - the wallet buttons are unrestricted, so theirs omits the list and lets dynamic
+ *     payment methods pick — which is what keeps Google Pay, Apple Pay and PayPal
+ *     appearing or not according to the Dashboard rather than to a hardcoded array here.
+ *
+ * `source` therefore has to be trusted only as far as choosing between those two shapes.
+ * It cannot widen what may be charged: the amount is still clamped, the currency is still
+ * checked, and both branches create an intent on the same account.
  */
 
 import type { APIRoute } from 'astro';
@@ -22,7 +34,15 @@ import { donationCurrency } from '@/data/site';
 // The rules live in a pure module so they can be tested without a server or a Stripe
 // key. See `src/lib/donation.test.ts` — those cases are the guard between a query
 // string and a card charge.
-import { clampAmount, isSupportedCurrency, toMinorUnits, MIN_AMOUNT, MAX_AMOUNT } from '@/lib/donation';
+import {
+    clampAmount,
+    isSupportedCurrency,
+    toMinorUnits,
+    MIN_AMOUNT,
+    MAX_AMOUNT,
+    CARD_FORM_METHODS,
+    isCardFormSource,
+} from '@/lib/donation';
 
 export const prerender = false;
 
@@ -64,9 +84,14 @@ export const POST: APIRoute = async ({ request }) => {
         // Stripe counts in the currency's smallest unit.
         amount: String(toMinorUnits(amount)),
         currency,
-        'automatic_payment_methods[enabled]': 'true',
         description: 'Intelligent Workspace donation',
     });
+
+    if (isCardFormSource(body.source)) {
+        CARD_FORM_METHODS.forEach((type, index) => form.append(`payment_method_types[${index}]`, type));
+    } else {
+        form.append('automatic_payment_methods[enabled]', 'true');
+    }
 
     try {
         const response = await fetch(STRIPE_API, {

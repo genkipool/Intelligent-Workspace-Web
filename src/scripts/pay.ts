@@ -16,6 +16,7 @@
  */
 
 import { donationAmounts, defaultDonationAmount, donationCurrency } from '@/data/site';
+import { CARD_FORM_METHODS } from '@/lib/donation';
 
 /**
  * The publishable key of the account that receives the donations.
@@ -327,11 +328,17 @@ function setBusy(busy: boolean): void {
     button.classList.toggle('is-busy', busy);
 }
 
-async function createIntent(): Promise<string> {
+/**
+ * `source` is not decoration. Stripe refuses to confirm details collected by an Element
+ * configured with `paymentMethodTypes` against an intent created with automatic payment
+ * methods, so the endpoint has to build a different intent for each of this sheet's two
+ * elements and this is how it knows which.
+ */
+async function createIntent(source: 'card-form' | 'wallet'): Promise<string> {
     const response = await fetch('/api/intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, currency: CURRENCY, nonce: NONCE }),
+        body: JSON.stringify({ amount, currency: CURRENCY, nonce: NONCE, source }),
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || strings.failed);
@@ -349,7 +356,7 @@ const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
  *
  * `redirect: 'if_required'` keeps card and the browser-sheet wallets inside this frame.
  */
-async function finish(source: any, methodType: string): Promise<void> {
+async function finish(source: any, methodType: string, kind: 'card-form' | 'wallet'): Promise<void> {
     if (submitting) return;
 
     /*
@@ -376,7 +383,7 @@ async function finish(source: any, methodType: string): Promise<void> {
         const { error: submitError } = await source.submit();
         if (submitError) throw new Error(submitError.message);
 
-        const clientSecret = await createIntent();
+        const clientSecret = await createIntent(kind);
         const { error } = await stripe.confirmPayment({
             elements: source,
             clientSecret,
@@ -417,7 +424,7 @@ function mount(): void {
      * instance: putting it on the shared one would strip PayPal out of the wallet buttons
      * as well.
      */
-    cardElements = stripe.elements({ ...base, paymentMethodTypes: ['card', 'revolut_pay'] });
+    cardElements = stripe.elements({ ...base, paymentMethodTypes: [...CARD_FORM_METHODS] });
 
     /*
      * Tabs, because two of them fit across the panel on one row.
@@ -430,7 +437,7 @@ function mount(): void {
      */
     const payment = cardElements.create('payment', {
         layout: { type: 'tabs' },
-        paymentMethodOrder: ['card', 'revolut_pay'],
+        paymentMethodOrder: [...CARD_FORM_METHODS],
         /*
          * The wallets are already buttons above the divider, so the card form must not
          * offer them again — and it does by default, which is how Google Pay ended up
@@ -469,7 +476,7 @@ function mount(): void {
 
     $('payment-form').addEventListener('submit', (event) => {
         event.preventDefault();
-        void finish(cardElements, 'card');
+        void finish(cardElements, 'card', 'card-form');
     });
 
     // ── Then the wallets, above the divider ──
@@ -521,7 +528,7 @@ function mount(): void {
      * wallet button is not a form field and there is nothing to read afterwards.
      */
     express.on('confirm', (event: { expressPaymentType?: string }) =>
-        finish(walletElements, event?.expressPaymentType ?? 'wallet'),
+        finish(walletElements, event?.expressPaymentType ?? 'wallet', 'wallet'),
     );
     express.mount('#express');
 }
