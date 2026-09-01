@@ -253,21 +253,16 @@ let amount: number = defaultDonationAmount;
 let submitting = false;
 
 /**
- * TWO SETS OF ELEMENTS, ON PURPOSE.
+ * The one Elements instance both the wallet buttons and the card form come from.
  *
- * The sheet is one card form with the available wallets as buttons above it, and that is
- * not a layout the Payment Element can be asked for: it lists every method the account
- * has, and the only way to stop it is to tell it card is the only one it may collect.
- * Doing that to a single `elements` instance would silence the wallets too, since the
- * Express Checkout Element is created from the same instance and reads the same list.
- *
- * So there are two. `walletElements` knows about everything and paints the buttons;
- * `cardElements` knows only about cards and paints the form. Both carry the same amount —
- * `setAmount` updates both, and forgetting one is how a wallet ends up charging the old
- * total — and whichever one the reader used is the one that confirms.
+ * There were briefly two — one unrestricted for the wallets, one restricted to cards for
+ * the form — to keep the method list out of the card form. That was the wrong trade:
+ * Stripe's own guidance is to reuse a single instance "to save time", a second instance
+ * means a second set of frames to stand up before anything paints, and combining the two
+ * elements already removes the duplication, because Stripe drops the wallets from the
+ * Payment Element when an Express Checkout Element is on the page.
  */
-let walletElements: any = null;
-let cardElements: any = null;
+let elements: any = null;
 
 /**
  * Methods whose provider refuses to authenticate inside someone else's frame, so Stripe
@@ -306,8 +301,7 @@ function setAmount(value: number, { fromChip = false } = {}): void {
     // Stripe re-evaluates which wallets are eligible for the new total, which is why
     // this is not just a label change. Both sets, always: a wallet left on the old amount
     // would charge the old amount.
-    walletElements?.update({ amount: amount * 100 });
-    cardElements?.update({ amount: amount * 100 });
+    elements?.update({ amount: amount * 100 });
     updateSubmitLabel();
 }
 
@@ -394,53 +388,81 @@ async function finish(source: any, methodType: string): Promise<void> {
 }
 
 function mount(): void {
-    const appearance = stripeAppearance();
-    const base = { mode: 'payment' as const, amount: amount * 100, currency: CURRENCY, appearance };
-
-    // ── The wallets, as buttons above the divider ──
-    walletElements = stripe.elements(base);
-
-    const wanted = WALLET_FOR_METHOD[METHOD];
-    const express = walletElements.create('expressCheckout', {
-        buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
-        paymentMethodOrder: wanted ? [wanted] : [],
+    /*
+     * ONE `elements` instance for both, which is what Stripe documents: "reusing an
+     * existing Elements instance to save time". A second instance stands up a second set
+     * of frames for no benefit, and this page had grown one — the slow first paint people
+     * were reloading past was partly self-inflicted.
+     *
+     * Combining the two is also what removes the duplication: with an Express Checkout
+     * Element on the page, Stripe takes the wallets out of the Payment Element itself, so
+     * the card form is not offering Apple Pay a second time in a different shape.
+     */
+    elements = stripe.elements({
+        mode: 'payment',
+        amount: amount * 100,
+        currency: CURRENCY,
+        appearance: stripeAppearance(),
     });
 
-    express.on(
-        'ready',
-        ({ availablePaymentMethods }: { availablePaymentMethods?: Record<string, boolean> }) => {
-            const hasWallets = Boolean(availablePaymentMethods);
-            $('express').hidden = !hasWallets;
-            $('divider').hidden = !hasWallets;
-
-            // The tile the reader pressed named a wallet. If that one is not available,
-            // say so rather than leaving them hunting for a button that will never appear
-            // — the Apple Pay tile on anything that is not an Apple device, typically.
-            $('wallet-note').hidden = !(wanted && !availablePaymentMethods?.[wanted]);
-        },
-    );
+    const wanted = WALLET_FOR_METHOD[METHOD];
+    const express = elements.create('expressCheckout', {
+        buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
+        paymentMethodOrder: wanted ? [wanted] : [],
+        /*
+         * `always` is what makes the Apple Pay button exist at all outside Safari.
+         *
+         * Stripe's browser table says Apple Pay is supported on desktop Chrome, Edge,
+         * Firefox and Opera "only when `paymentMethods.applePay` is set to `always`" —
+         * the default is to offer it solely where the device has it configured, which
+         * outside Apple hardware is nowhere. On those browsers Apple Pay completes by
+         * showing a code the reader scans with their iPhone.
+         *
+         * Google Pay is the same story on Safari and the iOS browsers. Neither setting
+         * can conjure a button on a platform that genuinely cannot pay that way, or in an
+         * unsupported currency — it only stops us hiding one that would have worked.
+         */
+        paymentMethods: { applePay: 'always', googlePay: 'always' },
+    });
 
     /*
-     * The wallet reports which of itself was pressed, and that is the only way to know:
-     * a wallet button is not a form field and there is nothing to read afterwards. PayPal
-     * arriving here is what triggers the handoff to a tab.
+     * `availablepaymentmethodschange` rather than reading it off `ready`: it is the event
+     * Stripe documents for this, and it fires again if the answer changes — which it does
+     * when the amount moves and a wallet stops being eligible for the new total.
+     */
+    /*
+     * The two events hand the same answer under different names: `ready` calls it
+     * `availablePaymentMethods`, `availablepaymentmethodschange` calls it
+     * `paymentMethods`. Reading only one of them is how the buttons ended up hidden even
+     * when a wallet was available — the handler received `undefined` and concluded there
+     * was nothing to show.
+     */
+    const showWallets = (event: {
+        paymentMethods?: Record<string, boolean>;
+        availablePaymentMethods?: Record<string, boolean>;
+    }) => {
+        const paymentMethods = event?.paymentMethods ?? event?.availablePaymentMethods;
+        const any = Boolean(paymentMethods && Object.values(paymentMethods).some(Boolean));
+        $('express').hidden = !any;
+        $('divider').hidden = !any;
+
+        // The tile the reader pressed named a wallet. If that one is not available, say so
+        // rather than leaving them hunting for a button that will never appear.
+        $('wallet-note').hidden = !(wanted && !paymentMethods?.[wanted]);
+    };
+    express.on('availablepaymentmethodschange', showWallets);
+    express.on('ready', showWallets);
+
+    /*
+     * The wallet reports which of itself was pressed, and that is the only way to know: a
+     * wallet button is not a form field and there is nothing to read afterwards.
      */
     express.on('confirm', (event: { expressPaymentType?: string }) =>
-        finish(walletElements, event?.expressPaymentType ?? 'wallet'),
+        finish(elements, event?.expressPaymentType ?? 'wallet'),
     );
     express.mount('#express');
 
-    // ── The card form, and nothing else ──
-    /*
-     * `paymentMethodTypes: ['card']` is what removes the method list. With it the Payment
-     * Element has one method to offer, so it renders the fields directly instead of a row
-     * per method with a radio beside it. That is the whole of the "cleaner sheet": the
-     * wallets are already buttons above, and repeating them as a list underneath was
-     * offering the same choice twice in two different shapes.
-     */
-    cardElements = stripe.elements({ ...base, paymentMethodTypes: ['card'] });
-
-    const payment = cardElements.create('payment');
+    const payment = elements.create('payment');
     payment.on('ready', () => {
         $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
@@ -468,7 +490,7 @@ function mount(): void {
 
     $('payment-form').addEventListener('submit', (event) => {
         event.preventDefault();
-        void finish(cardElements, 'card');
+        void finish(elements, 'card');
     });
 }
 
