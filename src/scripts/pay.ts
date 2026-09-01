@@ -290,6 +290,17 @@ const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay', 'revolut_pay
 /** Whether this page is being framed, i.e. it is the panel's sheet and not a tab. */
 const FRAMED = window.parent !== window;
 
+/**
+ * Which tab of the card form is selected. Watched, because the form can collect more than
+ * one method and only the element knows which is showing.
+ *
+ * Losing this is what put "Failed to redirect to pm-redirects.stripe.com" in front of
+ * anyone choosing Revolut Pay: the submit handler passed a hardcoded `'card'`, so the
+ * check below never recognised a method that has to leave the frame, `confirmPayment` ran,
+ * and Stripe tried to navigate a sandboxed iframe to Revolut's authorisation page.
+ */
+let selectedType: string = 'card';
+
 function syncChips(): void {
     for (const chip of document.querySelectorAll<HTMLButtonElement>('.chip')) {
         const selected = Number(chip.dataset.amount) === amount;
@@ -448,6 +459,32 @@ function mount(): void {
          * page has to say it.
          */
         wallets: { applePay: 'never', googlePay: 'never' },
+        /*
+         * The mandate block, off.
+         *
+         * `terms` is Stripe's own switch for this — the alternative, an appearance rule
+         * hiding `.Block`, fights the element's layout and breaks whenever they reshape
+         * it. Stripe shows these "only when necessary", so switching them off is a
+         * decision about your own disclosures rather than a cosmetic one; Link's own legal
+         * agreement is not covered by this option and cannot be removed.
+         */
+        terms: {
+            card: 'never',
+            applePay: 'never',
+            googlePay: 'never',
+            paypal: 'never',
+            sepaDebit: 'never',
+            bancontact: 'never',
+            ideal: 'never',
+            sofort: 'never',
+            cashapp: 'never',
+            auBecsDebit: 'never',
+            usBankAccount: 'never',
+        },
+    });
+    payment.on('change', (event: { value?: { type?: string } }) => {
+        selectedType = event?.value?.type ?? selectedType;
+        setStatus('');
     });
     payment.on('ready', () => {
         $('payment-loading').hidden = true;
@@ -476,7 +513,7 @@ function mount(): void {
 
     $('payment-form').addEventListener('submit', (event) => {
         event.preventDefault();
-        void finish(cardElements, 'card', 'card-form');
+        void finish(cardElements, selectedType, 'card-form');
     });
 
     // ── Then the wallets, above the divider ──
