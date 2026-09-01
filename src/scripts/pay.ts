@@ -548,12 +548,18 @@ function mount(): void {
          *     always return false. Show will be rejected with NotSupportedError.
          *
          * `always` tells Stripe to offer a wallet anyway, so it goes on waiting for an
-         * answer that the browser has already said it will never give — and the sheet sits
-         * on "Loading the secure payment form" until the timeout. Letting the default
-         * decide means the wallets are simply absent there, which is the truth: they
-         * cannot run in that frame whatever we ask for.
+         * answer the browser has already refused to give — that is the hang.
+         *
+         * But the default is not enough either: Stripe still *asks*, and the asking is
+         * what prints that warning in the panel's console on every open. `never` is the
+         * only value that stops the question being put. Nothing is lost by it — those two
+         * wallets cannot run in this frame whatever we request — and Link, which is not a
+         * Payment Request wallet, still appears, so the buttons above the divider do not
+         * go empty.
          */
-        ...(FRAMED ? {} : { paymentMethods: { applePay: 'always', googlePay: 'always' } }),
+        paymentMethods: FRAMED
+            ? { applePay: 'never', googlePay: 'never' }
+            : { applePay: 'always', googlePay: 'always' },
     });
 
     /*
