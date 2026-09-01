@@ -431,6 +431,16 @@ function mount(): void {
     const payment = cardElements.create('payment', {
         layout: { type: 'tabs' },
         paymentMethodOrder: ['card', 'revolut_pay'],
+        /*
+         * The wallets are already buttons above the divider, so the card form must not
+         * offer them again — and it does by default, which is how Google Pay ended up
+         * sitting in the tab strip where Revolut Pay should be, pushing it out of view.
+         *
+         * Stripe removes the wallets from the Payment Element by itself when both elements
+         * share one `elements()` instance. These deliberately do not share one, so this
+         * page has to say it.
+         */
+        wallets: { applePay: 'never', googlePay: 'never' },
     });
     payment.on('ready', () => {
         $('payment-loading').hidden = true;
