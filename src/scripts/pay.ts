@@ -18,16 +18,28 @@
 import { donationAmounts, defaultDonationAmount, donationCurrency } from '@/data/site';
 
 /**
- * The publishable key of the account that receives the donations. Public by design — it
- * identifies the account and can do nothing on its own. The secret key lives only in the
- * deployment environment, never here.
+ * The publishable key of the account that receives the donations.
  *
- * IT MUST BELONG TO THE SAME ACCOUNT AS THAT SECRET KEY. The account is the segment after
+ * WHY THIS IS AN ENVIRONMENT VARIABLE AND NOT A SECRET. A publishable key is meant to be
+ * read by anyone: it identifies the account and can do nothing on its own, and it ends up
+ * in the client bundle whatever we do — `.env` cannot hide it, and nothing here is trying
+ * to. What the variable buys is the other thing `.env` is for: test and live are the same
+ * build with a different value, so going live stops being a code edit that someone has to
+ * remember, review and deploy.
+ *
+ * Astro only exposes variables prefixed `PUBLIC_` to the browser, which is the check that
+ * keeps a secret from being reached for here by mistake: `STRIPE_SECRET_KEY` is simply not
+ * visible from this file.
+ *
+ * IT MUST BELONG TO THE SAME ACCOUNT AS THE SECRET KEY. The account is the segment after
  * `pk_test_`/`sk_test_`, and this pair used to disagree: the page identified one account
  * while `/api/intent` minted the PaymentIntent on another, so every `client_secret` was
- * for an intent this key had never heard of. Check the two match before going live.
+ * for an intent this key had never heard of, and confirming could not work. The test key
+ * below is the fallback so a fresh clone runs with no configuration; production sets the
+ * variable.
  */
 const PUBLISHABLE_KEY =
+    import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY ||
     'pk_test_51U86TNRxpp4Vcyc0qjfgquKeor0aCVQYGTiOlHlSZOBNMvxpxqw8YN0b3nf7QdtuofTGdhoAeGink2NeJ4dzjMYY00YgqqL9yl';
 
 /** Which wallet the clicked tile asked for. Only used to rank the buttons. */
@@ -41,6 +53,7 @@ interface PayStrings {
     donateNow: string;
     failed: string;
     badAmount: string;
+    opensOutside: string;
 }
 
 declare const Stripe: (key: string, options?: Record<string, unknown>) => any;
@@ -194,6 +207,30 @@ let amount: number = defaultDonationAmount;
 let elements: any = null;
 let submitting = false;
 
+/**
+ * The row selected in the accordion. Needed because some methods cannot be completed
+ * here at all, and the only way to know which one is in play is to watch the element.
+ */
+let selectedType = 'card';
+
+/**
+ * Methods whose provider refuses to authenticate inside someone else's frame, so Stripe
+ * has to send the browser away to finish them.
+ *
+ * PayPal is the one that matters — it has always been the exception this architecture
+ * bends around — and Klarna and Amazon Pay behave the same way. Confirming one of these
+ * inside the panel navigates the panel's iframe to a page that then refuses to be framed,
+ * and the reader gets a blank rectangle with no idea what happened.
+ *
+ * Card, Link, Google Pay and Apple Pay are NOT here: they finish in place. The wallets
+ * use the browser's own payment sheet, which is drawn over the panel rather than in it,
+ * so they need no window of their own either.
+ */
+const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay']);
+
+/** Whether this page is being framed, i.e. it is the panel's sheet and not a tab. */
+const FRAMED = window.parent !== window;
+
 function syncChips(): void {
     for (const chip of document.querySelectorAll<HTMLButtonElement>('.chip')) {
         const selected = Number(chip.dataset.amount) === amount;
@@ -251,6 +288,24 @@ const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
  */
 async function finish(): Promise<void> {
     if (submitting) return;
+
+    /*
+     * Nothing can be confirmed here for these, so do not try. The panel is asked to open
+     * this same sheet as an ordinary tab, carrying the amount and the method, and there
+     * the redirect is just a redirect. `pay:external` is the only message that asks the
+     * panel to do something rather than telling it what happened.
+     */
+    if (FRAMED && LEAVES_THE_FRAME.has(selectedType)) {
+        const away = new URL(window.location.href);
+        away.searchParams.set('amount', String(amount));
+        away.searchParams.set('method', selectedType);
+        away.searchParams.delete('nonce');
+        away.searchParams.delete('theme');
+        notifyPanel('pay:external', { url: away.toString(), method: selectedType });
+        setStatus(strings.opensOutside, 'success');
+        return;
+    }
+
     setBusy(true);
     setStatus('');
 
@@ -311,31 +366,23 @@ function mount(): void {
     express.mount('#express');
 
     /*
-     * WHY NOT TABS IN THE PANEL. `layout: 'tabs'` puts the payment methods in one
-     * horizontal strip, and Stripe gives no option to wrap that strip onto a second row.
-     * A side panel is around 400px wide, so with card, Link, PayPal and a wallet in it
-     * the last tabs are simply cut off — the reader cannot reach a method that is
-     * offered.
+     * NO TABS, ANYWHERE. `layout: 'tabs'` is one horizontal strip and Stripe gives no way
+     * to wrap it, so in a 400px panel the last methods are cut off and cannot be reached
+     * at all. There used to be a width check here that kept the tabs on a wide viewport,
+     * and it was the wrong shape twice over: it made the sheet two different interfaces
+     * depending on where it opened, and it had to guess a width from a frame that has not
+     * been laid out yet.
      *
-     * The accordion is the shape that fits: one row per method, stacked, nothing beyond
-     * the edge, and the radios make the choice obvious. A wide viewport — this page also
-     * opens as a full tab from the extension's about page — keeps the tabs, which read
-     * better when there is room for them.
+     * The accordion is one row per method, stacked, with radios. It fits any width, it is
+     * the same sheet everywhere, and there is nothing to measure.
      */
-    const NARROW = 520;
-    /*
-     * Measured on the box the element actually mounts into, not on the window: this page
-     * is normally inside a frame, and a frame's width is the number that decides whether
-     * the tabs fit. A width of zero means the browser has not laid the page out yet — a
-     * minimised or background window reports exactly that — and the panel is the common
-     * case, so an unknown width is treated as narrow.
-     */
-    const available = $('payment-element').getBoundingClientRect().width || window.innerWidth || 0;
     const payment = elements.create('payment', {
-        layout:
-            available === 0 || available < NARROW
-                ? { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: false }
-                : 'tabs',
+        layout: { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: false },
+    });
+
+    payment.on('change', (event: { value?: { type?: string } }) => {
+        selectedType = event?.value?.type ?? selectedType;
+        setStatus('');
     });
     payment.on('ready', () => {
         $('payment-loading').hidden = true;

@@ -785,6 +785,7 @@ export const ui = {
         'pay.otherAmount': 'Other amount',
         'pay.orCard': 'or pay by card',
         'pay.loading': 'Loading the secure payment form…',
+        'pay.opensOutside': 'That provider will not open inside the panel, so it has been opened in a tab.',
         'pay.donateNow': 'Donate',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
@@ -1599,6 +1600,8 @@ export const ui = {
         'pay.otherAmount': 'Otro importe',
         'pay.orCard': 'o paga con tarjeta',
         'pay.loading': 'Cargando el formulario de pago seguro…',
+        'pay.opensOutside':
+            'Ese proveedor no se abre dentro del panel, así que se ha abierto en una pestaña.',
         'pay.donateNow': 'Donar',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',
