@@ -9,6 +9,21 @@ const t = useTranslations(lang);
 ---
 
 <Base lang={lang} title={t('pay.title')} description={t('pay.secured')} noindex icons={[]}>
+    <!--
+        Stripe's first load is the whole cost of this page. `js.stripe.com/v3` pulls in a
+        controller frame, a metrics frame and the Elements themselves, each on its own
+        origin, and none of that starts until the script has parsed. Cold, that took about
+        twelve seconds in the panel — long enough that the sheet reads as broken and the
+        reader reloads, which is the only reason it then looks fine: the second load is
+        served from cache.
+
+        These start the DNS lookup and the TLS handshake while the HTML is still arriving.
+        They are hints, so a browser that ignores them loses nothing.
+    -->
+    <link rel="preconnect" href="https://js.stripe.com" slot="head" />
+    <link rel="preconnect" href="https://m.stripe.network" slot="head" />
+    <link rel="preconnect" href="https://q.stripe.com" slot="head" />
+
     <!-- Stripe.js must be the real remote script: it refuses to run when served from
          another origin, and bundling it would break card tokenisation. `is:inline`
          keeps Astro from trying to process it. -->

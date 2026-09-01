@@ -21,9 +21,14 @@ import { donationAmounts, defaultDonationAmount, donationCurrency } from '@/data
  * The publishable key of the account that receives the donations. Public by design — it
  * identifies the account and can do nothing on its own. The secret key lives only in the
  * deployment environment, never here.
+ *
+ * IT MUST BELONG TO THE SAME ACCOUNT AS THAT SECRET KEY. The account is the segment after
+ * `pk_test_`/`sk_test_`, and this pair used to disagree: the page identified one account
+ * while `/api/intent` minted the PaymentIntent on another, so every `client_secret` was
+ * for an intent this key had never heard of. Check the two match before going live.
  */
 const PUBLISHABLE_KEY =
-    'pk_test_51U86TYRqJ0CJGtLi1Bsuse2u2AGyMH55cZU2GeszRCaGkbYtSiULOVejpFglyuk6L7j2GnVmD1LDK2z0E1lqx2bv00KGx0bvpD';
+    'pk_test_51U86TNRxpp4Vcyc0qjfgquKeor0aCVQYGTiOlHlSZOBNMvxpxqw8YN0b3nf7QdtuofTGdhoAeGink2NeJ4dzjMYY00YgqqL9yl';
 
 /** Which wallet the clicked tile asked for. Only used to rank the buttons. */
 const WALLET_FOR_METHOD: Record<string, string> = {
@@ -305,10 +310,55 @@ function mount(): void {
     express.on('confirm', finish);
     express.mount('#express');
 
-    const payment = elements.create('payment', { layout: 'tabs' });
+    /*
+     * WHY NOT TABS IN THE PANEL. `layout: 'tabs'` puts the payment methods in one
+     * horizontal strip, and Stripe gives no option to wrap that strip onto a second row.
+     * A side panel is around 400px wide, so with card, Link, PayPal and a wallet in it
+     * the last tabs are simply cut off — the reader cannot reach a method that is
+     * offered.
+     *
+     * The accordion is the shape that fits: one row per method, stacked, nothing beyond
+     * the edge, and the radios make the choice obvious. A wide viewport — this page also
+     * opens as a full tab from the extension's about page — keeps the tabs, which read
+     * better when there is room for them.
+     */
+    const NARROW = 520;
+    /*
+     * Measured on the box the element actually mounts into, not on the window: this page
+     * is normally inside a frame, and a frame's width is the number that decides whether
+     * the tabs fit. A width of zero means the browser has not laid the page out yet — a
+     * minimised or background window reports exactly that — and the panel is the common
+     * case, so an unknown width is treated as narrow.
+     */
+    const available = $('payment-element').getBoundingClientRect().width || window.innerWidth || 0;
+    const payment = elements.create('payment', {
+        layout:
+            available === 0 || available < NARROW
+                ? { type: 'accordion', defaultCollapsed: false, radios: true, spacedAccordionItems: false }
+                : 'tabs',
+    });
     payment.on('ready', () => {
+        $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
         notifyPanel('pay:ready');
+    });
+    /*
+     * If Stripe never reports ready — blocked script, dead network, a wallet frame that
+     * hangs — the sheet must say so rather than spin for ever. Twenty seconds is longer
+     * than the worst cold load measured in the panel and shorter than anyone's patience.
+     */
+    const readyTimeout = window.setTimeout(() => {
+        if (!$('payment-loading').hidden) {
+            $('payment-loading').hidden = true;
+            setStatus(strings.failed);
+            notifyPanel('pay:error', { message: strings.failed });
+        }
+    }, 20_000);
+    payment.on('ready', () => window.clearTimeout(readyTimeout));
+    payment.on('loaderror', (event: { error?: { message?: string } }) => {
+        window.clearTimeout(readyTimeout);
+        $('payment-loading').hidden = true;
+        setStatus(event?.error?.message || strings.failed);
     });
     payment.mount('#payment-element');
 

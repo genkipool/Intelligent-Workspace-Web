@@ -26,5 +26,11 @@ export const team: readonly Person[] = [
 
 /** Preset donation amounts, in whole euros. Mirrored by the server-side clamp. */
 export const donationAmounts = [1, 5, 10] as const;
-export const defaultDonationAmount = 5;
+
+/**
+ * The chip selected on arrival. It has to exist in `donationAmounts`, or the sheet opens
+ * with an amount no chip is showing as chosen. `DONATION_DEFAULT_AMOUNT` in the
+ * extension's `config/payments.js` is the same number and has to move with it.
+ */
+export const defaultDonationAmount = 1;
 export const donationCurrency = 'eur';

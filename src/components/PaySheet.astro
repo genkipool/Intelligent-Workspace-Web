@@ -56,6 +56,16 @@ const t = useTranslations(lang);
     <p class="divider" id="divider" hidden><span>{t('pay.orCard')}</span></p>
 
     <form id="payment-form" novalidate>
+        <!--
+            Shown until Stripe's Elements report themselves ready. Cold, that takes
+            seconds — the frame has to fetch `js.stripe.com/v3` and stand up three more
+            frames behind it — and an empty gap above a greyed-out button is
+            indistinguishable from a page that failed. This says which of the two it is.
+        -->
+        <div id="payment-loading" class="loading" role="status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>{t('pay.loading')}</span>
+        </div>
         <div id="payment-element"></div>
         <button id="submit" type="submit" disabled>
             <span class="spinner" aria-hidden="true"></span>
