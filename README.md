@@ -150,6 +150,13 @@ row. The proper long-term fix is still to put the _real_ public key there, so un
 Web Store builds share one ID — but a wrong value is worse than none, because it invents
 an ID no allowlist will ever contain.
 
+**The marketing pages name `js.stripe.com` in `script-src` too, and only for a prefetch.**
+The landing page warms `js.stripe.com/v3` with `<link rel="prefetch" as="script">` so the
+donation sheet finds it in cache instead of fetching it while the reader waits. A prefetch
+with `as="script"` is checked against `script-src`, so without the origin there the browser
+drops it — silently, which is the worst kind of not working. Nothing executes from that
+origin on these pages; the file is only fetched and parked.
+
 **The payment CSP has to name four Stripe origins, not one.** `js.stripe.com` is the
 obvious one and it is not enough: Stripe stands up a controller and a metrics frame on
 `m.stripe.network`, reports to `q.stripe.com`, and loads every card-brand and wallet logo

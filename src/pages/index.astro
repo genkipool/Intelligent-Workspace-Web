@@ -1,9 +1,12 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Landing from '@/components/Landing.astro';
+import PayWarmup from '@/components/PayWarmup.astro';
 import { allIconNames } from '@/data/icons';
+import { localisePath } from '@/i18n/utils';
 ---
 
 <Base lang="en" icons={allIconNames}>
+    <PayWarmup slot="head" payPath={localisePath('en', '/pay')} />
     <Landing lang="en" />
 </Base>

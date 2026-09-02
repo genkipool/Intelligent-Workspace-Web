@@ -1,0 +1,31 @@
+---
+/**
+ * Warms everything the donation sheet will need, from the page before it.
+ *
+ * Stripe's cost is almost entirely the first load: `js.stripe.com/v3` has to arrive,
+ * parse, and then stand up a controller frame and a metrics frame on two more origins
+ * before a single field is painted. Paid on `/pay` itself, that is the reader watching
+ * "Loading the secure payment form". Paid here, while they are still reading the page
+ * they are on, it costs them nothing — by the time they press Donate the script is in
+ * the HTTP cache and the connections are open.
+ *
+ * `prefetch`, not `<script>`: the file is fetched at the lowest priority and never
+ * executed, so this page gains a warm cache without gaining a third-party script, its
+ * parse cost, or its frames. `preconnect` does the DNS lookup and the TLS handshake for
+ * the two origins the prefetch does not itself touch.
+ *
+ * All of it is a hint. A browser that ignores every line loses nothing but the head start.
+ */
+interface Props {
+    /** The localised path of the sheet, so the document itself is warmed too. */
+    payPath: string;
+}
+
+const { payPath } = Astro.props;
+---
+
+<link rel="preconnect" href="https://js.stripe.com" />
+<link rel="preconnect" href="https://m.stripe.network" />
+<link rel="preconnect" href="https://q.stripe.com" />
+<link rel="prefetch" href="https://js.stripe.com/v3/" as="script" crossorigin />
+<link rel="prefetch" href={payPath} as="document" />
