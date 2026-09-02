@@ -21,27 +21,31 @@ import { CARD_FORM_METHODS, clampAmount } from '@/lib/donation';
 /**
  * The publishable key of the account that receives the donations.
  *
- * WHY THIS IS AN ENVIRONMENT VARIABLE AND NOT A SECRET. A publishable key is meant to be
- * read by anyone: it identifies the account and can do nothing on its own, and it ends up
- * in the client bundle whatever we do — `.env` cannot hide it, and nothing here is trying
- * to. What the variable buys is the other thing `.env` is for: test and live are the same
- * build with a different value, so going live stops being a code edit that someone has to
- * remember, review and deploy.
+ * NO KEY IS WRITTEN HERE, AND NONE MAY BE. There used to be a `pk_test_` in this file as
+ * a fallback so a fresh clone ran with no configuration, and that convenience had a
+ * failure mode worth more than it: with the variable missing or misspelt in production
+ * the site did not break, it quietly took donations in TEST MODE. Nobody is charged,
+ * nothing arrives, and every screen — the sheet, the wallets, the thank-you — looks
+ * exactly as it does when it works.
  *
- * Astro only exposes variables prefixed `PUBLIC_` to the browser, which is the check that
- * keeps a secret from being reached for here by mistake: `STRIPE_SECRET_KEY` is simply not
- * visible from this file.
+ * A publishable key is not a secret; it is meant to be read by anyone and it ends up in
+ * the client bundle whatever we do. This is not about hiding it. It is about there being
+ * ONE place that decides which account and which mode this page charges against, and that
+ * place being the environment, so test and live are the same build with a different value
+ * and neither can be reached by accident.
+ *
+ * Set `PUBLIC_STRIPE_PUBLISHABLE_KEY` in `.env` for local work and in the host's
+ * environment for a deployment. Astro only exposes `PUBLIC_`-prefixed variables to the
+ * browser, which is the check that keeps `STRIPE_SECRET_KEY` from being reached for here
+ * by mistake.
  *
  * IT MUST BELONG TO THE SAME ACCOUNT AS THE SECRET KEY. The account is the segment after
- * `pk_test_`/`sk_test_`, and this pair used to disagree: the page identified one account
- * while `/api/intent` minted the PaymentIntent on another, so every `client_secret` was
- * for an intent this key had never heard of, and confirming could not work. The test key
- * below is the fallback so a fresh clone runs with no configuration; production sets the
- * variable.
+ * `pk_test_`/`sk_test_`, and this pair has disagreed before: the page identified one
+ * account while `/api/intent` minted the PaymentIntent on another, so every
+ * `client_secret` was for an intent this key had never heard of and confirming could not
+ * work.
  */
-const PUBLISHABLE_KEY =
-    import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY ||
-    'pk_test_51U86TNRxpp4Vcyc0qjfgquKeor0aCVQYGTiOlHlSZOBNMvxpxqw8YN0b3nf7QdtuofTGdhoAeGink2NeJ4dzjMYY00YgqqL9yl';
+const PUBLISHABLE_KEY = import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
 /**
  * Which wallet the clicked tile asked for. Only used to rank the buttons.
@@ -100,6 +104,7 @@ interface PayStrings {
     opensOutside: string;
     redirecting: string;
     thanks: string;
+    notConfigured: string;
 }
 
 declare const Stripe: (key: string, options?: Record<string, unknown>) => any;
@@ -428,22 +433,27 @@ let walletElements: any = null;
 let cardElements: any = null;
 
 /**
- * Methods whose provider refuses to authenticate inside someone else's frame, so Stripe
- * has to send the browser away to finish them.
+ * Methods that a FRAMED CARD FORM cannot finish, because confirming one navigates the
+ * frame to a page that then refuses to be framed and the reader gets a blank rectangle.
  *
- * PayPal is the one that matters — it has always been the exception this architecture
- * bends around — and Klarna, Amazon Pay and Revolut Pay behave the same way. Confirming one of these
- * inside the panel navigates the panel's iframe to a page that then refuses to be framed,
- * and the reader gets a blank rectangle with no idea what happened.
+ * IT IS ABOUT THE CARD FORM, NOT ABOUT THE METHOD. The same names pressed as buttons in
+ * the express row behave completely differently: there PayPal, Klarna and Amazon Pay open
+ * their provider's own window and the customer PRE-AUTHORISES the amount there, so by the
+ * time `confirm` fires there is nothing left to redirect to and `confirmPayment` settles
+ * in place. Stripe says as much for the Express Checkout Element — "for Amazon Pay,
+ * Klarna, and PayPal, the amount you confirm in the PaymentIntent must match the amount
+ * the customer pre-authorized" — and `redirect: 'if_required'` "only redirects customers
+ * that check out with redirect-based payment methods", which a pre-authorised wallet is
+ * no longer.
  *
- * Link, Google Pay and Apple Pay are NOT here: they finish in place. The wallets use the
- * browser's own payment sheet, which is drawn over the panel rather than in it, so they
- * need no window of their own either.
+ * Treating them as frame-leavers is what broke PayPal: the reader authorised in PayPal's
+ * own window, and the panel answered by throwing that authorisation away and opening a
+ * fresh sheet asking them to do it again — which never closed and never reported
+ * anything, because nobody ever finished it.
  *
- * `card` is not here either, but for a different reason and it is not an exemption: the
- * panel never collects a card at all any more — see `mountHandoff`. This set is only
- * still consulted for a wallet the reader picked from the express row, which is where
- * PayPal, Klarna and Amazon Pay can still be pressed inside the frame.
+ * So this set is consulted for `kind === 'card-form'` only. See the guard in `finish`.
+ * The panel has no card form left, so today it never fires there at all; it stays for the
+ * unframed sheet and for anything that frames a card form again.
  */
 const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay', 'revolut_pay']);
 
@@ -576,6 +586,24 @@ async function createIntent(source: 'card-form' | 'wallet'): Promise<string> {
     return data.clientSecret;
 }
 
+/**
+ * No key, no sheet — and it says so.
+ *
+ * This is the other half of removing the committed fallback. Without a key the page must
+ * fail where a person can see it, not fall through to a mode where everything looks right
+ * and no money moves. Thrown at module scope, so nothing below runs and no Element is
+ * ever mounted against an account we cannot name.
+ */
+if (!PUBLISHABLE_KEY) {
+    $('payment-loading').hidden = true;
+    $('payment-form').hidden = true;
+    $('handoff').hidden = true;
+    $('handoff-note').hidden = true;
+    setStatus(strings.notConfigured);
+    report('pay:error', { message: strings.notConfigured });
+    throw new Error('PUBLIC_STRIPE_PUBLISHABLE_KEY is not set');
+}
+
 const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
 
 /**
@@ -597,12 +625,11 @@ async function finish(
     if (submitting) return;
 
     /*
-     * Nothing can be confirmed here for these, so do not try: confirming one inside the
-     * panel navigates the frame to a page that then refuses to be framed, and the reader
-     * gets a blank rectangle. It goes to a window instead, where the redirect is just a
-     * redirect.
+     * A framed CARD FORM cannot redirect, so it hands off instead. A wallet never does:
+     * it was pre-authorised in the provider's own window and confirming it here is the
+     * last step, not the first. See `LEAVES_THE_FRAME`.
      */
-    if (FRAMED && LEAVES_THE_FRAME.has(methodType)) {
+    if (FRAMED && kind === 'card-form' && LEAVES_THE_FRAME.has(methodType)) {
         handOff(methodType);
         return;
     }
