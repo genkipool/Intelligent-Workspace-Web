@@ -99,6 +99,7 @@ interface PayStrings {
     badAmount: string;
     opensOutside: string;
     redirecting: string;
+    thanks: string;
 }
 
 declare const Stripe: (key: string, options?: Record<string, unknown>) => any;
@@ -135,6 +136,29 @@ const FOCUSED = HANDOFF && (CARD_FORM_METHODS as readonly string[]).includes(MET
  * redirect happens without a second press of a button that says the same thing again.
  */
 const REDIRECTS_AWAY = new Set(['revolut_pay']);
+
+/**
+ * [AI INSTRUCTION]
+ * HOW A HAND-OFF WINDOW TELLS THE PANEL IT IS DONE.
+ *
+ * The window is opened by `chrome.windows.create`, which deliberately leaves it with no
+ * `window.opener`, so it cannot postMessage the sheet the way the sheet postMessages the
+ * panel. And it must not be given the panel's nonce: that is the token the panel trusts.
+ *
+ * A `BroadcastChannel` solves it without either. It is scoped to the origin, so only this
+ * site's own documents can hear it — the extension cannot, and neither can any other
+ * site — and it survives what an opener does not: the window navigates away to Revolut
+ * and back, and COOP puts the returning document in a fresh browsing context group with
+ * `opener` severed. The channel does not care.
+ *
+ * The framed sheet listens, and relays what it hears to the panel over the bridge it
+ * already has. So the panel's trust boundary is unchanged: it still only believes
+ * messages that come from its own iframe carrying its own nonce.
+ */
+const CHANNEL_PREFIX = 'iw-pay-';
+
+/** Present only in a hand-off window: the channel the sheet that opened it is listening on. */
+const CHANNEL = params.get('channel');
 const LANG = document.documentElement.lang === 'es' ? 'es' : 'en';
 
 const strings: PayStrings = JSON.parse(document.getElementById('pay-strings')?.textContent ?? '{}');
@@ -161,6 +185,52 @@ const PANEL_ORIGIN = window.location.ancestorOrigins?.[0] ?? '*';
 function notifyPanel(type: string, extra: Record<string, unknown> = {}): void {
     if (!NONCE || window.parent === window) return;
     window.parent.postMessage({ type, nonce: NONCE, ...extra }, PANEL_ORIGIN);
+}
+
+/**
+ * Says what happened, to whoever can hear it.
+ *
+ * In the panel's sheet that is the panel, over postMessage. In a hand-off window it is
+ * the sheet that opened it, over the BroadcastChannel, and the sheet relays it on. One
+ * call site either way, so a new outcome cannot be reported to one and not the other.
+ */
+function report(type: string, extra: Record<string, unknown> = {}): void {
+    notifyPanel(type, extra);
+    if (!CHANNEL) return;
+    try {
+        const channel = new BroadcastChannel(CHANNEL_PREFIX + CHANNEL);
+        channel.postMessage({ type, ...extra });
+        channel.close();
+    } catch {
+        // No BroadcastChannel: the window stays open showing its own result, which is
+        // the same place the reader would have been left before any of this existed.
+    }
+}
+
+/**
+ * Listens for the hand-off window this sheet is about to open, and relays it to the panel.
+ *
+ * Held so a second hand-off replaces the first rather than leaving an orphan listening
+ * for a window nobody is looking at any more.
+ */
+let handoffChannel: BroadcastChannel | null = null;
+
+function listenForHandoff(token: string): void {
+    try {
+        handoffChannel?.close();
+        handoffChannel = new BroadcastChannel(CHANNEL_PREFIX + token);
+        handoffChannel.onmessage = (event: MessageEvent) => {
+            const data = event.data;
+            if (!data || typeof data !== 'object') return;
+            if (data.type === 'pay:success') {
+                notifyPanel('pay:success', { amount: Number(data.amount) || amount });
+            } else if (data.type === 'pay:error') {
+                notifyPanel('pay:error', { message: String(data.message ?? '').slice(0, 300) });
+            }
+        };
+    } catch {
+        // Without it the payment still completes; the panel just is not told.
+    }
 }
 
 // ─── Theme ───────────────────────────────────────────────────────
@@ -463,6 +533,14 @@ function handOff(method: string): void {
     away.searchParams.set('method', method);
     // What tells the window it is a hand-off and not the whole sheet. See `HANDOFF`.
     away.searchParams.set('handoff', '1');
+    /*
+     * The way back. Minted here rather than reusing the panel's nonce: this one only has
+     * to be unguessable enough to keep two sheets in two windows from hearing each other,
+     * and the nonce is a different secret with a different job.
+     */
+    const token = crypto.randomUUID();
+    away.searchParams.set('channel', token);
+    listenForHandoff(token);
     away.searchParams.delete('nonce');
     away.searchParams.delete('theme');
     notifyPanel('pay:external', { url: away.toString(), method });
@@ -545,12 +623,13 @@ async function finish(
         });
         if (error) throw new Error(error.message);
 
-        notifyPanel('pay:success', { amount });
-        setStatus('', 'success');
+        report('pay:success', { amount });
+        setStatus(strings.thanks, 'success');
+        askToClose();
     } catch (error) {
         const message = (error as Error).message || strings.failed;
         setStatus(message, 'error');
-        notifyPanel('pay:error', { message });
+        report('pay:error', { message });
     } finally {
         setBusy(false);
     }
@@ -594,6 +673,66 @@ function mountHandoff(): void {
     for (const option of document.querySelectorAll<HTMLButtonElement>('.handoff-option')) {
         option.addEventListener('click', () => handOff(option.dataset.method!));
     }
+}
+
+/**
+ * Asks for this window to go away, now that it has nothing left to show.
+ *
+ * `window.close()` only works on a window a script opened, and this one was opened by
+ * `chrome.windows.create`, so the call is refused here and the panel does the real
+ * closing when the success reaches it. It is still worth making: the same page opened as
+ * an ordinary popup — from the about page, or by a future caller — closes itself.
+ */
+function askToClose(): void {
+    if (!HANDOFF) return;
+    try {
+        window.close();
+    } catch {
+        // Refused, as expected in a window the extension opened. The panel closes it.
+    }
+}
+
+/**
+ * Finishes a payment that came back from the provider's own page.
+ *
+ * Stripe appends `payment_intent_client_secret` to the `return_url`, and until now this
+ * page ignored it: after authorising on Revolut the window came back, mounted the form
+ * again, and said nothing — which is why the panel never showed a thank-you for Revolut
+ * Pay. The intent is retrieved rather than trusting `redirect_status`, because that
+ * parameter is in a URL the reader can edit.
+ *
+ * @returns whether this load was a return, in which case there is no form to mount.
+ */
+async function settleRedirectReturn(): Promise<boolean> {
+    const secret = params.get('payment_intent_client_secret');
+    if (!secret) return false;
+
+    $('payment-form').hidden = true;
+    $('handoff').hidden = true;
+    $('handoff-note').hidden = true;
+    $('amounts').hidden = true;
+
+    try {
+        const { paymentIntent, error } = await stripe.retrievePaymentIntent(secret);
+        if (error) throw new Error(error.message);
+
+        const paid = paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing';
+        if (paid) {
+            const settled = Number(paymentIntent.amount) / 100 || amount;
+            report('pay:success', { amount: settled });
+            setStatus(strings.thanks, 'success');
+            askToClose();
+        } else {
+            const message = paymentIntent?.last_payment_error?.message || strings.failed;
+            setStatus(message, 'error');
+            report('pay:error', { message });
+        }
+    } catch (caught) {
+        const message = (caught as Error).message || strings.failed;
+        setStatus(message, 'error');
+        report('pay:error', { message });
+    }
+    return true;
 }
 
 /**
@@ -872,4 +1011,14 @@ $('custom-amount').addEventListener('input', (event) => {
 
 syncChips();
 updateSubmitLabel();
-mount();
+
+/*
+ * A return from the provider is not a sheet to fill in, so it is settled first and the
+ * Elements are never built. Anything else mounts as before — and a failure here must not
+ * stop that, or one bad `return_url` would take the whole page down.
+ */
+void settleRedirectReturn()
+    .catch(() => false)
+    .then((handled) => {
+        if (!handled) mount();
+    });
