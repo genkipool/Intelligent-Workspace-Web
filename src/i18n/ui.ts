@@ -791,6 +791,7 @@ export const ui = {
         'pay.method.revolutPay': 'Revolut Pay',
         'pay.opensInWindow':
             'These open in a window of their own, where Chrome can still offer you a saved card.',
+        'pay.redirecting': 'Taking you there to authorise the payment…',
         'pay.donateNow': 'Donate',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
@@ -1610,6 +1611,7 @@ export const ui = {
         'pay.method.revolutPay': 'Revolut Pay',
         'pay.opensInWindow':
             'Se abren en una ventana propia, donde Chrome sí puede ofrecerte una tarjeta guardada.',
+        'pay.redirecting': 'Te llevamos allí para autorizar el pago…',
         'pay.donateNow': 'Donar',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',

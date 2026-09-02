@@ -10,6 +10,8 @@ import {
     MIN_AMOUNT,
     MAX_AMOUNT,
     CARD_FORM_METHODS,
+    CARD_FORM_METHOD_LABEL,
+    cardFormMethodsFrom,
     isCardFormSource,
 } from '@/lib/donation';
 
@@ -97,5 +99,33 @@ describe('which shape of PaymentIntent a request needs', () => {
     it('names only methods the sheet is built to show', () => {
         // A method added here has to fit the tab strip, which Stripe will not wrap.
         expect(CARD_FORM_METHODS.length).toBeLessThanOrEqual(2);
+    });
+});
+
+describe('cardFormMethodsFrom', () => {
+    it('honours a hand-off window that opened on one method', () => {
+        expect(cardFormMethodsFrom(['revolut_pay'])).toEqual(['revolut_pay']);
+        expect(cardFormMethodsFrom(['card'])).toEqual(['card']);
+    });
+
+    it('cannot be used to charge a method the card form does not collect', () => {
+        expect(cardFormMethodsFrom(['paypal', 'klarna'])).toEqual([...CARD_FORM_METHODS]);
+        expect(cardFormMethodsFrom(['card', 'sepa_debit'])).toEqual(['card']);
+    });
+
+    it('falls back to the whole list for anything that is not a list of methods', () => {
+        for (const raw of [undefined, null, 'card', 42, {}, [], [null, 7, {}]]) {
+            expect(cardFormMethodsFrom(raw)).toEqual([...CARD_FORM_METHODS]);
+        }
+    });
+
+    it('drops duplicates, because Stripe rejects a repeated type', () => {
+        expect(cardFormMethodsFrom(['card', 'card'])).toEqual(['card']);
+    });
+
+    it('gives every method a label, so no button can render nameless', () => {
+        for (const method of CARD_FORM_METHODS) {
+            expect(CARD_FORM_METHOD_LABEL[method]).toMatch(/^pay\.method\./);
+        }
     });
 });

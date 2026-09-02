@@ -16,7 +16,7 @@
  */
 
 import { donationAmounts, defaultDonationAmount, donationCurrency } from '@/data/site';
-import { CARD_FORM_METHODS } from '@/lib/donation';
+import { CARD_FORM_METHODS, clampAmount } from '@/lib/donation';
 
 /**
  * The publishable key of the account that receives the donations.
@@ -81,11 +81,24 @@ function cardFormOrder(): string[] {
     return [asked, ...CARD_FORM_METHODS.filter((type) => type !== asked)];
 }
 
+/**
+ * The types the card form's `elements()` instance is created with, which is also the list
+ * `/api/intent` has to build the PaymentIntent from.
+ *
+ * A hand-off window gets exactly one, so Stripe draws the form on its own with no tab
+ * strip above it — there is nothing to choose between when the choice was already made in
+ * the panel. Everywhere else it is the whole list, and the tabs come back.
+ */
+function cardFormTypes(): string[] {
+    return FOCUSED ? [METHOD] : [...CARD_FORM_METHODS];
+}
+
 interface PayStrings {
     donateNow: string;
     failed: string;
     badAmount: string;
     opensOutside: string;
+    redirecting: string;
 }
 
 declare const Stripe: (key: string, options?: Record<string, unknown>) => any;
@@ -94,6 +107,34 @@ const params = new URLSearchParams(window.location.search);
 const NONCE = params.get('nonce');
 const METHOD = params.get('method') ?? 'card';
 const CURRENCY = (params.get('currency') ?? donationCurrency).toLowerCase();
+
+/**
+ * Whether this page is the window the panel opened, rather than the sheet itself or the
+ * tab the about page opens.
+ *
+ * The panel adds it in `handOff`, and it is what turns the full sheet into the single
+ * method the reader already chose: the amount is settled, the wallets were on offer in
+ * the panel, and a second copy of all of it in a 480px window is a second decision to
+ * make about something already decided.
+ */
+const HANDOFF = params.get('handoff') === '1';
+
+/**
+ * A hand-off window that opened on one of the card form's own methods, which is the case
+ * that gets the stripped-down sheet. A wallet hand-off — PayPal, Klarna, Amazon Pay from
+ * the express row — still needs the full page, because what finishes it is the wallet
+ * button and not this form.
+ */
+const FOCUSED = HANDOFF && (CARD_FORM_METHODS as readonly string[]).includes(METHOD);
+
+/**
+ * Methods that finish by leaving this page for the provider's own.
+ *
+ * For these the window is not a form to fill in, it is a doorway: the reader pressed
+ * Revolut Pay in the panel and expects Revolut, so the window confirms by itself and the
+ * redirect happens without a second press of a button that says the same thing again.
+ */
+const REDIRECTS_AWAY = new Set(['revolut_pay']);
 const LANG = document.documentElement.lang === 'es' ? 'es' : 'en';
 
 const strings: PayStrings = JSON.parse(document.getElementById('pay-strings')?.textContent ?? '{}');
@@ -286,7 +327,15 @@ function stripeAppearance() {
 
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T;
 
-let amount: number = defaultDonationAmount;
+/**
+ * The amount, from the query string when there is one.
+ *
+ * `buildPaymentUrl` has always put it there and this file never read it, so a hand-off
+ * window opened after choosing 10 € charged the default instead. `clampAmount` is the
+ * same function the endpoint validates with, so the button cannot show a number the
+ * server would refuse.
+ */
+let amount: number = clampAmount(params.get('amount')) ?? defaultDonationAmount;
 let submitting = false;
 
 /**
@@ -412,6 +461,8 @@ function handOff(method: string): void {
     const away = new URL(window.location.href);
     away.searchParams.set('amount', String(amount));
     away.searchParams.set('method', method);
+    // What tells the window it is a hand-off and not the whole sheet. See `HANDOFF`.
+    away.searchParams.set('handoff', '1');
     away.searchParams.delete('nonce');
     away.searchParams.delete('theme');
     notifyPanel('pay:external', { url: away.toString(), method });
@@ -423,12 +474,24 @@ function handOff(method: string): void {
  * configured with `paymentMethodTypes` against an intent created with automatic payment
  * methods, so the endpoint has to build a different intent for each of this sheet's two
  * elements and this is how it knows which.
+ *
+ * `methods` is the second half of the same requirement. The card form does not always
+ * carry both types any more — a hand-off window restricts itself to the one it opened
+ * on — and Stripe rejects a confirmation whose intent names a type the Element was not
+ * configured with. The endpoint filters the list down to `CARD_FORM_METHODS`, so this
+ * can narrow what may be charged and never widen it.
  */
 async function createIntent(source: 'card-form' | 'wallet'): Promise<string> {
     const response = await fetch('/api/intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, currency: CURRENCY, nonce: NONCE, source }),
+        body: JSON.stringify({
+            amount,
+            currency: CURRENCY,
+            nonce: NONCE,
+            source,
+            methods: source === 'card-form' ? cardFormTypes() : undefined,
+        }),
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || strings.failed);
@@ -446,7 +509,13 @@ const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
  *
  * `redirect: 'if_required'` keeps card and the browser-sheet wallets inside this frame.
  */
-async function finish(source: any, methodType: string, kind: 'card-form' | 'wallet'): Promise<void> {
+async function finish(
+    source: any,
+    methodType: string,
+    kind: 'card-form' | 'wallet',
+    /** What to say while it runs. Empty clears the line, which is the usual case. */
+    announce = '',
+): Promise<void> {
     if (submitting) return;
 
     /*
@@ -461,7 +530,7 @@ async function finish(source: any, methodType: string, kind: 'card-form' | 'wall
     }
 
     setBusy(true);
-    setStatus('');
+    setStatus(announce, 'success');
 
     try {
         const { error: submitError } = await source.submit();
@@ -527,9 +596,44 @@ function mountHandoff(): void {
     }
 }
 
+/**
+ * Sends a redirect-only method on its way, without asking a second time.
+ *
+ * Revolut Pay has nothing to fill in: pressing it in the panel already said everything,
+ * and a window that then shows one button saying the same word is a step that exists only
+ * because the code needed somewhere to put it. So the window confirms as soon as Stripe
+ * is ready and the reader lands on Revolut.
+ *
+ * ONCE PER TAB, AND THAT IS WHY THIS TOUCHES sessionStorage. `confirmPayment` navigates
+ * away; pressing Back comes straight back here, and firing again would bounce them out of
+ * their own cancellation with no way to stop. The mark survives that Back — same tab,
+ * same session — and when it is found the sheet simply stays put with its button, so
+ * going again is a deliberate press. A browser that refuses the storage (private mode,
+ * blocked site data) loses only the guard, never the payment.
+ */
+function autoRedirect(): void {
+    if (!REDIRECTS_AWAY.has(METHOD)) return;
+
+    const key = `pay:auto:${METHOD}:${amount}:${CURRENCY}`;
+    try {
+        if (sessionStorage.getItem(key) === '1') return;
+        sessionStorage.setItem(key, '1');
+    } catch {
+        // No storage: the redirect still runs, it just is not guarded against Back.
+    }
+    void finish(cardElements, METHOD, 'card-form', strings.redirecting);
+}
+
 function mount(): void {
     const appearance = stripeAppearance();
     const base = { mode: 'payment' as const, amount: amount * 100, currency: CURRENCY, appearance };
+
+    /*
+     * The amount was settled in the panel and travels in the query string, so the chips
+     * and the free field would only offer to change a decision this window cannot carry
+     * back. The figure is still on screen: the button says "Donate 5 €".
+     */
+    if (FOCUSED) $('amounts').hidden = true;
 
     if (FRAMED) {
         /*
@@ -560,7 +664,7 @@ function mount(): void {
      * instance: putting it on the shared one would strip PayPal out of the wallet buttons
      * as well.
      */
-    cardElements = stripe.elements({ ...base, paymentMethodTypes: [...CARD_FORM_METHODS] });
+    cardElements = stripe.elements({ ...base, paymentMethodTypes: cardFormTypes() });
 
     /*
      * Tabs, because two of them fit across the panel on one row.
@@ -584,7 +688,31 @@ function mount(): void {
          * share one `elements()` instance. These deliberately do not share one, so this
          * page has to say it.
          */
-        wallets: { applePay: 'never', googlePay: 'never' },
+        wallets: {
+            applePay: 'never',
+            googlePay: 'never',
+            /*
+             * Link's inline signup — "Save my information for faster checkout", with its
+             * email, phone and full-name fields — is the largest thing on the sheet and it
+             * is not part of paying. `wallets.link` is Stripe's own switch for it; there is
+             * no other, and hiding it with an appearance rule does not work because
+             * `display` is not a property the Appearance API accepts.
+             *
+             * Off only in the hand-off window, where the reader asked for one method and
+             * should get that method and nothing else. The full sheet keeps Link, because
+             * there it is a way to pay rather than an interruption.
+             */
+            link: FOCUSED ? 'never' : 'auto',
+        },
+        /*
+         * Only the address fields the payment actually needs.
+         *
+         * `if_required` differs from `never` in the way that matters here: it drops the
+         * optional ones — the country dropdown, the postcode — and keeps anything the
+         * method or the account genuinely requires, so nothing has to be passed back at
+         * confirmation time and no payment can fail for a field we hid.
+         */
+        fields: FOCUSED ? { billingDetails: { address: 'if_required' } } : undefined,
         /*
          * The mandate block, off.
          *
@@ -616,6 +744,12 @@ function mount(): void {
         $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
         notifyPanel('pay:ready');
+
+        if (FOCUSED) {
+            // The wallets belong to the panel's sheet. This window is one method.
+            autoRedirect();
+            return;
+        }
         // Only now: see `mountWallets`.
         mountWallets();
     });

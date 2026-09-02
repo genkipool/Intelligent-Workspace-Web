@@ -76,3 +76,24 @@ export const CARD_FORM_METHOD_LABEL = {
 export function isCardFormSource(source: unknown): boolean {
     return source === 'card-form';
 }
+
+/**
+ * Which of the card-form methods a request may create an intent for.
+ *
+ * The sheet no longer always collects both. A hand-off window opens on one method and
+ * gives its Elements instance only that `paymentMethodTypes`, and Stripe refuses to
+ * confirm details collected by an Element whose types disagree with the intent's — so
+ * the browser has to say which it used and this is where that claim is checked.
+ *
+ * It cannot widen anything: whatever arrives is filtered down to `CARD_FORM_METHODS`,
+ * duplicates are dropped, and an empty or unrecognised list falls back to the full one,
+ * which is what every caller before this parameter existed was asking for.
+ */
+export function cardFormMethodsFrom(raw: unknown): string[] {
+    if (!Array.isArray(raw)) return [...CARD_FORM_METHODS];
+    const allowed = new Set<string>(CARD_FORM_METHODS);
+    const asked = [...new Set(raw.filter((type): type is string => typeof type === 'string'))].filter(
+        (type) => allowed.has(type),
+    );
+    return asked.length > 0 ? asked : [...CARD_FORM_METHODS];
+}

@@ -20,12 +20,65 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+/**
+ * The mark on each hand-off button, drawn here rather than pulled from Stripe.
+ *
+ * Stripe's own glyphs live inside its iframes and no markup of ours can reach them, so a
+ * button that only said "Tarjeta" was a word where every other payment control on the
+ * page has a logo. These are the two shapes people already recognise: a card, and
+ * Revolut's rounded-square R.
+ *
+ * `satisfies` against `CARD_FORM_METHODS` for the same reason `CARD_FORM_METHOD_LABEL`
+ * is written that way — adding a method without drawing it should not compile.
+ */
+const METHOD_MARK = {
+    card: {
+        viewBox: '0 0 24 24',
+        paths: [
+            {
+                d: 'M2.5 7.5a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-15a2 2 0 0 1-2-2z',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '1.6',
+            },
+            { d: 'M2.5 10.2h19', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.6' },
+            {
+                d: 'M5.6 14.4h4',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '1.6',
+                'stroke-linecap': 'round',
+            },
+        ],
+    },
+    revolut_pay: {
+        viewBox: '0 0 24 24',
+        paths: [
+            {
+                d: 'M4 4.8A1.8 1.8 0 0 1 5.8 3h12.4A1.8 1.8 0 0 1 20 4.8v14.4a1.8 1.8 0 0 1-1.8 1.8H5.8A1.8 1.8 0 0 1 4 19.2z',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '1.6',
+            },
+            {
+                // Revolut's R: a stem, a closed bowl, and the leg kicking out to the right.
+                d: 'M8.6 17.4V6.6h3.2a2.9 2.9 0 0 1 0 5.8H9.5l3.9 5',
+                fill: 'none',
+                stroke: 'currentColor',
+                'stroke-width': '1.7',
+                'stroke-linecap': 'round',
+                'stroke-linejoin': 'round',
+            },
+        ],
+    },
+} as const satisfies Record<(typeof CARD_FORM_METHODS)[number], { viewBox: string; paths: object[] }>;
 ---
 
 <main class="sheet" aria-labelledby="sheet-title">
     <h1 id="sheet-title">{t('pay.title')}</h1>
 
-    <fieldset class="amounts">
+    <fieldset class="amounts" id="amounts">
         <legend>{t('pay.chooseAmount')}</legend>
         <div class="chips" id="chips" role="radiogroup" aria-labelledby="sheet-title">
             {
@@ -95,8 +148,19 @@ const t = useTranslations(lang);
         {
             CARD_FORM_METHODS.map((method) => (
                 <button type="button" class="handoff-option" data-method={method}>
-                    <span>{t(CARD_FORM_METHOD_LABEL[method])}</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <svg
+                        class="mark"
+                        viewBox={METHOD_MARK[method].viewBox}
+                        aria-hidden="true"
+                        focusable="false"
+                    >
+                        {METHOD_MARK[method].paths.map((path) => (
+                            <path {...path} />
+                        ))}
+                    </svg>
+                    <span class="name">{t(CARD_FORM_METHOD_LABEL[method])}</span>
+                    {/* Opens in its own window, said in the place the press happens. */}
+                    <svg class="away" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path
                             d="M14 4h6v6M20 4l-8.5 8.5M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
                             fill="none"
@@ -128,5 +192,6 @@ const t = useTranslations(lang);
         failed: t('pay.failed'),
         badAmount: t('pay.badAmount'),
         opensOutside: t('pay.opensOutside'),
+        redirecting: t('pay.redirecting'),
     })}
 />

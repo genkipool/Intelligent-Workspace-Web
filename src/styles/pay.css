@@ -105,6 +105,12 @@ h1 {
     gap: 12px;
 }
 
+/* `display: flex` beats the user-agent rule for `[hidden]`, and the hand-off window
+   hides the whole block: the amount was chosen in the panel and travels in the URL. */
+.amounts[hidden] {
+    display: none;
+}
+
 legend {
     padding: 0 0 10px;
     width: 100%;
@@ -255,6 +261,13 @@ legend {
     color: var(--muted-color);
 }
 
+/* Third of the same kind: `display: flex` beats the user-agent `[hidden]` rule, so the
+   "or pay by card" rule stayed on screen in the hand-off window, which has no wallets
+   above it and no card tabs below it to divide. */
+.divider[hidden] {
+    display: none;
+}
+
 .divider::before,
 .divider::after {
     content: '';
@@ -286,7 +299,13 @@ form[hidden] {
  */
 .handoff {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    /*
+     * 170px is the width at which a mark, "Revolut Pay" and the window glyph all fit
+     * without the label having to shorten. Below two of those — a 360px panel, which is
+     * the common one — `auto-fit` drops to a single column and each button gets the whole
+     * width, which is better than two buttons reading "Tarjeta" and "Revolut …".
+     */
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: 8px;
 }
 
@@ -329,15 +348,31 @@ form[hidden] {
     cursor: not-allowed;
 }
 
+/* The method's own mark — the card, Revolut's R — at the size the label is set in. */
+.handoff-option .mark {
+    width: 19px;
+    height: 19px;
+    flex: none;
+}
+
+.handoff-option .name {
+    /* The label is what gives, so a long method name shortens instead of pushing the
+       marks off a 320px panel. */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* The "opens in its own window" glyph. Muted, so the label is what is read first. */
-.handoff-option svg {
-    width: 15px;
-    height: 15px;
+.handoff-option .away {
+    width: 14px;
+    height: 14px;
     flex: none;
     color: var(--muted-color);
 }
 
-.handoff-option:hover:not(:disabled) svg {
+.handoff-option:hover:not(:disabled) .away {
     color: inherit;
 }
 

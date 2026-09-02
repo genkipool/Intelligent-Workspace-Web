@@ -18,8 +18,9 @@
  * so in as many words. The sheet has two elements with two different configurations, so
  * this has two branches:
  *
- *   - the card form restricts itself to `CARD_FORM_METHODS`, so its intent names exactly
- *     those types;
+ *   - the card form restricts itself to a subset of `CARD_FORM_METHODS` — all of them in
+ *     the panel-less sheet, exactly one in a hand-off window — so its intent has to name
+ *     the same list, which the browser sends and `cardFormMethodsFrom` checks;
  *   - the wallet buttons are unrestricted, so theirs omits the list and lets dynamic
  *     payment methods pick — which is what keeps Google Pay, Apple Pay and PayPal
  *     appearing or not according to the Dashboard rather than to a hardcoded array here.
@@ -40,7 +41,7 @@ import {
     toMinorUnits,
     MIN_AMOUNT,
     MAX_AMOUNT,
-    CARD_FORM_METHODS,
+    cardFormMethodsFrom,
     isCardFormSource,
 } from '@/lib/donation';
 
@@ -88,7 +89,17 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     if (isCardFormSource(body.source)) {
-        CARD_FORM_METHODS.forEach((type, index) => form.append(`payment_method_types[${index}]`, type));
+        /*
+         * The list has to be the one the Element actually used, not the whole of
+         * `CARD_FORM_METHODS`. A hand-off window opens on a single method and restricts
+         * its Elements instance to it, and Stripe rejects a confirmation whose intent
+         * names types the Element was not configured with. `cardFormMethodsFrom` filters
+         * the browser's claim down to methods this sheet is allowed to charge, so it can
+         * narrow the intent and never widen it.
+         */
+        cardFormMethodsFrom(body.methods).forEach((type, index) =>
+            form.append(`payment_method_types[${index}]`, type),
+        );
     } else {
         form.append('automatic_payment_methods[enabled]', 'true');
     }
