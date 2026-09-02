@@ -504,6 +504,8 @@ function mount(): void {
         $('payment-loading').hidden = true;
         $<HTMLButtonElement>('submit').disabled = false;
         notifyPanel('pay:ready');
+        // Only now: see `mountWallets`.
+        mountWallets();
     });
     /*
      * If Stripe never reports ready — blocked script, dead network, a frame that hangs —
@@ -530,73 +532,75 @@ function mount(): void {
         void finish(cardElements, selectedType, 'card-form');
     });
 
-    // ── Then the wallets, above the divider ──
-    walletElements = stripe.elements(base);
+    /*
+     * THE WALLETS ARE BUILT AFTER THE CARD FORM IS ON SCREEN, NOT BEFORE.
+     *
+     * The Express Checkout Element has to ask the browser which wallets this device can
+     * use before it paints anything, and with `always` it asks about Apple Pay even where
+     * the answer is slow or never comes — inside the panel, where Chrome declines the
+     * Payment Request probe outright, that wait was the whole "Loading the secure payment
+     * form" hang.
+     *
+     * Creating it only once the card form has reported ready unties the two. The sheet is
+     * usable in about a second, and the wallet row appears above the divider whenever
+     * Stripe has an answer — which is what `always` is for, and why it can now stay on
+     * everywhere instead of being switched off in the panel.
+     */
+    function mountWallets(): void {
+        walletElements = stripe.elements(base);
 
-    const wanted = WALLET_FOR_METHOD[METHOD];
-    const express = walletElements.create('expressCheckout', {
-        buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
-        paymentMethodOrder: wanted ? [wanted] : [],
+        const wanted = WALLET_FOR_METHOD[METHOD];
+        const express = walletElements.create('expressCheckout', {
+            buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
+            paymentMethodOrder: wanted ? [wanted] : [],
+            /*
+             * `always`, everywhere.
+             *
+             * Stripe's browser table says Apple Pay works on desktop Chrome, Edge, Firefox and
+             * Opera "only when `paymentMethods.applePay` is set to `always`" — the default
+             * offers it solely where the device already has it configured, which off Apple
+             * hardware is nowhere. Google Pay is the same story on Safari and iOS browsers.
+             *
+             * It used to be off inside the panel, because asking for a wallet the frame cannot
+             * probe is what made the sheet hang. That is fixed by building this element after
+             * the card form rather than before it, so the waiting costs nobody anything — and
+             * switching it off cost the panel its Apple Pay button, which was the wrong trade.
+             */
+            paymentMethods: { applePay: 'always', googlePay: 'always' },
+        });
+
         /*
-         * `always` ONLY WHERE THE PAYMENT REQUEST API EXISTS, which is not inside the
-         * panel.
-         *
-         * Stripe's browser table says Apple Pay works on desktop Chrome, Edge, Firefox
-         * and Opera "only when `paymentMethods.applePay` is set to `always`" — the default
-         * offers it solely where the device already has it configured. So `always` is
-         * right in a tab.
-         *
-         * In the panel it is worse than useless. Chrome refuses the Payment Request API
-         * to a frame whose ancestor is a `chrome-extension://` page and says so:
-         *
-         *     Only localhost, file://, and cryptographic scheme origins allowed.
-         *     No UI will be shown. CanMakePayment and hasEnrolledInstrument will
-         *     always return false. Show will be rejected with NotSupportedError.
-         *
-         * `always` tells Stripe to offer a wallet anyway, so it goes on waiting for an
-         * answer the browser has already refused to give — that is the hang.
-         *
-         * DO NOT ANSWER THAT WARNING WITH `never`. I tried, to silence the console line,
-         * and it took Google Pay and Apple Pay out of the panel — where they had been
-         * working. The warning is Chrome describing one probe it declined; it is not a
-         * statement that the wallets are unavailable, and the buttons prove it. Leaving
-         * the option off lets Stripe decide from what it can actually reach, which is the
-         * only party here with the full picture.
+         * The two events hand the same answer under different names: `ready` calls it
+         * `availablePaymentMethods`, `availablepaymentmethodschange` calls it
+         * `paymentMethods`. Reading only one of them hid the buttons even when a wallet was
+         * available, because the handler received `undefined` and concluded there was nothing
+         * to show.
          */
-        ...(FRAMED ? {} : { paymentMethods: { applePay: 'always', googlePay: 'always' } }),
-    });
+        const showWallets = (event: {
+            paymentMethods?: Record<string, boolean>;
+            availablePaymentMethods?: Record<string, boolean>;
+        }) => {
+            const available = event?.paymentMethods ?? event?.availablePaymentMethods;
+            const any = Boolean(available && Object.values(available).some(Boolean));
+            $('express').hidden = !any;
+            $('divider').hidden = !any;
 
-    /*
-     * The two events hand the same answer under different names: `ready` calls it
-     * `availablePaymentMethods`, `availablepaymentmethodschange` calls it
-     * `paymentMethods`. Reading only one of them hid the buttons even when a wallet was
-     * available, because the handler received `undefined` and concluded there was nothing
-     * to show.
-     */
-    const showWallets = (event: {
-        paymentMethods?: Record<string, boolean>;
-        availablePaymentMethods?: Record<string, boolean>;
-    }) => {
-        const available = event?.paymentMethods ?? event?.availablePaymentMethods;
-        const any = Boolean(available && Object.values(available).some(Boolean));
-        $('express').hidden = !any;
-        $('divider').hidden = !any;
+            // The tile the reader pressed named a wallet. If that one is not available, say so
+            // rather than leaving them hunting for a button that will never appear.
+            $('wallet-note').hidden = !(wanted && !available?.[wanted]);
+        };
+        express.on('availablepaymentmethodschange', showWallets);
+        express.on('ready', showWallets);
 
-        // The tile the reader pressed named a wallet. If that one is not available, say so
-        // rather than leaving them hunting for a button that will never appear.
-        $('wallet-note').hidden = !(wanted && !available?.[wanted]);
-    };
-    express.on('availablepaymentmethodschange', showWallets);
-    express.on('ready', showWallets);
-
-    /*
-     * The wallet reports which of itself was pressed, and that is the only way to know: a
-     * wallet button is not a form field and there is nothing to read afterwards.
-     */
-    express.on('confirm', (event: { expressPaymentType?: string }) =>
-        finish(walletElements, event?.expressPaymentType ?? 'wallet', 'wallet'),
-    );
-    express.mount('#express');
+        /*
+         * The wallet reports which of itself was pressed, and that is the only way to know: a
+         * wallet button is not a form field and there is nothing to read afterwards.
+         */
+        express.on('confirm', (event: { expressPaymentType?: string }) =>
+            finish(walletElements, event?.expressPaymentType ?? 'wallet', 'wallet'),
+        );
+        express.mount('#express');
+    }
 }
 
 // ─── Boot ────────────────────────────────────────────────────────
