@@ -269,6 +269,78 @@ form {
     gap: 16px;
 }
 
+/* `display: flex` above beats the user-agent rule for `[hidden]`, and the panel hides
+   this whole form. Without this line the card form is still on screen there. */
+form[hidden] {
+    display: none;
+}
+
+/**
+ * The panel's two ways out, in place of the card form. See `mountHandoff` in `pay.ts`
+ * for why the panel cannot draw card fields at all.
+ *
+ * Dressed as the amount chips are, because they are the same kind of control: one
+ * hairline, the panel's ground, the extension's radius, the interactive colour on hover.
+ * `auto-fit` rather than two fixed columns so a third method wraps instead of being
+ * squeezed off the edge of a 320px panel.
+ */
+.handoff {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+}
+
+.handoff[hidden] {
+    display: none;
+}
+
+.handoff-option {
+    font: inherit;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition:
+        border-color 0.13s,
+        background-color 0.13s,
+        color 0.13s;
+}
+
+.handoff-option:hover:not(:disabled) {
+    border-color: var(--interactive-color);
+    background: color-mix(in srgb, var(--interactive-color) 10%, transparent);
+    color: var(--action-color, var(--interactive-color));
+}
+
+.handoff-option:focus-visible {
+    outline: 2px solid var(--interactive-color);
+    outline-offset: 1px;
+}
+
+.handoff-option:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* The "opens in its own window" glyph. Muted, so the label is what is read first. */
+.handoff-option svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: var(--muted-color);
+}
+
+.handoff-option:hover:not(:disabled) svg {
+    color: inherit;
+}
+
 #submit {
     font: inherit;
     font-weight: 600;

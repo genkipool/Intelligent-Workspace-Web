@@ -785,13 +785,17 @@ export const ui = {
         'pay.otherAmount': 'Other amount',
         'pay.orCard': 'or pay by card',
         'pay.loading': 'Loading the secure payment form…',
-        'pay.opensOutside': 'That provider will not open inside the panel, so it has been opened in a tab.',
+        'pay.opensOutside':
+            'It has opened in its own window. Finish the payment there and this panel will stay as it is.',
+        'pay.method.card': 'Card',
+        'pay.method.revolutPay': 'Revolut Pay',
+        'pay.opensInWindow':
+            'These open in a window of their own, where Chrome can still offer you a saved card.',
         'pay.donateNow': 'Donate',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
         'pay.badAmount': 'Choose an amount between 1 and 500 euros.',
-        'pay.walletUnavailable':
-            'That wallet is not available on this device, so the card form is shown instead.',
+        'pay.walletUnavailable': 'That wallet is not available on this device. The options below still are.',
 
         // Error Pages
         'errors.badge': 'Status code',
@@ -1601,13 +1605,17 @@ export const ui = {
         'pay.orCard': 'o paga con tarjeta',
         'pay.loading': 'Cargando el formulario de pago seguro…',
         'pay.opensOutside':
-            'Ese proveedor no se abre dentro del panel, así que se ha abierto en una pestaña.',
+            'Se ha abierto en su propia ventana. Termina ahí el pago y este panel se queda como está.',
+        'pay.method.card': 'Tarjeta',
+        'pay.method.revolutPay': 'Revolut Pay',
+        'pay.opensInWindow':
+            'Se abren en una ventana propia, donde Chrome sí puede ofrecerte una tarjeta guardada.',
         'pay.donateNow': 'Donar',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',
         'pay.badAmount': 'Elige un importe entre 1 y 500 euros.',
         'pay.walletUnavailable':
-            'Ese monedero no está disponible en este dispositivo, así que se muestra el formulario de tarjeta.',
+            'Ese monedero no está disponible en este dispositivo. Las opciones de abajo sí.',
 
         // Error Pages
         'errors.badge': 'Código de estado',

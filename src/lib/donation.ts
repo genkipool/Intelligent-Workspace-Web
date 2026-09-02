@@ -53,6 +53,18 @@ export function toMinorUnits(amount: number): number {
 export const CARD_FORM_METHODS = ['card', 'revolut_pay'] as const;
 
 /**
+ * What each of those is called on the hand-off buttons the panel shows in place of the
+ * card form. See `pay.ts` for why the panel cannot show the form itself.
+ *
+ * `satisfies` is the point of writing it this way: adding a method to `CARD_FORM_METHODS`
+ * without naming it here is a type error, not a button with no label on it.
+ */
+export const CARD_FORM_METHOD_LABEL = {
+    card: 'pay.method.card',
+    revolut_pay: 'pay.method.revolutPay',
+} as const satisfies Record<(typeof CARD_FORM_METHODS)[number], string>;
+
+/**
  * Whether a request is confirming from the card form or from a wallet button.
  *
  * The two need different PaymentIntents. The card form restricts itself with

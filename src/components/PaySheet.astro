@@ -12,6 +12,7 @@
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
 import { donationAmounts } from '@/data/site';
+import { CARD_FORM_METHODS, CARD_FORM_METHOD_LABEL } from '@/lib/donation';
 
 interface Props {
     lang: Lang;
@@ -72,6 +73,44 @@ const t = useTranslations(lang);
             <span id="submit-label">{t('pay.donateNow')}</span>
         </button>
     </form>
+
+    <!--
+        WHAT THE PANEL GETS INSTEAD OF THE CARD FORM.
+
+        Chrome decides whether a payment form is in a secure context from the URL of the
+        TOP-LEVEL document, not from the frame the fields are in
+        (`ChromeAutofillClient::IsContextSecure` reads `GetVisibleEntry()`). The panel's
+        top-level document is `chrome-extension://…`, whose scheme is not cryptographic,
+        so every card field framed in it is judged insecure and anyone with a saved card
+        is told the form "does not use a secure connection". Nothing this page sends —
+        headers, HTTPS, CSP — can change that verdict from inside the panel.
+
+        So the panel does not draw card fields at all. It draws these, and each one opens
+        the same sheet in a window of its own, where the top-level document IS https and
+        the verdict flips. `pay.ts` decides which of the two blocks is shown; the buttons
+        come from `CARD_FORM_METHODS`, so this list cannot drift from the one the card
+        form and the PaymentIntent are built from.
+    -->
+    <div id="handoff" class="handoff" hidden>
+        {
+            CARD_FORM_METHODS.map((method) => (
+                <button type="button" class="handoff-option" data-method={method}>
+                    <span>{t(CARD_FORM_METHOD_LABEL[method])}</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path
+                            d="M14 4h6v6M20 4l-8.5 8.5M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
+            ))
+        }
+    </div>
+    <p class="fineprint" id="handoff-note" hidden>{t('pay.opensInWindow')}</p>
 
     <p id="status" class="status" role="status" aria-live="polite"></p>
     <p class="fineprint" id="wallet-note" hidden>{t('pay.walletUnavailable')}</p>

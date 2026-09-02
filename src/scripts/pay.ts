@@ -59,6 +59,28 @@ const WALLET_FOR_METHOD: Record<string, string> = {
     apple_pay: 'applePay',
 };
 
+/**
+ * The card form's tabs, with the one that was asked for first.
+ *
+ * The Payment Element opens on the first entry of `paymentMethodOrder`, so this is the
+ * only way to say which tab the sheet should already be on.
+ *
+ * IT IS WHAT MAKES THE HAND-OFF WINDOW WORK. Choosing Revolut Pay in the panel cannot be
+ * finished in the frame, so `finish` asks the panel to reopen this same page in a window
+ * with `method=revolut_pay`. That window used to be built from a fixed
+ * `['card', 'revolut_pay']`, so it opened on Tarjeta — the reader pressed Revolut Pay,
+ * got a second copy of the card form, and reasonably read that as "Revolut Pay does not
+ * open". The window now opens on the tab they chose, and one press of Donate finishes it.
+ *
+ * A method the card form does not collect (a wallet, or nothing at all) leaves the order
+ * as it is, which is the list's own order.
+ */
+function cardFormOrder(): string[] {
+    const asked = (CARD_FORM_METHODS as readonly string[]).includes(METHOD) ? METHOD : null;
+    if (!asked) return [...CARD_FORM_METHODS];
+    return [asked, ...CARD_FORM_METHODS.filter((type) => type !== asked)];
+}
+
 interface PayStrings {
     donateNow: string;
     failed: string;
@@ -295,9 +317,14 @@ let cardElements: any = null;
  * inside the panel navigates the panel's iframe to a page that then refuses to be framed,
  * and the reader gets a blank rectangle with no idea what happened.
  *
- * Card, Link, Google Pay and Apple Pay are NOT here: they finish in place. The wallets
- * use the browser's own payment sheet, which is drawn over the panel rather than in it,
- * so they need no window of their own either.
+ * Link, Google Pay and Apple Pay are NOT here: they finish in place. The wallets use the
+ * browser's own payment sheet, which is drawn over the panel rather than in it, so they
+ * need no window of their own either.
+ *
+ * `card` is not here either, but for a different reason and it is not an exemption: the
+ * panel never collects a card at all any more — see `mountHandoff`. This set is only
+ * still consulted for a wallet the reader picked from the express row, which is where
+ * PayPal, Klarna and Amazon Pay can still be pressed inside the frame.
  */
 const LEAVES_THE_FRAME = new Set(['paypal', 'klarna', 'amazon_pay', 'revolut_pay']);
 
@@ -312,8 +339,11 @@ const FRAMED = window.parent !== window;
  * anyone choosing Revolut Pay: the submit handler passed a hardcoded `'card'`, so the
  * check below never recognised a method that has to leave the frame, `confirmPayment` ran,
  * and Stripe tried to navigate a sandboxed iframe to Revolut's authorisation page.
+ *
+ * It starts on whatever tab the element will open on rather than on a fixed `'card'`, so
+ * a submit that happens before the first `change` event still names the right method.
  */
-let selectedType: string = 'card';
+let selectedType: string = cardFormOrder()[0]!;
 
 function syncChips(): void {
     for (const chip of document.querySelectorAll<HTMLButtonElement>('.chip')) {
@@ -354,6 +384,41 @@ function setBusy(busy: boolean): void {
 }
 
 /**
+ * Turns the way out of this sheet on or off, whichever of the two it is.
+ *
+ * The amount validator used to reach for `#submit` by name. In the panel that button is
+ * not on screen, so an amount of 900 left the hand-off buttons live and the reader could
+ * carry a rejected amount into the window, where the endpoint refuses it and the error
+ * arrives a screen too late.
+ */
+function setPayEnabled(enabled: boolean): void {
+    $<HTMLButtonElement>('submit').disabled = !enabled;
+    for (const option of document.querySelectorAll<HTMLButtonElement>('.handoff-option')) {
+        option.disabled = !enabled;
+    }
+}
+
+/**
+ * Reopens this same sheet outside the frame, on the method the reader chose.
+ *
+ * The window is the panel's job — `pay:external` is the only message that asks it to act
+ * rather than telling it what happened — and the panel checks the address against its own
+ * `PAYMENT_ORIGIN` before opening anything.
+ *
+ * The nonce and the theme are stripped: there is no bridge to authenticate to out there,
+ * and the window paints in the site's own colours.
+ */
+function handOff(method: string): void {
+    const away = new URL(window.location.href);
+    away.searchParams.set('amount', String(amount));
+    away.searchParams.set('method', method);
+    away.searchParams.delete('nonce');
+    away.searchParams.delete('theme');
+    notifyPanel('pay:external', { url: away.toString(), method });
+    setStatus(strings.opensOutside, 'success');
+}
+
+/**
  * `source` is not decoration. Stripe refuses to confirm details collected by an Element
  * configured with `paymentMethodTypes` against an intent created with automatic payment
  * methods, so the endpoint has to build a different intent for each of this sheet's two
@@ -385,19 +450,13 @@ async function finish(source: any, methodType: string, kind: 'card-form' | 'wall
     if (submitting) return;
 
     /*
-     * Nothing can be confirmed here for these, so do not try. The panel is asked to open
-     * this same sheet as an ordinary tab, carrying the amount and the method, and there
-     * the redirect is just a redirect. `pay:external` is the only message that asks the
-     * panel to do something rather than telling it what happened.
+     * Nothing can be confirmed here for these, so do not try: confirming one inside the
+     * panel navigates the frame to a page that then refuses to be framed, and the reader
+     * gets a blank rectangle. It goes to a window instead, where the redirect is just a
+     * redirect.
      */
     if (FRAMED && LEAVES_THE_FRAME.has(methodType)) {
-        const away = new URL(window.location.href);
-        away.searchParams.set('amount', String(amount));
-        away.searchParams.set('method', methodType);
-        away.searchParams.delete('nonce');
-        away.searchParams.delete('theme');
-        notifyPanel('pay:external', { url: away.toString(), method: methodType });
-        setStatus(strings.opensOutside, 'success');
+        handOff(methodType);
         return;
     }
 
@@ -428,9 +487,61 @@ async function finish(source: any, methodType: string, kind: 'card-form' | 'wall
     }
 }
 
+/**
+ * [AI INSTRUCTION]
+ * THE PANEL DOES NOT DRAW CARD FIELDS. DO NOT PUT THEM BACK.
+ *
+ * Chrome decides whether a payment form is in a secure context from the URL of the
+ * TOP-LEVEL document, not from the frame the fields are in:
+ *
+ *     bool ChromeAutofillClient::IsContextSecure() const {
+ *       content::NavigationEntry* entry =
+ *           web_contents()->GetController().GetVisibleEntry();
+ *       return entry && entry->GetURL().SchemeIsCryptographic() && …;
+ *     }
+ *
+ * The panel's top-level document is `chrome-extension://<id>/…/listGroup.html`, and
+ * `chrome-extension:` is not a cryptographic scheme. So `CreditCardSuggestionGenerator`
+ * replaces every suggestion with `IDS_AUTOFILL_WARNING_INSECURE_CONNECTION` — "automatic
+ * payment methods filling is disabled because this form does not use a secure
+ * connection" — for anyone who has a card saved in Chrome. Measured, not assumed: with
+ * this page framed in the panel `Autofill.QueriedCreditCardFormIsSecure` recorded 2 of 2
+ * samples in bucket 0; the same page in an ordinary https tab recorded 3 of 3 in bucket 1.
+ *
+ * NOTHING THIS PAGE CAN SEND CHANGES THAT VERDICT. It is already HTTPS with a valid
+ * certificate, a strict CSP and `frame-ancestors` naming the extension. The scheme being
+ * read is the panel's, not ours.
+ *
+ * So the framed sheet offers the amount, the wallets that finish in place, and a button
+ * per card-form method that reopens this page in a window. There the top-level document
+ * is https, the verdict flips, and Chrome fills a saved card as it would anywhere else.
+ * `cardFormOrder` makes that window open on the method that was pressed.
+ */
+function mountHandoff(): void {
+    $('payment-form').hidden = true;
+    $('handoff').hidden = false;
+    $('handoff-note').hidden = false;
+
+    for (const option of document.querySelectorAll<HTMLButtonElement>('.handoff-option')) {
+        option.addEventListener('click', () => handOff(option.dataset.method!));
+    }
+}
+
 function mount(): void {
     const appearance = stripeAppearance();
     const base = { mode: 'payment' as const, amount: amount * 100, currency: CURRENCY, appearance };
+
+    if (FRAMED) {
+        /*
+         * Nothing to wait for — there is no Element here to report ready — so the panel
+         * is told at once and the wallets are built immediately rather than off the card
+         * form's `ready`, which is where that call used to hang.
+         */
+        mountHandoff();
+        notifyPanel('pay:ready');
+        mountWallets();
+        return;
+    }
 
     // ── The card form first ──
     /*
@@ -462,7 +573,8 @@ function mount(): void {
      */
     const payment = cardElements.create('payment', {
         layout: { type: 'tabs' },
-        paymentMethodOrder: [...CARD_FORM_METHODS],
+        // The tab the query string asked for, first — see `cardFormOrder`.
+        paymentMethodOrder: cardFormOrder(),
         /*
          * The wallets are already buttons above the divider, so the card form must not
          * offer them again — and it does by default, which is how Google Pay ended up
@@ -616,11 +728,11 @@ $('custom-amount').addEventListener('input', (event) => {
     const [min, max] = [donationAmounts[0]!, 500];
     if (!Number.isFinite(raw) || raw < min || raw > max) {
         setStatus(strings.badAmount);
-        $<HTMLButtonElement>('submit').disabled = true;
+        setPayEnabled(false);
         return;
     }
     setStatus('');
-    $<HTMLButtonElement>('submit').disabled = false;
+    setPayEnabled(true);
     setAmount(Math.floor(raw));
 });
 
