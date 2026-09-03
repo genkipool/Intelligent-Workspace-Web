@@ -15,6 +15,15 @@ const t = useTranslations(lang);
 const homeUrl = localisePath(lang, '/');
 
 /**
+ * The donation sheet is a page of its own, not a section of this one, which is why it
+ * is an action beside the install button rather than a sixth entry in `links` below —
+ * everything in that list scrolls, and this one leaves.
+ *
+ * `localisePath`, so a Spanish reader gets `/es/pay` and a sheet already in Spanish.
+ */
+const payUrl = localisePath(lang, '/pay');
+
+/**
  * The bar and the drawer are the same five links, so they are one list. They were two
  * copies of the same markup, which is exactly the kind of pair that drifts: a section
  * added to one and forgotten in the other is invisible until someone opens the site on
@@ -64,6 +73,24 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
             <LangToggle lang={lang} />
             <ThemeToggle lang={lang} />
 
+            <!--
+                `data-astro-reload` is not optional. The site navigates with the view
+                transitions router, and `/pay` is served with a strict CSP of its own so
+                that Stripe can be framed there and nowhere else; swapped in as a
+                fragment it would inherit this page's policy instead and the sheet would
+                come up blank. `DonateBand` does the same for the same reason.
+            -->
+            <a
+                href={payUrl}
+                class="btn-secondary nav-donate-btn"
+                title={t('nav.donateTitle')}
+                aria-label={t('nav.donate')}
+                data-astro-reload
+            >
+                <Icon name="heart" size={16} />
+                <span>{t('nav.donate')}</span>
+            </a>
+
             <a
                 href={site.storeUrl}
                 target="_blank"
@@ -102,6 +129,11 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 <a href={site.storeUrl} target="_blank" rel="noopener noreferrer" class="btn-primary w-full">
                     {t('nav.install')}
                 </a>
+                <!-- Second, because installing is what most readers came for. -->
+                <a href={payUrl} class="btn-secondary w-full mobile-donate-link" data-astro-reload>
+                    <Icon name="heart" size={16} />
+                    <span>{t('nav.donate')}</span>
+                </a>
             </div>
         </div>
     </div>
@@ -113,6 +145,24 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         const drawer = document.getElementById('mobile-drawer');
         const mobileLinks = document.querySelectorAll('.mobile-link');
         const brandLink = document.getElementById('nav-brand-logo');
+
+        /*
+         * ONCE PER SET OF NODES, NOT ONCE PER CALL.
+         *
+         * This runs twice on every first load: once at module scope, and again on
+         * `astro:page-load`, which the view transitions router fires for the initial
+         * page as well as for later ones. Both calls bound their own handler to the
+         * same button, so one press opened the drawer and closed it again in the same
+         * tick — measured, two `is-open` writes per click — and the menu simply never
+         * appeared on a phone. Nothing in the markup said so, because the class was
+         * being set correctly; it was just being unset immediately afterwards.
+         *
+         * The flag lives on the node rather than in a module variable on purpose: after
+         * a transition these are new elements, so the mark is gone and they get wired,
+         * which is exactly what the `astro:page-load` call is for.
+         */
+        if (!menuBtn || menuBtn.dataset.navWired === 'true') return;
+        menuBtn.dataset.navWired = 'true';
 
         function toggleMenu() {
             const isOpen = drawer?.classList.contains('is-open');
@@ -257,6 +307,39 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         min-height: unset;
     }
 
+    /* The same treatment `.nav-install-btn` gives `.btn-primary`: the shared button is
+       sized for a page's call to action, and a 50px-tall pill in a 70px bar leaves no
+       bar. Secondary rather than primary on purpose — there is one primary action up
+       here, and it is installing. */
+    /*
+     * A FIXED WIDTH, NOT ONE THE LABEL DECIDES.
+     *
+     * `.btn-secondary` sizes itself to its content, which means this button is 105px in
+     * English and 98px in Spanish — the bar shifts under the language switch, and it
+     * would shift again for any third language. It is a fixed control in a fixed bar,
+     * so the width is stated here and the label is centred in it. The room is set for
+     * the longer of the two labels plus its heart, with a little to spare.
+     *
+     * `.nav-install-btn` gives `.btn-primary` the same treatment for the same reason:
+     * the shared button is sized for a page's call to action, and a 50px-tall pill in a
+     * 70px bar leaves no bar. Secondary rather than primary on purpose — there is one
+     * primary action up here, and it is installing.
+     */
+    .nav-donate-btn {
+        width: 116px;
+        /* Fixed means fixed: without this the flex row squeezes it as the window
+           narrows, so the button that was not supposed to move with its label moves
+           with the viewport instead. */
+        flex-shrink: 0;
+        padding: 8px 0;
+        justify-content: center;
+        font-size: 0.88rem;
+        min-width: unset;
+        min-height: unset;
+        gap: 7px;
+        box-shadow: none;
+    }
+
     .mobile-toggle-btn {
         display: none;
         align-items: center;
@@ -347,21 +430,59 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
     }
 
     .mobile-drawer-cta {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
         margin-top: 8px;
         padding-top: 14px;
         border-top: 1px solid var(--border-subtle);
+    }
+
+    .mobile-donate-link {
+        min-height: 46px;
+        font-size: 0.95rem;
     }
 
     .w-full {
         width: 100%;
     }
 
-    @media (max-width: 920px) {
+    /*
+     * THE BAR IS SIX THINGS WIDE, AND UNDER ABOUT 1280px IT STOPS BEING SIX THINGS WIDE.
+     *
+     * Measured: the full bar needs 1280px to seat the install button inside the window.
+     * Below that it used to simply overflow — and it did so before this donate link
+     * existed too, from roughly 1150px down to the 920px breakpoint, with "Add to
+     * Chrome" pushed off the right-hand edge and no way to reach it. Nothing said so,
+     * because an overflowing flex row neither wraps nor scrolls; it just leaves.
+     *
+     * So there are two steps now instead of one. First the row is tightened: the donate
+     * button drops to its heart, which is what an icon is for, and the links give back
+     * the padding they can spare. Then, when even that does not fit, the whole thing
+     * folds into the drawer — at 1120px rather than 920, because 920 was a promise the
+     * bar could not keep.
+     */
+    @media (max-width: 1360px) {
+        .nav-item {
+            padding: 8px 10px;
+        }
+
+        .nav-links {
+            gap: 4px;
+        }
+
+        .nav-actions {
+            gap: 8px;
+        }
+    }
+
+    @media (max-width: 1230px) {
         .nav-links {
             display: none;
         }
 
-        .nav-install-btn {
+        .nav-install-btn,
+        .nav-donate-btn {
             display: none;
         }
 

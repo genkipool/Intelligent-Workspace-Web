@@ -22,6 +22,8 @@ export const ui = {
         'nav.theme': 'Switch theme',
         'nav.language': 'Language',
         'nav.install': 'Add to Chrome',
+        'nav.donate': 'Donate',
+        'nav.donateTitle': 'Support the development of Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
         // Hero Section & 3-Slide Carousel
@@ -844,6 +846,8 @@ export const ui = {
         'nav.theme': 'Cambiar tema',
         'nav.language': 'Idioma',
         'nav.install': 'Añadir a Chrome',
+        'nav.donate': 'Donar',
+        'nav.donateTitle': 'Apoya el desarrollo de Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
         // Hero Section & 3-Slide Carousel
