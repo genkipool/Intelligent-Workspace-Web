@@ -101,19 +101,40 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 <span>{t('nav.install')}</span>
             </a>
 
-            <!-- Mobile Hamburger Toggle -->
+            <!--
+                THREE BARS, NOT TWO ICONS.
+
+                It used to be `<Icon name="menu">` and `<Icon name="close">` stacked, with
+                `display` swapping which one showed: a hard cut between two unrelated
+                glyphs at the exact moment the reader is looking straight at it. Bars can
+                be moved instead — the outer two rotate onto each other and the middle one
+                gets out of the way — so the same press reads as one thing becoming
+                another. Nothing else can animate that: the sprite's lines live inside a
+                `<use>` shadow tree and cannot be reached by a stylesheet.
+            -->
             <button
                 id="mobile-menu-btn"
                 type="button"
                 class="mobile-toggle-btn"
-                aria-label="Toggle navigation menu"
+                aria-label={t('nav.menu')}
                 aria-expanded="false"
+                aria-controls="mobile-drawer"
             >
-                <Icon name="menu" size={22} class="icon-open" />
-                <Icon name="close" size={22} class="icon-close" />
+                <span class="burger" aria-hidden="true">
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                    <span class="burger-bar"></span>
+                </span>
             </button>
         </div>
     </div>
+
+    <!--
+        The page behind the drawer, dimmed. It is what makes the drawer read as being in
+        front of something rather than as part of the header, and it is the target most
+        people reach for to dismiss a menu.
+    -->
+    <div id="mobile-scrim" class="mobile-scrim" aria-hidden="true"></div>
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobile-drawer" class="mobile-drawer">
@@ -164,23 +185,48 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         if (!menuBtn || menuBtn.dataset.navWired === 'true') return;
         menuBtn.dataset.navWired = 'true';
 
-        function toggleMenu() {
-            const isOpen = drawer?.classList.contains('is-open');
-            if (isOpen) {
-                drawer?.classList.remove('is-open');
-                menuBtn?.setAttribute('aria-expanded', 'false');
-            } else {
-                drawer?.classList.add('is-open');
-                menuBtn?.setAttribute('aria-expanded', 'true');
-            }
+        const scrim = document.getElementById('mobile-scrim');
+
+        /*
+         * One function that puts every part into the same state, rather than three
+         * places each remembering to update the button, the drawer and the scrim. The
+         * `aria-expanded` attribute is not bookkeeping here: it is what the CSS reads to
+         * turn the bars into a cross, so the animation cannot fall out of step with the
+         * menu.
+         *
+         * The page behind is frozen while the menu is over it. A drawer that scrolls the
+         * document under itself is the oldest bug in mobile navigation, and one line
+         * stops it.
+         */
+        function setMenu(open: boolean) {
+            drawer?.classList.toggle('is-open', open);
+            scrim?.classList.toggle('is-open', open);
+            menuBtn?.setAttribute('aria-expanded', String(open));
+            document.body.style.overflow = open ? 'hidden' : '';
         }
 
-        menuBtn?.addEventListener('click', toggleMenu);
-        mobileLinks.forEach((link) => {
-            link.addEventListener('click', () => {
-                drawer?.classList.remove('is-open');
-                menuBtn?.setAttribute('aria-expanded', 'false');
-            });
+        const isOpen = () => drawer?.classList.contains('is-open') ?? false;
+
+        menuBtn?.addEventListener('click', () => setMenu(!isOpen()));
+        scrim?.addEventListener('click', () => setMenu(false));
+        mobileLinks.forEach((link) => link.addEventListener('click', () => setMenu(false)));
+
+        // Escape is what people press, and it has to reach the button afterwards or the
+        // focus is left inside a drawer that is no longer on screen.
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || !isOpen()) return;
+            setMenu(false);
+            menuBtn?.focus();
+        });
+
+        /*
+         * Widening the window past the breakpoint hides the button and the drawer with
+         * it, but the state stays behind: the scroll lock would survive on a desktop
+         * page with no visible way to undo it. The menu closes itself instead.
+         */
+        const wide = window.matchMedia('(min-width: 1231px)');
+        wide.addEventListener('change', (event) => {
+            if (event.matches) setMenu(false);
         });
 
         // Logo click smooth scroll to top
@@ -365,20 +411,108 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         color: var(--header-color);
     }
 
-    /* `:global` because the glyph is rendered by `Icon.astro`, so it carries that
-       component's scope and not this one's. Astro scopes every part of a selector, and
-       an unscoped element here would otherwise never be matched. */
-    .mobile-toggle-btn :global(.icon-close),
-    .mobile-toggle-btn[aria-expanded='true'] :global(.icon-open) {
-        display: none;
+    .mobile-toggle-btn:hover {
+        border-color: var(--action-color);
     }
 
-    .mobile-toggle-btn[aria-expanded='true'] :global(.icon-close) {
+    .mobile-toggle-btn:focus-visible {
+        outline: 2px solid var(--action-color);
+        outline-offset: 2px;
+    }
+
+    /* --- THE BARS ---------------------------------------------------
+       A fixed box so the three bars can be positioned against it and
+       rotate about its centre; `transform` and `opacity` only, so the
+       whole morph runs on the compositor and never touches layout. */
+    .burger {
+        position: relative;
         display: block;
+        width: 18px;
+        height: 14px;
     }
 
+    .burger-bar {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        border-radius: 2px;
+        background: currentColor;
+        transition:
+            transform 0.32s cubic-bezier(0.65, 0, 0.35, 1),
+            opacity 0.16s ease;
+    }
+
+    .burger-bar:nth-child(1) {
+        top: 0;
+    }
+
+    .burger-bar:nth-child(2) {
+        top: 6px;
+    }
+
+    .burger-bar:nth-child(3) {
+        top: 12px;
+    }
+
+    /* The outer two travel to the middle and cross there; the one already in the middle
+       fades as they arrive, so there is never a third line inside the X. */
+    .mobile-toggle-btn[aria-expanded='true'] .burger-bar:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+
+    .mobile-toggle-btn[aria-expanded='true'] .burger-bar:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0.2);
+    }
+
+    .mobile-toggle-btn[aria-expanded='true'] .burger-bar:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* --- THE SCRIM --------------------------------------------------
+       Below the drawer and above everything else. It fades rather than
+       appears, because a dark sheet that arrives in one frame reads as
+       the page having broken. */
+    .mobile-scrim {
+        position: fixed;
+        inset: 70px 0 0;
+        background: rgba(11, 18, 24, 0.55);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.28s ease,
+            visibility 0s linear 0.28s;
+        z-index: 55;
+    }
+
+    :root[data-theme='light'] .mobile-scrim {
+        background: rgba(11, 28, 21, 0.28);
+    }
+
+    .mobile-scrim.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+            opacity 0.28s ease,
+            visibility 0s;
+    }
+
+    /*
+     * `display` cannot be transitioned, and that is the whole reason this drawer used to
+     * appear in one frame with nothing to say it had come from the header. It is always
+     * laid out now and hidden by `visibility`, which does animate — and which, unlike
+     * `opacity` alone, also takes the links out of the tab order and off the screen
+     * reader while the menu is shut, so none of that had to be arranged by hand.
+     *
+     * The delay on `visibility` is what lets it stay visible for the length of the
+     * closing slide instead of vanishing at the start of it.
+     */
     .mobile-drawer {
-        display: none;
         position: absolute;
         top: 70px;
         left: 0;
@@ -386,20 +520,41 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         background: var(--bg-panel-color);
         border-bottom: 1px solid var(--border-color);
         box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
-        padding: 20px var(--gutter);
+        padding: 20px var(--gutter) 26px;
         z-index: 60;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition:
+            opacity 0.24s ease,
+            transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 0.32s;
     }
 
+    /*
+     * Opaque, not 98% of it.
+     *
+     * Two per cent of the hero's heading came through the panel as a grey ghost behind
+     * the menu — the kind of thing that reads as a rendering fault rather than as a
+     * design. The translucency was there to let the page show through; that job belongs
+     * to the scrim now, which dims what is *around* the drawer, and a panel you can see
+     * the page through is a panel with nothing behind it. The blur went with it: it had
+     * nothing left to blur.
+     */
     :root[data-theme='light'] .mobile-drawer {
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background: #ffffff;
         border-bottom: 1px solid var(--border-color);
-        box-shadow: 0 16px 40px rgba(11, 28, 21, 0.08);
+        box-shadow: 0 16px 40px rgba(11, 28, 21, 0.12);
     }
 
     .mobile-drawer.is-open {
-        display: block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition:
+            opacity 0.2s ease,
+            transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s;
     }
 
     .mobile-drawer-inner {
@@ -410,18 +565,80 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         margin: 0 auto;
     }
 
+    /*
+     * The rows arrive in the order they are read, a frame or two apart.
+     *
+     * Everything landing at once is a panel appearing; landing in sequence is a list
+     * being dealt, and it is the difference between a menu that opens and a menu that
+     * is simply there. Sixth and last is the pair of buttons, which is where the eye
+     * should end up.
+     *
+     * Delays only on the way in. On the way out they would hold the last row on screen
+     * after the drawer had gone, and closing a menu is not a moment anyone wants drawn
+     * out — so the closed state resets them to zero.
+     */
+    .mobile-drawer-inner > * {
+        opacity: 0;
+        transform: translateY(-6px);
+        transition:
+            opacity 0.001s,
+            transform 0.001s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > * {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+            opacity 0.26s ease,
+            transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(1) {
+        transition-delay: 0.04s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(2) {
+        transition-delay: 0.08s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(3) {
+        transition-delay: 0.12s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(4) {
+        transition-delay: 0.16s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(5) {
+        transition-delay: 0.2s;
+    }
+
+    .mobile-drawer.is-open .mobile-drawer-inner > :nth-child(6) {
+        transition-delay: 0.24s;
+    }
+
     .mobile-link {
-        padding: 10px 14px;
+        padding: 12px 14px;
         border-radius: var(--radius-sm);
         font-size: 1rem;
         font-weight: 600;
         color: var(--text-color);
-        transition: background 0.15s;
+        transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            transform 0.12s ease;
     }
 
-    .mobile-link:hover {
+    .mobile-link:hover,
+    .mobile-link:focus-visible {
         background: var(--bg-card-hover);
         color: var(--action-color);
+    }
+
+    /* A press has to answer on a screen with no pointer to hover with. */
+    .mobile-link:active {
+        transform: scale(0.985);
+        background: var(--bg-card-hover);
     }
 
     :root[data-theme='light'] .mobile-link:hover {
@@ -473,6 +690,84 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
 
         .nav-actions {
             gap: 8px;
+        }
+    }
+
+    /*
+     * Everything above is decoration on top of a menu that opens either way. Somebody
+     * who asked their system for less motion gets the same drawer, in place, at once —
+     * `visibility` keeps its zero-second step so the links stay out of the tab order
+     * while it is shut.
+     */
+    @media (prefers-reduced-motion: reduce) {
+        /* The open states have to be named too. `.mobile-drawer.is-open` declares its own
+           transition and outweighs a bare `.mobile-drawer` even from inside this block —
+           measured: the drawer was still fading through 0.15 opacity forty milliseconds
+           after the press, which is exactly the animation this is meant to remove. */
+        .burger-bar,
+        .mobile-scrim,
+        .mobile-scrim.is-open,
+        .mobile-drawer,
+        .mobile-drawer.is-open,
+        .mobile-drawer-inner > *,
+        .mobile-drawer.is-open .mobile-drawer-inner > * {
+            transition: none;
+        }
+
+        .mobile-drawer {
+            transform: none;
+        }
+
+        .mobile-drawer-inner > * {
+            transform: none;
+        }
+
+        .mobile-drawer.is-open .mobile-drawer-inner > * {
+            transition-delay: 0s;
+        }
+    }
+
+    /*
+     * A PHONE IS NARROWER THAN THE BRAND PLUS THE CONTROLS.
+     *
+     * Measured on the live site: at 360px the header was 69px wider than the window, so
+     * the whole page scrolled sideways — the oldest and least excusable mobile bug there
+     * is, and it had nothing to do with the menu except that the menu button was the
+     * thing being pushed off the edge.
+     *
+     * The controls are all fixed-size targets and none of them may shrink. The brand is
+     * the one part that can give: the version tag goes, the name comes down a step and
+     * is allowed to truncate rather than push. `min-width: 0` is what makes that
+     * possible at all — a flex item refuses to shrink below its content without it, and
+     * an ellipsis that can never trigger is not an ellipsis.
+     */
+    @media (max-width: 520px) {
+        .header-inner {
+            gap: 10px;
+        }
+
+        .nav-actions {
+            gap: 8px;
+        }
+
+        .brand-link {
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .brand-text-block {
+            min-width: 0;
+        }
+
+        .brand-name {
+            font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .version-tag {
+            display: none;
         }
     }
 

@@ -23,6 +23,7 @@ export const ui = {
         'nav.language': 'Language',
         'nav.install': 'Add to Chrome',
         'nav.donate': 'Donate',
+        'nav.menu': 'Menu',
         'nav.donateTitle': 'Support the development of Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
@@ -847,6 +848,7 @@ export const ui = {
         'nav.language': 'Idioma',
         'nav.install': 'Añadir a Chrome',
         'nav.donate': 'Donar',
+        'nav.menu': 'Menú',
         'nav.donateTitle': 'Apoya el desarrollo de Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
