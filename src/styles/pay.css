@@ -252,6 +252,46 @@ legend {
     min-height: 44px;
 }
 
+/* ── The wallets' seat, kept warm ────────────────────────
+   The Express Checkout Element is built after the card form and answers about a second
+   later, so revealing it then shoved everything under it down the page. `pay.ts` takes
+   the space at the moment it starts asking and gives it back if the answer is "no
+   wallets here", so the sheet fills in rather than jumping. */
+.express.is-pending {
+    border-radius: 10px;
+    background-image: linear-gradient(
+        90deg,
+        var(--panel-color) 0%,
+        color-mix(in srgb, var(--accent-color) 12%, var(--panel-color)) 50%,
+        var(--panel-color) 100%
+    );
+    background-size: 220% 100%;
+    animation: express-wait 1.4s ease-in-out infinite;
+}
+
+/* The rule keeps its line but says nothing yet: "or pay by card" divides two things, and
+   until Stripe answers we do not know there is anything above it to divide. */
+.divider.is-pending {
+    visibility: hidden;
+}
+
+@keyframes express-wait {
+    from {
+        background-position: 120% 0;
+    }
+    to {
+        background-position: -20% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .express.is-pending {
+        animation: none;
+        background-image: none;
+        background-color: var(--panel-color);
+    }
+}
+
 .divider {
     display: flex;
     align-items: center;

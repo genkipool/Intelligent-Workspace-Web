@@ -959,6 +959,47 @@ function mount(): void {
      * everywhere instead of being switched off in the panel.
      */
     function mountWallets(): void {
+        /*
+         * THE ROW'S HEIGHT IS RESERVED BEFORE STRIPE HAS ANSWERED.
+         *
+         * The wallets are built after the card form on purpose (see above), so they land
+         * about a second after the sheet is already readable — and they used to land by
+         * un-hiding themselves, which pushed the divider, the card options and the small
+         * print down the page under the reader's eyes. In the panel that is the whole
+         * visible behaviour of the sheet: it looks finished, and then it jumps.
+         *
+         * So the space is taken now and settled later. `is-pending` holds a blank row the
+         * exact height a wallet button occupies; `settle` either fills it or takes it back,
+         * and does so once — whichever of `ready`, `availablepaymentmethodschange` or the
+         * deadline gets there first.
+         */
+        const expressEl = $('express');
+        const dividerEl = $('divider');
+        expressEl.hidden = false;
+        dividerEl.hidden = false;
+        expressEl.classList.add('is-pending');
+        dividerEl.classList.add('is-pending');
+
+        let settled = false;
+        let pendingTimer = 0;
+        const settle = (any: boolean) => {
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(pendingTimer);
+            expressEl.classList.remove('is-pending');
+            dividerEl.classList.remove('is-pending');
+            expressEl.hidden = !any;
+            dividerEl.hidden = !any;
+        };
+
+        /*
+         * If no answer ever comes — a blocked probe, a dead network — the reservation has
+         * to be given back rather than left as a permanent gap. Shorter than the card
+         * form's twenty seconds because this one is only holding a row of buttons, not the
+         * form itself.
+         */
+        pendingTimer = window.setTimeout(() => settle(false), 8000);
+
         walletElements = stripe.elements(base);
 
         const wanted = WALLET_FOR_METHOD[METHOD];
@@ -994,8 +1035,7 @@ function mount(): void {
         }) => {
             const available = event?.paymentMethods ?? event?.availablePaymentMethods;
             const any = Boolean(available && Object.values(available).some(Boolean));
-            $('express').hidden = !any;
-            $('divider').hidden = !any;
+            settle(any);
 
             // The tile the reader pressed named a wallet. If that one is not available, say so
             // rather than leaving them hunting for a button that will never appear.
