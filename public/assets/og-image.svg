@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#151f28"/>
+      <stop offset="50%" stop-color="#1b2631"/>
+      <stop offset="100%" stop-color="#10171e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="35%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#16a085" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#16a085" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Logo container (centered vertically on the left side) -->
+  <g transform="translate(120, 115) scale(0.84)">
+    <!-- TARJETA POSTERIOR -->
+    <rect x="11" y="10" width="324" height="300" rx="49" fill="#48C9B0"/>
+    <!-- RECTÁNGULO BLANCO POSTERIOR -->
+    <rect x="49" y="42" width="157" height="104" rx="24" fill="#FFFFFF"/>
+    <!-- TARJETA INTERMEDIA -->
+    <rect x="80" y="87" width="324" height="300" rx="49" fill="#16A085"/>
+    <!-- RECTÁNGULO BLANCO INTERMEDIO -->
+    <rect x="116" y="117" width="158" height="104" rx="24" fill="#FFFFFF"/>
+    <!-- TARJETA PRINCIPAL -->
+    <rect x="148" y="146" width="324" height="299" rx="49" fill="#0E6655"/>
+    <!-- BARRA -->
+    <rect x="165" y="179" width="343" height="84" rx="18" fill="#73D2BE"/>
+    <!-- CÍRCULO NARANJA -->
+    <circle cx="213.5" cy="221" r="31.5" fill="#F48325"/>
+    <!-- CÍRCULO NARANJA OSCURO -->
+    <circle cx="295.5" cy="221" r="31.5" fill="#DF5F1D"/>
+    <!-- CÍRCULO AMARILLO -->
+    <circle cx="377.5" cy="221" r="31.5" fill="#F4D54E"/>
+    <!-- CÍRCULO VERDE -->
+    <circle cx="459.5" cy="221" r="31.5" fill="#3E9D46"/>
+  </g>
+
+  <!-- Typography on the right side -->
+  <g transform="translate(600, 270)">
+    <text x="0" y="0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif" font-size="56" font-weight="800" fill="#FFFFFF" letter-spacing="-1.5">Intelligent Workspace</text>
+    <text x="0" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif" font-size="26" font-weight="500" fill="#48C9B0" letter-spacing="-0.5">Tu espacio de trabajo inteligente en el navegador</text>
+    <text x="0" y="110" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif" font-size="20" font-weight="400" fill="#9eb5ad">Smart Tab Groups • Productivity Tools • 100% Local</text>
+  </g>
+</svg>
