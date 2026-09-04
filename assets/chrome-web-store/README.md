@@ -6,6 +6,12 @@ No forman parte del sitio: esta carpeta queda fuera de `public/` y de `src/`, as
 Astro no las copia a `dist/` ni existe ninguna ruta pública que las sirva. Están aquí
 solo para tenerlas versionadas y localizadas a la hora de publicar la extensión.
 
+Están en `1280x800/`, ya al tamaño que pide la Chrome Web Store. Se hicieron a partir
+de capturas de 1920×993 escalándolas enteras a 1280×662 y rellenando arriba y abajo
+hasta 800 con el mismo `#212a34` del fondo: no se recortó ni se deformó nada, y las
+bandas no se distinguen del fondo de la propia captura. Los originales ya no se
+conservan.
+
 | Archivo                                 | Contenido                                                                           |
 | --------------------------------------- | ----------------------------------------------------------------------------------- |
 | `01-hero-workstation.png`               | Portada: «Transform your browser into an autonomous workstation» + gestor de reglas |
@@ -25,16 +31,3 @@ solo para tenerlas versionadas y localizadas a la hora de publicar la extensión
 | `15-marcadores-historial-descargas.png` | Marcadores, historial, cerradas y descargas en el panel                             |
 | `16-snippets-variables.png`             | Abreviaturas que se expanden con variables `{{así}}`                                |
 | `17-atajos-de-teclado.png`              | Tabla completa de atajos: omnibar, página y navegador                               |
-
-Los originales son PNG de 1920×993. En `1280x800/` están las mismas imágenes al
-tamaño que pide la Chrome Web Store: escaladas enteras a 1280×662 y rellenadas arriba
-y abajo hasta 800 con el mismo `#212a34` del fondo, así que no se recorta ni se
-deforma nada y las bandas no se distinguen. Para regenerarlas desde esta carpeta:
-
-```sh
-mkdir -p 1280x800
-for f in *.png; do
-  magick "$f" -resize 1280x800 -background '#212a34' -gravity center \
-    -extent 1280x800 -strip "1280x800/$f"
-done
-```
