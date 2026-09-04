@@ -1,7 +1,7 @@
 /**
  * The panels the extension actually ships, taken from its own about page.
  *
- * This is the honest inventory, not a marketing shortlist: nineteen entries, grouped the
+ * This is the honest inventory, not a marketing shortlist: twenty-one entries, grouped the
  * way a user meets them. The four deep sections above the grid explain the *why*; this
  * answers "but what is actually in it".
  *
@@ -176,7 +176,7 @@ export const bentoCards: readonly BentoCard[] = [
         span: 'col-span-1',
     },
 
-    // ── 3. Quick Tools & Utilities (6 items) ──
+    // ── 3. Quick Tools & Utilities (9 items) ──
     {
         id: 'split-screen',
         category: 'tools',
@@ -253,5 +253,27 @@ export const bentoCards: readonly BentoCard[] = [
         badgeKey: 'bento.qrTools.badge',
         highlightKeys: ['bento.qrTools.h1', 'bento.qrTools.h2', 'bento.qrTools.h3'],
         span: 'col-span-1',
+    },
+    {
+        id: 'radio',
+        category: 'tools',
+        icon: 'radio',
+        titleKey: 'bento.radio.title',
+        descKey: 'bento.radio.desc',
+        tagKey: 'bento.radio.tag',
+        badgeKey: 'bento.radio.badge',
+        highlightKeys: ['bento.radio.h1', 'bento.radio.h2', 'bento.radio.h3'],
+        span: 'col-span-1',
+    },
+    {
+        id: 'music-player',
+        category: 'tools',
+        icon: 'music',
+        titleKey: 'bento.musicPlayer.title',
+        descKey: 'bento.musicPlayer.desc',
+        tagKey: 'bento.musicPlayer.tag',
+        badgeKey: 'bento.musicPlayer.badge',
+        highlightKeys: ['bento.musicPlayer.h1', 'bento.musicPlayer.h2', 'bento.musicPlayer.h3'],
+        span: 'col-span-2',
     },
 ];

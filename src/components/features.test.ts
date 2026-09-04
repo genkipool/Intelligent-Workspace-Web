@@ -35,8 +35,8 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain('aria-orientation="horizontal"');
                 expect(pilarHtml).toContain('aria-label=');
 
-                // Check 4 tabs
-                const expectedTabIds = ['tab-agent', 'tab-tabs', 'tab-focus', 'tab-keys'];
+                // Check 5 tabs
+                const expectedTabIds = ['tab-agent', 'tab-tabs', 'tab-focus', 'tab-keys', 'tab-media'];
                 for (const tabId of expectedTabIds) {
                     const btnId = `tab-btn-${tabId.replace('tab-', '')}`;
                     expect(pilarHtml).toContain(`id="${btnId}"`);
@@ -44,9 +44,9 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                     expect(pilarHtml).toContain(`aria-controls="${tabId}"`);
                 }
 
-                // Check exactly 4 tabs in section
+                // Check exactly 5 tabs in section
                 const tabButtons = pilarHtml.match(/<button[^>]*role="tab"[^>]*>/g) || [];
-                expect(tabButtons).toHaveLength(4);
+                expect(tabButtons).toHaveLength(5);
 
                 // Check initial active and inactive roving tabindex states in SSR
                 expect(pilarHtml).toContain(
@@ -61,8 +61,11 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain(
                     'id="tab-btn-keys" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-keys" tabindex="-1"',
                 );
+                expect(pilarHtml).toContain(
+                    'id="tab-btn-media" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-media" tabindex="-1"',
+                );
 
-                // Check 4 tabpanels
+                // Check 5 tabpanels
                 for (const tabId of expectedTabIds) {
                     const btnId = `tab-btn-${tabId.replace('tab-', '')}`;
                     expect(pilarHtml).toContain(`id="${tabId}"`);
@@ -70,7 +73,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 }
 
                 const tabPanels = pilarHtml.match(/<div[^>]*role="tabpanel"[^>]*>/g) || [];
-                expect(tabPanels).toHaveLength(4);
+                expect(tabPanels).toHaveLength(5);
 
                 // Active panel is tab-agent, others hidden
                 expect(pilarHtml).toContain(
@@ -85,10 +88,13 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain(
                     'id="tab-keys" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-keys" tabindex="0" hidden',
                 );
+                expect(pilarHtml).toContain(
+                    'id="tab-media" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-media" tabindex="0" hidden',
+                );
 
                 // Check SVG vector icons inside tab buttons have aria-hidden="true"
                 const svgs = pilarHtml.match(/<svg[^>]*aria-hidden="true"[^>]*>/g) || [];
-                expect(svgs.length).toBeGreaterThanOrEqual(4);
+                expect(svgs.length).toBeGreaterThanOrEqual(5);
             }
         });
     });
@@ -102,6 +108,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             'fhub.tab2',
             'fhub.tab3',
             'fhub.tab4',
+            'fhub.tab5',
             'fhub.agent.title',
             'fhub.agent.lead',
             'fhub.agent.f1',
@@ -159,6 +166,19 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             'fhub.keys.mockup.snippetLabel',
             'fhub.keys.mockup.snippetTrigger',
             'fhub.keys.mockup.snippetResult',
+            'fhub.media.title',
+            'fhub.media.lead',
+            'fhub.media.f1',
+            'fhub.media.f2',
+            'fhub.media.f3',
+            'fhub.media.f4',
+            'fhub.media.mockup.badge',
+            'fhub.media.mockup.searchPlaceholder',
+            'fhub.media.mockup.tabMusic',
+            'fhub.media.mockup.tabRadio',
+            'fhub.media.mockup.tabAll',
+            'fhub.media.mockup.savedStations',
+            'fhub.media.mockup.folder',
         ] as const;
 
         it('defines all fhub translation keys in both en and es with non-empty strings', () => {
@@ -208,6 +228,13 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                     selected: 'false',
                 },
                 { id: 'tab-btn-keys', panelId: 'tab-keys', active: false, tabindex: '-1', selected: 'false' },
+                {
+                    id: 'tab-btn-media',
+                    panelId: 'tab-media',
+                    active: false,
+                    tabindex: '-1',
+                    selected: 'false',
+                },
             ];
 
             const panels: PanelItem[] = [
@@ -215,6 +242,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 { id: 'tab-tabs', active: false, hidden: true },
                 { id: 'tab-focus', active: false, hidden: true },
                 { id: 'tab-keys', active: false, hidden: true },
+                { id: 'tab-media', active: false, hidden: true },
             ];
 
             return { tabs, panels, activeIndex: 0 };
@@ -272,7 +300,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             return false;
         }
 
-        it('correctly navigates forward and wraps around from Tab 3 to Tab 0', () => {
+        it('correctly navigates forward and wraps around from Tab 4 to Tab 0', () => {
             const state = createInitialState();
             expect(state.activeIndex).toBe(0);
 
@@ -291,35 +319,39 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             expect(handleKey(state, 'ArrowRight')).toBe(true);
             expect(state.activeIndex).toBe(3);
 
-            // ArrowRight 3 -> 0 (cyclic wrap-around!)
+            // ArrowRight 3 -> 4
+            expect(handleKey(state, 'ArrowRight')).toBe(true);
+            expect(state.activeIndex).toBe(4);
+
+            // ArrowRight 4 -> 0 (cyclic wrap-around!)
             expect(handleKey(state, 'ArrowRight')).toBe(true);
             expect(state.activeIndex).toBe(0);
             expect(state.tabs[0].active).toBe(true);
             expect(state.tabs[0].tabindex).toBe('0');
             expect(state.panels[0].hidden).toBe(false);
-            expect(state.panels[3].hidden).toBe(true);
+            expect(state.panels[4].hidden).toBe(true);
         });
 
-        it('correctly navigates backward and wraps around from Tab 0 to Tab 3', () => {
+        it('correctly navigates backward and wraps around from Tab 0 to Tab 4', () => {
             const state = createInitialState();
             expect(state.activeIndex).toBe(0);
 
-            // ArrowLeft 0 -> 3 (cyclic wrap-around!)
+            // ArrowLeft 0 -> 4 (cyclic wrap-around!)
             expect(handleKey(state, 'ArrowLeft')).toBe(true);
-            expect(state.activeIndex).toBe(3);
-            expect(state.tabs[3].active).toBe(true);
-            expect(state.tabs[3].tabindex).toBe('0');
+            expect(state.activeIndex).toBe(4);
+            expect(state.tabs[4].active).toBe(true);
+            expect(state.tabs[4].tabindex).toBe('0');
             expect(state.tabs[0].tabindex).toBe('-1');
-            expect(state.panels[3].hidden).toBe(false);
+            expect(state.panels[4].hidden).toBe(false);
             expect(state.panels[0].hidden).toBe(true);
 
-            // ArrowUp 3 -> 2
+            // ArrowUp 4 -> 3
             expect(handleKey(state, 'ArrowUp')).toBe(true);
-            expect(state.activeIndex).toBe(2);
+            expect(state.activeIndex).toBe(3);
 
-            // ArrowLeft 2 -> 1
+            // ArrowLeft 3 -> 2
             expect(handleKey(state, 'ArrowLeft')).toBe(true);
-            expect(state.activeIndex).toBe(1);
+            expect(state.activeIndex).toBe(2);
         });
 
         it('correctly executes Home and End jumps', () => {
@@ -333,11 +365,11 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             expect(state.tabs[0].active).toBe(true);
             expect(state.tabs[0].tabindex).toBe('0');
 
-            // End -> jumps to 3
+            // End -> jumps to 4
             expect(handleKey(state, 'End')).toBe(true);
-            expect(state.activeIndex).toBe(3);
-            expect(state.tabs[3].active).toBe(true);
-            expect(state.tabs[3].tabindex).toBe('0');
+            expect(state.activeIndex).toBe(4);
+            expect(state.tabs[4].active).toBe(true);
+            expect(state.tabs[4].tabindex).toBe('0');
         });
 
         it('ignores unhandled keys without altering state', () => {
@@ -364,9 +396,9 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(activeTabs[0].tabindex).toBe('0');
                 expect(activeTabs[0].selected).toBe('true');
 
-                // Invariant: exactly 3 inactive tabs
+                // Invariant: exactly 4 inactive tabs
                 const inactiveTabs = state.tabs.filter((t) => !t.active);
-                expect(inactiveTabs).toHaveLength(3);
+                expect(inactiveTabs).toHaveLength(4);
                 for (const t of inactiveTabs) {
                     expect(t.tabindex).toBe('-1');
                     expect(t.selected).toBe('false');
@@ -378,9 +410,9 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(activePanels[0].hidden).toBe(false);
                 expect(activePanels[0].id).toBe(activeTabs[0].panelId);
 
-                // Invariant: exactly 3 hidden panels
+                // Invariant: exactly 4 hidden panels
                 const inactivePanels = state.panels.filter((p) => !p.active);
-                expect(inactivePanels).toHaveLength(3);
+                expect(inactivePanels).toHaveLength(4);
                 for (const p of inactivePanels) {
                     expect(p.hidden).toBe(true);
                 }

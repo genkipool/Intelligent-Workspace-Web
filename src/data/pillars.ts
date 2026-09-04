@@ -1,8 +1,8 @@
 /**
- * The four pillars behind the tab strip, in the order a reader meets them.
+ * The five pillars behind the tab strip, in the order a reader meets them.
  *
- * The strip and the four panels were written out four times each: eight blocks of the
- * same markup differing only in a key prefix. They are this list now, so a fifth pillar
+ * The strip and its panels were once written out by hand, one block of the same markup
+ * per pillar, differing only in a key prefix. They are this list now, so a further pillar
  * is one entry plus its keys in `ui.ts`, and the strip cannot fall out of step with the
  * panels it controls — the ids that wire `aria-controls` to `aria-labelledby` are derived
  * from `id` rather than typed twice.
@@ -16,7 +16,7 @@ import type { IconName } from '@/data/icons';
 
 export interface Pillar {
     /** Also the tab's `data-tab`, and the stem of both element ids. */
-    id: 'agent' | 'tabs' | 'focus' | 'keys';
+    id: 'agent' | 'tabs' | 'focus' | 'keys' | 'media';
     icon: IconName;
     tabKey: TranslationKey;
     titleKey: TranslationKey;
@@ -57,5 +57,13 @@ export const pillars: readonly Pillar[] = [
         titleKey: 'fhub.keys.title',
         leadKey: 'fhub.keys.lead',
         checkKeys: ['fhub.keys.f1', 'fhub.keys.f2', 'fhub.keys.f3', 'fhub.keys.f4'],
+    },
+    {
+        id: 'media',
+        icon: 'music',
+        tabKey: 'fhub.tab5',
+        titleKey: 'fhub.media.title',
+        leadKey: 'fhub.media.lead',
+        checkKeys: ['fhub.media.f1', 'fhub.media.f2', 'fhub.media.f3', 'fhub.media.f4'],
     },
 ];

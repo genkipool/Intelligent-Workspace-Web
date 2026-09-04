@@ -1,0 +1,211 @@
+---
+/**
+ * THE MUSIC PLAYER AND THE RADIO, AS THE SIDE PANEL DRAWS THEM.
+ *
+ * `MusicPlayerPanel.svelte` plus the `MUSIC PLAYER` block of `listGroup.css`. The panel
+ * is a stack of rows under the toolbar — the same shape as the Pomodoro drawer — and
+ * this shot is the state it is in with the list open on the "All" tab while a station
+ * plays: the search field in place of the track name, the three tabs with their counts,
+ * the saved stations above the folders, and the live bar instead of a seek bar.
+ *
+ * The two controls the real panel makes interactive are drawn rather than rendered: the
+ * seek bar and the volume slider are a `role="slider"` div and an `<input type="range">`
+ * in the extension, and a picture of a panel has no business offering either to a
+ * keyboard. Their fills are the extension's own, down to the gradient the volume track
+ * paints from `--vol-pct`.
+ */
+import Icon from '@/components/Icon.astro';
+import PanelChrome from '@/components/shots/PanelChrome.astro';
+
+export interface MusicShotStation {
+    name: string;
+    /** The one that is on the air, drawn with the speaker glyph and the accent row. */
+    playing?: boolean;
+}
+
+export interface MusicShotFolder {
+    name: string;
+    tracks: string[];
+}
+
+interface Props {
+    /** The side panel's own title bar. */
+    title: string;
+    searchPlaceholder: string;
+    tabMusic: string;
+    tabRadio: string;
+    tabAll: string;
+    savedStations: string;
+    stations: readonly MusicShotStation[];
+    folders: readonly MusicShotFolder[];
+    /** The clock, which keeps running on a stream. */
+    elapsed: string;
+    /** How full the volume slider is drawn, 0–100. */
+    volumePct: number;
+}
+
+const {
+    title,
+    searchPlaceholder,
+    tabMusic,
+    tabRadio,
+    tabAll,
+    savedStations,
+    stations,
+    folders,
+    elapsed,
+    volumePct,
+} = Astro.props;
+
+const trackCount = folders.reduce((total, folder) => total + folder.tracks.length, 0);
+---
+
+<div class="iw-shot">
+    <PanelChrome
+        title={title}
+        actions={[{ icon: 'pin' }, { icon: 'rules' }, { icon: 'home' }, { icon: 'back' }]}
+    />
+
+    <section class="music-panel" aria-hidden="true">
+        <!-- ① The row the track name lives in. With the list open it is the search
+                 field instead, and the radio and add-folder buttons stay put. -->
+        <div class="music-row music-row-title">
+            <div class="music-search-wrap">
+                <span class="music-search-icon"><Icon name="search" size={16} /></span>
+                <span class="music-search-input">{searchPlaceholder}</span>
+            </div>
+            <span class="music-icon-btn"><Icon name="close" size={16} /></span>
+            <span class="music-icon-btn active"><Icon name="radio" size={16} /></span>
+            <span class="music-icon-btn"><Icon name="addFolder" size={16} /></span>
+        </div>
+
+        <!-- ② Música · Radio · Todo, each with what it holds. -->
+        <div class="music-tabs">
+            <span class="music-tab-btn">
+                <Icon name="music" size={14} />
+                <span>{tabMusic}</span>
+                <span class="music-tab-badge">{trackCount}</span>
+            </span>
+            <span class="music-tab-btn">
+                <Icon name="radio" size={14} />
+                <span>{tabRadio}</span>
+                <span class="music-tab-badge">{stations.length}</span>
+            </span>
+            <span class="music-tab-btn active">
+                <Icon name="playlist" size={14} />
+                <span>{tabAll}</span>
+                <span class="music-tab-badge">{trackCount + stations.length}</span>
+            </span>
+        </div>
+
+        <!-- ③ The list: the stations first, then a folder per folder you handed over. -->
+        <div class="music-results">
+            <div class="music-folder music-all-section is-open">
+                <div class="music-folder-title">
+                    <span class="folder-icon-wrapper"><Icon name="radio" size={16} /></span>
+                    <span class="folder-name">{savedStations}</span>
+                    <span class="music-folder-count">({stations.length})</span>
+                </div>
+                <div class="music-folder-content">
+                    {
+                        stations.map((station) => (
+                            <div
+                                class:list={[
+                                    'music-result',
+                                    'music-radio-result',
+                                    { active: station.playing },
+                                ]}
+                            >
+                                <span class="music-track-icon">
+                                    <Icon name={station.playing ? 'speaker' : 'radio'} size={14} />
+                                </span>
+                                <span class="music-result-name">{station.name}</span>
+                                <span class="close-item-btn">
+                                    <Icon name="close" size={16} />
+                                </span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+            {
+                folders.map((folder) => (
+                    <div class="music-folder is-open">
+                        <div class="music-folder-title">
+                            <span class="folder-icon-wrapper">
+                                <Icon name="folderOpen" size={16} />
+                            </span>
+                            <span class="folder-name">{folder.name}</span>
+                            <span class="music-folder-count">({folder.tracks.length})</span>
+                            <span class="music-folder-delete-btn">
+                                <Icon name="trash" size={14} />
+                            </span>
+                        </div>
+                        <div class="music-folder-content">
+                            {folder.tracks.map((track) => (
+                                <div class="music-result">
+                                    <span class="music-track-icon">
+                                        <Icon name="music" size={14} />
+                                    </span>
+                                    <span class="music-result-name">{track}</span>
+                                    <span class="close-item-btn">
+                                        <Icon name="close" size={16} />
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+
+        <!-- ④ A stream has no length, so the bar is hatched and the duration is the
+                 radio mark. On a file this is the seek bar with its handle. -->
+        <div class="music-row music-row-progress is-radio">
+            <span class="music-time">{elapsed}</span>
+            <span class="music-progress-radio-container"></span>
+            <span class="music-time music-time-live"><Icon name="radio" size={13} /></span>
+        </div>
+
+        <!-- ⑤ Transport and volume. Rewind and fast-forward are the ten-second jumps,
+                 and they are the two the panel greys out while a stream is on. -->
+        <div class="music-row music-row-controls">
+            <div class="music-controls-center">
+                <div class="music-transport">
+                    <span class="music-action-btn"><Icon name="trackPrev" size={18} /></span>
+                    <span class="music-action-btn is-disabled"><Icon name="rewindFast" size={18} /></span>
+                    <span class="music-action-btn music-play-btn"><Icon name="pauseSolid" size={18} /></span>
+                    <span class="music-action-btn"><Icon name="stopSolid" size={18} /></span>
+                    <span class="music-action-btn is-disabled"><Icon name="forwardFast" size={18} /></span>
+                    <span class="music-action-btn"><Icon name="trackNext" size={18} /></span>
+                </div>
+
+                <span class="music-controls-divider"></span>
+
+                <div class="music-volume-control">
+                    <span class="music-action-btn music-mute-btn"><Icon name="speaker" size={16} /></span>
+                    <span class="music-volume-slider" style={`--vol-pct: ${volumePct}%`}>
+                        <span class="music-volume-thumb" style={`left: ${volumePct}%`}></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    /*
+     * Nothing here but what the shot needs and the extension does not have a rule for:
+     * the panel is drawn from `src/styles/extension-ui.css`, which carries the
+     * transcription of the extension's own `MUSIC PLAYER` block.
+     *
+     * `:global` because every glyph comes out of `Icon.astro` and so carries that
+     * component's scope rather than this one's.
+     */
+    .music-folder-title :global(svg),
+    .music-track-icon :global(svg),
+    .music-search-icon :global(svg) {
+        display: block;
+    }
+</style>

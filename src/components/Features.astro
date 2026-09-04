@@ -7,6 +7,7 @@ import SectionHeader from '@/components/SectionHeader.astro';
 import Icon from '@/components/Icon.astro';
 import PanelGroupList from '@/components/shots/PanelGroupList.astro';
 import PanelChrome from '@/components/shots/PanelChrome.astro';
+import PanelMusicPlayer from '@/components/shots/PanelMusicPlayer.astro';
 
 interface Props {
     lang: Lang;
@@ -305,6 +306,35 @@ const t = useTranslations(lang);
                 </div>
             </div>
         </PillarPanel>
+
+        <!-- Music and radio -->
+        <PillarPanel lang={lang} pillar={pillars[4]}>
+            <div class="panel-preview">
+                <!-- The player's drawer with the list open on "All": the stations it
+                                     keeps above the folders you handed it, a station on the air, and the
+                                     live bar a stream gets where a file would have a seek bar. -->
+                <PanelMusicPlayer
+                    title={t('fhub.media.mockup.badge')}
+                    searchPlaceholder={t('fhub.media.mockup.searchPlaceholder')}
+                    tabMusic={t('fhub.media.mockup.tabMusic')}
+                    tabRadio={t('fhub.media.mockup.tabRadio')}
+                    tabAll={t('fhub.media.mockup.tabAll')}
+                    savedStations={t('fhub.media.mockup.savedStations')}
+                    elapsed="42:07"
+                    volumePct={72}
+                    stations={[
+                        { name: 'Radio Paradise · Mellow Mix', playing: true },
+                        { name: 'BBC World Service' },
+                    ]}
+                    folders={[
+                        {
+                            name: t('fhub.media.mockup.folder'),
+                            tracks: ['Nils Frahm - Says.flac', 'Bonobo - Kerala.mp3'],
+                        },
+                    ]}
+                />
+            </div>
+        </PillarPanel>
     </div>
 </section>
 
@@ -413,7 +443,9 @@ const t = useTranslations(lang);
         gap: 6px;
         /* One row. The bar is a segmented control: wrapped onto two lines it stops
            reading as one, and the active pill ends up sitting under the others.
-           Below the breakpoint the labels go and the icons carry it instead. */
+           Below the breakpoint the labels go and the icons carry it instead. Five
+           labels need more room than four did, so the ceiling and both breakpoints
+           moved out with the fifth pillar rather than letting it wrap. */
         flex-wrap: nowrap;
         background: rgba(27, 38, 49, 0.75);
         backdrop-filter: blur(20px) saturate(180%);
@@ -425,7 +457,7 @@ const t = useTranslations(lang);
             0 10px 30px -5px rgba(0, 0, 0, 0.35),
             0 0 20px -4px rgba(22, 160, 133, 0.12),
             inset 0 1px 1px rgba(255, 255, 255, 0.08);
-        max-width: 920px;
+        max-width: 1060px;
         margin: 0 auto;
         position: relative;
         z-index: 10;
@@ -704,31 +736,31 @@ const t = useTranslations(lang);
         box-shadow: 0 14px 34px rgba(11, 28, 21, 0.18);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1080px) {
         .tab-nav {
             gap: 4px;
             padding: 5px;
         }
 
         .tab-btn {
-            padding: 8px 14px;
+            padding: 8px 12px;
             font-size: 0.86rem;
             gap: 7px;
         }
     }
 
-    /* Narrower than this the four labels cannot share a line, so the icons carry
+    /* Narrower than this the five labels cannot share a line, so the icons carry
        the bar on their own and the label is left to the panel heading below. */
-    @media (max-width: 640px) {
+    @media (max-width: 820px) {
         .tab-nav {
             justify-content: space-between;
             width: 100%;
-            max-width: 340px;
+            max-width: 360px;
         }
 
         .tab-btn {
             justify-content: center;
-            padding: 10px 14px;
+            padding: 10px 12px;
         }
 
         .tab-btn span {
