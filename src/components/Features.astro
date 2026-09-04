@@ -499,25 +499,21 @@ const t = useTranslations(lang);
        an unscoped element here would otherwise never be matched. */
     .tab-btn :global(svg) {
         flex-shrink: 0;
-        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    /* Hover changes colour and nothing else: the bar is a segmented control, and a tab
+       that lifts or grows under the pointer makes the row look unstable while the
+       reader is only passing over it on the way to another tab. */
     .tab-btn:hover:not(.active) {
         color: var(--text-color);
         background: rgba(255, 255, 255, 0.06);
         border-color: rgba(255, 255, 255, 0.08);
-        transform: translateY(-1px);
     }
 
     :root[data-theme='light'] .tab-btn:hover:not(.active) {
         color: var(--text-color);
         background: rgba(22, 160, 133, 0.08);
         border-color: rgba(22, 160, 133, 0.15);
-        transform: translateY(-1px);
-    }
-
-    .tab-btn:hover:not(.active) :global(svg) {
-        transform: scale(1.08);
     }
 
     .tab-btn:active {
