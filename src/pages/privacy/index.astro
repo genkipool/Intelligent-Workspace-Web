@@ -1,0 +1,24 @@
+---
+/**
+ * The privacy policy the Chrome Web Store listing points at, in English.
+ *
+ * Prerendered like the rest of the site. It is deliberately indexable — a policy nobody
+ * can find is not a policy — so it keeps the canonical and the `hreflang` pair that
+ * `Base.astro` builds from the path, which is why the Spanish copy lives at the same
+ * path under `/es/` rather than at a translated one.
+ */
+import Base from '@/layouts/Base.astro';
+import PrivacyPolicy from '@/components/PrivacyPolicy.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<Base
+    lang="en"
+    title={t('privacy.meta.title')}
+    description={t('privacy.meta.description')}
+    icons={['sun', 'moon', 'back', 'lock', 'key', 'shield', 'github']}
+>
+    <PrivacyPolicy lang="en" />
+</Base>

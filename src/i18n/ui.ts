@@ -777,6 +777,163 @@ export const ui = {
         'trust.card3.desc':
             'No tracking pixel, no fingerprinting, no telemetry endpoint, and nothing that has to be turned off in settings.',
 
+        // Privacy Policy — the standalone /privacy page
+        'privacy.meta.title': 'Privacy Policy — Intelligent Workspace',
+        'privacy.meta.description':
+            'What Intelligent Workspace stores, where it stores it, and the handful of moments something leaves your browser. No account, no server of ours, no analytics inside the extension.',
+        'privacy.eyebrow': 'Legal',
+        'privacy.title': 'Privacy Policy',
+        'privacy.effective': 'In effect since',
+        'privacy.lede':
+            'There is no account to create, no server of ours to talk to, and nothing in the extension that reports back. That leaves this document short on promises and long on specifics: what is stored, where it sits, and every moment something crosses the network.',
+        'privacy.back': 'Back to the site',
+        'privacy.toc': 'On this page',
+
+        'privacy.sum1.title': 'No account, no server',
+        'privacy.sum1.desc':
+            'Nothing you do in the extension is sent to us. There is no “us” at the other end: no backend, no database, no log with your name on it.',
+        'privacy.sum2.title': 'Your key, your traffic',
+        'privacy.sum2.desc':
+            'The assistant talks to Google with the key you pasted, from your browser, under your quota. There is no proxy of ours in the middle to read it.',
+        'privacy.sum3.title': 'Nothing is sold, ever',
+        'privacy.sum3.desc':
+            'No advertising, no data brokers, no telemetry endpoint, and no profile of you for anyone to buy.',
+
+        'privacy.scope.title': 'Two different things, one policy',
+        'privacy.scope.p1':
+            'This covers the Chrome extension and the website you are reading. They are separate pieces of software with separate privacy stories, and blurring the two is how a policy ends up meaning nothing. Wherever a rule applies to one and not the other, it says so.',
+        'privacy.scope.p2':
+            'Both are published by Luis Reoyo (GENKI Organización), who is also the data controller for the little the website handles. Anything in this document can be checked against the source code, which is public.',
+
+        'privacy.store.title': 'What the extension keeps, and where',
+        'privacy.store.p1':
+            'Everything the extension knows lives in your own browser profile, in the two places Chrome gives an extension: its storage areas and an IndexedDB database. Neither is reachable from the internet, and no part of the extension copies them anywhere.',
+        'privacy.store.colWhat': 'What',
+        'privacy.store.colWhere': 'Where it lives',
+        'privacy.store.colLeaves': 'Does it leave this machine?',
+        'privacy.store.note':
+            'Removing the extension from chrome://extensions deletes all of it, databases included. Chrome does that itself, and nothing is left behind anywhere else, because there is nowhere else.',
+
+        'privacy.store.r1.what': 'Groups, rules, colours and grouping preferences',
+        'privacy.store.r1.leaves': 'Only through Chrome’s own profile sync, if you have it switched on',
+        'privacy.store.r2.what': 'Notes, checklists and Kanban boards',
+        'privacy.store.r2.leaves': 'No',
+        'privacy.store.r3.what': 'Screenshots, and the text OCR reads out of them',
+        'privacy.store.r3.leaves': 'No',
+        'privacy.store.r4.what': 'Conversations with the AI assistant',
+        'privacy.store.r4.leaves': 'No. The replies arrive from Google; the transcript stays here',
+        'privacy.store.r5.what': 'Saved sessions and group backups',
+        'privacy.store.r5.leaves': 'Only inside a file you export yourself, to the folder you choose',
+        'privacy.store.r6.what': 'Pomodoro sessions and their history',
+        'privacy.store.r6.leaves': 'No',
+        'privacy.store.r7.what': 'Music you add and your radio favourites',
+        'privacy.store.r7.leaves': 'No',
+        'privacy.store.r8.what': 'Web activity: seconds, visits and sessions per site, per day',
+        'privacy.store.r8.leaves': 'No, unless you switch on that record’s own sync, which is off by default',
+        'privacy.store.r9.what': 'Snippets, keyboard overrides and omnibar preferences',
+        'privacy.store.r9.leaves': 'Only through Chrome’s own profile sync, if you have it switched on',
+        'privacy.store.r10.what': 'Your Google AI Studio key',
+        'privacy.store.r10.leaves':
+            'Never synced. It travels only as the header of your own request to Google',
+
+        'privacy.sync.title': 'Chrome’s own sync, and what rides along',
+        'privacy.sync.p1':
+            'Some settings — rules, snippets, keyboard overrides — are written to the browser’s synced storage area so a second computer signed into the same Chrome profile behaves the same way. That area belongs to Chrome, not to us: with Chrome sync on, Google carries it under your account; with it off, it stays on this machine and behaves exactly like local storage.',
+        'privacy.sync.p2':
+            'The web activity record is deliberately kept out of it. Syncing it is a switch of its own, off until you turn it on, because where somebody has been is not something to start shipping anywhere without being asked. Your API key is never synced at all.',
+
+        'privacy.net.title': 'When something does leave your browser',
+        'privacy.net.p1':
+            'The features below reach the network because they cannot work otherwise, and each is listed with what it sends and when. None of them is on a schedule and none runs in the background waiting to phone home.',
+        'privacy.net.colWhere': 'Where to',
+        'privacy.net.colWhat': 'What is sent',
+        'privacy.net.colWhen': 'When',
+        'privacy.net.p2':
+            'And, of course, the websites you open yourself. The extension arranges the tabs around a page; it does not sit between you and what is in it.',
+
+        'privacy.net.r1.what':
+            'Your prompt, whatever page text or screenshot you attached to it, and your own API key',
+        'privacy.net.r1.when': 'Only when you ask the assistant for something',
+        'privacy.net.r2.host': 'Chrome’s built-in on-device model',
+        'privacy.net.r2.what': 'Nothing. It runs inside Chrome, on this machine, and makes no request at all',
+        'privacy.net.r2.when': 'When you choose it instead of Gemini',
+        'privacy.net.r3.what': 'The station name or genre you typed, and nothing else',
+        'privacy.net.r3.when': 'While you search or browse online radio',
+        'privacy.net.r4.host': 'The radio station you press play on',
+        'privacy.net.r4.what':
+            'An ordinary audio request to that station’s own server, which sees your IP address as any website does',
+        'privacy.net.r4.when': 'While a station is playing',
+        'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
+        'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
+        'privacy.net.r6.what': 'The domain of a link, so the omnibar can draw its site icon',
+        'privacy.net.r6.when': 'While the omnibar has results on screen',
+        'privacy.net.r7.what':
+            'Nothing about you. It fetches the OCR language model, which Chrome then caches',
+        'privacy.net.r7.when': 'The first time you run OCR on a screenshot',
+
+        'privacy.ai.title': 'The AI assistant',
+        'privacy.ai.p1':
+            'The assistant runs one of two ways, and you pick which. Gemini goes over the network with a Google AI Studio key you create and paste yourself: the request is made by your browser, straight to Google, on your key and your quota, and it is covered by Google’s API terms rather than by this policy. We are not a party to that traffic — there is no service of ours in the middle that could be.',
+        'privacy.ai.p2':
+            'The alternative is Chrome’s built-in model, which runs on your machine and needs neither a key nor a connection. Either way the conversation is written to the browser’s own database and nowhere else, and clearing it in the panel clears it for good.',
+
+        'privacy.perm.title': 'Permissions, and what they are not for',
+        'privacy.perm.p1':
+            'Chrome will tell you the extension asks for twenty-four permissions plus access to every site. That is a lot, and being suspicious about it is the right instinct, so each group is set out on the home page beside the feature that cannot exist without it. None of them builds a profile, and none feeds anything that leaves this machine except the connections listed above.',
+        'privacy.perm.p2':
+            'Access to every site is what lets the link labels, reader mode, snippet expansion and the activity blocker work anywhere rather than on a list Chrome would have to approve first. It is not used to read pages in the background: those scripts wake up when you press the key that calls them.',
+        'privacy.perm.cta': 'See the permission table',
+
+        'privacy.site.title': 'This website',
+        'privacy.site.p1':
+            'The site is a handful of static files on Vercel. It sets no cookies, has no login and asks for nothing. Your browser’s request reaches Vercel’s servers, which see what any web server sees: an IP address, a user agent, the page asked for. That is hosting, not tracking.',
+        'privacy.site.p2':
+            'Two Vercel measurement scripts do run here: Analytics, which counts page views without cookies and without a cross-site identifier, and Speed Insights, which reports how quickly the page rendered. Both only ever aggregate, neither follows you to another site, and the extension itself carries neither.',
+        'privacy.site.p3':
+            'The donation page is the one exception to “no third-party frames”: it loads Stripe, and only Stripe.',
+
+        'privacy.pay.title': 'Donations',
+        'privacy.pay.p1':
+            'Donations go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame — the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
+        'privacy.pay.p2':
+            'What Stripe collects, and what it does with it, is governed by Stripe’s privacy policy rather than this one. We keep no record of who donated, because there is no database here to keep one in. A donation is voluntary, unlocks nothing, and is not a subscription.',
+
+        'privacy.limited.title': 'Chrome Web Store Limited Use',
+        'privacy.limited.p1':
+            'Intelligent Workspace’s use of information received from Google APIs follows the Chrome Web Store User Data Policy, including its Limited Use requirements. Concretely: the data is used only to provide the features described here and on the home page; it is never sold; it is never transferred to anyone except where a feature you triggered requires it; it is never used for advertising, profiling or creditworthiness; and no human reads it, because it never arrives anywhere a human could.',
+
+        'privacy.rights.title': 'Your data, and getting rid of it',
+        'privacy.rights.p1':
+            'You hold all of it, which answers most of the usual rights on its own. There is no export request to file — the extension writes its own data to a file whenever you ask. There is no deletion request either, because the delete button is already in the panel.',
+        'privacy.rights.li1':
+            'Delete one thing — a note, a screenshot, a backup, a day of activity — where it is shown.',
+        'privacy.rights.li2':
+            'Wipe a whole area from the extension’s settings, the activity record and the assistant’s conversations included.',
+        'privacy.rights.li3':
+            'Remove the extension at chrome://extensions and Chrome drops every byte of its storage with it.',
+        'privacy.rights.li4':
+            'Turn off Chrome’s profile sync, or the activity record’s own sync switch, if you would rather nothing rode along.',
+        'privacy.rights.li5':
+            'Revoke your Google AI Studio key in Google’s console. It is your key on your account, and revoking it ends the extension’s access immediately.',
+        'privacy.rights.p2':
+            'If you are in the EU or the UK, the rights of access, rectification, erasure, restriction, portability and objection apply. In practice there is nothing here to act on — but write to the address below and you will get a straight answer about what exists, which is what those rights are for.',
+
+        'privacy.legal.title': 'Responsibility, minors and the law',
+        'privacy.legal.p1':
+            'The controller is Luis Reoyo (GENKI Organización), Spain. Spanish and EU data protection law applies, and a complaint can also be taken to the Agencia Española de Protección de Datos.',
+        'privacy.legal.p2':
+            'The extension is a general productivity tool, not directed at children, and it collects nothing that would identify one — or anyone else. There is no age gate because there is no account to put one in front of.',
+
+        'privacy.changes.title': 'Changes to this policy',
+        'privacy.changes.p1':
+            'When this policy changes the new version replaces this page and the date at the top moves with it. Any change that alters what leaves your browser will also be named in the release notes of the version that makes it, so it cannot arrive quietly.',
+
+        'privacy.contact.title': 'Contact',
+        'privacy.contact.p1':
+            'Questions about any of this — including the ones that begin “I do not believe you” — go to the address below. The source code is public, so a claim on this page that the code does not back up is a bug report worth filing.',
+        'privacy.contact.email': 'Write to us',
+        'privacy.contact.source': 'Read the source',
+
         // Tab Strip & Screenshots
 
         // Family Categories
@@ -870,6 +1027,7 @@ export const ui = {
         'footer.prodTitle': 'Product',
         'footer.toolsTitle': 'Utilities',
         'footer.privacyTitle': 'Privacy & Trust',
+        'footer.policy': 'Privacy Policy',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. All rights reserved.',
         'footer.license': 'Source available for audit on GitHub. Proprietary license.',
     },
@@ -1646,6 +1804,166 @@ export const ui = {
         'trust.card3.desc':
             'Sin píxel de seguimiento, sin huella digital, sin servidor de telemetría y sin nada que haya que desactivar en los ajustes.',
 
+        // Privacy Policy — the standalone /privacy page
+        'privacy.meta.title': 'Política de Privacidad — Intelligent Workspace',
+        'privacy.meta.description':
+            'Qué guarda Intelligent Workspace, dónde lo guarda y las contadas veces que algo sale de tu navegador. Sin cuenta, sin servidor nuestro y sin analíticas dentro de la extensión.',
+        'privacy.eyebrow': 'Legal',
+        'privacy.title': 'Política de Privacidad',
+        'privacy.effective': 'En vigor desde el',
+        'privacy.lede':
+            'No hay cuenta que crear, no hay servidor nuestro con el que hablar y no hay nada en la extensión que informe de vuelta. Eso deja este documento corto en promesas y largo en detalles: qué se guarda, dónde está y cada momento en que algo cruza la red.',
+        'privacy.back': 'Volver al sitio',
+        'privacy.toc': 'En esta página',
+
+        'privacy.sum1.title': 'Sin cuenta, sin servidor',
+        'privacy.sum1.desc':
+            'Nada de lo que haces en la extensión se nos envía. No hay un «nosotros» al otro lado: ni backend, ni base de datos, ni registro con tu nombre.',
+        'privacy.sum2.title': 'Tu clave, tu tráfico',
+        'privacy.sum2.desc':
+            'El asistente habla con Google usando la clave que tú pegaste, desde tu navegador y con tu cuota. No hay ningún proxy nuestro en medio que pueda leerlo.',
+        'privacy.sum3.title': 'No se vende nada, nunca',
+        'privacy.sum3.desc':
+            'Sin publicidad, sin intermediarios de datos, sin servidor de telemetría y sin un perfil tuyo que nadie pueda comprar.',
+
+        'privacy.scope.title': 'Dos cosas distintas, una sola política',
+        'privacy.scope.p1':
+            'Esto cubre la extensión de Chrome y la web que estás leyendo. Son dos programas separados con dos historias de privacidad separadas, y mezclarlas es justo lo que vacía de sentido a una política. Cuando una regla se aplica a una y no a la otra, aquí se dice.',
+        'privacy.scope.p2':
+            'Ambas las publica Luis Reoyo (GENKI Organización), que es además el responsable del tratamiento de lo poco que maneja la web. Todo lo que dice este documento se puede contrastar con el código fuente, que es público.',
+
+        'privacy.store.title': 'Qué guarda la extensión, y dónde',
+        'privacy.store.p1':
+            'Todo lo que la extensión sabe vive en tu propio perfil del navegador, en los dos sitios que Chrome le da a una extensión: sus áreas de almacenamiento y una base de datos IndexedDB. Ninguno de los dos es accesible desde internet, y ninguna parte de la extensión los copia a ningún sitio.',
+        'privacy.store.colWhat': 'Qué',
+        'privacy.store.colWhere': 'Dónde vive',
+        'privacy.store.colLeaves': '¿Sale de esta máquina?',
+        'privacy.store.note':
+            'Si quitas la extensión desde chrome://extensions se borra todo, bases de datos incluidas. Lo hace Chrome, y no queda nada en ningún otro sitio, porque no hay ningún otro sitio.',
+
+        'privacy.store.r1.what': 'Grupos, reglas, colores y preferencias de agrupación',
+        'privacy.store.r1.leaves':
+            'Solo a través de la sincronización de perfil de Chrome, si la tienes activada',
+        'privacy.store.r2.what': 'Notas, listas de tareas y tableros Kanban',
+        'privacy.store.r2.leaves': 'No',
+        'privacy.store.r3.what': 'Capturas de pantalla, y el texto que el OCR saca de ellas',
+        'privacy.store.r3.leaves': 'No',
+        'privacy.store.r4.what': 'Conversaciones con el asistente de IA',
+        'privacy.store.r4.leaves': 'No. Las respuestas llegan de Google; la transcripción se queda aquí',
+        'privacy.store.r5.what': 'Sesiones guardadas y copias de grupos',
+        'privacy.store.r5.leaves': 'Solo dentro de un archivo que exportas tú, a la carpeta que elijas',
+        'privacy.store.r6.what': 'Sesiones de Pomodoro y su historial',
+        'privacy.store.r6.leaves': 'No',
+        'privacy.store.r7.what': 'La música que añades y tus emisoras favoritas',
+        'privacy.store.r7.leaves': 'No',
+        'privacy.store.r8.what': 'Actividad web: segundos, visitas y sesiones por sitio y por día',
+        'privacy.store.r8.leaves':
+            'No, salvo que actives la sincronización propia de ese registro, desactivada por defecto',
+        'privacy.store.r9.what': 'Snippets, atajos reasignados y preferencias del omnibar',
+        'privacy.store.r9.leaves':
+            'Solo a través de la sincronización de perfil de Chrome, si la tienes activada',
+        'privacy.store.r10.what': 'Tu clave de Google AI Studio',
+        'privacy.store.r10.leaves':
+            'Nunca se sincroniza. Solo viaja como cabecera de tu propia petición a Google',
+
+        'privacy.sync.title': 'La sincronización de Chrome, y qué se sube a ella',
+        'privacy.sync.p1':
+            'Algunos ajustes —reglas, snippets, atajos reasignados— se escriben en el área sincronizada del navegador para que un segundo ordenador con el mismo perfil de Chrome se comporte igual. Esa área es de Chrome, no nuestra: con la sincronización activada, Google la lleva bajo tu cuenta; con ella desactivada, se queda en esta máquina y funciona igual que el almacenamiento local.',
+        'privacy.sync.p2':
+            'El registro de actividad web se queda fuera a propósito. Sincronizarlo es un interruptor aparte, apagado hasta que tú lo enciendas, porque por dónde ha pasado alguien no es algo que se mande a ningún sitio sin preguntar. Tu clave de API no se sincroniza nunca.',
+
+        'privacy.net.title': 'Cuándo sale algo de tu navegador',
+        'privacy.net.p1':
+            'Las funciones de abajo salen a la red porque no pueden funcionar de otra manera, y cada una está aquí con qué envía y cuándo. Ninguna sigue un horario ni se queda en segundo plano esperando para llamar a casa.',
+        'privacy.net.colWhere': 'Adónde',
+        'privacy.net.colWhat': 'Qué se envía',
+        'privacy.net.colWhen': 'Cuándo',
+        'privacy.net.p2':
+            'Y, por supuesto, las webs que abres tú. La extensión ordena las pestañas alrededor de una página; no se coloca entre tú y lo que hay dentro de ella.',
+
+        'privacy.net.r1.what':
+            'Tu petición, el texto de la página o la captura que le hayas adjuntado, y tu propia clave de API',
+        'privacy.net.r1.when': 'Solo cuando le pides algo al asistente',
+        'privacy.net.r2.host': 'El modelo local integrado en Chrome',
+        'privacy.net.r2.what':
+            'Nada. Se ejecuta dentro de Chrome, en esta máquina, y no hace ninguna petición',
+        'privacy.net.r2.when': 'Cuando lo eliges en lugar de Gemini',
+        'privacy.net.r3.what': 'El nombre o el género de emisora que escribes, y nada más',
+        'privacy.net.r3.when': 'Mientras buscas o exploras la radio en línea',
+        'privacy.net.r4.host': 'La emisora a la que le das al play',
+        'privacy.net.r4.what':
+            'Una petición de audio corriente al servidor de la propia emisora, que ve tu IP como la ve cualquier web',
+        'privacy.net.r4.when': 'Mientras suena una emisora',
+        'privacy.net.r5.what': 'El identificador del vídeo, para la miniatura y el reproductor incrustado',
+        'privacy.net.r5.when': 'Solo con un enlace de YouTube que previsualizas o reproduces',
+        'privacy.net.r6.what': 'El dominio de un enlace, para que el omnibar dibuje su icono de sitio',
+        'privacy.net.r6.when': 'Mientras el omnibar tiene resultados en pantalla',
+        'privacy.net.r7.what': 'Nada sobre ti. Descarga el modelo de idioma del OCR, que Chrome luego cachea',
+        'privacy.net.r7.when': 'La primera vez que pasas el OCR por una captura',
+
+        'privacy.ai.title': 'El asistente de IA',
+        'privacy.ai.p1':
+            'El asistente funciona de dos maneras y eliges tú cuál. Gemini sale a la red con una clave de Google AI Studio que creas y pegas tú: la petición la hace tu navegador, directa a Google, con tu clave y tu cuota, y la rigen las condiciones de la API de Google, no esta política. No somos parte de ese tráfico, porque no hay ningún servicio nuestro en medio que pudiera serlo.',
+        'privacy.ai.p2':
+            'La alternativa es el modelo integrado de Chrome, que se ejecuta en tu máquina y no necesita ni clave ni conexión. En ambos casos la conversación se escribe en la base de datos del propio navegador y en ningún otro sitio, y borrarla desde el panel la borra de verdad.',
+
+        'privacy.perm.title': 'Los permisos, y para qué no son',
+        'privacy.perm.p1':
+            'Chrome te dirá que la extensión pide veinticuatro permisos más acceso a todos los sitios. Son muchos, y desconfiar es el instinto correcto, así que cada grupo está explicado en la portada junto a la función que no puede existir sin él. Ninguno construye un perfil, y ninguno alimenta nada que salga de esta máquina más allá de las conexiones de arriba.',
+        'privacy.perm.p2':
+            'El acceso a todos los sitios es lo que permite que las etiquetas de enlace, el modo lectura, los snippets y el bloqueo por actividad funcionen en cualquier web y no en una lista que Chrome tendría que aprobar antes. No se usa para leer páginas en segundo plano: esos scripts se despiertan cuando pulsas la tecla que los llama.',
+        'privacy.perm.cta': 'Ver la tabla de permisos',
+
+        'privacy.site.title': 'Esta web',
+        'privacy.site.p1':
+            'La web son un puñado de archivos estáticos en Vercel. No pone cookies, no tiene inicio de sesión y no pide nada. La petición de tu navegador llega a los servidores de Vercel, que ven lo que ve cualquier servidor web: una dirección IP, un agente de usuario y la página pedida. Eso es alojamiento, no seguimiento.',
+        'privacy.site.p2':
+            'Sí se ejecutan aquí dos scripts de medición de Vercel: Analytics, que cuenta visitas sin cookies y sin identificador entre sitios, y Speed Insights, que informa de lo rápido que se dibujó la página. Los dos solo agregan, ninguno te sigue a otra web y la extensión no lleva ninguno de los dos.',
+        'privacy.site.p3':
+            'La página de donación es la única excepción al «sin marcos de terceros»: carga Stripe, y solo Stripe.',
+
+        'privacy.pay.title': 'Donaciones',
+        'privacy.pay.p1':
+            'Las donaciones pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco: el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
+        'privacy.pay.p2':
+            'Lo que Stripe recoge, y lo que hace con ello, lo rige la política de privacidad de Stripe y no esta. Nosotros no guardamos ningún registro de quién donó, porque aquí no hay base de datos donde guardarlo. Donar es voluntario, no desbloquea nada y no es una suscripción.',
+
+        'privacy.limited.title': 'Uso limitado de la Chrome Web Store',
+        'privacy.limited.p1':
+            'El uso que Intelligent Workspace hace de la información recibida de las API de Google cumple la Política de Datos de Usuario de la Chrome Web Store, incluidos sus requisitos de Uso Limitado. En concreto: los datos se usan solo para ofrecer las funciones descritas aquí y en la portada; no se venden nunca; no se transfieren a nadie salvo cuando lo exige una función que has activado tú; no se usan para publicidad, perfilado ni solvencia crediticia; y ninguna persona los lee, porque no llegan a ningún sitio donde una persona pudiera hacerlo.',
+
+        'privacy.rights.title': 'Tus datos, y cómo deshacerte de ellos',
+        'privacy.rights.p1':
+            'Los tienes todos tú, lo que resuelve por sí solo casi todos los derechos habituales. No hay solicitud de exportación que presentar: la extensión escribe sus propios datos en un archivo cuando se lo pides. Tampoco hay solicitud de supresión, porque el botón de borrar ya está en el panel.',
+        'privacy.rights.li1':
+            'Borra una cosa concreta —una nota, una captura, una copia de seguridad, un día de actividad— allí donde se muestra.',
+        'privacy.rights.li2':
+            'Vacía un área entera desde los ajustes de la extensión, incluidos el registro de actividad y las conversaciones del asistente.',
+        'privacy.rights.li3':
+            'Quita la extensión en chrome://extensions y Chrome se lleva con ella hasta el último byte de su almacenamiento.',
+        'privacy.rights.li4':
+            'Desactiva la sincronización de perfil de Chrome, o el interruptor propio del registro de actividad, si prefieres que no suba nada.',
+        'privacy.rights.li5':
+            'Revoca tu clave de Google AI Studio en la consola de Google. Es tu clave en tu cuenta, y revocarla corta el acceso de la extensión al instante.',
+        'privacy.rights.p2':
+            'Si estás en la UE o el Reino Unido, se aplican los derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición. En la práctica aquí no hay nada sobre lo que actuar, pero escribe a la dirección de abajo y tendrás una respuesta clara sobre qué existe, que es para lo que están esos derechos.',
+
+        'privacy.legal.title': 'Responsabilidad, menores y ley aplicable',
+        'privacy.legal.p1':
+            'El responsable del tratamiento es Luis Reoyo (GENKI Organización), España. Se aplica la normativa española y europea de protección de datos, y cualquier reclamación puede dirigirse también a la Agencia Española de Protección de Datos.',
+        'privacy.legal.p2':
+            'La extensión es una herramienta de productividad general, no está dirigida a menores y no recoge nada que identificaría a uno, ni a nadie. No hay verificación de edad porque no hay cuenta delante de la que ponerla.',
+
+        'privacy.changes.title': 'Cambios en esta política',
+        'privacy.changes.p1':
+            'Cuando esta política cambie, la nueva versión sustituirá a esta página y la fecha de arriba se moverá con ella. Cualquier cambio que altere lo que sale de tu navegador se nombrará además en las notas de la versión que lo introduzca, para que no llegue en silencio.',
+
+        'privacy.contact.title': 'Contacto',
+        'privacy.contact.p1':
+            'Cualquier duda sobre todo esto —incluidas las que empiezan por «no me lo creo»— a la dirección de abajo. El código fuente es público, así que una afirmación de esta página que el código no respalde es un informe de error que merece la pena abrir.',
+        'privacy.contact.email': 'Escríbenos',
+        'privacy.contact.source': 'Leer el código fuente',
+
         // Tab Strip & Screenshots
 
         // Family Categories
@@ -1740,6 +2058,7 @@ export const ui = {
         'footer.prodTitle': 'Producto',
         'footer.toolsTitle': 'Utilidades',
         'footer.privacyTitle': 'Privacidad y Confianza',
+        'footer.policy': 'Política de Privacidad',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. Todos los derechos reservados.',
         'footer.license': 'Código disponible para auditoría en GitHub. Licencia propietaria.',
     },

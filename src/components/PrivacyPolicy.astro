@@ -1,0 +1,732 @@
+---
+/**
+ * The privacy policy, as a page rather than a wall.
+ *
+ * It carries its own header and footer for the reason `ErrorPage.astro` does: every link
+ * in `Nav.astro` and `SiteFooter.astro` is an anchor into a section of the landing page,
+ * and an anchor to a section that is not on this page is a dead link. What is here goes
+ * somewhere real, and the one link back into the landing is an absolute path rather than
+ * a fragment.
+ *
+ * The two tables are the point of the document. A policy is usually a paragraph saying
+ * "we store some things locally"; these say which things, in which storage area, and
+ * whether that area leaves the machine — which is the only form of the claim a reader can
+ * actually check against `chrome://extensions` or against the source. They come from
+ * `@/data/privacy`, so the page cannot say something the data does not.
+ *
+ * The contents rail is `position: sticky` on wide screens and a plain list above the text
+ * on narrow ones. It is a `<nav>` with a label so it is skippable, because on a document
+ * this long a screen reader hearing thirteen links before the first sentence is the
+ * difference between a table of contents and an obstacle.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+import { sections, storageRows, connectionRows, effectiveDate } from '@/data/privacy';
+import Icon from '@/components/Icon.astro';
+import LangToggle from '@/components/LangToggle.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const homeUrl = localisePath(lang, '/');
+/* The permission table lives in the landing page's trust section. An absolute path plus
+   the fragment, so it works from here and keeps working if this page is ever framed. */
+const permissionsUrl = `${homeUrl}#privacidad`;
+
+const effectiveLabel = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+}).format(new Date(`${effectiveDate}T00:00:00Z`));
+
+const summaryCards = [
+    { icon: 'lock', title: t('privacy.sum1.title'), desc: t('privacy.sum1.desc') },
+    { icon: 'key', title: t('privacy.sum2.title'), desc: t('privacy.sum2.desc') },
+    { icon: 'shield', title: t('privacy.sum3.title'), desc: t('privacy.sum3.desc') },
+] as const;
+---
+
+<header class="policy-topbar">
+    <div class="wrap policy-topbar-inner">
+        <a href={homeUrl} class="policy-brand" aria-label={site.name}>
+            <img
+                src="/assets/logo-64.png"
+                alt=""
+                width="32"
+                height="32"
+                class="policy-brand-logo"
+                aria-hidden="true"
+                decoding="async"
+            />
+            <span class="policy-brand-name">{site.name}</span>
+        </a>
+
+        <div class="policy-topbar-actions">
+            <a href={homeUrl} class="policy-back">
+                <Icon name="back" size={14} />
+                <span>{t('privacy.back')}</span>
+            </a>
+            <LangToggle lang={lang} />
+            <ThemeToggle lang={lang} />
+        </div>
+    </div>
+</header>
+
+<main class="policy-main" id="main">
+    <div class="wrap policy-head">
+        <span class="section-eyebrow">{t('privacy.eyebrow')}</span>
+        <h1 class="policy-title">{t('privacy.title')}</h1>
+        <p class="policy-date">
+            {t('privacy.effective')}{' '}<time datetime={effectiveDate}>{effectiveLabel}</time>
+        </p>
+        <p class="policy-lede">{t('privacy.lede')}</p>
+
+        <div class="policy-summary" data-reveal>
+            {
+                summaryCards.map((card) => (
+                    <div class="glass-card policy-sum-card">
+                        <div class="policy-sum-icon">
+                            <Icon name={card.icon} size={20} />
+                        </div>
+                        <h2 class="policy-sum-title">{card.title}</h2>
+                        <p class="policy-sum-desc">{card.desc}</p>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <div class="wrap policy-body">
+        <nav class="policy-toc" aria-label={t('privacy.toc')}>
+            <p class="policy-toc-title">{t('privacy.toc')}</p>
+            <ol class="policy-toc-list">
+                {
+                    sections.map((section) => (
+                        <li>
+                            <a href={`#${section.id}`}>{t(section.titleKey)}</a>
+                        </li>
+                    ))
+                }
+            </ol>
+        </nav>
+
+        <article class="policy-article">
+            <section id="scope">
+                <h2>{t('privacy.scope.title')}</h2>
+                <p>{t('privacy.scope.p1')}</p>
+                <p>{t('privacy.scope.p2')}</p>
+            </section>
+
+            <section id="store">
+                <h2>{t('privacy.store.title')}</h2>
+                <p>{t('privacy.store.p1')}</p>
+
+                <div class="policy-table-scroll">
+                    <table class="policy-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">{t('privacy.store.colWhat')}</th>
+                                <th scope="col">{t('privacy.store.colWhere')}</th>
+                                <th scope="col">{t('privacy.store.colLeaves')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                storageRows.map((row) => (
+                                    <tr>
+                                        <td>{t(row.whatKey)}</td>
+                                        <td>
+                                            <code class="policy-code">{row.where}</code>
+                                        </td>
+                                        <td>{t(row.leavesKey)}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="policy-note">{t('privacy.store.note')}</p>
+            </section>
+
+            <section id="sync">
+                <h2>{t('privacy.sync.title')}</h2>
+                <p>{t('privacy.sync.p1')}</p>
+                <p>{t('privacy.sync.p2')}</p>
+            </section>
+
+            <section id="network">
+                <h2>{t('privacy.net.title')}</h2>
+                <p>{t('privacy.net.p1')}</p>
+
+                <div class="policy-table-scroll">
+                    <table class="policy-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">{t('privacy.net.colWhere')}</th>
+                                <th scope="col">{t('privacy.net.colWhat')}</th>
+                                <th scope="col">{t('privacy.net.colWhen')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                connectionRows.map((row) => (
+                                    <tr>
+                                        <td>
+                                            {row.host ? (
+                                                <code class="policy-code">{row.host}</code>
+                                            ) : (
+                                                t(row.hostKey!)
+                                            )}
+                                        </td>
+                                        <td>{t(row.sendsKey)}</td>
+                                        <td>{t(row.whenKey)}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>{t('privacy.net.p2')}</p>
+            </section>
+
+            <section id="ai">
+                <h2>{t('privacy.ai.title')}</h2>
+                <p>{t('privacy.ai.p1')}</p>
+                <p>{t('privacy.ai.p2')}</p>
+            </section>
+
+            <section id="permissions">
+                <h2>{t('privacy.perm.title')}</h2>
+                <p>{t('privacy.perm.p1')}</p>
+                <p>{t('privacy.perm.p2')}</p>
+                <p class="policy-actions">
+                    <a href={permissionsUrl} class="policy-link">{t('privacy.perm.cta')}</a>
+                </p>
+            </section>
+
+            <section id="website">
+                <h2>{t('privacy.site.title')}</h2>
+                <p>{t('privacy.site.p1')}</p>
+                <p>{t('privacy.site.p2')}</p>
+                <p>{t('privacy.site.p3')}</p>
+            </section>
+
+            <section id="donations">
+                <h2>{t('privacy.pay.title')}</h2>
+                <p>{t('privacy.pay.p1')}</p>
+                <p>{t('privacy.pay.p2')}</p>
+            </section>
+
+            <section id="limited-use">
+                <h2>{t('privacy.limited.title')}</h2>
+                <p>{t('privacy.limited.p1')}</p>
+            </section>
+
+            <section id="rights">
+                <h2>{t('privacy.rights.title')}</h2>
+                <p>{t('privacy.rights.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('privacy.rights.li1')}</li>
+                    <li>{t('privacy.rights.li2')}</li>
+                    <li>{t('privacy.rights.li3')}</li>
+                    <li>{t('privacy.rights.li4')}</li>
+                    <li>{t('privacy.rights.li5')}</li>
+                </ul>
+                <p>{t('privacy.rights.p2')}</p>
+            </section>
+
+            <section id="legal">
+                <h2>{t('privacy.legal.title')}</h2>
+                <p>{t('privacy.legal.p1')}</p>
+                <p>{t('privacy.legal.p2')}</p>
+            </section>
+
+            <section id="changes">
+                <h2>{t('privacy.changes.title')}</h2>
+                <p>{t('privacy.changes.p1')}</p>
+            </section>
+
+            <section id="contact">
+                <h2>{t('privacy.contact.title')}</h2>
+                <p>{t('privacy.contact.p1')}</p>
+                <p class="policy-contact-address">
+                    <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>
+                </p>
+                <div class="policy-actions">
+                    <a href={`mailto:${site.privacyEmail}`} class="btn-primary policy-btn">
+                        {t('privacy.contact.email')}
+                    </a>
+                    <a
+                        href={site.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-secondary policy-btn"
+                    >
+                        <Icon name="github" size={16} />
+                        <span>{t('privacy.contact.source')}</span>
+                    </a>
+                </div>
+            </section>
+        </article>
+    </div>
+</main>
+
+<footer class="policy-footer">
+    <div class="wrap policy-footer-inner">
+        <span>{t('footer.copyright')}</span>
+        <span>{t('footer.license')}</span>
+    </div>
+</footer>
+
+<style>
+    /* ── Header ── */
+    .policy-topbar {
+        position: relative;
+        z-index: 2;
+        padding-block: 18px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .policy-topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .policy-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .policy-brand-logo {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    .policy-brand-name {
+        font-weight: 750;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+    }
+
+    .policy-topbar-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .policy-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .policy-back:hover {
+        color: var(--action-color);
+    }
+
+    /* ── The opening ── */
+    .policy-main {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+    }
+
+    .policy-head {
+        padding-block: clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px);
+    }
+
+    /* The title has to stop somewhere, but the block itself must not: a `max-width` on
+       `.policy-head` centres it inside `.wrap` and leaves its left edge somewhere the
+       contents rail below is not. */
+    .policy-title {
+        max-width: 20ch;
+    }
+
+    .policy-title {
+        margin-top: 10px;
+        font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+        color: var(--text-color);
+    }
+
+    .policy-date {
+        margin-top: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-dim);
+    }
+
+    .policy-lede {
+        margin-top: 20px;
+        max-width: 68ch;
+        font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+        line-height: 1.75;
+        color: var(--text-soft);
+    }
+
+    .policy-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 34px;
+    }
+
+    .policy-sum-card {
+        padding: 24px;
+    }
+
+    .policy-sum-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        background: rgba(22, 160, 133, 0.15);
+        border: 1px solid rgba(26, 188, 156, 0.3);
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .policy-sum-icon {
+        background: #edf6f2;
+        border: 1px solid #b8dacb;
+        color: var(--header-color);
+    }
+
+    .policy-sum-title {
+        font-size: 1.02rem;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: var(--text-color);
+    }
+
+    .policy-sum-desc {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--text-soft);
+    }
+
+    /* ── Contents rail and article ── */
+    .policy-body {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: clamp(32px, 5vw, 64px);
+        padding-bottom: clamp(56px, 8vw, 110px);
+        align-items: start;
+    }
+
+    .policy-toc {
+        position: sticky;
+        top: 28px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+    }
+
+    :root[data-theme='light'] .policy-toc {
+        background: #ffffff;
+    }
+
+    .policy-toc-title {
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-dim);
+        margin-bottom: 12px;
+    }
+
+    .policy-toc-list {
+        list-style: none;
+        counter-reset: toc;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .policy-toc-list li {
+        counter-increment: toc;
+    }
+
+    .policy-toc-list a {
+        display: block;
+        padding: 5px 0;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.18s ease;
+    }
+
+    .policy-toc-list a::before {
+        content: counter(toc) '. ';
+        color: var(--text-dim);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .policy-toc-list a:hover {
+        color: var(--action-color);
+    }
+
+    /*
+     * The measure is on the prose, not on the column. Capping the article itself made the
+     * two tables 74ch wide as well, and at that width the first column wrapped
+     * `generativelanguage.googleapis.com` across three lines — a hostname broken mid-word
+     * is exactly the thing a reader is meant to be able to check. The paragraphs keep
+     * their line length; the tables get the whole column.
+     */
+    .policy-article p,
+    .policy-list {
+        max-width: 74ch;
+    }
+
+    .policy-article section {
+        /* The sticky header is only 28px away, so an anchored heading needs room above
+           it or the fragment jump lands with the title touching the top of the window. */
+        scroll-margin-top: 28px;
+        padding-block: 26px;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .policy-article section:first-child {
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .policy-article h2 {
+        font-size: clamp(1.3rem, 2vw, 1.6rem);
+        font-weight: 750;
+        letter-spacing: -0.02em;
+        color: var(--text-color);
+        margin-bottom: 14px;
+    }
+
+    .policy-article p {
+        font-size: 0.98rem;
+        line-height: 1.78;
+        color: var(--text-soft);
+    }
+
+    .policy-article p + p {
+        margin-top: 14px;
+    }
+
+    .policy-list {
+        list-style: none;
+        margin-top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .policy-list li {
+        position: relative;
+        padding-left: 22px;
+        font-size: 0.98rem;
+        line-height: 1.7;
+        color: var(--text-soft);
+    }
+
+    .policy-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 0.72em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--action-color);
+    }
+
+    /* Written under `.policy-article` so it outranks that block's own `p` rule rather
+       than having to fight it with `!important`. */
+    .policy-article .policy-note {
+        margin-top: 16px;
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-subtle);
+        border-left: 3px solid var(--action-color);
+        background: var(--bg-surface);
+        font-size: 0.92rem;
+        color: var(--text-muted);
+    }
+
+    /* ── Tables ── */
+    .policy-table-scroll {
+        margin-top: 20px;
+        overflow-x: auto;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+    }
+
+    :root[data-theme='light'] .policy-table-scroll {
+        background: #ffffff;
+    }
+
+    .policy-table {
+        width: 100%;
+        min-width: 560px;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .policy-table th {
+        padding: 12px 16px;
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border-color);
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+    }
+
+    .policy-table td {
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--border-subtle);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        color: var(--text-soft);
+        vertical-align: top;
+    }
+
+    .policy-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .policy-table tbody tr:hover {
+        background: var(--bg-card-hover);
+    }
+
+    .policy-code {
+        display: inline-block;
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        background: rgba(22, 160, 133, 0.12);
+        border: 1px solid rgba(22, 160, 133, 0.3);
+        color: var(--action-color);
+        /* A hostname reads as one thing or not at all. Wide enough and it fits; narrower
+           than that, the table scrolls sideways rather than hyphenating a domain. */
+        white-space: nowrap;
+    }
+
+    :root[data-theme='light'] .policy-code {
+        background: #edf6f2;
+        border: 1px solid #b8dacb;
+        color: #0a5745;
+        font-weight: 600;
+    }
+
+    /* ── Links and closing buttons ── */
+    .policy-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .policy-link,
+    .policy-contact-address a {
+        color: var(--action-color);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+    }
+
+    .policy-link:hover,
+    .policy-contact-address a:hover {
+        border-bottom-color: var(--action-color);
+    }
+
+    .policy-article .policy-contact-address {
+        margin-top: 14px;
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+    }
+
+    .policy-btn {
+        min-width: 0;
+        min-height: 44px;
+        padding: 11px 22px;
+        font-size: 0.92rem;
+    }
+
+    /* ── Footer ── */
+    .policy-footer {
+        position: relative;
+        z-index: 2;
+        margin-top: auto;
+        padding-block: 22px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .policy-footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    @media (max-width: 1000px) {
+        .policy-body {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .policy-toc {
+            position: static;
+        }
+    }
+
+    @media (max-width: 860px) {
+        .policy-summary {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .policy-brand-name {
+            display: none;
+        }
+
+        .policy-back span {
+            display: none;
+        }
+
+        .policy-footer-inner {
+            justify-content: center;
+            text-align: center;
+        }
+    }
+</style>

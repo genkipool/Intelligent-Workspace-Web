@@ -11,6 +11,12 @@ export const site = {
     storeUrl: 'https://chromewebstore.google.com/category/extensions',
     // Source-available, so the permissions section can invite the reader to check it.
     sourceUrl: 'https://github.com/genkipool/Intelligent-Workspace',
+    /**
+     * The address on the privacy policy, and the only one the site publishes. It is a
+     * real inbox rather than a form: a page that claims to hold nothing about you has no
+     * business asking for your details before it will answer a question.
+     */
+    privacyEmail: 'privacy@genkipool.com',
 } as const;
 
 export interface Person {

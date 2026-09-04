@@ -1,0 +1,20 @@
+---
+/**
+ * The same policy in Spanish, at the same path under `/es/` — see `pages/privacy/`
+ * for why the route is not translated along with the copy.
+ */
+import Base from '@/layouts/Base.astro';
+import PrivacyPolicy from '@/components/PrivacyPolicy.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('es');
+---
+
+<Base
+    lang="es"
+    title={t('privacy.meta.title')}
+    description={t('privacy.meta.description')}
+    icons={['sun', 'moon', 'back', 'lock', 'key', 'shield', 'github']}
+>
+    <PrivacyPolicy lang="es" />
+</Base>
