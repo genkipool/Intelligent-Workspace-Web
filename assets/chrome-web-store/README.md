@@ -26,5 +26,15 @@ solo para tenerlas versionadas y localizadas a la hora de publicar la extensión
 | `16-snippets-variables.png`             | Abreviaturas que se expanden con variables `{{así}}`                                |
 | `17-atajos-de-teclado.png`              | Tabla completa de atajos: omnibar, página y navegador                               |
 
-Todas son PNG de 1920×993. La Chrome Web Store pide capturas de 1280×800 o 640×400,
-así que habrá que reescalarlas o recortarlas antes de subirlas.
+Los originales son PNG de 1920×993. En `1280x800/` están las mismas imágenes al
+tamaño que pide la Chrome Web Store: escaladas enteras a 1280×662 y rellenadas arriba
+y abajo hasta 800 con el mismo `#212a34` del fondo, así que no se recorta ni se
+deforma nada y las bandas no se distinguen. Para regenerarlas desde esta carpeta:
+
+```sh
+mkdir -p 1280x800
+for f in *.png; do
+  magick "$f" -resize 1280x800 -background '#212a34' -gravity center \
+    -extent 1280x800 -strip "1280x800/$f"
+done
+```
