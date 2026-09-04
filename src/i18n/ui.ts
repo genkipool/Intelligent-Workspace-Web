@@ -631,15 +631,15 @@ export const ui = {
 
         // Comparison Matrix
         'comp.badge': 'Comparison',
-        'comp.title': 'One extension where a stack of them used to be',
+        'comp.title': 'One unified workspace where there used to be friction',
         'comp.subtitle':
-            'Every row below is a job people usually install a separate extension for. They share one side panel, one settings page, one set of shortcuts and one permission prompt, and none of them phones home.',
+            'Every workflow below is unified into a single productivity side panel. One cohesive interface, unified shortcuts, local on-device privacy, and zero telemetry.',
         'comp.colFeature': 'Capability',
-        'comp.colStandard': 'A separate extension each',
+        'comp.colStandard': 'Fragmented tools',
         'comp.colIw': 'Intelligent Workspace',
         'comp.r1.feature': 'Tabs, groups and sessions',
         'comp.r1.standard':
-            'A grouper, a session saver and a tree-tabs sidebar: three UIs, three sets of shortcuts, three ideas of what a group is.',
+            'Separate tools for grouping, sessions, and sidebar views: conflicting interfaces, fragmented shortcuts, and inconsistent workflows.',
         'comp.r1.iw':
             'Rules by URL fragment; grouping by domain, subdomain and IP; auto-collapse timers; group backup and restore; recently closed and saved sessions.',
         'comp.r2.feature': 'Memory and idle tabs',
@@ -654,7 +654,7 @@ export const ui = {
             'Fifty-eight tools onto the browser, plus summaries, saved conversations, scheduled questions, and Chrome’s on-device model when the quota runs out.',
         'comp.r4.feature': 'Search and keyboard control',
         'comp.r4.standard':
-            'One extension for a command palette, another for link hints, and a fight over which one owns which key.',
+            'Disconnected command palettes and link hint tools, with shortcut conflicts and separate configuration menus.',
         'comp.r4.iw':
             'One floating omnibar with a prefix per source, letter labels on every link, and every binding editable in one place.',
         'comp.r5.feature': 'Notes, bookmarks, history, downloads',
@@ -669,13 +669,13 @@ export const ui = {
             'Time per site and category on this device only, daily and weekly caps, opening hours, and a block screen that can ask for a password.',
         'comp.r7.feature': 'Screenshots, OCR, QR, cookies, colour',
         'comp.r7.standard':
-            'Five one-trick extensions, each with its own permissions and its own toolbar button.',
+            'Multiple standalone utilities, each with separate configurations, cluttered toolbars, and inconsistent UIs.',
         'comp.r7.iw':
             'Full-page and area capture with a local gallery, on-device OCR, QR reader and generator, a cookie editor, and a screen colour picker.',
-        'comp.deck.badTitle': 'A fragmented stack',
+        'comp.deck.badTitle': 'Fragmented workflows',
         'comp.deck.badDesc':
-            'Each one with its own permissions, its own settings page and its own toolbar button, and several of them keeping a copy of your browsing on a server you do not run.',
-        'comp.deck.goodTitle': 'One workstation',
+            'Multiple disconnected tools with conflicting shortcuts and cluttered interfaces, often sending your browsing data to external servers.',
+        'comp.deck.goodTitle': 'One unified workstation',
         'comp.deck.goodDesc':
             'One Manifest V3 extension, one side panel, one place where every shortcut is defined, and storage that never leaves this device.',
         'comp.eyebrow': 'Side by side',
@@ -1726,15 +1726,15 @@ export const ui = {
 
         // Comparison Matrix
         'comp.badge': 'Comparativa',
-        'comp.title': 'Una extensión donde antes había una pila de ellas',
+        'comp.title': 'Un entorno unificado donde antes había dispersión',
         'comp.subtitle':
-            'Cada fila de abajo es un trabajo para el que se suele instalar una extensión aparte. Aquí comparten panel lateral, página de ajustes, juego de atajos y un único aviso de permisos, y ninguna llama a casa.',
+            'Cada flujo de trabajo se integra de forma natural en un único panel lateral de productividad. Una interfaz coherente, atajos unificados, privacidad local y sin telemetría.',
         'comp.colFeature': 'Capacidad',
-        'comp.colStandard': 'Una extensión distinta para cada cosa',
+        'comp.colStandard': 'Herramientas dispersas',
         'comp.colIw': 'Intelligent Workspace',
         'comp.r1.feature': 'Pestañas, grupos y sesiones',
         'comp.r1.standard':
-            'Un agrupador, un guardador de sesiones y una barra lateral de árbol: tres interfaces, tres juegos de atajos y tres ideas distintas de qué es un grupo.',
+            'Herramientas separadas para agrupar, guardar sesiones y ver barras laterales: tres interfaces distintas, atajos en conflicto y flujos incompatibles.',
         'comp.r1.iw':
             'Reglas por fragmento de URL; agrupación por dominio, subdominio e IP; temporizadores de plegado; copia y restauración de grupos; cerradas recientemente y sesiones guardadas.',
         'comp.r2.feature': 'Memoria y pestañas paradas',
@@ -1749,7 +1749,7 @@ export const ui = {
             'Cincuenta y ocho herramientas enganchadas al navegador, más resúmenes, conversaciones guardadas, preguntas programadas y el modelo local de Chrome cuando se acaba la cuota.',
         'comp.r4.feature': 'Búsqueda y control por teclado',
         'comp.r4.standard':
-            'Una extensión para la paleta de comandos, otra para las etiquetas de enlace y una pelea por quién se queda con cada tecla.',
+            'Herramientas sueltas para paletas de comandos y navegación por teclado, con teclas en conflicto y menús de ajustes divididos.',
         'comp.r4.iw':
             'Un omnibar flotante con un prefijo por fuente, etiquetas de letra en cada enlace y todas las combinaciones editables en un mismo sitio.',
         'comp.r5.feature': 'Notas, marcadores, historial, descargas',
@@ -1764,12 +1764,12 @@ export const ui = {
             'Tiempo por sitio y por categoría solo en este equipo, topes diarios y semanales, franjas horarias y una pantalla de bloqueo que puede pedir contraseña.',
         'comp.r7.feature': 'Capturas, OCR, QR, cookies, color',
         'comp.r7.standard':
-            'Cinco extensiones de un solo truco, cada una con sus permisos y su botón en la barra.',
+            'Múltiples utilidades sueltas, cada una con su propia configuración, sobrecargando la barra de navegación.',
         'comp.r7.iw':
             'Captura de página completa y de área con galería local, OCR en tu propio equipo, lector y generador de QR, editor de cookies y cuentagotas de pantalla.',
-        'comp.deck.badTitle': 'Una pila fragmentada',
+        'comp.deck.badTitle': 'Flujos fragmentados',
         'comp.deck.badDesc':
-            'Cada una con sus permisos, su página de ajustes y su botón en la barra, y varias de ellas guardando una copia de tu navegación en un servidor que no es tuyo.',
+            'Múltiples herramientas desconectadas, con atajos en conflicto e interfaces dispersas, a menudo enviando tus datos a servidores externos.',
         'comp.deck.goodTitle': 'Una sola estación de trabajo',
         'comp.deck.goodDesc':
             'Una extensión Manifest V3, un panel lateral, un único sitio donde se definen todos los atajos y un almacenamiento que no sale de este equipo.',
