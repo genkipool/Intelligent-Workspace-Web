@@ -85,7 +85,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Stripe counts in the currency's smallest unit.
         amount: String(toMinorUnits(amount)),
         currency,
-        description: 'Intelligent Workspace donation',
+        description: 'Intelligent Workspace software support',
     });
 
     if (isCardFormSource(body.source)) {

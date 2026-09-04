@@ -47,7 +47,7 @@ export const sections: readonly PolicySection[] = [
     { id: 'permissions', titleKey: 'privacy.perm.title' },
     { id: 'website', titleKey: 'privacy.site.title' },
     { id: 'cookies', titleKey: 'privacy.cookies.title' },
-    { id: 'donations', titleKey: 'privacy.pay.title' },
+    { id: 'payments', titleKey: 'privacy.pay.title' },
     { id: 'limited-use', titleKey: 'privacy.limited.title' },
     { id: 'rights', titleKey: 'privacy.rights.title' },
     { id: 'legal', titleKey: 'privacy.legal.title' },

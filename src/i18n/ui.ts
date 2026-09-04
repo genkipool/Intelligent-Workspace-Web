@@ -22,7 +22,7 @@ export const ui = {
         'nav.theme': 'Switch theme',
         'nav.language': 'Language',
         'nav.install': 'Add to Chrome',
-        'nav.donate': 'Donate',
+        'nav.donate': 'Support',
         'nav.menu': 'Menu',
         'nav.donateTitle': 'Support the development of Intelligent Workspace',
         'nav.version': 'Manifest V3',
@@ -837,7 +837,7 @@ export const ui = {
         'privacy.basis.li3':
             'Serving this website and keeping it up: our legitimate interest in delivering the pages you requested and in aggregate measurement that carries no identifier. Article 6.1.f.',
         'privacy.basis.li4':
-            'Processing a donation: performance of the transaction you started, and the accounting duties that follow it. Articles 6.1.b and 6.1.c.',
+            'Processing a software support contribution: performance of the transaction you started, and the accounting duties that follow it. Articles 6.1.b and 6.1.c.',
         'privacy.basis.p2':
             'Where the basis is consent you can withdraw it at any time, and withdrawing it is a switch in the settings rather than a request to us. Withdrawal does not undo processing that already happened, which in this case means data already written to your own device and which you can delete yourself.',
 
@@ -946,7 +946,7 @@ export const ui = {
         'privacy.site.p2':
             'Two Vercel measurement scripts do run here: Analytics, which counts page views without cookies and without a cross-site identifier, and Speed Insights, which reports how quickly the page rendered. Both only ever aggregate, neither follows you to another site, and the extension itself carries neither.',
         'privacy.site.p3':
-            'The donation page is the one exception to “no third-party frames”: it loads Stripe, and only Stripe.',
+            'The support payment page is the one exception to “no third-party frames”: it loads Stripe, and only Stripe.',
 
         'privacy.cookies.title': 'Cookies and local storage',
         'privacy.cookies.p1':
@@ -954,11 +954,11 @@ export const ui = {
         'privacy.cookies.p2':
             'It does store one thing in your browser, and only after you act: pressing the light and dark toggle writes your choice under the key iw-theme in local storage, so the next page you open does not flash the wrong colours. That is a preference you asked for, stored on your own device, readable by nobody else, and article 22.2 of the Spanish LSSI exempts exactly this kind of storage from prior consent. Clearing your browser data removes it and the site goes back to following your system setting.',
 
-        'privacy.pay.title': 'Donations',
+        'privacy.pay.title': 'Support and Payments',
         'privacy.pay.p1':
-            'Donations go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame, so the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
+            'Payments to support development go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame, so the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
         'privacy.pay.p2':
-            'What Stripe collects, and what it does with it, is governed by Stripe’s privacy policy rather than this one. We keep no record of who donated, because there is no database here to keep one in. A donation is voluntary, unlocks nothing, and is not a subscription.',
+            'What Stripe collects, and what it does with it, is governed by Stripe’s privacy policy rather than this one. We keep no record of who contributed, because there is no database here to keep one in. A payment is voluntary, unlocks nothing, and is not a subscription.',
 
         'privacy.limited.title': 'Chrome Web Store Limited Use',
         'privacy.limited.p1':
@@ -1024,7 +1024,7 @@ export const ui = {
         'faq.subtitle': 'Everything you need to know about privacy, performance, and architecture.',
         'faq.cost.q': 'How much does it cost?',
         'faq.cost.a':
-            'Intelligent Workspace is completely free. There are no paywalled features, no subscriptions, and no advertisements. Optional donations help support ongoing maintenance.',
+            'Intelligent Workspace is completely free. There are no paywalled features, no subscriptions, and no advertisements. Voluntary contributions help support ongoing maintenance.',
         'faq.account.q': 'Do I need an account to use it?',
         'faq.account.a':
             'No. There is no login, no email capture, and no authentication server. All your settings and data remain on your device.',
@@ -1045,8 +1045,8 @@ export const ui = {
         'donate.title': 'Support Independent Development',
         'donate.eyebrow': 'Free, private, and open to audit',
         'donate.body':
-            'Intelligent Workspace is free, private, and ad-free. If it gives you your focus and afternoons back, a one-off donation keeps development active.',
-        'donate.cta': 'Donate',
+            'Intelligent Workspace is free, private, and ad-free. If it gives you your focus and afternoons back, a voluntary contribution keeps development active.',
+        'donate.cta': 'Support Project',
         'donate.secured':
             'Payments processed securely by Stripe. We never see or store your payment details.',
 
@@ -1063,9 +1063,9 @@ export const ui = {
         'pay.opensInWindow':
             'These open in a window of their own, where Chrome can still offer you a saved card.',
         'pay.redirecting': 'Taking you there to authorise the payment…',
-        'pay.thanks': 'Thank you. Your donation went through.',
-        'pay.notConfigured': 'Donations are not configured on this deployment yet.',
-        'pay.donateNow': 'Donate',
+        'pay.thanks': 'Thank you. Your support payment went through.',
+        'pay.notConfigured': 'Payments are not configured on this deployment yet.',
+        'pay.donateNow': 'Support',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
         'pay.badAmount': 'Choose an amount between 1 and 500 euros.',
@@ -1116,7 +1116,7 @@ export const ui = {
         'nav.theme': 'Cambiar tema',
         'nav.language': 'Idioma',
         'nav.install': 'Añadir a Chrome',
-        'nav.donate': 'Donar',
+        'nav.donate': 'Apoyar',
         'nav.menu': 'Menú',
         'nav.donateTitle': 'Apoya el desarrollo de Intelligent Workspace',
         'nav.version': 'Manifest V3',
@@ -1932,7 +1932,7 @@ export const ui = {
         'privacy.basis.li3':
             'Servir esta web y mantenerla en pie: nuestro interés legítimo en entregar las páginas que has pedido y en una medición agregada que no lleva identificador. Artículo 6.1.f.',
         'privacy.basis.li4':
-            'Tramitar una donación: la ejecución de la operación que has iniciado y los deberes contables que la siguen. Artículos 6.1.b y 6.1.c.',
+            'Tramitar una aportación de soporte: la ejecución de la operación que has iniciado y los deberes contables que la siguen. Artículos 6.1.b y 6.1.c.',
         'privacy.basis.p2':
             'Donde la base es el consentimiento, puedes retirarlo cuando quieras, y retirarlo es un interruptor en los ajustes, no una solicitud a nosotros. La retirada no deshace el tratamiento ya ocurrido, que en este caso son datos ya escritos en tu propio dispositivo y que puedes borrar tú.',
 
@@ -2044,7 +2044,7 @@ export const ui = {
         'privacy.site.p2':
             'Sí se ejecutan aquí dos scripts de medición de Vercel: Analytics, que cuenta visitas sin cookies y sin identificador entre sitios, y Speed Insights, que informa de lo rápido que se dibujó la página. Los dos solo agregan, ninguno te sigue a otra web y la extensión no lleva ninguno de los dos.',
         'privacy.site.p3':
-            'La página de donación es la única excepción al «sin marcos de terceros»: carga Stripe, y solo Stripe.',
+            'La página de apoyo y pago es la única excepción al «sin marcos de terceros»: carga Stripe, y solo Stripe.',
 
         'privacy.cookies.title': 'Cookies y almacenamiento local',
         'privacy.cookies.p1':
@@ -2052,11 +2052,11 @@ export const ui = {
         'privacy.cookies.p2':
             'Sí guarda una cosa en tu navegador, y solo después de que actúes tú: al pulsar el conmutador de claro y oscuro se escribe tu elección bajo la clave iw-theme en el almacenamiento local, para que la siguiente página no parpadee con los colores equivocados. Es una preferencia que has pedido tú, guardada en tu propio dispositivo, que nadie más puede leer, y el artículo 22.2 de la LSSI exime exactamente a este tipo de almacenamiento del consentimiento previo. Si borras los datos de navegación desaparece y la web vuelve a seguir el ajuste de tu sistema.',
 
-        'privacy.pay.title': 'Donaciones',
+        'privacy.pay.title': 'Apoyo al desarrollo y pagos',
         'privacy.pay.p1':
-            'Las donaciones pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco, así que el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
+            'Los pagos de apoyo al desarrollo pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco, así que el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
         'privacy.pay.p2':
-            'Lo que Stripe recoge, y lo que hace con ello, lo rige la política de privacidad de Stripe y no esta. Nosotros no guardamos ningún registro de quién donó, porque aquí no hay base de datos donde guardarlo. Donar es voluntario, no desbloquea nada y no es una suscripción.',
+            'Lo que Stripe recoge, y lo que hace con ello, lo rige la política de privacidad de Stripe y no esta. Nosotros no guardamos ningún registro de quién realizó una aportación, porque aquí no hay base de datos donde guardarlo. Aportar es voluntario, no desbloquea nada y no es una suscripción.',
 
         'privacy.limited.title': 'Uso limitado de la Chrome Web Store',
         'privacy.limited.p1':
@@ -2122,7 +2122,7 @@ export const ui = {
         'faq.subtitle': 'Todo lo que necesitas saber sobre privacidad, rendimiento y arquitectura.',
         'faq.cost.q': '¿Cuánto cuesta?',
         'faq.cost.a':
-            'Intelligent Workspace es totalmente gratuita. No hay funciones de pago ocultas, ni suscripciones, ni publicidad. Las donaciones voluntarias ayudan a mantener el proyecto vivo.',
+            'Intelligent Workspace es totalmente gratuita. No hay funciones de pago ocultas, ni suscripciones, ni publicidad. Las aportaciones voluntarias de apoyo ayudan a mantener el proyecto vivo.',
         'faq.account.q': '¿Necesito registrarme o crear una cuenta?',
         'faq.account.a':
             'No. No hay registros, ni captura de correos, ni servidores de cuentas. Todos tus datos y ajustes se guardan localmente en tu navegador.',
@@ -2143,8 +2143,8 @@ export const ui = {
         'donate.title': 'Apoya el Desarrollo Independiente',
         'donate.eyebrow': 'Gratis, privado y auditable',
         'donate.body':
-            'Intelligent Workspace es gratuita, privada y sin publicidad. Si te devuelve el foco y tus tardes, una donación puntual ayuda a continuar su desarrollo.',
-        'donate.cta': 'Donar',
+            'Intelligent Workspace es gratuita, privada y sin publicidad. Si te devuelve el foco y tus tardes, una aportación voluntaria ayuda a continuar su desarrollo.',
+        'donate.cta': 'Apoyar',
         'donate.secured':
             'Pagos gestionados de forma segura a través de Stripe. Nunca guardamos tus datos bancarios.',
 
@@ -2161,9 +2161,9 @@ export const ui = {
         'pay.opensInWindow':
             'Se abren en una ventana propia, donde Chrome sí puede ofrecerte una tarjeta guardada.',
         'pay.redirecting': 'Te llevamos allí para autorizar el pago…',
-        'pay.thanks': 'Gracias. Tu donación se ha completado.',
-        'pay.notConfigured': 'Las donaciones aún no están configuradas en este despliegue.',
-        'pay.donateNow': 'Donar',
+        'pay.thanks': 'Gracias. Tu aportación de apoyo se ha completado.',
+        'pay.notConfigured': 'Los pagos aún no están configurados en este despliegue.',
+        'pay.donateNow': 'Apoyar',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',
         'pay.badAmount': 'Elige un importe entre 1 y 500 euros.',

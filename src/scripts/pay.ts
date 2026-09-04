@@ -1004,7 +1004,7 @@ function mount(): void {
 
         const wanted = WALLET_FOR_METHOD[METHOD];
         const express = walletElements.create('expressCheckout', {
-            buttonType: { googlePay: 'donate', applePay: 'donate', paypal: 'pay' },
+            buttonType: { googlePay: 'plain', applePay: 'plain', paypal: 'pay' },
             paymentMethodOrder: wanted ? [wanted] : [],
             /*
              * `always`, everywhere.
