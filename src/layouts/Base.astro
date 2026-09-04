@@ -81,7 +81,8 @@ const jsonLd = {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <link rel="icon" type="image/png" href="/assets/icon.png" />
+        <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+        <link rel="alternate icon" type="image/png" href="/assets/icon.png" />
         <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
         {noindex && <meta name="robots" content="noindex, nofollow" />}
         {!noindex && alternates.map((alt) => <link rel="alternate" hreflang={alt.code} href={alt.href} />)}
