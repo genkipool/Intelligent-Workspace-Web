@@ -97,6 +97,8 @@ const payUrl = localisePath(lang, '/pay');
 <footer class="error-footer">
     <div class="wrap error-footer-inner">
         <span>{t('footer.copyright')}</span>
+        {/* Reachable from every page, this one included. */}
+        <a class="error-footer-link" href={localisePath(lang, '/privacy')}>{t('footer.policy')}</a>
         <span>{t('footer.license')}</span>
     </div>
 </footer>
@@ -293,6 +295,21 @@ const payUrl = localisePath(lang, '/pay');
         border-top: 1px solid var(--border-subtle);
         font-size: 0.8rem;
         color: var(--text-dim);
+    }
+
+    .error-footer-link {
+        color: var(--text-muted);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .error-footer-link:hover {
+        color: var(--action-color);
+        border-bottom-color: var(--action-color);
     }
 
     .error-footer-inner {

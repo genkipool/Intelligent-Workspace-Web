@@ -12,11 +12,15 @@ export const site = {
     // Source-available, so the permissions section can invite the reader to check it.
     sourceUrl: 'https://github.com/genkipool/Intelligent-Workspace',
     /**
-     * The address on the privacy policy, and the only one the site publishes. It is a
-     * real inbox rather than a form: a page that claims to hold nothing about you has no
-     * business asking for your details before it will answer a question.
+     * The address on the privacy policy, and the only one the site publishes.
+     *
+     * It is there because it has to be: article 13.1.a of the GDPR requires the
+     * controller's contact details, and the Chrome Web Store will not accept a policy
+     * with no way to reach whoever wrote it. It is a real inbox rather than a form, since
+     * a page that claims to hold nothing about you has no business asking for your
+     * details before it will answer a question.
      */
-    privacyEmail: 'privacy@genkipool.com',
+    privacyEmail: 'luisrb1985@gmail.com',
 } as const;
 
 export interface Person {

@@ -766,6 +766,7 @@ export const ui = {
             'A host permission rather than an API one, and the reason those page features can run on any site instead of a list Chrome would have to approve.',
         'trust.source': 'The source code is public. Every single line can be inspected and audited.',
         'trust.sourceCta': 'Audit on GitHub',
+        'trust.policyCta': 'Read the privacy policy',
 
         'trust.card1.title': 'It stays on this machine',
         'trust.card1.desc':
@@ -777,8 +778,8 @@ export const ui = {
         'trust.card3.desc':
             'No tracking pixel, no fingerprinting, no telemetry endpoint, and nothing that has to be turned off in settings.',
 
-        // Privacy Policy — the standalone /privacy page
-        'privacy.meta.title': 'Privacy Policy — Intelligent Workspace',
+        // Privacy Policy: the standalone /privacy page
+        'privacy.meta.title': 'Privacy Policy | Intelligent Workspace',
         'privacy.meta.description':
             'What Intelligent Workspace stores, where it stores it, and the handful of moments something leaves your browser. No account, no server of ours, no analytics inside the extension.',
         'privacy.eyebrow': 'Legal',
@@ -799,11 +800,46 @@ export const ui = {
         'privacy.sum3.desc':
             'No advertising, no data brokers, no telemetry endpoint, and no profile of you for anyone to buy.',
 
+        // The first layer the AEPD asks for: the six answers a reader is entitled to
+        // before deciding whether to read the rest.
+        'privacy.basic.heading': 'Basic information on data protection',
+        'privacy.basic.controller': 'Controller',
+        'privacy.basic.controllerV': 'Luis Reoyo (GENKI Organización), Spain.',
+        'privacy.basic.purpose': 'Purpose',
+        'privacy.basic.purposeV':
+            'To run the features of the extension on your own device, and to serve this website.',
+        'privacy.basic.basis': 'Legal basis',
+        'privacy.basic.basisV':
+            'Your consent, given by installing the extension and by switching on each optional feature, and our legitimate interest in serving and securing the website.',
+        'privacy.basic.recipients': 'Recipients',
+        'privacy.basic.recipientsV':
+            'None by default. A feature you trigger yourself can reach Google, the radio directory, YouTube, jsDelivr, Stripe or Vercel, each listed in section 5.',
+        'privacy.basic.transfers': 'Transfers',
+        'privacy.basic.transfersV':
+            'Those providers are outside the EEA. The request is made by your browser and only when you ask for it. Section 6 explains the safeguards.',
+        'privacy.basic.rights': 'Your rights',
+        'privacy.basic.rightsV':
+            'Access, rectification, erasure, restriction, portability, objection, and the withdrawal of consent. Most of them you exercise yourself, from the panel. Section 14.',
+
         'privacy.scope.title': 'Two different things, one policy',
         'privacy.scope.p1':
             'This covers the Chrome extension and the website you are reading. They are separate pieces of software with separate privacy stories, and blurring the two is how a policy ends up meaning nothing. Wherever a rule applies to one and not the other, it says so.',
         'privacy.scope.p2':
-            'Both are published by Luis Reoyo (GENKI Organización), who is also the data controller for the little the website handles. Anything in this document can be checked against the source code, which is public.',
+            'Both are published by Luis Reoyo (GENKI Organización), who is also the data controller for the little the website handles. No data protection officer is appointed, because the scale of this processing does not require one under article 37 of the GDPR. Anything in this document can be checked against the source code, which is public.',
+
+        'privacy.basis.title': 'Why each thing is processed, and under which legal basis',
+        'privacy.basis.p1':
+            'The GDPR asks for a lawful basis per purpose rather than one for the whole product, so here they are, one line each.',
+        'privacy.basis.li1':
+            'Running the features on your device: your consent, given when you install the extension and again when you switch on an optional feature such as the activity record or the assistant. Article 6.1.a.',
+        'privacy.basis.li2':
+            'Sending a prompt to Google, searching the radio directory, loading a YouTube thumbnail or fetching a site icon: your consent, given by the action itself. Nothing is sent until you ask for it.',
+        'privacy.basis.li3':
+            'Serving this website and keeping it up: our legitimate interest in delivering the pages you requested and in aggregate measurement that carries no identifier. Article 6.1.f.',
+        'privacy.basis.li4':
+            'Processing a donation: performance of the transaction you started, and the accounting duties that follow it. Articles 6.1.b and 6.1.c.',
+        'privacy.basis.p2':
+            'Where the basis is consent you can withdraw it at any time, and withdrawing it is a switch in the settings rather than a request to us. Withdrawal does not undo processing that already happened, which in this case means data already written to your own device and which you can delete yourself.',
 
         'privacy.store.title': 'What the extension keeps, and where',
         'privacy.store.p1':
@@ -838,7 +874,7 @@ export const ui = {
 
         'privacy.sync.title': 'Chrome’s own sync, and what rides along',
         'privacy.sync.p1':
-            'Some settings — rules, snippets, keyboard overrides — are written to the browser’s synced storage area so a second computer signed into the same Chrome profile behaves the same way. That area belongs to Chrome, not to us: with Chrome sync on, Google carries it under your account; with it off, it stays on this machine and behaves exactly like local storage.',
+            'Some settings, namely rules, snippets and keyboard overrides, are written to the browser’s synced storage area so a second computer signed into the same Chrome profile behaves the same way. That area belongs to Chrome, not to us: with Chrome sync on, Google carries it under your account; with it off, it stays on this machine and behaves exactly like local storage.',
         'privacy.sync.p2':
             'The web activity record is deliberately kept out of it. Syncing it is a switch of its own, off until you turn it on, because where somebody has been is not something to start shipping anywhere without being asked. Your API key is never synced at all.',
 
@@ -871,9 +907,29 @@ export const ui = {
             'Nothing about you. It fetches the OCR language model, which Chrome then caches',
         'privacy.net.r7.when': 'The first time you run OCR on a screenshot',
 
+        'privacy.transfers.title': 'Transfers outside the European Economic Area',
+        'privacy.transfers.p1':
+            'Every provider in that table is a company established in the United States: Google, Vercel, Stripe, the jsDelivr network, and whichever server hosts the radio station you chose. A request to any of them is an international transfer, so it is named here rather than left implied.',
+        'privacy.transfers.p2':
+            'Two things limit it. The request is made by your browser, not forwarded by a server of ours, and it happens only when you trigger the feature that needs it. Google, Vercel and Stripe are certified under the EU to US Data Privacy Framework and also offer the European Commission’s standard contractual clauses, which are the safeguards these transfers rely on. Their own privacy terms govern what they do with the request once it arrives.',
+
+        'privacy.retention.title': 'How long any of it is kept',
+        'privacy.retention.p1':
+            'Nothing here has a server-side lifetime, because there is no server holding it. What exists on your device stays until you delete it, and these are the rules it follows.',
+        'privacy.retention.li1':
+            'Notes, screenshots, backups, conversations, Pomodoro history and the music library: kept until you delete them or remove the extension.',
+        'privacy.retention.li2':
+            'The web activity record: kept for the number of days you set in its own settings, and older days are dropped automatically.',
+        'privacy.retention.li3':
+            'Settings, rules and snippets: kept while the extension is installed. If Chrome sync carried a copy, removing the extension clears that copy too.',
+        'privacy.retention.li4':
+            'A prompt sent to Google, or a search sent to the radio directory: gone from here as soon as the answer arrives. What the receiving service keeps is set by its own retention policy.',
+        'privacy.retention.p2':
+            'This website keeps no record of your visit beyond the request logs its host produces, which Vercel rotates on its own schedule, and the aggregate page counts described in section 10.',
+
         'privacy.ai.title': 'The AI assistant',
         'privacy.ai.p1':
-            'The assistant runs one of two ways, and you pick which. Gemini goes over the network with a Google AI Studio key you create and paste yourself: the request is made by your browser, straight to Google, on your key and your quota, and it is covered by Google’s API terms rather than by this policy. We are not a party to that traffic — there is no service of ours in the middle that could be.',
+            'The assistant runs one of two ways, and you pick which. Gemini goes over the network with a Google AI Studio key you create and paste yourself: the request is made by your browser, straight to Google, on your key and your quota, and it is covered by Google’s API terms rather than by this policy. We are not a party to that traffic, because there is no service of ours in the middle that could be.',
         'privacy.ai.p2':
             'The alternative is Chrome’s built-in model, which runs on your machine and needs neither a key nor a connection. Either way the conversation is written to the browser’s own database and nowhere else, and clearing it in the panel clears it for good.',
 
@@ -886,15 +942,21 @@ export const ui = {
 
         'privacy.site.title': 'This website',
         'privacy.site.p1':
-            'The site is a handful of static files on Vercel. It sets no cookies, has no login and asks for nothing. Your browser’s request reaches Vercel’s servers, which see what any web server sees: an IP address, a user agent, the page asked for. That is hosting, not tracking.',
+            'The site is a handful of static files on Vercel. It has no login and asks for nothing. Your browser’s request reaches Vercel’s servers, which see what any web server sees: an IP address, a user agent, the page asked for. That is hosting, not tracking.',
         'privacy.site.p2':
             'Two Vercel measurement scripts do run here: Analytics, which counts page views without cookies and without a cross-site identifier, and Speed Insights, which reports how quickly the page rendered. Both only ever aggregate, neither follows you to another site, and the extension itself carries neither.',
         'privacy.site.p3':
             'The donation page is the one exception to “no third-party frames”: it loads Stripe, and only Stripe.',
 
+        'privacy.cookies.title': 'Cookies and local storage',
+        'privacy.cookies.p1':
+            'This website sets no cookies. Not an analytics cookie, not a session cookie, not a consent cookie, which is why you were never shown a banner asking you to accept one.',
+        'privacy.cookies.p2':
+            'It does store one thing in your browser, and only after you act: pressing the light and dark toggle writes your choice under the key iw-theme in local storage, so the next page you open does not flash the wrong colours. That is a preference you asked for, stored on your own device, readable by nobody else, and article 22.2 of the Spanish LSSI exempts exactly this kind of storage from prior consent. Clearing your browser data removes it and the site goes back to following your system setting.',
+
         'privacy.pay.title': 'Donations',
         'privacy.pay.p1':
-            'Donations go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame — the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
+            'Donations go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame, so the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
         'privacy.pay.p2':
             'What Stripe collects, and what it does with it, is governed by Stripe’s privacy policy rather than this one. We keep no record of who donated, because there is no database here to keep one in. A donation is voluntary, unlocks nothing, and is not a subscription.',
 
@@ -904,9 +966,9 @@ export const ui = {
 
         'privacy.rights.title': 'Your data, and getting rid of it',
         'privacy.rights.p1':
-            'You hold all of it, which answers most of the usual rights on its own. There is no export request to file — the extension writes its own data to a file whenever you ask. There is no deletion request either, because the delete button is already in the panel.',
+            'You hold all of it, which answers most of the usual rights on its own. There is no export request to file, because the extension writes its own data to a file whenever you ask. There is no deletion request either, because the delete button is already in the panel.',
         'privacy.rights.li1':
-            'Delete one thing — a note, a screenshot, a backup, a day of activity — where it is shown.',
+            'Delete one thing, a note, a screenshot, a backup or a day of activity, where it is shown.',
         'privacy.rights.li2':
             'Wipe a whole area from the extension’s settings, the activity record and the assistant’s conversations included.',
         'privacy.rights.li3':
@@ -914,23 +976,29 @@ export const ui = {
         'privacy.rights.li4':
             'Turn off Chrome’s profile sync, or the activity record’s own sync switch, if you would rather nothing rode along.',
         'privacy.rights.li5':
+            'Withdraw your consent to any optional feature by switching it off, which stops the processing from that moment on.',
+        'privacy.rights.li6':
             'Revoke your Google AI Studio key in Google’s console. It is your key on your account, and revoking it ends the extension’s access immediately.',
         'privacy.rights.p2':
-            'If you are in the EU or the UK, the rights of access, rectification, erasure, restriction, portability and objection apply. In practice there is nothing here to act on — but write to the address below and you will get a straight answer about what exists, which is what those rights are for.',
+            'If you are in the EU or the UK, the rights of access, rectification, erasure, restriction, portability and objection apply, along with the right to withdraw consent. In practice there is nothing here to act on, but write to the address below and you will get a straight answer about what exists, which is what those rights are for. You will have one within a month.',
+        'privacy.rights.p3':
+            'You can also complain to a supervisory authority. In Spain that is the Agencia Española de Protección de Datos, at www.aepd.es.',
 
         'privacy.legal.title': 'Responsibility, minors and the law',
         'privacy.legal.p1':
-            'The controller is Luis Reoyo (GENKI Organización), Spain. Spanish and EU data protection law applies, and a complaint can also be taken to the Agencia Española de Protección de Datos.',
+            'The controller is Luis Reoyo (GENKI Organización), Spain. Spanish and EU data protection law applies: Regulation (EU) 2016/679, Organic Law 3/2018, and Law 34/2002 for the website itself.',
         'privacy.legal.p2':
-            'The extension is a general productivity tool, not directed at children, and it collects nothing that would identify one — or anyone else. There is no age gate because there is no account to put one in front of.',
+            'Nothing here is a statutory or contractual requirement. You are not obliged to provide any data, and the only consequence of providing none is that the feature you did not use does not run. There is no automated decision making and no profiling of any kind, under article 22 of the GDPR or otherwise.',
+        'privacy.legal.p3':
+            'The extension is a general productivity tool, not directed at children, and it collects nothing that would identify one, or anyone else. There is no age gate because there is no account to put one in front of.',
 
         'privacy.changes.title': 'Changes to this policy',
         'privacy.changes.p1':
-            'When this policy changes the new version replaces this page and the date at the top moves with it. Any change that alters what leaves your browser will also be named in the release notes of the version that makes it, so it cannot arrive quietly.',
+            'When this policy changes the new version replaces this page and the date at the top moves with it. Any change that alters what leaves your browser will also be named in the release notes of the version that makes it, and announced in the extension itself, so it cannot arrive quietly.',
 
         'privacy.contact.title': 'Contact',
         'privacy.contact.p1':
-            'Questions about any of this — including the ones that begin “I do not believe you” — go to the address below. The source code is public, so a claim on this page that the code does not back up is a bug report worth filing.',
+            'Questions about any of this, including the ones that begin “I do not believe you”, go to the address below. The source code is public, so a claim on this page that the code does not back up is a bug report worth filing.',
         'privacy.contact.email': 'Write to us',
         'privacy.contact.source': 'Read the source',
 
@@ -1793,6 +1861,7 @@ export const ui = {
             'Un permiso de host, no de API, y la razón por la que esas funciones de página pueden ejecutarse en cualquier sitio en vez de en una lista que Chrome tendría que aprobar.',
         'trust.source': 'El código fuente es público. Cada línea se puede auditar y comprobar en GitHub.',
         'trust.sourceCta': 'Auditar en GitHub',
+        'trust.policyCta': 'Leer la política de privacidad',
 
         'trust.card1.title': 'Se queda en esta máquina',
         'trust.card1.desc':
@@ -1804,8 +1873,8 @@ export const ui = {
         'trust.card3.desc':
             'Sin píxel de seguimiento, sin huella digital, sin servidor de telemetría y sin nada que haya que desactivar en los ajustes.',
 
-        // Privacy Policy — the standalone /privacy page
-        'privacy.meta.title': 'Política de Privacidad — Intelligent Workspace',
+        // Privacy Policy: the standalone /privacy page
+        'privacy.meta.title': 'Política de Privacidad | Intelligent Workspace',
         'privacy.meta.description':
             'Qué guarda Intelligent Workspace, dónde lo guarda y las contadas veces que algo sale de tu navegador. Sin cuenta, sin servidor nuestro y sin analíticas dentro de la extensión.',
         'privacy.eyebrow': 'Legal',
@@ -1826,11 +1895,46 @@ export const ui = {
         'privacy.sum3.desc':
             'Sin publicidad, sin intermediarios de datos, sin servidor de telemetría y sin un perfil tuyo que nadie pueda comprar.',
 
+        // The first layer the AEPD asks for: the six answers a reader is entitled to
+        // before deciding whether to read the rest.
+        'privacy.basic.heading': 'Información básica sobre protección de datos',
+        'privacy.basic.controller': 'Responsable',
+        'privacy.basic.controllerV': 'Luis Reoyo (GENKI Organización), España.',
+        'privacy.basic.purpose': 'Finalidad',
+        'privacy.basic.purposeV':
+            'Hacer funcionar las funciones de la extensión en tu propio dispositivo y servir esta web.',
+        'privacy.basic.basis': 'Base jurídica',
+        'privacy.basic.basisV':
+            'Tu consentimiento, prestado al instalar la extensión y al activar cada función opcional, y nuestro interés legítimo en servir y proteger la web.',
+        'privacy.basic.recipients': 'Destinatarios',
+        'privacy.basic.recipientsV':
+            'Ninguno por defecto. Una función que actives tú puede llegar a Google, al directorio de radio, a YouTube, a jsDelivr, a Stripe o a Vercel, y todas están en la sección 5.',
+        'privacy.basic.transfers': 'Transferencias',
+        'privacy.basic.transfersV':
+            'Esos proveedores están fuera del EEE. La petición la hace tu navegador y solo cuando tú la pides. La sección 6 explica las garantías.',
+        'privacy.basic.rights': 'Tus derechos',
+        'privacy.basic.rightsV':
+            'Acceso, rectificación, supresión, limitación, portabilidad, oposición y retirada del consentimiento. Casi todos los ejerces tú mismo, desde el panel. Sección 14.',
+
         'privacy.scope.title': 'Dos cosas distintas, una sola política',
         'privacy.scope.p1':
             'Esto cubre la extensión de Chrome y la web que estás leyendo. Son dos programas separados con dos historias de privacidad separadas, y mezclarlas es justo lo que vacía de sentido a una política. Cuando una regla se aplica a una y no a la otra, aquí se dice.',
         'privacy.scope.p2':
-            'Ambas las publica Luis Reoyo (GENKI Organización), que es además el responsable del tratamiento de lo poco que maneja la web. Todo lo que dice este documento se puede contrastar con el código fuente, que es público.',
+            'Ambas las publica Luis Reoyo (GENKI Organización), que es además el responsable del tratamiento de lo poco que maneja la web. No hay delegado de protección de datos designado, porque la escala de este tratamiento no lo exige según el artículo 37 del RGPD. Todo lo que dice este documento se puede contrastar con el código fuente, que es público.',
+
+        'privacy.basis.title': 'Por qué se trata cada cosa, y con qué base jurídica',
+        'privacy.basis.p1':
+            'El RGPD pide una base jurídica por finalidad, no una para todo el producto, así que aquí están, una línea cada una.',
+        'privacy.basis.li1':
+            'Hacer funcionar las funciones en tu dispositivo: tu consentimiento, prestado al instalar la extensión y de nuevo al activar una función opcional como el registro de actividad o el asistente. Artículo 6.1.a.',
+        'privacy.basis.li2':
+            'Enviar una consulta a Google, buscar en el directorio de radio, cargar una miniatura de YouTube o pedir un icono de sitio: tu consentimiento, prestado con la propia acción. No se envía nada hasta que lo pides.',
+        'privacy.basis.li3':
+            'Servir esta web y mantenerla en pie: nuestro interés legítimo en entregar las páginas que has pedido y en una medición agregada que no lleva identificador. Artículo 6.1.f.',
+        'privacy.basis.li4':
+            'Tramitar una donación: la ejecución de la operación que has iniciado y los deberes contables que la siguen. Artículos 6.1.b y 6.1.c.',
+        'privacy.basis.p2':
+            'Donde la base es el consentimiento, puedes retirarlo cuando quieras, y retirarlo es un interruptor en los ajustes, no una solicitud a nosotros. La retirada no deshace el tratamiento ya ocurrido, que en este caso son datos ya escritos en tu propio dispositivo y que puedes borrar tú.',
 
         'privacy.store.title': 'Qué guarda la extensión, y dónde',
         'privacy.store.p1':
@@ -1868,7 +1972,7 @@ export const ui = {
 
         'privacy.sync.title': 'La sincronización de Chrome, y qué se sube a ella',
         'privacy.sync.p1':
-            'Algunos ajustes —reglas, snippets, atajos reasignados— se escriben en el área sincronizada del navegador para que un segundo ordenador con el mismo perfil de Chrome se comporte igual. Esa área es de Chrome, no nuestra: con la sincronización activada, Google la lleva bajo tu cuenta; con ella desactivada, se queda en esta máquina y funciona igual que el almacenamiento local.',
+            'Algunos ajustes, en concreto reglas, snippets y atajos reasignados, se escriben en el área sincronizada del navegador para que un segundo ordenador con el mismo perfil de Chrome se comporte igual. Esa área es de Chrome, no nuestra: con la sincronización activada, Google la lleva bajo tu cuenta; con ella desactivada, se queda en esta máquina y funciona igual que el almacenamiento local.',
         'privacy.sync.p2':
             'El registro de actividad web se queda fuera a propósito. Sincronizarlo es un interruptor aparte, apagado hasta que tú lo enciendas, porque por dónde ha pasado alguien no es algo que se mande a ningún sitio sin preguntar. Tu clave de API no se sincroniza nunca.',
 
@@ -1901,6 +2005,26 @@ export const ui = {
         'privacy.net.r7.what': 'Nada sobre ti. Descarga el modelo de idioma del OCR, que Chrome luego cachea',
         'privacy.net.r7.when': 'La primera vez que pasas el OCR por una captura',
 
+        'privacy.transfers.title': 'Transferencias fuera del Espacio Económico Europeo',
+        'privacy.transfers.p1':
+            'Todos los proveedores de esa tabla son empresas establecidas en Estados Unidos: Google, Vercel, Stripe, la red jsDelivr y el servidor que aloje la emisora que hayas elegido. Una petición a cualquiera de ellos es una transferencia internacional, así que se nombra aquí en vez de dejarla sobreentendida.',
+        'privacy.transfers.p2':
+            'Dos cosas la limitan. La petición la hace tu navegador, no la reenvía ningún servidor nuestro, y ocurre solo cuando activas la función que la necesita. Google, Vercel y Stripe están certificados en el Marco de Privacidad de Datos UE-EE. UU. y ofrecen además las cláusulas contractuales tipo de la Comisión Europea, que son las garantías en las que se apoyan estas transferencias. Lo que hagan con la petición una vez llega lo rigen sus propias condiciones de privacidad.',
+
+        'privacy.retention.title': 'Cuánto tiempo se conserva todo esto',
+        'privacy.retention.p1':
+            'Nada de esto tiene una vida útil en servidor, porque no hay servidor que lo guarde. Lo que existe en tu dispositivo se queda hasta que lo borras, y estas son las reglas que sigue.',
+        'privacy.retention.li1':
+            'Notas, capturas, copias de seguridad, conversaciones, historial del Pomodoro y biblioteca de música: hasta que los borres o quites la extensión.',
+        'privacy.retention.li2':
+            'El registro de actividad web: los días que fijes en sus propios ajustes, y los días más antiguos se descartan solos.',
+        'privacy.retention.li3':
+            'Ajustes, reglas y snippets: mientras la extensión esté instalada. Si la sincronización de Chrome llevaba una copia, quitar la extensión borra también esa copia.',
+        'privacy.retention.li4':
+            'Una consulta enviada a Google, o una búsqueda enviada al directorio de radio: desaparece de aquí en cuanto llega la respuesta. Lo que conserve el servicio que la recibe lo marca su propia política de conservación.',
+        'privacy.retention.p2':
+            'Esta web no guarda ningún registro de tu visita más allá de los logs de petición que genera su alojamiento, que Vercel rota según su propio calendario, y los recuentos agregados de páginas que describe la sección 10.',
+
         'privacy.ai.title': 'El asistente de IA',
         'privacy.ai.p1':
             'El asistente funciona de dos maneras y eliges tú cuál. Gemini sale a la red con una clave de Google AI Studio que creas y pegas tú: la petición la hace tu navegador, directa a Google, con tu clave y tu cuota, y la rigen las condiciones de la API de Google, no esta política. No somos parte de ese tráfico, porque no hay ningún servicio nuestro en medio que pudiera serlo.',
@@ -1916,15 +2040,21 @@ export const ui = {
 
         'privacy.site.title': 'Esta web',
         'privacy.site.p1':
-            'La web son un puñado de archivos estáticos en Vercel. No pone cookies, no tiene inicio de sesión y no pide nada. La petición de tu navegador llega a los servidores de Vercel, que ven lo que ve cualquier servidor web: una dirección IP, un agente de usuario y la página pedida. Eso es alojamiento, no seguimiento.',
+            'La web son un puñado de archivos estáticos en Vercel. No tiene inicio de sesión y no pide nada. La petición de tu navegador llega a los servidores de Vercel, que ven lo que ve cualquier servidor web: una dirección IP, un agente de usuario y la página pedida. Eso es alojamiento, no seguimiento.',
         'privacy.site.p2':
             'Sí se ejecutan aquí dos scripts de medición de Vercel: Analytics, que cuenta visitas sin cookies y sin identificador entre sitios, y Speed Insights, que informa de lo rápido que se dibujó la página. Los dos solo agregan, ninguno te sigue a otra web y la extensión no lleva ninguno de los dos.',
         'privacy.site.p3':
             'La página de donación es la única excepción al «sin marcos de terceros»: carga Stripe, y solo Stripe.',
 
+        'privacy.cookies.title': 'Cookies y almacenamiento local',
+        'privacy.cookies.p1':
+            'Esta web no pone cookies. Ni de analítica, ni de sesión, ni de consentimiento, y por eso nunca te ha salido un banner pidiéndote que aceptes ninguna.',
+        'privacy.cookies.p2':
+            'Sí guarda una cosa en tu navegador, y solo después de que actúes tú: al pulsar el conmutador de claro y oscuro se escribe tu elección bajo la clave iw-theme en el almacenamiento local, para que la siguiente página no parpadee con los colores equivocados. Es una preferencia que has pedido tú, guardada en tu propio dispositivo, que nadie más puede leer, y el artículo 22.2 de la LSSI exime exactamente a este tipo de almacenamiento del consentimiento previo. Si borras los datos de navegación desaparece y la web vuelve a seguir el ajuste de tu sistema.',
+
         'privacy.pay.title': 'Donaciones',
         'privacy.pay.p1':
-            'Las donaciones pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco: el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
+            'Las donaciones pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco, así que el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
         'privacy.pay.p2':
             'Lo que Stripe recoge, y lo que hace con ello, lo rige la política de privacidad de Stripe y no esta. Nosotros no guardamos ningún registro de quién donó, porque aquí no hay base de datos donde guardarlo. Donar es voluntario, no desbloquea nada y no es una suscripción.',
 
@@ -1934,9 +2064,9 @@ export const ui = {
 
         'privacy.rights.title': 'Tus datos, y cómo deshacerte de ellos',
         'privacy.rights.p1':
-            'Los tienes todos tú, lo que resuelve por sí solo casi todos los derechos habituales. No hay solicitud de exportación que presentar: la extensión escribe sus propios datos en un archivo cuando se lo pides. Tampoco hay solicitud de supresión, porque el botón de borrar ya está en el panel.',
+            'Los tienes todos tú, lo que resuelve por sí solo casi todos los derechos habituales. No hay solicitud de exportación que presentar, porque la extensión escribe sus propios datos en un archivo cuando se lo pides. Tampoco hay solicitud de supresión, porque el botón de borrar ya está en el panel.',
         'privacy.rights.li1':
-            'Borra una cosa concreta —una nota, una captura, una copia de seguridad, un día de actividad— allí donde se muestra.',
+            'Borra una cosa concreta, una nota, una captura, una copia de seguridad o un día de actividad, allí donde se muestra.',
         'privacy.rights.li2':
             'Vacía un área entera desde los ajustes de la extensión, incluidos el registro de actividad y las conversaciones del asistente.',
         'privacy.rights.li3':
@@ -1944,23 +2074,29 @@ export const ui = {
         'privacy.rights.li4':
             'Desactiva la sincronización de perfil de Chrome, o el interruptor propio del registro de actividad, si prefieres que no suba nada.',
         'privacy.rights.li5':
+            'Retira tu consentimiento a cualquier función opcional apagándola, lo que detiene el tratamiento a partir de ese momento.',
+        'privacy.rights.li6':
             'Revoca tu clave de Google AI Studio en la consola de Google. Es tu clave en tu cuenta, y revocarla corta el acceso de la extensión al instante.',
         'privacy.rights.p2':
-            'Si estás en la UE o el Reino Unido, se aplican los derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición. En la práctica aquí no hay nada sobre lo que actuar, pero escribe a la dirección de abajo y tendrás una respuesta clara sobre qué existe, que es para lo que están esos derechos.',
+            'Si estás en la UE o el Reino Unido, se aplican los derechos de acceso, rectificación, supresión, limitación, portabilidad y oposición, junto con el derecho a retirar el consentimiento. En la práctica aquí no hay nada sobre lo que actuar, pero escribe a la dirección de abajo y tendrás una respuesta clara sobre qué existe, que es para lo que están esos derechos. La tendrás en menos de un mes.',
+        'privacy.rights.p3':
+            'También puedes reclamar ante una autoridad de control. En España es la Agencia Española de Protección de Datos, en www.aepd.es.',
 
         'privacy.legal.title': 'Responsabilidad, menores y ley aplicable',
         'privacy.legal.p1':
-            'El responsable del tratamiento es Luis Reoyo (GENKI Organización), España. Se aplica la normativa española y europea de protección de datos, y cualquier reclamación puede dirigirse también a la Agencia Española de Protección de Datos.',
+            'El responsable del tratamiento es Luis Reoyo (GENKI Organización), España. Se aplica la normativa española y europea de protección de datos: el Reglamento (UE) 2016/679, la Ley Orgánica 3/2018 y la Ley 34/2002 para la propia web.',
         'privacy.legal.p2':
+            'Nada de esto es un requisito legal ni contractual. No estás obligado a facilitar ningún dato, y la única consecuencia de no facilitar ninguno es que la función que no has usado no se ejecuta. No hay decisiones automatizadas ni perfilado de ningún tipo, ni al amparo del artículo 22 del RGPD ni de otra forma.',
+        'privacy.legal.p3':
             'La extensión es una herramienta de productividad general, no está dirigida a menores y no recoge nada que identificaría a uno, ni a nadie. No hay verificación de edad porque no hay cuenta delante de la que ponerla.',
 
         'privacy.changes.title': 'Cambios en esta política',
         'privacy.changes.p1':
-            'Cuando esta política cambie, la nueva versión sustituirá a esta página y la fecha de arriba se moverá con ella. Cualquier cambio que altere lo que sale de tu navegador se nombrará además en las notas de la versión que lo introduzca, para que no llegue en silencio.',
+            'Cuando esta política cambie, la nueva versión sustituirá a esta página y la fecha de arriba se moverá con ella. Cualquier cambio que altere lo que sale de tu navegador se nombrará además en las notas de la versión que lo introduzca, y se avisará en la propia extensión, para que no llegue en silencio.',
 
         'privacy.contact.title': 'Contacto',
         'privacy.contact.p1':
-            'Cualquier duda sobre todo esto —incluidas las que empiezan por «no me lo creo»— a la dirección de abajo. El código fuente es público, así que una afirmación de esta página que el código no respalde es un informe de error que merece la pena abrir.',
+            'Cualquier duda sobre todo esto, incluidas las que empiezan por «no me lo creo», a la dirección de abajo. El código fuente es público, así que una afirmación de esta página que el código no respalde es un informe de error que merece la pena abrir.',
         'privacy.contact.email': 'Escríbenos',
         'privacy.contact.source': 'Leer el código fuente',
 

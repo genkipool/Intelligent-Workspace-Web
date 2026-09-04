@@ -27,24 +27,56 @@ export interface PolicySection {
 }
 
 /**
- * Every section, in the order the article renders them. The list is read twice — once
- * for the contents rail, once for the headings — so a section cannot appear in one and
- * be missing from the other.
+ * Every section, in the order the article renders them, and the order the numbers in the
+ * copy count from: the first layer points at "section 5", "section 6", "section 10" and
+ * "section 14", and those are positions in this list. Reordering a row renumbers a
+ * cross-reference, so read the copy before moving one.
+ *
+ * The list is also read twice, once for the contents rail and once for the headings, so a
+ * section cannot appear in one and be missing from the other.
  */
 export const sections: readonly PolicySection[] = [
     { id: 'scope', titleKey: 'privacy.scope.title' },
+    { id: 'basis', titleKey: 'privacy.basis.title' },
     { id: 'store', titleKey: 'privacy.store.title' },
     { id: 'sync', titleKey: 'privacy.sync.title' },
     { id: 'network', titleKey: 'privacy.net.title' },
+    { id: 'transfers', titleKey: 'privacy.transfers.title' },
+    { id: 'retention', titleKey: 'privacy.retention.title' },
     { id: 'ai', titleKey: 'privacy.ai.title' },
     { id: 'permissions', titleKey: 'privacy.perm.title' },
     { id: 'website', titleKey: 'privacy.site.title' },
+    { id: 'cookies', titleKey: 'privacy.cookies.title' },
     { id: 'donations', titleKey: 'privacy.pay.title' },
     { id: 'limited-use', titleKey: 'privacy.limited.title' },
     { id: 'rights', titleKey: 'privacy.rights.title' },
     { id: 'legal', titleKey: 'privacy.legal.title' },
     { id: 'changes', titleKey: 'privacy.changes.title' },
     { id: 'contact', titleKey: 'privacy.contact.title' },
+];
+
+/**
+ * The first layer, in the shape the AEPD publishes and every Spanish reviewer looks for:
+ * six rows answering who, what for, on what basis, who else sees it, whether it leaves
+ * the EEA, and what the reader can do about it. The full text is the second layer, and
+ * the numbers in the copy point from one to the other.
+ *
+ * It exists because article 12 of the GDPR asks for the information to be concise as well
+ * as complete, and a seventeen-section document is not concise on its own. WP260 calls
+ * this a layered notice and recommends it for exactly this situation.
+ */
+export interface BasicRow {
+    labelKey: TranslationKey;
+    valueKey: TranslationKey;
+}
+
+export const basicRows: readonly BasicRow[] = [
+    { labelKey: 'privacy.basic.controller', valueKey: 'privacy.basic.controllerV' },
+    { labelKey: 'privacy.basic.purpose', valueKey: 'privacy.basic.purposeV' },
+    { labelKey: 'privacy.basic.basis', valueKey: 'privacy.basic.basisV' },
+    { labelKey: 'privacy.basic.recipients', valueKey: 'privacy.basic.recipientsV' },
+    { labelKey: 'privacy.basic.transfers', valueKey: 'privacy.basic.transfersV' },
+    { labelKey: 'privacy.basic.rights', valueKey: 'privacy.basic.rightsV' },
 ];
 
 export interface StorageRow {

@@ -1,5 +1,5 @@
 ---
-import { useTranslations } from '@/i18n/utils';
+import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import type { IconName } from '@/data/icons';
 import SectionHeader from '@/components/SectionHeader.astro';
@@ -73,15 +73,26 @@ const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
         }
         <div class="matrix-footer">
             <span>{t('trust.source')}</span>
-            <a
-                href={site.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-secondary source-btn"
-            >
-                <Icon name="github" size={16} />
-                <span>{t('trust.sourceCta')}</span>
-            </a>
+            <div class="matrix-footer-actions">
+                {
+                    /* A text button rather than a filled one: the policy is the reading the
+                    section leads to, not a second call to action competing with the store
+                    button at the top of the page. */
+                }
+                <a href={localisePath(lang, '/privacy')} class="policy-text-btn">
+                    <Icon name="shieldCheck" size={16} />
+                    <span>{t('trust.policyCta')}</span>
+                </a>
+                <a
+                    href={site.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-secondary source-btn"
+                >
+                    <Icon name="github" size={16} />
+                    <span>{t('trust.sourceCta')}</span>
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -216,9 +227,42 @@ const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
         background: var(--bg-color);
     }
 
+    .matrix-footer-actions {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
     .source-btn {
         padding: 8px 18px;
         font-size: 0.85rem;
+    }
+
+    .policy-text-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        border: 1px solid transparent;
+        background: none;
+        color: var(--action-color);
+        font-size: 0.85rem;
+        font-weight: 650;
+        text-decoration: none;
+        transition:
+            border-color 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+    .policy-text-btn:hover {
+        border-color: var(--border-glow);
+        background: rgba(22, 160, 133, 0.1);
+    }
+
+    :root[data-theme='light'] .policy-text-btn {
+        color: var(--header-color);
     }
 
     @media (max-width: 850px) {
@@ -238,6 +282,10 @@ const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
         .matrix-footer {
             flex-direction: column;
             align-items: flex-start;
+        }
+
+        .policy-text-btn {
+            padding-inline: 0;
         }
     }
 </style>

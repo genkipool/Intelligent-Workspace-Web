@@ -22,7 +22,7 @@
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
-import { sections, storageRows, connectionRows, effectiveDate } from '@/data/privacy';
+import { sections, basicRows, storageRows, connectionRows, effectiveDate } from '@/data/privacy';
 import Icon from '@/components/Icon.astro';
 import LangToggle from '@/components/LangToggle.astro';
 import ThemeToggle from '@/components/ThemeToggle.astro';
@@ -100,6 +100,23 @@ const summaryCards = [
                 ))
             }
         </div>
+
+        <!-- The formal first layer. The three cards above say it in plain words; this
+             says it in the six fields the AEPD publishes, which is the form a reviewer
+             is looking for. -->
+        <section class="policy-basic" aria-labelledby="policy-basic-heading">
+            <h2 class="policy-basic-heading" id="policy-basic-heading">{t('privacy.basic.heading')}</h2>
+            <dl class="policy-basic-list">
+                {
+                    basicRows.map((row) => (
+                        <div class="policy-basic-row">
+                            <dt>{t(row.labelKey)}</dt>
+                            <dd>{t(row.valueKey)}</dd>
+                        </div>
+                    ))
+                }
+            </dl>
+        </section>
     </div>
 
     <div class="wrap policy-body">
@@ -109,7 +126,9 @@ const summaryCards = [
                 {
                     sections.map((section) => (
                         <li>
-                            <a href={`#${section.id}`}>{t(section.titleKey)}</a>
+                            <a href={`#${section.id}`} data-toc={section.id}>
+                                {t(section.titleKey)}
+                            </a>
                         </li>
                     ))
                 }
@@ -121,6 +140,18 @@ const summaryCards = [
                 <h2>{t('privacy.scope.title')}</h2>
                 <p>{t('privacy.scope.p1')}</p>
                 <p>{t('privacy.scope.p2')}</p>
+            </section>
+
+            <section id="basis">
+                <h2>{t('privacy.basis.title')}</h2>
+                <p>{t('privacy.basis.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('privacy.basis.li1')}</li>
+                    <li>{t('privacy.basis.li2')}</li>
+                    <li>{t('privacy.basis.li3')}</li>
+                    <li>{t('privacy.basis.li4')}</li>
+                </ul>
+                <p>{t('privacy.basis.p2')}</p>
             </section>
 
             <section id="store">
@@ -197,6 +228,24 @@ const summaryCards = [
                 <p>{t('privacy.net.p2')}</p>
             </section>
 
+            <section id="transfers">
+                <h2>{t('privacy.transfers.title')}</h2>
+                <p>{t('privacy.transfers.p1')}</p>
+                <p>{t('privacy.transfers.p2')}</p>
+            </section>
+
+            <section id="retention">
+                <h2>{t('privacy.retention.title')}</h2>
+                <p>{t('privacy.retention.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('privacy.retention.li1')}</li>
+                    <li>{t('privacy.retention.li2')}</li>
+                    <li>{t('privacy.retention.li3')}</li>
+                    <li>{t('privacy.retention.li4')}</li>
+                </ul>
+                <p>{t('privacy.retention.p2')}</p>
+            </section>
+
             <section id="ai">
                 <h2>{t('privacy.ai.title')}</h2>
                 <p>{t('privacy.ai.p1')}</p>
@@ -219,6 +268,12 @@ const summaryCards = [
                 <p>{t('privacy.site.p3')}</p>
             </section>
 
+            <section id="cookies">
+                <h2>{t('privacy.cookies.title')}</h2>
+                <p>{t('privacy.cookies.p1')}</p>
+                <p>{t('privacy.cookies.p2')}</p>
+            </section>
+
             <section id="donations">
                 <h2>{t('privacy.pay.title')}</h2>
                 <p>{t('privacy.pay.p1')}</p>
@@ -239,14 +294,17 @@ const summaryCards = [
                     <li>{t('privacy.rights.li3')}</li>
                     <li>{t('privacy.rights.li4')}</li>
                     <li>{t('privacy.rights.li5')}</li>
+                    <li>{t('privacy.rights.li6')}</li>
                 </ul>
                 <p>{t('privacy.rights.p2')}</p>
+                <p>{t('privacy.rights.p3')}</p>
             </section>
 
             <section id="legal">
                 <h2>{t('privacy.legal.title')}</h2>
                 <p>{t('privacy.legal.p1')}</p>
                 <p>{t('privacy.legal.p2')}</p>
+                <p>{t('privacy.legal.p3')}</p>
             </section>
 
             <section id="changes">
@@ -278,6 +336,74 @@ const summaryCards = [
         </article>
     </div>
 </main>
+
+<script>
+    /**
+     * The contents rail follows the reader.
+     *
+     * An `IntersectionObserver` on its own answers the wrong question here: it reports
+     * which sections are *visible*, and on a screen showing three of them at once it has
+     * no opinion about which one is being read. So the observer only maintains the set of
+     * visible sections, and the topmost of that set is the one marked. That is what a
+     * reader means by "where I am".
+     *
+     * The band is deliberately narrow. `rootMargin` crops the viewport to a strip near the
+     * top, so a section counts as current once its heading reaches roughly the first third
+     * of the screen, instead of the moment its last line scrolls into view at the bottom.
+     *
+     * The last section is short, so at the very end of the document nothing new can enter
+     * the band; the scroll listener handles that case by pinning the final entry once the
+     * page is scrolled to the bottom. Without it, "Contact" is the one link the rail can
+     * never highlight.
+     */
+    function initPolicyToc(): void {
+        const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')];
+        if (links.length === 0) return;
+
+        const sections = links
+            .map((link) => document.getElementById(link.dataset.toc!))
+            .filter((section): section is HTMLElement => section !== null);
+        if (sections.length === 0) return;
+
+        const visible = new Set<string>();
+        let pinned: string | null = null;
+
+        const paint = () => {
+            const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
+            const current = atBottom
+                ? sections[sections.length - 1]!.id
+                : (sections.find((section) => visible.has(section.id))?.id ?? pinned);
+
+            if (current === pinned && current !== null) return;
+            pinned = current;
+
+            for (const link of links) {
+                const isCurrent = link.dataset.toc === current;
+                link.classList.toggle('active', isCurrent);
+                if (isCurrent) link.setAttribute('aria-current', 'true');
+                else link.removeAttribute('aria-current');
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) visible.add(entry.target.id);
+                    else visible.delete(entry.target.id);
+                }
+                paint();
+            },
+            { rootMargin: '0px 0px -66% 0px', threshold: 0 },
+        );
+
+        for (const section of sections) observer.observe(section);
+        window.addEventListener('scroll', paint, { passive: true });
+        paint();
+    }
+
+    initPolicyToc();
+    document.addEventListener('astro:page-load', initPolicyToc);
+</script>
 
 <footer class="policy-footer">
     <div class="wrap policy-footer-inner">
@@ -350,15 +476,32 @@ const summaryCards = [
         flex: 1;
     }
 
-    .policy-head {
-        padding-block: clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px);
+    /*
+     * The document is a column, and the column is centred.
+     *
+     * `.wrap` is 1240px wide because the landing page needs it. A legal text does not:
+     * capping the prose at a readable measure inside that width left the article hugging
+     * the left edge with 300px of nothing beside it, which reads as a layout accident
+     * rather than as a margin. So this page narrows the container and centres it, and
+     * everything inside shares one left edge and one right edge: the rail, the headings,
+     * the paragraphs and both tables.
+     */
+    .policy-head,
+    .policy-body {
+        /*
+         * `.wrap` is `border-box` and carries the gutter as padding, so a flat
+         * `max-width: 1000px` here spends up to 128px of it on the gutter and hands the
+         * article 592px instead of the 720 it was sized for, which put the table columns
+         * back to wrapping. Adding the gutter back keeps the *content* at 980 whatever
+         * the viewport does to the gutter.
+         */
+        max-width: calc(980px + var(--gutter) * 2);
+        margin-inline: auto;
     }
 
-    /* The title has to stop somewhere, but the block itself must not: a `max-width` on
-       `.policy-head` centres it inside `.wrap` and leaves its left edge somewhere the
-       contents rail below is not. */
-    .policy-title {
-        max-width: 20ch;
+    .policy-head {
+        padding-block: clamp(40px, 6vw, 76px) clamp(28px, 4vw, 44px);
+        text-align: center;
     }
 
     .policy-title {
@@ -381,6 +524,11 @@ const summaryCards = [
     .policy-lede {
         margin-top: 20px;
         max-width: 68ch;
+        /* Centred as a block, ranged left as text. Centring the lines of a paragraph this
+           long costs exactly what article 12 of the GDPR asks for, which is that the
+           reader can follow it without hunting for where each line starts. */
+        text-align: left;
+        margin-inline: auto;
         font-size: clamp(1.02rem, 1.3vw, 1.15rem);
         line-height: 1.75;
         color: var(--text-soft);
@@ -429,11 +577,72 @@ const summaryCards = [
         color: var(--text-soft);
     }
 
+    /* ── The first layer ── */
+    .policy-basic {
+        margin-top: 34px;
+        padding: clamp(20px, 3vw, 30px);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface);
+        text-align: left;
+    }
+
+    :root[data-theme='light'] .policy-basic {
+        background: var(--bg-surface);
+    }
+
+    .policy-basic-heading {
+        font-size: 0.72rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-dim);
+        margin-bottom: 18px;
+        text-align: center;
+    }
+
+    .policy-basic-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .policy-basic-row {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 16px;
+        padding-block: 11px;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .policy-basic-row:first-child {
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .policy-basic-row dt {
+        font-size: 0.78rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--action-color);
+        padding-top: 3px;
+    }
+
+    :root[data-theme='light'] .policy-basic-row dt {
+        color: var(--header-color);
+    }
+
+    .policy-basic-row dd {
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+    }
+
     /* ── Contents rail and article ── */
     .policy-body {
         display: grid;
-        grid-template-columns: 240px minmax(0, 1fr);
-        gap: clamp(32px, 5vw, 64px);
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: clamp(28px, 3vw, 44px);
         padding-bottom: clamp(56px, 8vw, 110px);
         align-items: start;
     }
@@ -468,10 +677,6 @@ const summaryCards = [
         gap: 2px;
     }
 
-    .policy-toc-list li {
-        counter-increment: toc;
-    }
-
     .policy-toc-list a {
         display: block;
         padding: 5px 0;
@@ -493,15 +698,53 @@ const summaryCards = [
     }
 
     /*
-     * The measure is on the prose, not on the column. Capping the article itself made the
-     * two tables 74ch wide as well, and at that width the first column wrapped
-     * `generativelanguage.googleapis.com` across three lines — a hostname broken mid-word
-     * is exactly the thing a reader is meant to be able to check. The paragraphs keep
-     * their line length; the tables get the whole column.
+     * Where the reader is. `active` is put on by the script above, so it never appears in
+     * the built HTML; it is in `ADDED_AT_RUNTIME` in `scoped-styles.test.ts` for that
+     * reason. Colour alone would not do it, so the entry also gains weight and a rule down
+     * its left side, which survives a colourblind reader and a monochrome print.
      */
+    .policy-toc-list a.active {
+        color: var(--action-color);
+        font-weight: 700;
+    }
+
+    .policy-toc-list a.active::before {
+        color: var(--action-color);
+    }
+
+    .policy-toc-list li {
+        counter-increment: toc;
+        border-left: 2px solid transparent;
+        padding-left: 10px;
+        margin-left: -12px;
+        transition: border-color 0.18s ease;
+    }
+
+    .policy-toc-list li:has(a.active) {
+        border-left-color: var(--action-color);
+    }
+
+    /*
+     * No cap on the prose any more. The column itself is the measure: 1000px less the rail
+     * and the gap leaves the article around 700px, which at this size is a little over
+     * eighty characters a line. That is the top of the comfortable range rather than the
+     * middle of it, and it is what the narrower container buys, since capping the
+     * paragraphs any tighter is exactly what put the empty band back beside them.
+     */
+    /*
+     * A measure again, but a generous one. Unbounded, the paragraphs ran the full 716px of
+     * the column, which is past ninety characters a line; capped at the old 74ch they left
+     * a 150px band of nothing beside them, which is the smaller version of the problem the
+     * narrower container was meant to solve. 80ch sits between the two, and the tables
+     * still get the whole column because the cap is on the prose, not on the article.
+     */
+    .policy-article {
+        text-align: left;
+    }
+
     .policy-article p,
     .policy-list {
-        max-width: 74ch;
+        max-width: 80ch;
     }
 
     .policy-article section {
@@ -526,13 +769,17 @@ const summaryCards = [
     }
 
     .policy-article p {
-        font-size: 0.98rem;
+        font-size: 1rem;
         line-height: 1.78;
         color: var(--text-soft);
     }
 
-    .policy-article p + p {
-        margin-top: 14px;
+    .policy-article p + p,
+    /* `p + p` covers prose against prose and nothing else, so the paragraph that closes a
+       section after a list or a table was sitting flush against it. */
+    .policy-article .policy-list + p,
+    .policy-article .policy-table-scroll + p {
+        margin-top: 16px;
     }
 
     .policy-list {
@@ -712,6 +959,13 @@ const summaryCards = [
     @media (max-width: 860px) {
         .policy-summary {
             grid-template-columns: 1fr;
+        }
+
+        /* The label column stops being a column. At this width 150px of it is most of the
+           line, and the value underneath reads better than the value squeezed beside it. */
+        .policy-basic-row {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 4px;
         }
     }
 
