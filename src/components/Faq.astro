@@ -1,119 +1,17 @@
 ---
-import { useTranslations } from '@/i18n/utils';
-import type { Lang } from '@/i18n/ui';
+import { type Lang } from '@/i18n/ui';
 import SectionHeader from '@/components/SectionHeader.astro';
+import QuestionList from '@/components/QuestionList.astro';
 import { questions } from '@/data/story';
-import Icon from '@/components/Icon.astro';
 
 interface Props {
     lang: Lang;
 }
 
 const { lang } = Astro.props;
-const t = useTranslations(lang);
 ---
 
 <section id="faq" class="section-container wrap">
-    <!-- Section Header -->
     <SectionHeader lang={lang} titleKey="faq.heading" subtitleKey="faq.subtitle" />
-
-    <!-- Accordion List -->
-    <div class="faq-list" data-reveal>
-        {
-            questions.map((item) => (
-                <details class="faq-item">
-                    <summary class="faq-question">
-                        <span>{t(item.qKey)}</span>
-                        <Icon name="chevronDown" class="faq-chevron" />
-                    </summary>
-                    <div class="faq-answer">
-                        <p>{t(item.aKey)}</p>
-                    </div>
-                </details>
-            ))
-        }
-    </div>
+    <QuestionList lang={lang} items={questions} />
 </section>
-
-<style>
-    .faq-list {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .faq-item {
-        background: var(--bg-panel-color);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-md);
-        overflow: hidden;
-        transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-    }
-
-    :root[data-theme='light'] .faq-item {
-        background: #ffffff;
-        box-shadow: 0 4px 16px rgba(12, 29, 23, 0.04);
-    }
-
-    .faq-item[open] {
-        border-color: var(--action-color);
-        box-shadow: 0 4px 20px rgba(22, 160, 133, 0.15);
-    }
-
-    .faq-question {
-        padding: 22px 28px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text-color);
-        cursor: pointer;
-        list-style: none;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        user-select: none;
-        transition: color 0.18s ease;
-    }
-
-    .faq-question:hover {
-        color: var(--action-color);
-    }
-
-    :root[data-theme='light'] .faq-question:hover {
-        color: var(--header-color);
-    }
-
-    .faq-question::-webkit-details-marker {
-        display: none;
-    }
-
-    /* `:global` because the chevron is rendered by `Icon.astro`, so it carries that
-       component's scope and not this one's. Astro scopes every part of a selector, and
-       an unscoped element here would otherwise never be matched. */
-    .faq-question :global(.faq-chevron) {
-        color: var(--action-color);
-        transition: transform 0.2s ease;
-        flex-shrink: 0;
-    }
-
-    :root[data-theme='light'] .faq-question :global(.faq-chevron) {
-        color: var(--header-color);
-    }
-
-    .faq-item[open] :global(.faq-chevron) {
-        transform: rotate(180deg);
-    }
-
-    .faq-answer {
-        padding: 0 28px 24px;
-        font-size: 1rem;
-        color: var(--text-soft);
-        line-height: 1.7;
-        border-top: 1px solid var(--border-subtle);
-        padding-top: 16px;
-    }
-</style>

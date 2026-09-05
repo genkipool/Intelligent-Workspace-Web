@@ -787,7 +787,6 @@ export const ui = {
         'privacy.effective': 'In effect since',
         'privacy.lede':
             'There is no account to create, no server of ours to talk to, and nothing in the extension that reports back. That leaves this document short on promises and long on specifics: what is stored, where it sits, and every moment something crosses the network.',
-        'privacy.back': 'Back to the site',
         'privacy.toc': 'On this page',
 
         'privacy.sum1.title': 'No account, no server',
@@ -1092,6 +1091,96 @@ export const ui = {
         'errors.support': 'Support the project',
         'errors.source': 'Read the source',
 
+        // Standalone pages — the header and footer shared by the policy, the support
+        // centre and the error screens.
+        'doc.back': 'Back to the site',
+
+        // Support centre
+        'support.meta.title': 'Support — Intelligent Workspace',
+        'support.meta.description':
+            'Help with Intelligent Workspace: fixes for the problems that come up most, what to put in a report so it can be answered in one reply, and the three places a message actually reaches.',
+        'support.eyebrow': 'Support',
+        'support.title': 'Help with Intelligent Workspace',
+        'support.lede':
+            'Two people build this extension and the same two answer the post. Most of what arrives has a fix on this page, so it is worth a minute before you write — and if it is not here, the addresses below are real inboxes rather than a form.',
+        'support.badge': 'Usually answered within two working days',
+
+        'support.channels.heading': 'Where to write',
+        'support.channels.sub': 'Three routes, and the one you pick changes how quickly it gets looked at.',
+        'support.ch1.title': 'Email',
+        'support.ch1.desc':
+            'Anything you would rather not post in public: a screenshot with your own tabs in it, a problem with a contribution, or a question about what the extension stores.',
+        'support.ch1.meta': 'Private · answered by a person',
+        'support.ch1.cta': 'Write to us',
+        'support.ch2.title': 'GitHub issues',
+        'support.ch2.desc':
+            'Bugs and feature requests. Public, so anyone hitting the same thing finds your report — and you can watch the fix land in a commit.',
+        'support.ch2.meta': 'Public · fastest for bugs',
+        'support.ch2.cta': 'Open an issue',
+        'support.ch3.title': 'Chrome Web Store',
+        'support.ch3.desc':
+            'The support tab on the listing, for anyone who would rather not leave the store. It reaches the same inbox, a little more slowly.',
+        'support.ch3.meta': 'Public · store listing',
+        'support.ch3.cta': 'Go to the listing',
+
+        'support.fix.heading': 'Fix it in a minute',
+        'support.fix.sub':
+            'The seven things that account for most of the post. Each answer is the one we would have replied with.',
+        'support.fix.q1': 'The side panel will not open, or the extension is nowhere to be seen',
+        'support.fix.a1':
+            'Open the puzzle-piece menu in the toolbar and pin Intelligent Workspace, then check it is enabled at chrome://extensions. The side panel needs a Chromium browser that ships the Side Panel API: Chrome, Brave, Edge, Opera and Vivaldi have it; Firefox and Safari do not, so the extension cannot run there at all.',
+        'support.fix.q2': 'A keyboard shortcut does nothing',
+        'support.fix.a2':
+            'Two causes, in this order. Another extension may already own the combination: open chrome://extensions/shortcuts and rebind whichever one you prefer. And the keys typed on the page itself — the letter labels, the omnibar — need a content script, which Chrome forbids on its own pages: chrome://, the Web Store and the PDF viewer will never respond to them. Every key can be rebound; none of them is fixed.',
+        'support.fix.q3': 'The assistant answers with a quota or key error',
+        'support.fix.a3':
+            "A free Google AI Studio key has a daily ceiling, and that message is Google refusing the request rather than the extension failing. Paste a second key in the settings — the extension rotates through the ones you store — or switch the assistant to Chrome's on-device model, which needs no key, costs nothing and works offline.",
+        'support.fix.q4': 'Some tabs are not landing in the group their rule names',
+        'support.fix.a4':
+            'A rule matches a fragment of the address rather than a whole one, so "docs.google" catches every document and "google" catches far more than you meant. Check the fragment appears in the URL exactly as you typed it, and remember that a tab you dragged into a group by hand stays where you put it: the rules sort what arrives, they do not overrule you.',
+        'support.fix.q5': 'My settings did not follow me to another computer',
+        'support.fix.a5':
+            "Only the small things travel. Rules, preferences and shortcuts sit in the browser's synced storage and follow your Chrome profile; notes, screenshots, time records and Pomodoro history are far too large for that quota and stay in the local database on each machine. Move them with the export file: it is a plain backup you write on one computer and import on the other.",
+        'support.fix.q6': 'I want to start over, or I am about to reinstall',
+        'support.fix.a6':
+            'Export a backup first, from the backup panel. Uninstalling a Chrome extension deletes its local database along with it, and there is no copy on our side to send you — that is the other half of keeping everything on your machine. With the file saved, a fresh install is one import away from where you left off.',
+        'support.fix.q7': 'Chrome has felt slower since I installed it',
+        'support.fix.a7':
+            'Tell us, with the number in front. Open Chrome\'s own task manager (Shift+Esc), find the row for the extension, and send us what it says along with roughly how many tabs and how many rules you have. A slowdown we can reproduce is a bug we can fix; one described as "it feels heavy" is one we can only guess at.',
+
+        'support.report.heading': 'What to put in a report',
+        'support.report.sub':
+            'A report with these five lines is usually answered once. Without them it turns into three messages of questions before anyone can start.',
+        'support.report.i1':
+            'The extension version, from chrome://extensions, and your browser with its version.',
+        'support.report.i2': 'Your operating system — a bug that only happens on one is a common shape.',
+        'support.report.i3': 'What you did, step by step, in enough detail that somebody else can do it too.',
+        'support.report.i4': 'What you expected to happen, and what happened instead.',
+        'support.report.i5':
+            'Anything red in the console: right-click the panel, choose Inspect, and copy the Console tab.',
+        'support.report.note':
+            'Screenshots help and are welcome. Crop out whatever you would rather not share — we do not need your tabs to read an error message.',
+
+        'support.more.heading': 'Answers already written down',
+        'support.more.sub': 'Four pages that between them cover most of what gets asked twice.',
+        'support.more.r1.title': 'Frequently asked questions',
+        'support.more.r1.desc': 'Cost, accounts, the AI key, and which browsers work.',
+        'support.more.r2.title': 'Every keyboard shortcut',
+        'support.more.r2.desc': 'The omnibar prefixes, the page keys and the browser commands.',
+        'support.more.r3.title': 'Privacy policy',
+        'support.more.r3.desc': 'What is stored, where it sits, and what leaves the machine.',
+        'support.more.r4.title': 'Support the project',
+        'support.more.r4.desc': 'The extension is free. A contribution is what keeps it maintained.',
+
+        'support.contact.heading': 'Still stuck?',
+        'support.contact.p1':
+            'Write, and say what you already tried. There is no ticket number, no bot and no first line: the message arrives in the inbox of whoever wrote the code.',
+        'support.contact.email': 'Send an email',
+        'support.contact.issue': 'Open an issue',
+        'support.contact.privacy':
+            'A question about your data or your rights goes to the same address; the privacy policy says what is held and what you can ask for.',
+        'support.contact.privacyCta': 'Read the privacy policy',
+
         // Footer
         'footer.store': 'Chrome Web Store',
         'footer.github': 'GitHub Repository',
@@ -1101,6 +1190,8 @@ export const ui = {
         'footer.toolsTitle': 'Utilities',
         'footer.privacyTitle': 'Privacy & Trust',
         'footer.policy': 'Privacy Policy',
+        'footer.support': 'Support',
+        'footer.navLabel': 'Site pages',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. All rights reserved.',
         'footer.license': 'Source available for audit on GitHub. Proprietary license.',
     },
@@ -1887,7 +1978,6 @@ export const ui = {
         'privacy.effective': 'En vigor desde el',
         'privacy.lede':
             'No hay cuenta que crear, no hay servidor nuestro con el que hablar y no hay nada en la extensión que informe de vuelta. Eso deja este documento corto en promesas y largo en detalles: qué se guarda, dónde está y cada momento en que algo cruza la red.',
-        'privacy.back': 'Volver al sitio',
         'privacy.toc': 'En esta página',
 
         'privacy.sum1.title': 'Sin cuenta, sin servidor',
@@ -2196,6 +2286,99 @@ export const ui = {
         'errors.support': 'Apoyar el proyecto',
         'errors.source': 'Leer el código fuente',
 
+        // Standalone pages — the header and footer shared by the policy, the support
+        // centre and the error screens.
+        'doc.back': 'Volver al sitio',
+
+        // Support centre
+        'support.meta.title': 'Soporte — Intelligent Workspace',
+        'support.meta.description':
+            'Ayuda con Intelligent Workspace: la solución a los problemas más frecuentes, qué incluir en un informe para poder responderlo de una, y los tres sitios a los que un mensaje llega de verdad.',
+        'support.eyebrow': 'Soporte',
+        'support.title': 'Ayuda con Intelligent Workspace',
+        'support.lede':
+            'Somos dos personas: las mismas que escriben la extensión contestan el correo. Casi todo lo que llega tiene solución en esta página, así que merece la pena dedicarle un minuto antes de escribir; y si no está aquí, las direcciones de abajo son buzones reales, no un formulario.',
+        'support.badge': 'Solemos responder en dos días laborables',
+
+        'support.channels.heading': 'Dónde escribir',
+        'support.channels.sub': 'Tres vías, y la que elijas cambia la rapidez con la que se mira.',
+        'support.ch1.title': 'Correo',
+        'support.ch1.desc':
+            'Cualquier cosa que prefieras no publicar: una captura con tus propias pestañas, un problema con una aportación o una duda sobre qué guarda la extensión.',
+        'support.ch1.meta': 'Privado · contesta una persona',
+        'support.ch1.cta': 'Escríbenos',
+        'support.ch2.title': 'Incidencias en GitHub',
+        'support.ch2.desc':
+            'Fallos y propuestas. Es público, así que quien se tope con lo mismo encuentra tu informe, y puedes ver cómo la corrección aterriza en un commit.',
+        'support.ch2.meta': 'Público · lo más rápido para fallos',
+        'support.ch2.cta': 'Abrir una incidencia',
+        'support.ch3.title': 'Chrome Web Store',
+        'support.ch3.desc':
+            'La pestaña de asistencia de la ficha, para quien prefiera no salir de la tienda. Llega al mismo buzón, un poco más despacio.',
+        'support.ch3.meta': 'Público · ficha de la tienda',
+        'support.ch3.cta': 'Ir a la ficha',
+
+        'support.fix.heading': 'Arréglalo en un minuto',
+        'support.fix.sub':
+            'Las siete cosas que explican casi todo el correo que llega. Cada respuesta es la que te habríamos contestado.',
+        'support.fix.q1': 'El panel lateral no se abre, o la extensión no aparece por ninguna parte',
+        'support.fix.a1':
+            'Abre el menú de la pieza de puzle de la barra de herramientas y fija Intelligent Workspace; después comprueba en chrome://extensions que está activada. El panel lateral necesita un navegador Chromium que traiga la API de panel lateral: Chrome, Brave, Edge, Opera y Vivaldi la tienen; Firefox y Safari no, así que ahí la extensión no puede funcionar.',
+        'support.fix.q2': 'Un atajo de teclado no hace nada',
+        'support.fix.a2':
+            'Dos causas, por este orden. Puede que otra extensión ya se haya quedado con esa combinación: entra en chrome://extensions/shortcuts y reasigna la que prefieras. Y las teclas que se pulsan sobre la propia página —las etiquetas de letra, el omnibar— necesitan un content script, que Chrome prohíbe en sus propias páginas: chrome://, la Web Store y el visor de PDF no van a responder nunca. Todas las teclas se pueden reasignar; ninguna es fija.',
+        'support.fix.q3': 'El asistente responde con un error de cuota o de clave',
+        'support.fix.a3':
+            'Una clave gratuita de Google AI Studio tiene un tope diario, y ese mensaje es Google rechazando la petición, no la extensión fallando. Pega una segunda clave en los ajustes —la extensión va rotando entre las que guardes— o cambia el asistente al modelo local de Chrome, que no necesita clave, no cuesta nada y funciona sin conexión.',
+        'support.fix.q4': 'Algunas pestañas no caen en el grupo que dice su regla',
+        'support.fix.a4':
+            'Una regla busca un fragmento de la dirección, no la dirección entera: «docs.google» atrapa todos los documentos y «google» atrapa muchísimo más de lo que pretendías. Comprueba que el fragmento aparece en la URL tal y como lo escribiste, y ten en cuenta que una pestaña que arrastraste a un grupo a mano se queda donde la pusiste: las reglas ordenan lo que llega, no te llevan la contraria.',
+        'support.fix.q5': 'Mis ajustes no me han seguido a otro ordenador',
+        'support.fix.a5':
+            'Solo viaja lo pequeño. Reglas, preferencias y atajos están en el almacenamiento sincronizado del navegador y siguen a tu perfil de Chrome; las notas, las capturas, los registros de tiempo y el historial del Pomodoro son demasiado grandes para esa cuota y se quedan en la base de datos local de cada máquina. Muévelos con el archivo de exportación: es una copia de seguridad que escribes en un ordenador e importas en el otro.',
+        'support.fix.q6': 'Quiero empezar de cero, o voy a reinstalar',
+        'support.fix.a6':
+            'Exporta antes una copia desde el panel de copias de seguridad. Desinstalar una extensión de Chrome borra con ella su base de datos local, y por nuestra parte no hay ninguna copia que enviarte: esa es la otra mitad de guardarlo todo en tu máquina. Con el archivo guardado, una instalación limpia está a una importación de donde lo dejaste.',
+        'support.fix.q7': 'Chrome me va más lento desde que la instalé',
+        'support.fix.a7':
+            'Cuéntanoslo con el número por delante. Abre el administrador de tareas de Chrome (Mayús+Esc), busca la fila de la extensión y mándanos lo que ponga junto con cuántas pestañas y cuántas reglas tienes más o menos. Una ralentización que podemos reproducir es un fallo que podemos arreglar; una descrita como «va pesado» solo la podemos adivinar.',
+
+        'support.report.heading': 'Qué poner en un informe',
+        'support.report.sub':
+            'Un informe con estas cinco líneas se suele responder de una. Sin ellas se convierte en tres mensajes de preguntas antes de que nadie pueda empezar.',
+        'support.report.i1':
+            'La versión de la extensión, que sale en chrome://extensions, y tu navegador con su versión.',
+        'support.report.i2': 'Tu sistema operativo: un fallo que solo ocurre en uno es una forma habitual.',
+        'support.report.i3':
+            'Qué hiciste, paso a paso, con el detalle suficiente para que otra persona pueda repetirlo.',
+        'support.report.i4': 'Qué esperabas que pasara y qué pasó en su lugar.',
+        'support.report.i5':
+            'Lo que salga en rojo en la consola: clic derecho sobre el panel, Inspeccionar, y copia la pestaña Consola.',
+        'support.report.note':
+            'Las capturas ayudan y son bienvenidas. Recorta lo que prefieras no compartir: no nos hacen falta tus pestañas para leer un mensaje de error.',
+
+        'support.more.heading': 'Respuestas que ya están escritas',
+        'support.more.sub':
+            'Cuatro páginas que entre las cuatro cubren casi todo lo que se pregunta dos veces.',
+        'support.more.r1.title': 'Preguntas frecuentes',
+        'support.more.r1.desc': 'Precio, cuentas, la clave de IA y qué navegadores valen.',
+        'support.more.r2.title': 'Todos los atajos de teclado',
+        'support.more.r2.desc':
+            'Los prefijos del omnibar, las teclas de página y los comandos del navegador.',
+        'support.more.r3.title': 'Política de privacidad',
+        'support.more.r3.desc': 'Qué se guarda, dónde está y qué sale de la máquina.',
+        'support.more.r4.title': 'Apoyar el proyecto',
+        'support.more.r4.desc': 'La extensión es gratis. Una aportación es lo que la mantiene viva.',
+
+        'support.contact.heading': '¿Sigues atascado?',
+        'support.contact.p1':
+            'Escribe y cuenta lo que ya has probado. No hay número de ticket, ni bot, ni primer nivel: el mensaje llega al buzón de quien escribió el código.',
+        'support.contact.email': 'Enviar un correo',
+        'support.contact.issue': 'Abrir una incidencia',
+        'support.contact.privacy':
+            'Una duda sobre tus datos o tus derechos va a la misma dirección; la política de privacidad cuenta qué se guarda y qué puedes pedir.',
+        'support.contact.privacyCta': 'Leer la política de privacidad',
+
         // Footer
         'footer.store': 'Chrome Web Store',
         'footer.github': 'Repositorio de GitHub',
@@ -2205,6 +2388,8 @@ export const ui = {
         'footer.toolsTitle': 'Utilidades',
         'footer.privacyTitle': 'Privacidad y Confianza',
         'footer.policy': 'Política de Privacidad',
+        'footer.support': 'Soporte',
+        'footer.navLabel': 'Páginas del sitio',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. Todos los derechos reservados.',
         'footer.license': 'Código disponible para auditoría en GitHub. Licencia propietaria.',
     },

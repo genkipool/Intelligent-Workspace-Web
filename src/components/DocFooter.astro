@@ -1,0 +1,94 @@
+---
+/**
+ * The footer on a page that is not the landing page.
+ *
+ * `SiteFooter.astro` is four columns of anchors into the landing page's sections, which
+ * is the right footer there and a wall of dead links anywhere else. This is the same
+ * bottom bar without them: the copyright, the licence, and the two standalone pages a
+ * reader might be looking for.
+ *
+ * `current` drops the link to the page doing the rendering. A footer that offers to take
+ * you where you already are reads as a mistake, and on the privacy policy it was one.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+    /** The page this footer is on, so it does not link to itself. */
+    current?: 'privacy' | 'support';
+}
+
+const { lang, current } = Astro.props;
+const t = useTranslations(lang);
+
+const links = [
+    { id: 'privacy', href: localisePath(lang, '/privacy'), label: t('footer.policy') },
+    { id: 'support', href: localisePath(lang, '/support'), label: t('footer.support') },
+].filter((link) => link.id !== current);
+---
+
+<footer class="doc-footer">
+    <div class="wrap doc-footer-inner">
+        <span>{t('footer.copyright')}</span>
+        <nav class="doc-footer-links" aria-label={t('footer.navLabel')}>
+            {
+                links.map((link) => (
+                    <a class="doc-footer-link" href={link.href}>
+                        {link.label}
+                    </a>
+                ))
+            }
+        </nav>
+        <span>{t('footer.license')}</span>
+    </div>
+</footer>
+
+<style>
+    .doc-footer {
+        position: relative;
+        z-index: 2;
+        margin-top: auto;
+        padding-block: 22px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .doc-footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px 20px;
+    }
+
+    .doc-footer-links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 18px;
+    }
+
+    .doc-footer-link {
+        color: var(--text-muted);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .doc-footer-link:hover {
+        color: var(--action-color);
+        border-bottom-color: var(--action-color);
+    }
+
+    @media (max-width: 640px) {
+        .doc-footer-inner {
+            justify-content: center;
+            text-align: center;
+        }
+    }
+</style>

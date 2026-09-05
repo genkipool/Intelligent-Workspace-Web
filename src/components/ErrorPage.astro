@@ -9,16 +9,16 @@
  * tokens come from `global.css`, so the page follows the Viridian theme and the
  * light/dark toggle like every other page on the site.
  *
- * It carries its own header and footer rather than `Nav.astro` and `SiteFooter.astro`:
- * every link in those two is an anchor into a section of the landing page, and an
- * anchor to a section that is not on this page is a dead link. What is left here goes
- * somewhere real.
+ * The header and footer are `DocTopbar` and `DocFooter` rather than `Nav.astro` and
+ * `SiteFooter.astro`: every link in those two is an anchor into a section of the landing
+ * page, and an anchor to a section that is not on this page is a dead link. The topbar
+ * drops its back link here, since the primary button below already goes home.
  */
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
-import LangToggle from '@/components/LangToggle.astro';
-import ThemeToggle from '@/components/ThemeToggle.astro';
+import DocTopbar from '@/components/DocTopbar.astro';
+import DocFooter from '@/components/DocFooter.astro';
 
 interface Props {
     lang: Lang;
@@ -38,27 +38,7 @@ const homeUrl = localisePath(lang, '/');
 const payUrl = localisePath(lang, '/pay');
 ---
 
-<header class="error-topbar">
-    <div class="wrap error-topbar-inner">
-        <a href={homeUrl} class="error-brand" aria-label={site.name}>
-            <img
-                src="/assets/logo.svg"
-                alt=""
-                width="32"
-                height="32"
-                class="error-brand-logo"
-                aria-hidden="true"
-                decoding="async"
-            />
-            <span class="error-brand-name">{site.name}</span>
-        </a>
-
-        <div class="error-topbar-actions">
-            <LangToggle lang={lang} />
-            <ThemeToggle lang={lang} />
-        </div>
-    </div>
-</header>
+<DocTopbar lang={lang} back={false} />
 
 <main class="error-main" id="main">
     <!-- The status code, set as scenery. `aria-hidden` because the pill below already
@@ -94,14 +74,7 @@ const payUrl = localisePath(lang, '/pay');
     </div>
 </main>
 
-<footer class="error-footer">
-    <div class="wrap error-footer-inner">
-        <span>{t('footer.copyright')}</span>
-        {/* Reachable from every page, this one included. */}
-        <a class="error-footer-link" href={localisePath(lang, '/privacy')}>{t('footer.policy')}</a>
-        <span>{t('footer.license')}</span>
-    </div>
-</footer>
+<DocFooter lang={lang} />
 
 {
     /* Astro has no `reset()` to hand a button, so "try again" is a reload: the whole
@@ -114,47 +87,6 @@ const payUrl = localisePath(lang, '/pay');
 </script>
 
 <style>
-    /* ── Header ── */
-    .error-topbar {
-        position: relative;
-        z-index: 2;
-        padding-block: 18px;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .error-topbar-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-    }
-
-    .error-brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text-color);
-        text-decoration: none;
-    }
-
-    .error-brand-logo {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-    }
-
-    .error-brand-name {
-        font-weight: 750;
-        font-size: 1.05rem;
-        letter-spacing: -0.02em;
-    }
-
-    .error-topbar-actions {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-    }
-
     /* ── The stage ── */
     .error-main {
         position: relative;
@@ -284,50 +216,5 @@ const payUrl = localisePath(lang, '/pay');
     .error-links a:hover {
         color: var(--action-color);
         border-bottom-color: var(--action-color);
-    }
-
-    /* ── Footer ── */
-    .error-footer {
-        position: relative;
-        z-index: 2;
-        margin-top: auto;
-        padding-block: 22px;
-        border-top: 1px solid var(--border-subtle);
-        font-size: 0.8rem;
-        color: var(--text-dim);
-    }
-
-    .error-footer-link {
-        color: var(--text-muted);
-        font-weight: 600;
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        transition:
-            color 0.2s ease,
-            border-color 0.2s ease;
-    }
-
-    .error-footer-link:hover {
-        color: var(--action-color);
-        border-bottom-color: var(--action-color);
-    }
-
-    .error-footer-inner {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-    }
-
-    @media (max-width: 640px) {
-        .error-brand-name {
-            display: none;
-        }
-
-        .error-footer-inner {
-            justify-content: center;
-            text-align: center;
-        }
     }
 </style>

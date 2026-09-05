@@ -1,0 +1,38 @@
+---
+/**
+ * The support centre, in English.
+ *
+ * Prerendered like the rest of the site and deliberately indexable: "how do I stop the
+ * omnibar opening on chrome://" is a search somebody makes before they think to open the
+ * site, and the answer is here. It keeps the canonical and the `hreflang` pair
+ * `Base.astro` builds from the path, which is why the Spanish copy lives at the same
+ * path under `/es/` rather than at a translated one.
+ */
+import Base from '@/layouts/Base.astro';
+import SupportCenter from '@/components/SupportCenter.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<Base
+    lang="en"
+    title={t('support.meta.title')}
+    description={t('support.meta.description')}
+    icons={[
+        'sun',
+        'moon',
+        'back',
+        'clock',
+        'note',
+        'github',
+        'chromeStore',
+        'chevronDown',
+        'bookOpen',
+        'keyboardKeys',
+        'shieldCheck',
+        'heart',
+    ]}
+>
+    <SupportCenter lang="en" />
+</Base>

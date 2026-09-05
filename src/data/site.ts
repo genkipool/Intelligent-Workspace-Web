@@ -23,6 +23,20 @@ export const site = {
     privacyEmail: 'luisrb1985@gmail.com',
 } as const;
 
+/**
+ * The three places a message can arrive, all derived from the facts above so a changed
+ * repository or listing moves them together.
+ *
+ * The mail subject is deliberately not translated. It is a label on an inbox rather than
+ * copy on the page, and one spelling makes the thread filterable however the sender
+ * happened to be reading the site.
+ */
+export const supportUrls = {
+    email: `mailto:${site.privacyEmail}?subject=${encodeURIComponent('Intelligent Workspace support')}`,
+    issues: `${site.sourceUrl}/issues`,
+    store: `${site.storeUrl}/support`,
+} as const;
+
 export interface Person {
     name: string;
     roleKey: TranslationKey;

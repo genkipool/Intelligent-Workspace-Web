@@ -2,11 +2,11 @@
 /**
  * The privacy policy, as a page rather than a wall.
  *
- * It carries its own header and footer for the reason `ErrorPage.astro` does: every link
- * in `Nav.astro` and `SiteFooter.astro` is an anchor into a section of the landing page,
- * and an anchor to a section that is not on this page is a dead link. What is here goes
- * somewhere real, and the one link back into the landing is an absolute path rather than
- * a fragment.
+ * The header and footer are `DocTopbar` and `DocFooter` rather than the landing page's:
+ * every link in `Nav.astro` and `SiteFooter.astro` is an anchor into a section of that
+ * page, and an anchor to a section that is not on this one is a dead link. What is here
+ * goes somewhere real, and the link back into the landing is an absolute path rather
+ * than a fragment.
  *
  * The two tables are the point of the document. A policy is usually a paragraph saying
  * "we store some things locally"; these say which things, in which storage area, and
@@ -24,8 +24,8 @@ import type { Lang } from '@/i18n/ui';
 import { site } from '@/data/site';
 import { sections, basicRows, storageRows, connectionRows, effectiveDate } from '@/data/privacy';
 import Icon from '@/components/Icon.astro';
-import LangToggle from '@/components/LangToggle.astro';
-import ThemeToggle from '@/components/ThemeToggle.astro';
+import DocTopbar from '@/components/DocTopbar.astro';
+import DocFooter from '@/components/DocFooter.astro';
 
 interface Props {
     lang: Lang;
@@ -52,31 +52,7 @@ const summaryCards = [
 ] as const;
 ---
 
-<header class="policy-topbar">
-    <div class="wrap policy-topbar-inner">
-        <a href={homeUrl} class="policy-brand" aria-label={site.name}>
-            <img
-                src="/assets/logo.svg"
-                alt=""
-                width="32"
-                height="32"
-                class="policy-brand-logo"
-                aria-hidden="true"
-                decoding="async"
-            />
-            <span class="policy-brand-name">{site.name}</span>
-        </a>
-
-        <div class="policy-topbar-actions">
-            <a href={homeUrl} class="policy-back">
-                <Icon name="back" size={14} />
-                <span>{t('privacy.back')}</span>
-            </a>
-            <LangToggle lang={lang} />
-            <ThemeToggle lang={lang} />
-        </div>
-    </div>
-</header>
+<DocTopbar lang={lang} />
 
 <main class="policy-main" id="main">
     <div class="wrap policy-head">
@@ -408,70 +384,9 @@ const summaryCards = [
     document.addEventListener('astro:page-load', initPolicyToc);
 </script>
 
-<footer class="policy-footer">
-    <div class="wrap policy-footer-inner">
-        <span>{t('footer.copyright')}</span>
-        <span>{t('footer.license')}</span>
-    </div>
-</footer>
+<DocFooter lang={lang} current="privacy" />
 
 <style>
-    /* ── Header ── */
-    .policy-topbar {
-        position: relative;
-        z-index: 2;
-        padding-block: 18px;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .policy-topbar-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-    }
-
-    .policy-brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text-color);
-        text-decoration: none;
-    }
-
-    .policy-brand-logo {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-    }
-
-    .policy-brand-name {
-        font-weight: 750;
-        font-size: 1.05rem;
-        letter-spacing: -0.02em;
-    }
-
-    .policy-topbar-actions {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .policy-back {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: color 0.2s ease;
-    }
-
-    .policy-back:hover {
-        color: var(--action-color);
-    }
-
     /* ── The opening ── */
     .policy-main {
         position: relative;
@@ -930,25 +845,6 @@ const summaryCards = [
         font-size: 0.92rem;
     }
 
-    /* ── Footer ── */
-    .policy-footer {
-        position: relative;
-        z-index: 2;
-        margin-top: auto;
-        padding-block: 22px;
-        border-top: 1px solid var(--border-subtle);
-        font-size: 0.8rem;
-        color: var(--text-dim);
-    }
-
-    .policy-footer-inner {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-    }
-
     @media (max-width: 1000px) {
         .policy-body {
             grid-template-columns: minmax(0, 1fr);
@@ -969,21 +865,6 @@ const summaryCards = [
         .policy-basic-row {
             grid-template-columns: minmax(0, 1fr);
             gap: 4px;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .policy-brand-name {
-            display: none;
-        }
-
-        .policy-back span {
-            display: none;
-        }
-
-        .policy-footer-inner {
-            justify-content: center;
-            text-align: center;
         }
     }
 </style>

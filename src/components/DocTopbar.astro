@@ -1,0 +1,133 @@
+---
+/**
+ * The header on a page that is not the landing page.
+ *
+ * The privacy policy, the support centre and the error screens cannot use `Nav.astro`:
+ * every link in it is an anchor into a section of the landing page, and an anchor to a
+ * section that is not on this page is a dead link. Each of them grew its own header
+ * instead, and the three were the same header — same brand mark, same pair of toggles,
+ * same eighty lines of CSS written out three times.
+ *
+ * So it is one component. What is left of the difference is the back link, which the
+ * error screens do without because their whole content is one large button pointing at
+ * the same place.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+import Icon from '@/components/Icon.astro';
+import LangToggle from '@/components/LangToggle.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
+
+interface Props {
+    lang: Lang;
+    /** Off on the error screens, whose primary button already goes home. */
+    back?: boolean;
+}
+
+const { lang, back = true } = Astro.props;
+const t = useTranslations(lang);
+const homeUrl = localisePath(lang, '/');
+---
+
+<header class="doc-topbar">
+    <div class="wrap doc-topbar-inner">
+        <a href={homeUrl} class="doc-brand" aria-label={site.name}>
+            <img
+                src="/assets/logo.svg"
+                alt=""
+                width="32"
+                height="32"
+                class="doc-brand-logo"
+                aria-hidden="true"
+                decoding="async"
+            />
+            <span class="doc-brand-name">{site.name}</span>
+        </a>
+
+        <div class="doc-topbar-actions">
+            {
+                back && (
+                    <a href={homeUrl} class="doc-back">
+                        <Icon name="back" size={14} />
+                        <span>{t('doc.back')}</span>
+                    </a>
+                )
+            }
+            <LangToggle lang={lang} />
+            <ThemeToggle lang={lang} />
+        </div>
+    </div>
+</header>
+
+<style>
+    .doc-topbar {
+        position: relative;
+        z-index: 2;
+        padding-block: 18px;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .doc-topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .doc-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .doc-brand-logo {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+    }
+
+    .doc-brand-name {
+        font-weight: 750;
+        font-size: 1.05rem;
+        letter-spacing: -0.02em;
+        transition: color 0.2s ease;
+    }
+
+    .doc-brand:hover .doc-brand-name {
+        color: var(--action-color);
+    }
+
+    .doc-topbar-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .doc-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .doc-back:hover {
+        color: var(--action-color);
+    }
+
+    @media (max-width: 640px) {
+        .doc-brand-name {
+            display: none;
+        }
+
+        .doc-back span {
+            display: none;
+        }
+    }
+</style>

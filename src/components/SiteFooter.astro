@@ -76,6 +76,7 @@ const homeUrl = localisePath(lang, '/');
                     <li><a href="#privacidad">{t('nav.privacy')}</a></li>
                     <li><a href={localisePath(lang, '/privacy')}>{t('footer.policy')}</a></li>
                     <li><a href="#faq">{t('nav.faq')}</a></li>
+                    <li><a href={localisePath(lang, '/support')}>{t('footer.support')}</a></li>
                     <li><a href="#equipo">{t('team.heading')}</a></li>
                     <li>
                         <a href={site.sourceUrl} target="_blank" rel="noopener noreferrer"
@@ -91,11 +92,15 @@ const homeUrl = localisePath(lang, '/');
         <div class="footer-bottom-bar">
             <span class="footer-copy">{t('footer.copyright')}</span>
             {
-                /* The policy has to be reachable from anywhere on the site, so it sits in the
-                bottom bar as well as in the column above: that is where a reader looks for
-                a legal link, and the Chrome Web Store listing points at the same URL. */
+                /* The two standalone pages sit in the bottom bar as well as in the column
+                above. That is where a reader looks for a legal link — and the Chrome Web
+                Store listing points at both of these URLs, so neither may be more than one
+                click from anywhere on the site. */
             }
-            <a class="footer-policy-link" href={localisePath(lang, '/privacy')}>{t('footer.policy')}</a>
+            <nav class="footer-bottom-links" aria-label={t('footer.navLabel')}>
+                <a class="footer-policy-link" href={localisePath(lang, '/privacy')}>{t('footer.policy')}</a>
+                <a class="footer-policy-link" href={localisePath(lang, '/support')}>{t('footer.support')}</a>
+            </nav>
             <span class="footer-lic">{t('footer.license')}</span>
         </div>
     </div>
@@ -231,6 +236,13 @@ const homeUrl = localisePath(lang, '/');
         color: var(--header-color);
     }
 
+    .footer-bottom-links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 20px;
+    }
+
     .footer-policy-link {
         color: var(--text-muted);
         font-weight: 600;
@@ -250,9 +262,10 @@ const homeUrl = localisePath(lang, '/');
         padding-top: 32px;
         border-top: 1px solid var(--border-subtle);
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 12px 20px;
         font-size: 0.82rem;
         color: var(--text-dim);
     }

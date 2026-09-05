@@ -1,0 +1,142 @@
+---
+/**
+ * A stack of questions that open one at a time, built on `<details>`.
+ *
+ * Two sections want exactly this: the landing page's FAQ and the support centre's
+ * troubleshooting list. They differ in what they ask and in nothing else, so the markup
+ * and its styles live here and each caller passes its own entries.
+ *
+ * `<details>` rather than a button and a script: the browser already knows how to open
+ * and close one, it is keyboard-operable and announced correctly without an
+ * `aria-expanded` to keep in step, and the answer is in the page for Ctrl+F and for a
+ * printer even while it is shut.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang, TranslationKey } from '@/i18n/ui';
+import Icon from '@/components/Icon.astro';
+
+interface Entry {
+    readonly qKey: TranslationKey;
+    readonly aKey: TranslationKey;
+}
+
+interface Props {
+    lang: Lang;
+    items: readonly Entry[];
+    /** The measure of the stack. The FAQ runs wider than the support page's column. */
+    maxWidth?: string;
+}
+
+const { lang, items, maxWidth = '1100px' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="question-list" data-reveal style={`--question-list-measure: ${maxWidth}`}>
+    {
+        items.map((item) => (
+            <details class="question-item">
+                <summary class="question-summary">
+                    <span>{t(item.qKey)}</span>
+                    <Icon name="chevronDown" class="question-chevron" />
+                </summary>
+                <div class="question-answer">
+                    <p>{t(item.aKey)}</p>
+                </div>
+            </details>
+        ))
+    }
+</div>
+
+<style>
+    .question-list {
+        max-width: var(--question-list-measure, 1100px);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .question-item {
+        background: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    :root[data-theme='light'] .question-item {
+        background: #ffffff;
+        box-shadow: 0 4px 16px rgba(12, 29, 23, 0.04);
+    }
+
+    .question-item[open] {
+        border-color: var(--action-color);
+        box-shadow: 0 4px 20px rgba(22, 160, 133, 0.15);
+    }
+
+    .question-summary {
+        padding: 22px 28px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-color);
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        user-select: none;
+        transition: color 0.18s ease;
+    }
+
+    .question-summary:hover {
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .question-summary:hover {
+        color: var(--header-color);
+    }
+
+    .question-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    /* `:global` because the chevron is rendered by `Icon.astro`, so it carries that
+       component's scope and not this one's. Astro scopes every part of a selector, and
+       an unscoped element here would otherwise never be matched. */
+    .question-summary :global(.question-chevron) {
+        color: var(--action-color);
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    :root[data-theme='light'] .question-summary :global(.question-chevron) {
+        color: var(--header-color);
+    }
+
+    .question-item[open] :global(.question-chevron) {
+        transform: rotate(180deg);
+    }
+
+    .question-answer {
+        padding: 0 28px 24px;
+        font-size: 1rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 16px;
+    }
+
+    @media (max-width: 560px) {
+        .question-summary {
+            padding: 18px 20px;
+            font-size: 1rem;
+        }
+
+        .question-answer {
+            padding: 16px 20px 20px;
+        }
+    }
+</style>

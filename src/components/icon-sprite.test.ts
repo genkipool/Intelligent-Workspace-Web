@@ -14,7 +14,13 @@ import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const PAGES = ['index.html', path.join('es', 'index.html'), path.join('pay', 'index.html')];
+const PAGES = [
+    'index.html',
+    path.join('es', 'index.html'),
+    path.join('pay', 'index.html'),
+    path.join('privacy', 'index.html'),
+    path.join('support', 'index.html'),
+];
 
 function readBuiltPage(page: string): string | null {
     const file = path.resolve(process.cwd(), '.vercel', 'output', 'static', page);

@@ -1,0 +1,33 @@
+---
+/**
+ * The same support centre in Spanish, at the same path under `/es/` — see
+ * `pages/support/` for why the route is not translated along with the copy.
+ */
+import Base from '@/layouts/Base.astro';
+import SupportCenter from '@/components/SupportCenter.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('es');
+---
+
+<Base
+    lang="es"
+    title={t('support.meta.title')}
+    description={t('support.meta.description')}
+    icons={[
+        'sun',
+        'moon',
+        'back',
+        'clock',
+        'note',
+        'github',
+        'chromeStore',
+        'chevronDown',
+        'bookOpen',
+        'keyboardKeys',
+        'shieldCheck',
+        'heart',
+    ]}
+>
+    <SupportCenter lang="es" />
+</Base>

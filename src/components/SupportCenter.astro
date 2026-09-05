@@ -1,0 +1,682 @@
+---
+/**
+ * The support centre.
+ *
+ * A support page is usually a form and a promise. This one is ordered by what actually
+ * resolves a problem fastest, so the reader meets it in that order: where to write and
+ * what each route is good for, then the seven things that account for most of the post,
+ * then what a report needs to be answerable in one reply, then the pages that already
+ * answer the rest, and only at the end the two buttons.
+ *
+ * The troubleshooting list is `QuestionList.astro`, the same component the landing page's
+ * FAQ draws — they are the same object, a stack of `<details>`, and the difference is the
+ * questions. The header and footer are `DocTopbar` and `DocFooter` for the reason the
+ * privacy policy uses them: `Nav.astro` is entirely anchors into the landing page, and an
+ * anchor to a section that is not here is a dead link.
+ *
+ * Everything the page can say comes from `@/data/support` and `@/data/site`, so a
+ * changed repository, a changed listing or a removed answer is one edit rather than a
+ * hunt through the markup.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site, supportUrls } from '@/data/site';
+import { channels, troubleshooting, reportChecklist, resources } from '@/data/support';
+import Icon from '@/components/Icon.astro';
+import DocTopbar from '@/components/DocTopbar.astro';
+import DocFooter from '@/components/DocFooter.astro';
+import QuestionList from '@/components/QuestionList.astro';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const policyUrl = localisePath(lang, '/privacy');
+
+/* Both of these are set on every outbound anchor. `noopener` because a tab opened with
+   `target="_blank"` can otherwise reach back through `window.opener`. */
+const external = { target: '_blank', rel: 'noopener noreferrer' } as const;
+---
+
+<DocTopbar lang={lang} />
+
+<main class="support-main" id="main">
+    <div class="wrap support-head">
+        <span class="section-eyebrow">{t('support.eyebrow')}</span>
+        <h1 class="support-title">{t('support.title')}</h1>
+        <p class="support-lede">{t('support.lede')}</p>
+        <p class="support-badge">
+            <Icon name="clock" size={14} />
+            <span>{t('support.badge')}</span>
+        </p>
+    </div>
+
+    <!-- ── Where to write ── -->
+    <section class="wrap support-section" aria-labelledby="support-channels-heading">
+        <div class="support-section-head">
+            <h2 class="support-h2" id="support-channels-heading">{t('support.channels.heading')}</h2>
+            <p class="support-sub">{t('support.channels.sub')}</p>
+        </div>
+
+        <div class="support-channels" data-reveal>
+            {
+                channels.map((channel) => (
+                    <a
+                        class="glass-card support-channel"
+                        data-channel={channel.id}
+                        href={channel.href}
+                        {...(channel.external ? external : {})}
+                    >
+                        <span class="support-channel-icon">
+                            <Icon name={channel.icon} size={20} />
+                        </span>
+                        <h3 class="support-channel-title">{t(channel.titleKey)}</h3>
+                        <p class="support-channel-desc">{t(channel.descKey)}</p>
+                        <span class="support-channel-meta">{t(channel.metaKey)}</span>
+                        <span class="support-channel-cta">
+                            {t(channel.ctaKey)}
+                            <span class="support-arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </span>
+                    </a>
+                ))
+            }
+        </div>
+    </section>
+
+    <!-- ── The seven answers ── -->
+    <div class="section-alt support-band">
+        <section class="wrap support-section" aria-labelledby="support-fix-heading">
+            <div class="support-section-head">
+                <h2 class="support-h2" id="support-fix-heading">{t('support.fix.heading')}</h2>
+                <p class="support-sub">{t('support.fix.sub')}</p>
+            </div>
+
+            <QuestionList lang={lang} items={troubleshooting} maxWidth="920px" />
+        </section>
+    </div>
+
+    <!-- ── What a report needs ── -->
+    <section class="wrap support-section" aria-labelledby="support-report-heading">
+        <div class="support-report" data-reveal>
+            <div class="support-report-intro">
+                <h2 class="support-h2" id="support-report-heading">{t('support.report.heading')}</h2>
+                <p class="support-sub support-sub-left">{t('support.report.sub')}</p>
+                <p class="support-report-note">{t('support.report.note')}</p>
+            </div>
+
+            <ol class="support-report-list">
+                {reportChecklist.map((itemKey) => <li>{t(itemKey)}</li>)}
+            </ol>
+        </div>
+    </section>
+
+    <!-- ── Answers that already exist ── -->
+    <div class="section-alt support-band">
+        <section class="wrap support-section" aria-labelledby="support-more-heading">
+            <div class="support-section-head">
+                <h2 class="support-h2" id="support-more-heading">{t('support.more.heading')}</h2>
+                <p class="support-sub">{t('support.more.sub')}</p>
+            </div>
+
+            <div class="support-resources" data-reveal>
+                {
+                    resources.map((resource) => (
+                        <a
+                            class="support-resource"
+                            href={`${localisePath(lang, resource.path)}${resource.hash ?? ''}`}
+                            data-astro-reload={resource.reload}
+                        >
+                            <span class="support-resource-icon">
+                                <Icon name={resource.icon} size={18} />
+                            </span>
+                            <span class="support-resource-text">
+                                <span class="support-resource-title">{t(resource.titleKey)}</span>
+                                <span class="support-resource-desc">{t(resource.descKey)}</span>
+                            </span>
+                            <span class="support-arrow" aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
+
+    <!-- ── Still stuck ── -->
+    <section class="wrap support-section" aria-labelledby="support-contact-heading">
+        <div class="glass-card support-contact" data-reveal>
+            <h2 class="support-h2" id="support-contact-heading">{t('support.contact.heading')}</h2>
+            <p class="support-sub">{t('support.contact.p1')}</p>
+
+            <p class="support-address">
+                <a href={supportUrls.email}>{site.privacyEmail}</a>
+            </p>
+
+            <div class="support-actions">
+                <a href={supportUrls.email} class="btn-primary support-btn">
+                    {t('support.contact.email')}
+                </a>
+                <a href={supportUrls.issues} {...external} class="btn-secondary support-btn">
+                    <Icon name="github" size={16} />
+                    <span>{t('support.contact.issue')}</span>
+                </a>
+            </div>
+
+            <p class="support-contact-privacy">
+                {t('support.contact.privacy')}{' '}
+                <a href={policyUrl} class="support-inline-link">{t('support.contact.privacyCta')}</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<DocFooter lang={lang} current="support" />
+
+<style>
+    /*
+     * The column, and why it is not `.wrap`.
+     *
+     * `.wrap` is 1560px because the landing page's shots need it. A page that is mostly
+     * sentences does not: at that width the lede runs past a hundred and twenty
+     * characters a line and the three channel cards float apart. So every section here
+     * narrows the container and centres it, and the gutter is added back on top —
+     * `.wrap` is `border-box` and carries the gutter as padding, so a flat `max-width`
+     * would spend up to 128px of the content on it.
+     */
+    .support-head,
+    .support-section {
+        max-width: calc(1120px + var(--gutter) * 2);
+        margin-inline: auto;
+    }
+
+    .support-main {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+    }
+
+    /* ── The opening ── */
+    .support-head {
+        padding-block: clamp(40px, 6vw, 76px) clamp(8px, 2vw, 20px);
+        text-align: center;
+    }
+
+    .support-title {
+        margin-top: 10px;
+        font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+        color: var(--text-color);
+    }
+
+    .support-lede {
+        margin-top: 20px;
+        max-width: 68ch;
+        /* Centred as a block, ranged left as text: three lines of centred prose cost the
+           reader the left edge they are scanning for. */
+        text-align: left;
+        margin-inline: auto;
+        font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+        line-height: 1.75;
+        color: var(--text-soft);
+    }
+
+    .support-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 24px;
+        padding: 7px 16px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--accent-tint-line);
+        background: var(--accent-tint);
+        color: var(--action-color);
+        font-size: 0.8rem;
+        font-weight: 650;
+        letter-spacing: 0.01em;
+    }
+
+    :root[data-theme='light'] .support-badge {
+        color: var(--header-color);
+    }
+
+    /* ── Section rhythm ── */
+    .support-section {
+        padding-block: clamp(44px, 6vw, 76px);
+    }
+
+    /* A band runs the full width; only the section inside it is capped. */
+    .support-band {
+        position: relative;
+        z-index: 1;
+    }
+
+    .support-section-head {
+        max-width: 720px;
+        margin: 0 auto clamp(28px, 3.5vw, 42px);
+        text-align: center;
+    }
+
+    .support-h2 {
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        font-weight: 750;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        color: var(--text-color);
+    }
+
+    .support-sub {
+        margin-top: 12px;
+        font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+        line-height: 1.7;
+        color: var(--text-muted);
+    }
+
+    .support-sub-left {
+        max-width: 46ch;
+    }
+
+    /* ── Where to write ── */
+    .support-channels {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    /*
+     * The whole card is the link, so the target is the card and not four words at the
+     * bottom of it. The arrow underneath is decoration for the pointer; the accessible
+     * name is the heading and the sentence, which is what a screen reader reads out.
+     */
+    .support-channel {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 26px 26px 24px;
+        text-decoration: none;
+        /* `.glass-card` sets its own three-property transition; restating the list is
+           what keeps the border and the shadow animating once `transform` joins them. */
+        transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background-color 0.25s ease,
+            transform 0.25s ease;
+    }
+
+    .support-channel:hover {
+        transform: translateY(-4px);
+    }
+
+    .support-channel-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 4px;
+        border-radius: 10px;
+        border: 1px solid var(--accent-tint-line);
+        background: var(--accent-tint);
+        color: var(--action-color);
+        transition:
+            border-color 0.25s ease,
+            background-color 0.25s ease;
+    }
+
+    :root[data-theme='light'] .support-channel-icon {
+        color: var(--header-color);
+    }
+
+    .support-channel:hover .support-channel-icon {
+        border-color: var(--border-glow);
+    }
+
+    .support-channel-title {
+        font-size: 1.12rem;
+        font-weight: 750;
+        letter-spacing: -0.02em;
+        color: var(--text-color);
+    }
+
+    .support-channel-desc {
+        font-size: 0.92rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+    }
+
+    /* The label and the call to action are pinned to the foot of the card together, so
+       three descriptions of three different lengths still line their last two rows up
+       with one another. Pinning only the call to action left the labels ragged. */
+    .support-channel-meta {
+        margin-top: auto;
+        padding-top: 8px;
+        font-size: 0.74rem;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: var(--text-dim);
+    }
+
+    .support-channel-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding-top: 10px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-channel-cta {
+        color: var(--header-color);
+    }
+
+    .support-arrow {
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
+
+    .support-channel:hover .support-arrow,
+    .support-resource:hover .support-arrow {
+        transform: translateX(4px);
+    }
+
+    /* ── What a report needs ── */
+    .support-report {
+        display: grid;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+        gap: clamp(28px, 4vw, 56px);
+        align-items: start;
+    }
+
+    .support-report-intro {
+        text-align: left;
+    }
+
+    .support-report-note {
+        margin-top: 18px;
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-subtle);
+        border-left: 3px solid var(--action-color);
+        background: var(--bg-surface);
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: var(--text-muted);
+    }
+
+    .support-report-list {
+        list-style: none;
+        counter-reset: report;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px 0;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+    }
+
+    :root[data-theme='light'] .support-report-list {
+        background: #ffffff;
+        box-shadow: 0 4px 16px rgba(12, 29, 23, 0.04);
+    }
+
+    .support-report-list li {
+        counter-increment: report;
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 14px;
+        align-items: baseline;
+        padding: 14px 22px;
+        font-size: 0.95rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .support-report-list li:first-child {
+        border-top: none;
+    }
+
+    .support-report-list li::before {
+        content: counter(report, decimal-leading-zero);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-report-list li::before {
+        color: var(--header-color);
+    }
+
+    /* ── Answers that already exist ── */
+    .support-resources {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .support-resource {
+        display: grid;
+        grid-template-columns: 40px minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: center;
+        padding: 18px 20px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-panel-color);
+        color: var(--text-color);
+        text-decoration: none;
+        transition:
+            border-color 0.2s ease,
+            background-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    :root[data-theme='light'] .support-resource {
+        background: #ffffff;
+    }
+
+    .support-resource:hover {
+        border-color: var(--border-glow);
+        background: var(--bg-card-hover);
+        box-shadow: 0 4px 18px rgba(22, 160, 133, 0.12);
+    }
+
+    .support-resource-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid var(--accent-tint-line);
+        background: var(--accent-tint);
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-resource-icon {
+        color: var(--header-color);
+    }
+
+    .support-resource-text {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        min-width: 0;
+    }
+
+    .support-resource-title {
+        font-size: 0.98rem;
+        font-weight: 700;
+        color: var(--text-color);
+    }
+
+    .support-resource-desc {
+        font-size: 0.86rem;
+        line-height: 1.5;
+        color: var(--text-muted);
+    }
+
+    .support-resource .support-arrow {
+        color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-resource .support-arrow {
+        color: var(--header-color);
+    }
+
+    /* ── Still stuck ── */
+    .support-contact {
+        max-width: 760px;
+        margin-inline: auto;
+        padding: clamp(28px, 4vw, 44px);
+        text-align: center;
+    }
+
+    .support-contact .support-sub {
+        max-width: 56ch;
+        margin-inline: auto;
+    }
+
+    .support-address {
+        margin-top: 20px;
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+    }
+
+    .support-address a {
+        color: var(--action-color);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+    }
+
+    .support-address a:hover {
+        border-bottom-color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-address a {
+        color: var(--header-color);
+    }
+
+    :root[data-theme='light'] .support-address a:hover {
+        border-bottom-color: var(--header-color);
+    }
+
+    .support-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 22px;
+    }
+
+    .support-btn {
+        min-width: 0;
+        min-height: 46px;
+        padding: 12px 24px;
+        font-size: 0.94rem;
+    }
+
+    .support-contact-privacy {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-subtle);
+        font-size: 0.88rem;
+        line-height: 1.65;
+        color: var(--text-muted);
+    }
+
+    .support-inline-link {
+        color: var(--action-color);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .support-inline-link:hover {
+        border-bottom-color: var(--action-color);
+    }
+
+    :root[data-theme='light'] .support-inline-link {
+        color: var(--header-color);
+    }
+
+    :root[data-theme='light'] .support-inline-link:hover {
+        border-bottom-color: var(--header-color);
+    }
+
+    /* ── Narrower ── */
+    @media (max-width: 900px) {
+        .support-channels {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .support-report {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .support-sub-left {
+            max-width: none;
+        }
+
+        .support-resources {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+    @media (max-width: 560px) {
+        .support-lede {
+            font-size: 1rem;
+        }
+
+        /* The label and the sentence stop sharing a line: 40px of icon plus an arrow
+           leaves the description about half a column, and it wraps to four lines. */
+        .support-resource {
+            grid-template-columns: 40px minmax(0, 1fr);
+        }
+
+        .support-resource .support-arrow {
+            display: none;
+        }
+
+        .support-btn {
+            width: 100%;
+        }
+    }
+
+    /* A card that lifts is decoration; a reader who has asked for less motion keeps the
+       border and the shadow, which carry the same information. */
+    @media (prefers-reduced-motion: reduce) {
+        .support-channel,
+        .support-arrow {
+            transition: none;
+        }
+
+        .support-channel:hover {
+            transform: none;
+        }
+
+        .support-channel:hover .support-arrow,
+        .support-resource:hover .support-arrow {
+            transform: none;
+        }
+    }
+</style>
