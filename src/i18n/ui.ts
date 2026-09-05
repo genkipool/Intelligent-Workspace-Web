@@ -889,7 +889,8 @@ export const ui = {
 
         'privacy.net.r1.what':
             'Your prompt, whatever page text or screenshot you attached to it, and your own API key. Asking it to find an open tab also sends the titles and addresses of the tabs you have open, because that is the list it searches',
-        'privacy.net.r1.when': 'Only when you ask the assistant for something, including through the `find` keyword in Chrome’s address bar',
+        'privacy.net.r1.when':
+            'Only when you ask the assistant for something, including through the `find` keyword in Chrome’s address bar',
         'privacy.net.r2.host': 'Chrome’s built-in on-device model',
         'privacy.net.r2.what': 'Nothing. It runs inside Chrome, on this machine, and makes no request at all',
         'privacy.net.r2.when': 'When you choose it instead of Gemini',
@@ -1991,7 +1992,8 @@ export const ui = {
 
         'privacy.net.r1.what':
             'Tu petición, el texto de la página o la captura que le hayas adjuntado, y tu propia clave de API. Si le pides que encuentre una pestaña abierta, van también los títulos y las direcciones de las pestañas que tengas abiertas, porque esa es la lista en la que busca',
-        'privacy.net.r1.when': 'Solo cuando le pides algo al asistente, incluido con la palabra `find` en la barra de direcciones de Chrome',
+        'privacy.net.r1.when':
+            'Solo cuando le pides algo al asistente, incluido con la palabra `find` en la barra de direcciones de Chrome',
         'privacy.net.r2.host': 'El modelo local integrado en Chrome',
         'privacy.net.r2.what':
             'Nada. Se ejecuta dentro de Chrome, en esta máquina, y no hace ninguna petición',
