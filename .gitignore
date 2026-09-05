@@ -21,4 +21,9 @@ node_modules/
 .agents/
 
 # Self-signed certificate for `pnpm dev --https`. Regenerated on demand, never shared.
-.certs/
+#
+# The glob is deliberate. The rule used to be `.certs/` alone, and renaming the folder to
+# `.certs.off` to turn https off in dev was enough to take it out from under the rule — a
+# private key reached a public repository that way, in 223643c. `.certs*` covers the
+# rename, whatever suffix the next one picks.
+.certs*/
