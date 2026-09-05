@@ -6,6 +6,7 @@
     "type": "module",
     "scripts": {
         "dev": "astro dev",
+        "prepare": "husky",
         "cert": "mkdir -p .certs && openssl req -x509 -newkey rsa:2048 -nodes -sha256 -days 825 -keyout .certs/localhost-key.pem -out .certs/localhost-cert.pem -subj /CN=localhost -addext subjectAltName=DNS:localhost,IP:127.0.0.1",
         "build": "astro build",
         "preview": "astro preview",
@@ -28,6 +29,8 @@
     "devDependencies": {
         "@astrojs/check": "^0.9.10",
         "@types/node": "^26.4.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^17.4.1",
         "prettier": "^3.9.6",
         "prettier-plugin-astro": "^0.14.1",
         "typescript": "^6.0.3",
@@ -36,5 +39,10 @@
     "allowScripts": {
         "esbuild@0.28.2": true
     },
-    "packageManager": "pnpm@11.5.0"
+    "packageManager": "pnpm@11.5.0",
+    "lint-staged": {
+        "*.{js,mjs,ts,astro,css,md,json,yml,yaml}": [
+            "prettier --write"
+        ]
+    }
 }
