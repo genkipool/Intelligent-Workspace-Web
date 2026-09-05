@@ -1,0 +1,247 @@
+---
+/**
+ * The pair of floating scroll buttons, the ones the extension puts on its long views.
+ *
+ * Ported from `src/ui/components/common/ScrollButtons.svelte` in the extension, and
+ * deliberately the same object rather than a new one: the same round 40px pair stacked
+ * in the corner, the same two chevrons, the same rule about when each arrow is worth
+ * drawing — an arrow that points nowhere is worse than no arrow, so "up" is absent at
+ * the top, "down" is absent at the bottom, and the pair does not appear at all on a page
+ * with nothing to scroll. `MIN_SCROLL` and `EDGE` in the script below are the extension's
+ * `minScroll` and `edge` defaults, to the pixel.
+ *
+ * What the port drops is the part that only the panel needed. In the extension the
+ * component takes a `target`, because every view there scrolls inside its own container;
+ * here the window scrolls and there is nothing to choose, so the prop and the
+ * `MutationObserver` that watched for the container being swapped both go.
+ *
+ * The two glyphs are inline rather than `Icon.astro` references. The sprite exists
+ * because the landing page draws around 250 icons and inlining those cost 100 KB of
+ * HTML; two paths on a component that every page carries would instead mean every page's
+ * `icons` list in `Base.astro` has to name them, and `icon-sprite.test.ts` fails the day
+ * one forgets. Forty bytes a page buys that away — and it is how the extension draws
+ * them too.
+ */
+import { useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<!-- Both buttons start hidden, so a page that turns out not to scroll never flashes a
+     pair of controls at the reader before the script has had a chance to look. -->
+<div class="scroll-buttons" data-scroll-buttons>
+    <button type="button" class="scroll-btn" data-scroll-to="top" aria-label={t('doc.scrollTop')} hidden>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M6 15L12 9L18 15" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
+        </svg>
+    </button>
+    <button
+        type="button"
+        class="scroll-btn"
+        data-scroll-to="bottom"
+        aria-label={t('doc.scrollBottom')}
+        hidden
+    >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
+        </svg>
+    </button>
+</div>
+
+<script>
+    /**
+     * When each arrow is worth drawing.
+     *
+     * The page has to be scrollable by more than `MIN_SCROLL` for the pair to appear at
+     * all, and `EDGE` is how close to either end counts as being at it — without that
+     * slack the "up" arrow flickers in and out over the first fifteen pixels of a scroll.
+     * Both numbers are the extension's own defaults.
+     */
+    const MIN_SCROLL = 20;
+    const EDGE = 15;
+
+    /**
+     * Undoing the previous page's wiring.
+     *
+     * The site uses Astro's `ClientRouter`, so a navigation swaps the DOM while this
+     * module keeps running: the buttons this closed over are gone from the document, and
+     * their listeners would otherwise keep firing against detached nodes for the rest of
+     * the session. This module-level handle is what lets the next `astro:page-load`
+     * dismantle the last one before building the next.
+     */
+    let teardown: (() => void) | null = null;
+
+    function initScrollButtons(): void {
+        teardown?.();
+        teardown = null;
+
+        const root = document.querySelector<HTMLElement>('[data-scroll-buttons]');
+        const up = root?.querySelector<HTMLButtonElement>('[data-scroll-to="top"]');
+        const down = root?.querySelector<HTMLButtonElement>('[data-scroll-to="bottom"]');
+        if (!root || !up || !down) return;
+
+        let frame = 0;
+
+        /** How far the page can still travel. Zero on a page that fits the window. */
+        const runway = () =>
+            Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) - window.innerHeight;
+
+        /**
+         * Hiding a button takes it out of the tab order, and a button that disappears
+         * under the keyboard drops focus to the body — which on a page this long means
+         * the next Tab starts again from the top. So focus moves to the other arrow,
+         * which is the control the reader wanted next anyway.
+         */
+        const setHidden = (button: HTMLButtonElement, hidden: boolean, sibling: HTMLButtonElement) => {
+            if (hidden && !button.hidden && document.activeElement === button && !sibling.hidden) {
+                sibling.focus();
+            }
+            button.hidden = hidden;
+        };
+
+        const paint = () => {
+            frame = 0;
+            const distance = runway();
+            const worthIt = distance > MIN_SCROLL;
+            const showUp = worthIt && window.scrollY >= EDGE;
+            const showDown = worthIt && window.scrollY < distance - EDGE;
+
+            // "Up" first: at the foot of the page it is the arrow "down" hands focus to.
+            setHidden(up, !showUp, down);
+            setHidden(down, !showDown, up);
+            root.classList.toggle('is-visible', showUp || showDown);
+        };
+
+        /* Scroll fires far faster than the screen repaints, and every one of these events
+           only ever ends in the same two class changes. One frame is enough. */
+        const schedule = () => {
+            if (frame === 0) frame = requestAnimationFrame(paint);
+        };
+
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule, { passive: true });
+
+        /* Sections on the landing page carry `content-visibility: auto`, so the document
+           gets taller as the reader goes: what is "the bottom" changes under them, and a
+           scroll listener alone would keep hiding the down arrow too early. */
+        const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
+        observer?.observe(document.documentElement);
+
+        const jump = (event: MouseEvent) => {
+            const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(
+                '[data-scroll-to]',
+            );
+            if (!button) return;
+            /* `scroll-behavior: smooth` is on `html` globally, so `auto` would still
+               animate; `instant` is the only value that actually honours the setting. */
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({
+                top: button.dataset.scrollTo === 'top' ? 0 : runway(),
+                behavior: reduced ? 'instant' : 'smooth',
+            });
+        };
+        root.addEventListener('click', jump);
+
+        paint();
+
+        teardown = () => {
+            window.removeEventListener('scroll', schedule);
+            window.removeEventListener('resize', schedule);
+            root.removeEventListener('click', jump);
+            observer?.disconnect();
+            if (frame !== 0) cancelAnimationFrame(frame);
+        };
+    }
+
+    initScrollButtons();
+    document.addEventListener('astro:page-load', initScrollButtons);
+</script>
+
+<style>
+    /*
+     * Under the mobile drawer and its scrim, which are 60 and 55. A control that floats
+     * over an open menu is a control that gets pressed by accident.
+     */
+    .scroll-buttons {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+    }
+
+    .scroll-buttons.is-visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .scroll-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 50%;
+        background-color: var(--bg-panel-color);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    /* `hidden` is display:none only until author CSS gives the element a display of its
+       own, which the rule above just did. */
+    .scroll-btn[hidden] {
+        display: none;
+    }
+
+    :root[data-theme='light'] .scroll-btn {
+        box-shadow: 0 2px 8px rgba(11, 28, 21, 0.12);
+    }
+
+    .scroll-btn:hover {
+        background-color: var(--interactive-color);
+        border-color: var(--interactive-color);
+        /* The rest state takes its arrow from the text colour; on the accent it has to
+           be white in both themes, the way every filled button on the site is. */
+        color: #ffffff;
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 640px) {
+        .scroll-buttons {
+            right: 14px;
+            bottom: 14px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-buttons,
+        .scroll-btn {
+            transition: none;
+        }
+
+        .scroll-btn:hover {
+            transform: none;
+        }
+    }
+</style>

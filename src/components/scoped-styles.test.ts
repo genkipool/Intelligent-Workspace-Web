@@ -32,7 +32,7 @@ const STATIC_ROOT = path.resolve(process.cwd(), '.vercel', 'output', 'static');
  * Each is a state, not a shape: losing its rule changes behaviour, not layout, and the
  * page still renders. A new entry here needs to be one of those.
  */
-const ADDED_AT_RUNTIME = new Set(['is-in', 'is-open', 'is-selected', 'is-busy', 'active']);
+const ADDED_AT_RUNTIME = new Set(['is-in', 'is-open', 'is-selected', 'is-busy', 'is-visible', 'active']);
 
 /** `.foo[data-astro-cid-x]` → the class and the scope it is bound to. */
 const SCOPED_SELECTOR = /\.([A-Za-z0-9_-]+)\[(data-astro-cid-[a-z0-9]+)\]/g;

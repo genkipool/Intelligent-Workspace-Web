@@ -1091,9 +1091,12 @@ export const ui = {
         'errors.support': 'Support the project',
         'errors.source': 'Read the source',
 
-        // Standalone pages — the header and footer shared by the policy, the support
-        // centre and the error screens.
+        // Site chrome — the header and footer shared by the policy, the support centre
+        // and the error screens, and the scroll buttons every page carries. The two
+        // scroll labels are the extension's own `scrollToTop` and `scrollToBottom`.
         'doc.back': 'Back to the site',
+        'doc.scrollTop': 'Scroll to top',
+        'doc.scrollBottom': 'Scroll to bottom',
 
         // Support centre
         'support.meta.title': 'Support — Intelligent Workspace',
@@ -2286,9 +2289,12 @@ export const ui = {
         'errors.support': 'Apoyar el proyecto',
         'errors.source': 'Leer el código fuente',
 
-        // Standalone pages — the header and footer shared by the policy, the support
-        // centre and the error screens.
+        // Site chrome — the header and footer shared by the policy, the support centre
+        // and the error screens, and the scroll buttons every page carries. The two
+        // scroll labels are the extension's own `scrollToTop` and `scrollToBottom`.
         'doc.back': 'Volver al sitio',
+        'doc.scrollTop': 'Desplazarse hacia arriba',
+        'doc.scrollBottom': 'Desplazarse hasta el final',
 
         // Support centre
         'support.meta.title': 'Soporte — Intelligent Workspace',

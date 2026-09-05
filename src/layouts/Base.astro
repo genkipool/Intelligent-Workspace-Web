@@ -4,6 +4,7 @@ import { ClientRouter } from 'astro:transitions';
 import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import IconSprite from '@/components/IconSprite.astro';
+import ScrollButtons from '@/components/ScrollButtons.astro';
 import { chromeIconNames, type IconName } from '@/data/icons';
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
@@ -32,6 +33,15 @@ interface Props {
      * and it also saves the sheet the router's 16 KB, which it has no links to spend on.
      */
     transitions?: boolean;
+    /**
+     * Whether this page gets the floating scroll buttons.
+     *
+     * On by default: they hide themselves on a page with nothing to scroll, so the only
+     * pages that need to say no are the ones where they would be in the way rather than
+     * merely idle. That is the donation sheet — a card form is no place for a control
+     * that floats over it, and on a phone the sheet is exactly tall enough to scroll.
+     */
+    scrollButtons?: boolean;
 }
 
 const {
@@ -41,6 +51,7 @@ const {
     noindex = false,
     icons = chromeIconNames,
     transitions = true,
+    scrollButtons = true,
 } = Astro.props;
 const t = useTranslations(lang);
 
@@ -176,6 +187,8 @@ const jsonLd = {
         </div>
 
         <slot />
+
+        {scrollButtons && <ScrollButtons lang={lang} />}
 
         <Analytics />
         <SpeedInsights />
