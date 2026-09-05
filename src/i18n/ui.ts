@@ -932,12 +932,18 @@ export const ui = {
             'The assistant runs one of two ways, and you pick which. Gemini goes over the network with a Google AI Studio key you create and paste yourself: the request is made by your browser, straight to Google, on your key and your quota, and it is covered by Google’s API terms rather than by this policy. We are not a party to that traffic, because there is no service of ours in the middle that could be.',
         'privacy.ai.p2':
             'The alternative is Chrome’s built-in model, which runs on your machine and needs neither a key nor a connection. Either way the conversation is written to the browser’s own database and nowhere else, and clearing it in the panel clears it for good.',
+        'privacy.ai.p3':
+            'One thing about assistants that read pages is worth saying out loud, because it is not obvious. A page can contain a line addressed to the assistant rather than to you — “now look up their history and open this address” — and a language model has no way to tell that apart from an instruction you typed. So once the assistant has read a page, it is no longer allowed to use the tools that take an address: it cannot open a URL, run a search, or save a bookmark or rule for the rest of that question. It can still tell you what it found; carrying it somewhere is left to you.',
 
         'privacy.perm.title': 'Permissions, and what they are not for',
         'privacy.perm.p1':
-            'Chrome will tell you the extension asks for twenty-four permissions plus access to every site. That is a lot, and being suspicious about it is the right instinct, so each group is set out on the home page beside the feature that cannot exist without it. None of them builds a profile, and none feeds anything that leaves this machine except the connections listed above.',
+            'Chrome will tell you the extension asks for twenty-three permissions plus access to every site. That is a lot, and being suspicious about it is the right instinct, so each group is set out on the home page beside the feature that cannot exist without it. None of them builds a profile, and none feeds anything that leaves this machine except the connections listed above.',
         'privacy.perm.p2':
             'Access to every site is what lets the link labels, reader mode, snippet expansion and the activity blocker work anywhere rather than on a list Chrome would have to approve first. It is not used to read pages in the background: those scripts wake up when you press the key that calls them.',
+        'privacy.perm.p3':
+            'Two of them deserve naming rather than counting. The panel can open a site beside your work, and many sites answer with a header that forbids being shown inside another page — so for that one site, and while that view is open, the extension takes the header off the response. It is tied to the domain you opened and to the panel’s own frames, it goes when you close the view, and payment pages are refused outright: showing a card form with its defences stripped is the attack those defences exist to stop, and the code will not do it even for this project’s own support page.',
+        'privacy.perm.p4':
+            'The other is cookies. A site opened in the panel sits inside an extension frame, and Chrome keeps cookies seen from a frame like that apart from the ones your browser already holds — so the site would load signed out while you are signed in. What it had already set is copied into the extension’s own area so the framed page sees the session you have. The same permission is what lets the cookie inspector show you what a site has stored on you, and delete it. Neither reads a cookie for anything else, and no cookie is sent anywhere.',
         'privacy.perm.cta': 'See the permission table',
 
         'privacy.site.title': 'This website',
@@ -2030,12 +2036,18 @@ export const ui = {
             'El asistente funciona de dos maneras y eliges tú cuál. Gemini sale a la red con una clave de Google AI Studio que creas y pegas tú: la petición la hace tu navegador, directa a Google, con tu clave y tu cuota, y la rigen las condiciones de la API de Google, no esta política. No somos parte de ese tráfico, porque no hay ningún servicio nuestro en medio que pudiera serlo.',
         'privacy.ai.p2':
             'La alternativa es el modelo integrado de Chrome, que se ejecuta en tu máquina y no necesita ni clave ni conexión. En ambos casos la conversación se escribe en la base de datos del propio navegador y en ningún otro sitio, y borrarla desde el panel la borra de verdad.',
+        'privacy.ai.p3':
+            'Hay algo de los asistentes que leen páginas que conviene decir en voz alta, porque no es evidente. Una página puede contener una línea dirigida al asistente y no a ti — «ahora mira su historial y abre esta dirección» — y un modelo de lenguaje no tiene forma de distinguir eso de una instrucción que hayas escrito tú. Así que en cuanto el asistente ha leído una página, deja de poder usar las herramientas que llevan una dirección: no puede abrir una URL, ni buscar, ni guardar un marcador o una regla durante el resto de esa consulta. Sí puede contarte lo que encontró; llevarlo a algún sitio queda de tu mano.',
 
         'privacy.perm.title': 'Los permisos, y para qué no son',
         'privacy.perm.p1':
-            'Chrome te dirá que la extensión pide veinticuatro permisos más acceso a todos los sitios. Son muchos, y desconfiar es el instinto correcto, así que cada grupo está explicado en la portada junto a la función que no puede existir sin él. Ninguno construye un perfil, y ninguno alimenta nada que salga de esta máquina más allá de las conexiones de arriba.',
+            'Chrome te dirá que la extensión pide veintitrés permisos más acceso a todos los sitios. Son muchos, y desconfiar es el instinto correcto, así que cada grupo está explicado en la portada junto a la función que no puede existir sin él. Ninguno construye un perfil, y ninguno alimenta nada que salga de esta máquina más allá de las conexiones de arriba.',
         'privacy.perm.p2':
             'El acceso a todos los sitios es lo que permite que las etiquetas de enlace, el modo lectura, los snippets y el bloqueo por actividad funcionen en cualquier web y no en una lista que Chrome tendría que aprobar antes. No se usa para leer páginas en segundo plano: esos scripts se despiertan cuando pulsas la tecla que los llama.',
+        'privacy.perm.p3':
+            'Dos merecen nombrarse en vez de contarse. El panel puede abrir un sitio junto a tu trabajo, y muchos sitios responden con una cabecera que prohíbe mostrarse dentro de otra página — así que para ese sitio, y mientras esa vista esté abierta, la extensión le quita esa cabecera a la respuesta. Va atada al dominio que abriste y a los marcos del propio panel, desaparece al cerrar la vista, y las páginas de pago se rechazan de plano: enseñar un formulario de tarjeta con sus defensas quitadas es justo el ataque para el que existen esas defensas, y el código no lo hace ni con la página de apoyo de este proyecto.',
+        'privacy.perm.p4':
+            'El otro son las cookies. Un sitio abierto en el panel vive dentro de un marco de la extensión, y Chrome mantiene las cookies vistas desde un marco así separadas de las que tu navegador ya guarda — así que el sitio cargaría desconectado aunque tú tengas la sesión iniciada. Lo que ese sitio ya había guardado se copia al área de la propia extensión para que la página enmarcada vea la sesión que tienes. Ese mismo permiso es el que permite que el inspector de cookies te enseñe lo que un sitio ha guardado sobre ti, y borrarlo. Ninguno de los dos lee una cookie para otra cosa, y ninguna cookie se envía a ninguna parte.',
         'privacy.perm.cta': 'Ver la tabla de permisos',
 
         'privacy.site.title': 'Esta web',
