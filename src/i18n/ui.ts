@@ -833,7 +833,7 @@ export const ui = {
         'privacy.basis.li1':
             'Running the features on your device: your consent, given when you install the extension and again when you switch on an optional feature such as the activity record or the assistant. Article 6.1.a.',
         'privacy.basis.li2':
-            'Sending a prompt to Google, searching the radio directory, loading a YouTube thumbnail or fetching a site icon: your consent, given by the action itself. Nothing is sent until you ask for it.',
+            'Sending a prompt to Google, searching the radio directory or loading a YouTube thumbnail: your consent, given by the action itself. Nothing is sent until you ask for it.',
         'privacy.basis.li3':
             'Serving this website and keeping it up: our legitimate interest in delivering the pages you requested and in aggregate measurement that carries no identifier. Article 6.1.f.',
         'privacy.basis.li4':
@@ -901,8 +901,6 @@ export const ui = {
         'privacy.net.r4.when': 'While a station is playing',
         'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
         'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
-        'privacy.net.r6.what': 'The domain of a link, so the omnibar can draw its site icon',
-        'privacy.net.r6.when': 'While the omnibar has results on screen',
         'privacy.net.r7.what':
             'Nothing about you. It fetches the OCR language model, which Chrome then caches',
         'privacy.net.r7.when': 'The first time you run OCR on a screenshot',
@@ -1934,7 +1932,7 @@ export const ui = {
         'privacy.basis.li1':
             'Hacer funcionar las funciones en tu dispositivo: tu consentimiento, prestado al instalar la extensión y de nuevo al activar una función opcional como el registro de actividad o el asistente. Artículo 6.1.a.',
         'privacy.basis.li2':
-            'Enviar una consulta a Google, buscar en el directorio de radio, cargar una miniatura de YouTube o pedir un icono de sitio: tu consentimiento, prestado con la propia acción. No se envía nada hasta que lo pides.',
+            'Enviar una consulta a Google, buscar en el directorio de radio o cargar una miniatura de YouTube: tu consentimiento, prestado con la propia acción. No se envía nada hasta que lo pides.',
         'privacy.basis.li3':
             'Servir esta web y mantenerla en pie: nuestro interés legítimo en entregar las páginas que has pedido y en una medición agregada que no lleva identificador. Artículo 6.1.f.',
         'privacy.basis.li4':
@@ -2006,8 +2004,6 @@ export const ui = {
         'privacy.net.r4.when': 'Mientras suena una emisora',
         'privacy.net.r5.what': 'El identificador del vídeo, para la miniatura y el reproductor incrustado',
         'privacy.net.r5.when': 'Solo con un enlace de YouTube que previsualizas o reproduces',
-        'privacy.net.r6.what': 'El dominio de un enlace, para que el omnibar dibuje su icono de sitio',
-        'privacy.net.r6.when': 'Mientras el omnibar tiene resultados en pantalla',
         'privacy.net.r7.what': 'Nada sobre ti. Descarga el modelo de idioma del OCR, que Chrome luego cachea',
         'privacy.net.r7.when': 'La primera vez que pasas el OCR por una captura',
 

@@ -137,6 +137,5 @@ export const connectionRows: readonly ConnectionRow[] = [
     { host: 'api.radio-browser.info', sendsKey: 'privacy.net.r3.what', whenKey: 'privacy.net.r3.when' },
     { hostKey: 'privacy.net.r4.host', sendsKey: 'privacy.net.r4.what', whenKey: 'privacy.net.r4.when' },
     { host: 'youtube.com · i.ytimg.com', sendsKey: 'privacy.net.r5.what', whenKey: 'privacy.net.r5.when' },
-    { host: 'google.com/s2/favicons', sendsKey: 'privacy.net.r6.what', whenKey: 'privacy.net.r6.when' },
     { host: 'cdn.jsdelivr.net', sendsKey: 'privacy.net.r7.what', whenKey: 'privacy.net.r7.when' },
 ];
