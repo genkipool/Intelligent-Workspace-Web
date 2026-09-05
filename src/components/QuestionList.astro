@@ -9,7 +9,12 @@
  * `<details>` rather than a button and a script: the browser already knows how to open
  * and close one, it is keyboard-operable and announced correctly without an
  * `aria-expanded` to keep in step, and the answer is in the page for Ctrl+F and for a
- * printer even while it is shut.
+ * printer even while it is shut. The script below takes over the opening to animate it,
+ * and a browser that never runs it still gets a working accordion — the native one.
+ *
+ * The extra `.question-panel` around the answer is what the animation needs: something
+ * with no padding of its own to clip, so a height of zero really is nothing rather than
+ * the forty pixels of padding and rule that `.question-answer` carries.
  */
 import { useTranslations } from '@/i18n/utils';
 import type { Lang, TranslationKey } from '@/i18n/ui';
@@ -39,13 +44,158 @@ const t = useTranslations(lang);
                     <span>{t(item.qKey)}</span>
                     <Icon name="chevronDown" class="question-chevron" />
                 </summary>
-                <div class="question-answer">
-                    <p>{t(item.aKey)}</p>
+                <div class="question-panel">
+                    <div class="question-answer">
+                        <p>{t(item.aKey)}</p>
+                    </div>
                 </div>
             </details>
         ))
     }
 </div>
+
+<script>
+    /**
+     * The panel opens rather than appearing.
+     *
+     * `<details>` has no animation of its own: the browser shows and hides the content in
+     * one frame. The modern way round that is `::details-content` plus a transition on
+     * `block-size`, and it is written up everywhere — but it does not run in the browser
+     * this site is built for. Chrome 151 matches the pseudo-element, applies static rules
+     * to it and reports the transition in the computed style, and then fires no
+     * `transitionrun` at all: the panel snaps. The same is true of a bare `<details>` with
+     * nothing but the canonical five lines on it, so it is the feature and not this
+     * markup. Until that changes, the height is driven from here.
+     *
+     * `height` from a real number to a real number, rather than to `auto`: the panel is
+     * measured while it is open, so the animation always has both ends.
+     */
+    const DURATION = 340;
+    const EASING = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+    /**
+     * The run in flight, per accordion.
+     *
+     * It carries `opening` because `details.open` cannot answer the question while a
+     * close is still running: it stays `true` until the height reaches zero, so a second
+     * click read from it alone would start closing something that is already closing. The
+     * intent is what gets inverted, which is what makes a click mid-flight reverse the
+     * movement from where it is instead of restarting it from the end.
+     */
+    interface Run {
+        animation: Animation;
+        opening: boolean;
+    }
+
+    const running = new WeakMap<HTMLDetailsElement, Run>();
+
+    function toggle(details: HTMLDetailsElement, panel: HTMLElement): void {
+        const inFlight = running.get(details);
+        const opening = inFlight ? !inFlight.opening : !details.open;
+
+        /*
+         * Where the panel is now, and why this is not simply measured.
+         *
+         * A closed `<details>` does not put its content away with `display: none`; Chrome
+         * uses `content-visibility: hidden`, which keeps the box and its full height and
+         * only skips painting it. So measuring a shut panel reports the whole 123px of an
+         * answer nobody can see, and the opening animation was built from 123px to 123px
+         * — a run that changed nothing, which is exactly what "it snaps open" looks like.
+         *
+         * `open` is the honest answer whenever nothing is running. While something is, the
+         * animated height in the computed style is, and starting from it is what makes a
+         * click mid-flight reverse from where the panel actually is.
+         */
+        const from = inFlight
+            ? Number.parseFloat(getComputedStyle(panel).height)
+            : details.open
+              ? panel.scrollHeight
+              : 0;
+
+        for (const animation of panel.getAnimations({ subtree: true })) animation.cancel();
+        running.delete(details);
+
+        // Someone who has asked for less movement gets the native accordion back.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            details.open = opening;
+            return;
+        }
+
+        /* The panel has to be in the document to be measured, and has to stay there for
+           the whole of a close — `open` only goes false once the height has arrived. */
+        details.open = true;
+        const to = opening ? panel.scrollHeight : 0;
+
+        panel.firstElementChild?.animate(
+            [
+                { opacity: opening ? 0 : 1, transform: opening ? 'translateY(-6px)' : 'none' },
+                { opacity: opening ? 1 : 0, transform: opening ? 'none' : 'translateY(-6px)' },
+            ],
+            { duration: DURATION, easing: EASING },
+        );
+
+        const animation = panel.animate([{ height: `${from}px` }, { height: `${to}px` }], {
+            duration: DURATION,
+            easing: EASING,
+        });
+
+        running.set(details, { animation, opening });
+
+        /* `finish` and not `cancel`: an interrupted run must not have the last word on
+           `open`, and cancelling fires the other event. */
+        animation.addEventListener(
+            'finish',
+            () => {
+                running.delete(details);
+                details.open = opening;
+            },
+            { once: true },
+        );
+    }
+
+    /**
+     * One listener for the whole page, attached once.
+     *
+     * It holds no reference to anything the client-side router swaps out — the `WeakMap`
+     * is keyed by elements, which go with the old document — so unlike `ScrollButtons`
+     * this needs no teardown and no re-binding on `astro:page-load`.
+     *
+     * The default has to go: it is the browser's own instant toggle, and letting it run
+     * would flip `open` before the height had anywhere to travel from. Enter and Space on
+     * a focused summary arrive here as clicks too, so the keyboard is covered by the same
+     * three lines.
+     */
+    document.addEventListener('click', (event) => {
+        const summary = (event.target as HTMLElement | null)?.closest('.question-summary');
+        const details = summary?.parentElement as HTMLDetailsElement | null;
+        const panel = details?.querySelector<HTMLElement>('.question-panel');
+        if (!details || !panel) return;
+
+        event.preventDefault();
+        toggle(details, panel);
+    });
+
+    /**
+     * The word that highlights itself.
+     *
+     * `user-select: none` on the summary stops a drag from selecting the question, and
+     * that is all it stops. Chrome still runs its own word-selection under a double click
+     * and its line-selection under a triple one, so opening a panel with two quick clicks
+     * left a word of the question sitting in the site's teal `::selection` — a highlight
+     * nobody asked for, on text nobody was trying to copy.
+     *
+     * Cancelling the default on the second and later `mousedown` of a run is what stops
+     * the browser starting that selection. It is deliberately the narrowest fix that
+     * works: the first click of any run is untouched, so a drag still selects normally,
+     * every answer stays selectable and copyable, and the rest of the page never sees
+     * this listener.
+     */
+    document.addEventListener('mousedown', (event) => {
+        if (event.detail < 2) return;
+        if (!(event.target as HTMLElement | null)?.closest('.question-summary')) return;
+        event.preventDefault();
+    });
+</script>
 
 <style>
     .question-list {
@@ -108,7 +258,9 @@ const t = useTranslations(lang);
        an unscoped element here would otherwise never be matched. */
     .question-summary :global(.question-chevron) {
         color: var(--action-color);
-        transition: transform 0.2s ease;
+        /* The same curve and the same length as the panel below, so the arrow lands the
+           moment the answer finishes arriving rather than a beat before it. */
+        transition: transform 0.34s cubic-bezier(0.32, 0.72, 0, 1);
         flex-shrink: 0;
     }
 
@@ -120,13 +272,24 @@ const t = useTranslations(lang);
         transform: rotate(180deg);
     }
 
+    /* The box the height is animated on. It has nothing of its own to show — no padding,
+       no rule — so a height of zero is genuinely nothing on screen. */
+    .question-panel {
+        overflow: hidden;
+    }
+
     .question-answer {
-        padding: 0 28px 24px;
+        padding: 16px 28px 24px;
         font-size: 1rem;
         color: var(--text-soft);
         line-height: 1.7;
         border-top: 1px solid var(--border-subtle);
-        padding-top: 16px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .question-summary :global(.question-chevron) {
+            transition: none;
+        }
     }
 
     @media (max-width: 560px) {
