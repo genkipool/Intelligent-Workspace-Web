@@ -8,7 +8,7 @@ import type { TranslationKey } from '@/i18n/ui';
 export const site = {
     name: 'Intelligent Workspace',
     owner: 'Genkipool',
-    storeUrl: 'https://chromewebstore.google.com/category/extensions',
+    storeUrl: 'https://chromewebstore.google.com/detail/cmkbnppbnhoklenlngmbdfecgbnlojoo',
     // Source-available, so the permissions section can invite the reader to check it.
     sourceUrl: 'https://github.com/genkipool/Intelligent-Workspace',
     /**
