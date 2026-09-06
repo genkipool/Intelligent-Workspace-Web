@@ -960,9 +960,11 @@ export const ui = {
 
         'privacy.pay.title': 'Support and Payments',
         'privacy.pay.p1':
-            'Payments to support development go through Stripe. The card form is Stripe’s own, running inside Stripe’s frame, so the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
+            'Payments to support development go through Stripe. Card, Google Pay, Apple Pay and PayPal are four ways of paying it, not four processors: Stripe presents each of them, and choosing a wallet hands the payment to that wallet’s own sheet under whatever terms you already have with it. The card form is Stripe’s own, running inside Stripe’s frame, so the card number is typed into their field and never touches this site, the one server function behind it, or the extension. That function does exactly one thing: ask Stripe to create a payment between 1 and 500 euros and hand the browser back a token good for that single payment.',
         'privacy.pay.p2':
             'What Stripe collects, and what it does with it, is governed by Stripe’s privacy policy rather than this one. We keep no record of who contributed, because there is no database here to keep one in. A payment is voluntary, unlocks nothing, and is not a subscription.',
+        'privacy.pay.p3':
+            'The extension’s About page also shows a few cryptocurrency addresses, for anyone who would rather send something that way. They are static text with a button that copies one to your clipboard. No wallet is connected or read, no transaction is built or seen, nothing is mined, and no network request is made — the addresses are as inert as an account number printed on a page, and nothing here learns that you copied one.',
 
         'privacy.limited.title': 'Chrome Web Store Limited Use',
         'privacy.limited.p1':
@@ -2157,9 +2159,11 @@ export const ui = {
 
         'privacy.pay.title': 'Apoyo al desarrollo y pagos',
         'privacy.pay.p1':
-            'Los pagos de apoyo al desarrollo pasan por Stripe. El formulario de tarjeta es el suyo y se ejecuta dentro de su marco, así que el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
+            'Los pagos de apoyo al desarrollo pasan por Stripe. Tarjeta, Google Pay, Apple Pay y PayPal son cuatro formas de pagarle, no cuatro pasarelas: las presenta Stripe, y elegir un monedero entrega el pago a la hoja del propio monedero, con las condiciones que ya tengas con él. El formulario de tarjeta es el de Stripe y se ejecuta dentro de su marco, así que el número de tarjeta se escribe en su campo y no toca esta web, ni la única función de servidor que hay detrás, ni la extensión. Esa función hace exactamente una cosa: pedirle a Stripe que cree un pago de entre 1 y 500 euros y devolverle al navegador un testigo válido solo para ese pago.',
         'privacy.pay.p2':
             'Lo que Stripe recoge, y lo que hace con ello, lo rige la política de privacidad de Stripe y no esta. Nosotros no guardamos ningún registro de quién realizó una aportación, porque aquí no hay base de datos donde guardarlo. Aportar es voluntario, no desbloquea nada y no es una suscripción.',
+        'privacy.pay.p3':
+            'La página «Acerca de» de la extensión muestra además unas cuantas direcciones de criptomonedas, por si alguien prefiere enviar algo por ahí. Son texto fijo con un botón que copia una al portapapeles. No se conecta ni se lee ningún monedero, no se construye ni se ve ninguna transacción, no se mina nada y no se hace ninguna petición de red: las direcciones son tan inertes como un número de cuenta impreso en una hoja, y aquí no se entera nadie de que has copiado una.',
 
         'privacy.limited.title': 'Uso limitado de la Chrome Web Store',
         'privacy.limited.p1':
