@@ -1,5 +1,5 @@
 /**
- * The donation sheet.
+ * The contribution sheet.
  *
  * Every colour is a custom property with a fallback, because the panel overrides these
  * same names with the tokens of whatever theme the user picked. A hardcoded colour
@@ -14,7 +14,7 @@
      * VIRIDIAN, NOT STRIPE'S PURPLE. These are the fallbacks, used whenever the panel is
      * not the one opening this page: a link from the about page, a PayPal redirect coming
      * back, or somebody visiting /pay directly. They used to be Stripe's own palette,
-     * which meant the donation page of this project greeted anyone arriving on their own
+     * which meant the contribution page of this project greeted anyone arriving on their own
      * in `#635bff` — a colour that appears nowhere else on the site.
      *
      * The values are `global.css`'s, so the sheet is the site's page when it stands alone
@@ -472,7 +472,7 @@ form[hidden] {
  * The gap the Elements will fill, with a reason for it being empty.
  *
  * `min-height` is what stops the sheet jumping when the form finally arrives: the
- * skeleton is about as tall as the card form that replaces it, so the Donate button does
+ * skeleton is about as tall as the card form that replaces it, so the contribute button does
  * not leap down the panel under a cursor already on its way to it.
  */
 .loading {

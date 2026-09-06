@@ -1,5 +1,5 @@
 /**
- * The rules a donation amount has to satisfy, as a pure function.
+ * The rules a contribution amount has to satisfy, as a pure function.
  *
  * It lives here rather than inside the endpoint so it can be tested without a server,
  * a request or a Stripe key — and so the one place that decides what a valid amount is
@@ -10,13 +10,13 @@
  * so whatever arrives is re-checked here before a charge is created.
  */
 
-import { donationCurrency } from '@/data/site';
+import { contributionCurrency } from '@/data/site';
 
 /** Whole euros. Outside this range is a mistake or an attack, not a gift. */
 export const MIN_AMOUNT = 1;
 export const MAX_AMOUNT = 500;
 
-const SUPPORTED_CURRENCIES = new Set([donationCurrency]);
+const SUPPORTED_CURRENCIES = new Set([contributionCurrency]);
 
 /**
  * @returns the amount in whole units, or `null` if it is not one we will charge.

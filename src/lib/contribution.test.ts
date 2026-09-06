@@ -13,7 +13,7 @@ import {
     CARD_FORM_METHOD_LABEL,
     cardFormMethodsFrom,
     isCardFormSource,
-} from '@/lib/donation';
+} from '@/lib/contribution';
 
 describe('clampAmount', () => {
     it('accepts the presets the sheet offers', () => {

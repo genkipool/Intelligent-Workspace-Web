@@ -62,8 +62,8 @@ describe('the dictionary', () => {
     });
 
     it('returns the right language', () => {
-        expect(useTranslations('es')('donate.cta')).toBe('Apoyar');
-        expect(useTranslations('en')('donate.cta')).toBe('Support Project');
+        expect(useTranslations('es')('contribute.cta')).toBe('Apoyar');
+        expect(useTranslations('en')('contribute.cta')).toBe('Support Project');
     });
 
     it('contains zero occurrences of "Vimium" or "Vim" across all language dictionaries', () => {

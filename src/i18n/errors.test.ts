@@ -20,7 +20,7 @@ const errorKeys = [
     'errors.server.retry',
     'errors.server.cta',
     'errors.server.meta',
-    'errors.support',
+    'errors.contribute',
     'errors.source',
 ] as const satisfies readonly TranslationKey[];
 

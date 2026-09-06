@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 const homeUrl = localisePath(lang, '/');
 
 /**
- * The donation sheet is a page of its own, not a section of this one, which is why it
+ * The contribution sheet is a page of its own, not a section of this one, which is why it
  * is an action beside the install button rather than a sixth entry in `links` below —
  * everything in that list scrolls, and this one leaves.
  *
@@ -78,17 +78,17 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 transitions router, and `/pay` is served with a strict CSP of its own so
                 that Stripe can be framed there and nowhere else; swapped in as a
                 fragment it would inherit this page's policy instead and the sheet would
-                come up blank. `DonateBand` does the same for the same reason.
+                come up blank. `ContributionBand` does the same for the same reason.
             -->
             <a
                 href={payUrl}
-                class="btn-secondary nav-donate-btn"
-                title={t('nav.donateTitle')}
-                aria-label={t('nav.donate')}
+                class="btn-secondary nav-contribute-btn"
+                title={t('nav.contributeTitle')}
+                aria-label={t('nav.contribute')}
                 data-astro-reload
             >
                 <Icon name="heart" size={16} />
-                <span>{t('nav.donate')}</span>
+                <span>{t('nav.contribute')}</span>
             </a>
 
             <a
@@ -151,9 +151,9 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                     {t('nav.install')}
                 </a>
                 <!-- Second, because installing is what most readers came for. -->
-                <a href={payUrl} class="btn-secondary w-full mobile-donate-link" data-astro-reload>
+                <a href={payUrl} class="btn-secondary w-full mobile-contribute-link" data-astro-reload>
                     <Icon name="heart" size={16} />
-                    <span>{t('nav.donate')}</span>
+                    <span>{t('nav.contribute')}</span>
                 </a>
             </div>
         </div>
@@ -371,7 +371,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
      * 70px bar leaves no bar. Secondary rather than primary on purpose — there is one
      * primary action up here, and it is installing.
      */
-    .nav-donate-btn {
+    .nav-contribute-btn {
         width: 116px;
         /* Fixed means fixed: without this the flex row squeezes it as the window
            narrows, so the button that was not supposed to move with its label moves
@@ -655,7 +655,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         border-top: 1px solid var(--border-subtle);
     }
 
-    .mobile-donate-link {
+    .mobile-contribute-link {
         min-height: 46px;
         font-size: 0.95rem;
     }
@@ -668,12 +668,12 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
      * THE BAR IS SIX THINGS WIDE, AND UNDER ABOUT 1280px IT STOPS BEING SIX THINGS WIDE.
      *
      * Measured: the full bar needs 1280px to seat the install button inside the window.
-     * Below that it used to simply overflow — and it did so before this donate link
+     * Below that it used to simply overflow — and it did so before this contribute link
      * existed too, from roughly 1150px down to the 920px breakpoint, with "Add to
      * Chrome" pushed off the right-hand edge and no way to reach it. Nothing said so,
      * because an overflowing flex row neither wraps nor scrolls; it just leaves.
      *
-     * So there are two steps now instead of one. First the row is tightened: the donate
+     * So there are two steps now instead of one. First the row is tightened: the contribute
      * button drops to its heart, which is what an icon is for, and the links give back
      * the padding they can spare. Then, when even that does not fit, the whole thing
      * folds into the drawer — at 1120px rather than 920, because 920 was a promise the
@@ -777,7 +777,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         }
 
         .nav-install-btn,
-        .nav-donate-btn {
+        .nav-contribute-btn {
             display: none;
         }
 

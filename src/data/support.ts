@@ -109,7 +109,7 @@ export interface ResourceLink {
     /** Appended after the localised path, for the two that point into a section. */
     hash?: string;
     /**
-     * `data-astro-reload`, for the donation sheet. A view transition swaps the DOM
+     * `data-astro-reload`, for the contribution sheet. A view transition swaps the DOM
      * without re-running module scripts, and `/pay` needs its own to run — see the
      * `transitions` prop in `Base.astro` for the whole story.
      */

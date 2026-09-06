@@ -12,39 +12,39 @@ const t = useTranslations(lang);
 const payUrl = localisePath(lang, '/pay');
 ---
 
-<section class="section-container wrap donate-section">
+<section class="section-container wrap contribution-section">
     <!-- Open Fluid Banner without Box Container -->
-    <div class="donate-fluid-inner" data-reveal>
-        <div class="donate-accent-glow" aria-hidden="true"></div>
-        <div class="donate-content">
-            <span class="donate-eyebrow">{t('donate.eyebrow')}</span>
-            <h2 class="donate-headline">{t('donate.title')}</h2>
-            <p class="donate-body-text">{t('donate.body')}</p>
-            <div class="donate-actions-row">
-                <a href={payUrl} class="btn-primary donate-cta-btn" data-astro-reload>
+    <div class="contribution-fluid-inner" data-reveal>
+        <div class="contribution-accent-glow" aria-hidden="true"></div>
+        <div class="contribution-content">
+            <span class="contribution-eyebrow">{t('contribute.eyebrow')}</span>
+            <h2 class="contribution-headline">{t('contribute.title')}</h2>
+            <p class="contribution-body-text">{t('contribute.body')}</p>
+            <div class="contribution-actions-row">
+                <a href={payUrl} class="btn-primary contribution-cta-btn" data-astro-reload>
                     <Icon name="heart" />
-                    <span>{t('donate.cta')}</span>
+                    <span>{t('contribute.cta')}</span>
                 </a>
             </div>
-            <span class="donate-security-note">
+            <span class="contribution-security-note">
                 <Icon name="lock" size={15} />
-                <span>{t('donate.secured')}</span>
+                <span>{t('contribute.secured')}</span>
             </span>
         </div>
     </div>
 </section>
 
 <style>
-    .donate-section {
+    .contribution-section {
         position: relative;
     }
 
-    .donate-fluid-inner {
+    .contribution-fluid-inner {
         position: relative;
         padding: clamp(40px, 6vw, 72px) 0;
     }
 
-    .donate-accent-glow {
+    .contribution-accent-glow {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -56,7 +56,7 @@ const payUrl = localisePath(lang, '/pay');
         z-index: 0;
     }
 
-    .donate-content {
+    .contribution-content {
         position: relative;
         z-index: 1;
         max-width: 840px;
@@ -68,7 +68,7 @@ const payUrl = localisePath(lang, '/pay');
         gap: 16px;
     }
 
-    .donate-eyebrow {
+    .contribution-eyebrow {
         font-size: 0.78rem;
         font-weight: 750;
         text-transform: uppercase;
@@ -76,34 +76,34 @@ const payUrl = localisePath(lang, '/pay');
         color: var(--action-color);
     }
 
-    :root[data-theme='light'] .donate-eyebrow {
+    :root[data-theme='light'] .contribution-eyebrow {
         color: var(--header-color);
     }
 
-    .donate-headline {
+    .contribution-headline {
         font-size: clamp(2.2rem, 3.8vw, 3rem);
         color: var(--text-color);
         line-height: 1.15;
     }
 
-    .donate-body-text {
+    .contribution-body-text {
         font-size: 1.12rem;
         color: var(--text-soft);
         line-height: 1.65;
         max-width: 720px;
     }
 
-    .donate-actions-row {
+    .contribution-actions-row {
         margin-top: 8px;
     }
 
-    .donate-cta-btn {
+    .contribution-cta-btn {
         min-width: 220px;
         min-height: 52px;
         font-size: 1.05rem;
     }
 
-    .donate-security-note {
+    .contribution-security-note {
         display: inline-flex;
         align-items: center;
         gap: 7px;

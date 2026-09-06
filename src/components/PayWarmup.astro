@@ -1,12 +1,12 @@
 ---
 /**
- * Warms everything the donation sheet will need, from the page before it.
+ * Warms everything the contribution sheet will need, from the page before it.
  *
  * Stripe's cost is almost entirely the first load: `js.stripe.com/v3` has to arrive,
  * parse, and then stand up a controller frame and a metrics frame on two more origins
  * before a single field is painted. Paid on `/pay` itself, that is the reader watching
  * "Loading the secure payment form". Paid here, while they are still reading the page
- * they are on, it costs them nothing — by the time they press Donate the script is in
+ * they are on, it costs them nothing — by the time they press the button the script is in
  * the HTTP cache and the connections are open.
  *
  * `prefetch`, not `<script>`: the file is fetched at the lowest priority and never

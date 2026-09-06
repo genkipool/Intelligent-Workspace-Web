@@ -22,16 +22,16 @@ export const ui = {
         'nav.theme': 'Switch theme',
         'nav.language': 'Language',
         'nav.install': 'Add to Chrome',
-        'nav.donate': 'Support',
+        'nav.contribute': 'Support',
         'nav.menu': 'Menu',
-        'nav.donateTitle': 'Support the development of Intelligent Workspace',
+        'nav.contributeTitle': 'Support the development of Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
         // Hero Section & 3-Slide Carousel
         'hero.title': 'A browser that organises itself.',
         'hero.btnInstall': 'Add to Google Chrome',
         'hero.btnSource': 'View Source on GitHub',
-        'hero.support': 'Support the project',
+        'hero.contribute': 'Support the project',
 
         'hero.slide1.line1': 'Transform your browser into an',
         'hero.slide1.line2': 'autonomous workstation',
@@ -1045,13 +1045,13 @@ export const ui = {
         'faq.source.a':
             'Yes. The whole repository is on GitHub so that anyone can audit it and open a pull request. The licence is proprietary rather than open source: you may read it, build it for your own private use, and propose fixes, but not republish it or ship a derivative.',
 
-        // Final CTA & Donate Band
-        'donate.title': 'Support Independent Development',
-        'donate.eyebrow': 'Free, private, and open to audit',
-        'donate.body':
+        // Final CTA & Contribution Band
+        'contribute.title': 'Support Independent Development',
+        'contribute.eyebrow': 'Free, private, and open to audit',
+        'contribute.body':
             'Intelligent Workspace is free, private, and ad-free. If it gives you your focus and afternoons back, a voluntary contribution keeps development active.',
-        'donate.cta': 'Support Project',
-        'donate.secured':
+        'contribute.cta': 'Support Project',
+        'contribute.secured':
             'Payments processed securely by Stripe. We never see or store your payment details.',
 
         // Payment Page
@@ -1069,7 +1069,7 @@ export const ui = {
         'pay.redirecting': 'Taking you there to authorise the payment…',
         'pay.thanks': 'Thank you. Your support payment went through.',
         'pay.notConfigured': 'Payments are not configured on this deployment yet.',
-        'pay.donateNow': 'Support',
+        'pay.contributeNow': 'Support',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
         'pay.badAmount': 'Choose an amount between 1 and 500 euros.',
@@ -1088,7 +1088,7 @@ export const ui = {
         'errors.server.retry': 'Try again',
         'errors.server.cta': 'Go to the home page',
         'errors.server.meta': 'Something went wrong',
-        'errors.support': 'Support the project',
+        'errors.contribute': 'Support the project',
         'errors.source': 'Read the source',
 
         // Site chrome — the header and footer shared by the policy, the support centre
@@ -1215,16 +1215,16 @@ export const ui = {
         'nav.theme': 'Cambiar tema',
         'nav.language': 'Idioma',
         'nav.install': 'Añadir a Chrome',
-        'nav.donate': 'Apoyar',
+        'nav.contribute': 'Apoyar',
         'nav.menu': 'Menú',
-        'nav.donateTitle': 'Apoya el desarrollo de Intelligent Workspace',
+        'nav.contributeTitle': 'Apoya el desarrollo de Intelligent Workspace',
         'nav.version': 'Manifest V3',
 
         // Hero Section & 3-Slide Carousel
         'hero.title': 'Un navegador que se ordena solo.',
         'hero.btnInstall': 'Añadir a Google Chrome',
         'hero.btnSource': 'Ver Código en GitHub',
-        'hero.support': 'Apoyar el proyecto',
+        'hero.contribute': 'Apoyar el proyecto',
 
         'hero.slide1.line1': 'Transforma tu navegador en una',
         'hero.slide1.line2': 'estación de trabajo autónoma',
@@ -2242,13 +2242,13 @@ export const ui = {
         'faq.source.a':
             'Sí. El repositorio entero está en GitHub para que cualquiera pueda auditarlo y abrir un pull request. La licencia es propietaria, no de código abierto: puedes leerlo, compilarlo para tu uso privado y proponer arreglos, pero no republicarlo ni distribuir un derivado.',
 
-        // Final CTA & Donate Band
-        'donate.title': 'Apoya el Desarrollo Independiente',
-        'donate.eyebrow': 'Gratis, privado y auditable',
-        'donate.body':
+        // Final CTA & Contribution Band
+        'contribute.title': 'Apoya el Desarrollo Independiente',
+        'contribute.eyebrow': 'Gratis, privado y auditable',
+        'contribute.body':
             'Intelligent Workspace es gratuita, privada y sin publicidad. Si te devuelve el foco y tus tardes, una aportación voluntaria ayuda a continuar su desarrollo.',
-        'donate.cta': 'Apoyar',
-        'donate.secured':
+        'contribute.cta': 'Apoyar',
+        'contribute.secured':
             'Pagos gestionados de forma segura a través de Stripe. Nunca guardamos tus datos bancarios.',
 
         // Payment Page
@@ -2266,7 +2266,7 @@ export const ui = {
         'pay.redirecting': 'Te llevamos allí para autorizar el pago…',
         'pay.thanks': 'Gracias. Tu aportación de apoyo se ha completado.',
         'pay.notConfigured': 'Los pagos aún no están configurados en este despliegue.',
-        'pay.donateNow': 'Apoyar',
+        'pay.contributeNow': 'Apoyar',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',
         'pay.badAmount': 'Elige un importe entre 1 y 500 euros.',
@@ -2286,7 +2286,7 @@ export const ui = {
         'errors.server.retry': 'Intentar de nuevo',
         'errors.server.cta': 'Ir a la página de inicio',
         'errors.server.meta': 'Algo ha salido mal',
-        'errors.support': 'Apoyar el proyecto',
+        'errors.contribute': 'Apoyar el proyecto',
         'errors.source': 'Leer el código fuente',
 
         // Site chrome — the header and footer shared by the policy, the support centre

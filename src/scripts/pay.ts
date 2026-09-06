@@ -1,5 +1,5 @@
 /**
- * Wires Stripe into the donation sheet.
+ * Wires Stripe into the contribution sheet.
  *
  * The sheet's markup and every visible string are rendered at build time by
  * `PaySheet.astro`; this file only mounts the Elements and talks to the panel. If you
@@ -15,16 +15,16 @@
  * matching nonce the panel drops the message, so never invent one here.
  */
 
-import { donationAmounts, defaultDonationAmount, donationCurrency } from '@/data/site';
-import { CARD_FORM_METHODS, clampAmount } from '@/lib/donation';
+import { contributionAmounts, defaultContributionAmount, contributionCurrency } from '@/data/site';
+import { CARD_FORM_METHODS, clampAmount } from '@/lib/contribution';
 
 /**
- * The publishable key of the account that receives the donations.
+ * The publishable key of the account that receives the contributions.
  *
  * NO KEY IS WRITTEN HERE, AND NONE MAY BE. There used to be a `pk_test_` in this file as
  * a fallback so a fresh clone ran with no configuration, and that convenience had a
  * failure mode worth more than it: with the variable missing or misspelt in production
- * the site did not break, it quietly took donations in TEST MODE. Nobody is charged,
+ * the site did not break, it quietly took contributions in TEST MODE. Nobody is charged,
  * nothing arrives, and every screen — the sheet, the wallets, the thank-you — looks
  * exactly as it does when it works.
  *
@@ -74,7 +74,7 @@ const WALLET_FOR_METHOD: Record<string, string> = {
  * with `method=revolut_pay`. That window used to be built from a fixed
  * `['card', 'revolut_pay']`, so it opened on Tarjeta — the reader pressed Revolut Pay,
  * got a second copy of the card form, and reasonably read that as "Revolut Pay does not
- * open". The window now opens on the tab they chose, and one press of Donate finishes it.
+ * open". The window now opens on the tab they chose, and one press of the button finishes it.
  *
  * A method the card form does not collect (a wallet, or nothing at all) leaves the order
  * as it is, which is the list's own order.
@@ -98,7 +98,7 @@ function cardFormTypes(): string[] {
 }
 
 interface PayStrings {
-    donateNow: string;
+    contributeNow: string;
     failed: string;
     badAmount: string;
     opensOutside: string;
@@ -112,7 +112,7 @@ declare const Stripe: (key: string, options?: Record<string, unknown>) => any;
 const params = new URLSearchParams(window.location.search);
 const NONCE = params.get('nonce');
 const METHOD = params.get('method') ?? 'card';
-const CURRENCY = (params.get('currency') ?? donationCurrency).toLowerCase();
+const CURRENCY = (params.get('currency') ?? contributionCurrency).toLowerCase();
 
 /**
  * Whether this page is the window the panel opened, rather than the sheet itself or the
@@ -410,7 +410,7 @@ const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) 
  * same function the endpoint validates with, so the button cannot show a number the
  * server would refuse.
  */
-let amount: number = clampAmount(params.get('amount')) ?? defaultDonationAmount;
+let amount: number = clampAmount(params.get('amount')) ?? defaultContributionAmount;
 let submitting = false;
 
 /**
@@ -483,7 +483,7 @@ function syncChips(): void {
 }
 
 function updateSubmitLabel(): void {
-    $('submit-label').textContent = `${strings.donateNow} ${money.format(amount)}`;
+    $('submit-label').textContent = `${strings.contributeNow} ${money.format(amount)}`;
 }
 
 function setAmount(value: number, { fromChip = false } = {}): void {
@@ -797,7 +797,7 @@ function mount(): void {
     /*
      * The amount was settled in the panel and travels in the query string, so the chips
      * and the free field would only offer to change a decision this window cannot carry
-     * back. The figure is still on screen: the button says "Donate 5 €".
+     * back. The figure is still on screen: the button says "Support 5 €".
      */
     if (FOCUSED) $('amounts').hidden = true;
 
@@ -824,7 +824,7 @@ function mount(): void {
      *
      * `paymentMethodTypes` is what keeps the list short. Left to itself the account
      * offers Revolut Pay, Bancontact, MB WAY, Satispay and EPS as well, which in a 400px
-     * panel is a scrolling menu in front of a donation. Two entries is the whole list.
+     * panel is a scrolling menu in front of a contribution. Two entries is the whole list.
      *
      * It is an option of the instance, not of the element, which is why this is its own
      * instance: putting it on the shared one would strip PayPal out of the wallet buttons
@@ -1065,7 +1065,7 @@ for (const chip of document.querySelectorAll<HTMLButtonElement>('.chip')) {
 
 $('custom-amount').addEventListener('input', (event) => {
     const raw = Number((event.target as HTMLInputElement).value);
-    const [min, max] = [donationAmounts[0]!, 500];
+    const [min, max] = [contributionAmounts[0]!, 500];
     if (!Number.isFinite(raw) || raw < min || raw > max) {
         setStatus(strings.badAmount);
         setPayEnabled(false);

@@ -1,6 +1,6 @@
 ---
 /**
- * The donation form, rendered once for both languages.
+ * The contribution form, rendered once for both languages.
  *
  * WHY THIS IS A WEB PAGE AND NOT PART OF THE EXTENSION: Manifest V3 pins an extension's
  * script-src to 'self', so Stripe.js cannot load in a panel page. This is an ordinary
@@ -11,8 +11,8 @@
  */
 import type { Lang } from '@/i18n/ui';
 import { useTranslations } from '@/i18n/utils';
-import { donationAmounts } from '@/data/site';
-import { CARD_FORM_METHODS, CARD_FORM_METHOD_LABEL } from '@/lib/donation';
+import { contributionAmounts } from '@/data/site';
+import { CARD_FORM_METHODS, CARD_FORM_METHOD_LABEL } from '@/lib/contribution';
 
 interface Props {
     lang: Lang;
@@ -82,7 +82,7 @@ const METHOD_MARK = {
         <legend>{t('pay.chooseAmount')}</legend>
         <div class="chips" id="chips" role="radiogroup" aria-labelledby="sheet-title">
             {
-                donationAmounts.map((amount) => (
+                contributionAmounts.map((amount) => (
                     <button type="button" class="chip" data-amount={amount} role="radio" aria-checked="false">
                         {amount}
                     </button>
@@ -123,7 +123,7 @@ const METHOD_MARK = {
         <div id="payment-element"></div>
         <button id="submit" type="submit" disabled>
             <span class="spinner" aria-hidden="true"></span>
-            <span id="submit-label">{t('pay.donateNow')}</span>
+            <span id="submit-label">{t('pay.contributeNow')}</span>
         </button>
     </form>
 
@@ -188,7 +188,7 @@ const METHOD_MARK = {
     id="pay-strings"
     is:inline
     set:html={JSON.stringify({
-        donateNow: t('pay.donateNow'),
+        contributeNow: t('pay.contributeNow'),
         failed: t('pay.failed'),
         badAmount: t('pay.badAmount'),
         opensOutside: t('pay.opensOutside'),

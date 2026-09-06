@@ -25,7 +25,7 @@ interface Props {
     /**
      * Whether this page joins the client-side router.
      *
-     * The donation sheet must not. A view transition swaps the DOM without re-running
+     * The contribution sheet must not. A view transition swaps the DOM without re-running
      * module scripts, so arriving at `/pay` from a link inside the site left `pay.ts`
      * unexecuted: Stripe was never initialised and the sheet sat on "Loading the secure
      * payment form" for ever, while opening the same URL directly worked perfectly. The
@@ -38,7 +38,7 @@ interface Props {
      *
      * On by default: they hide themselves on a page with nothing to scroll, so the only
      * pages that need to say no are the ones where they would be in the way rather than
-     * merely idle. That is the donation sheet — a card form is no place for a control
+     * merely idle. That is the contribution sheet — a card form is no place for a control
      * that floats over it, and on a phone the sheet is exactly tall enough to scroll.
      */
     scrollButtons?: boolean;
@@ -122,7 +122,7 @@ const jsonLd = {
 
         {
             /* Zero-flash client-side transitions for the language switch. Off on the
-               donation sheet, which has no links and cannot survive a DOM swap. */
+               contribution sheet, which has no links and cannot survive a DOM swap. */
             transitions && <ClientRouter />
         }
 

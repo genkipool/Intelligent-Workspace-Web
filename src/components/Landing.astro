@@ -5,7 +5,7 @@
  */
 /*
  * The extension's own stylesheet, imported here rather than in `Base.astro`: every
- * class in it belongs to a shot on this page, and the donation sheet and the error
+ * class in it belongs to a shot on this page, and the contribution sheet and the error
  * pages were downloading all 25 KB of it to draw none.
  */
 import '@/styles/extension-ui.css';
@@ -27,7 +27,7 @@ import KeyboardBand from '@/components/KeyboardBand.astro';
 import Trust from '@/components/Trust.astro';
 import Faq from '@/components/Faq.astro';
 import Team from '@/components/Team.astro';
-import DonateBand from '@/components/DonateBand.astro';
+import ContributionBand from '@/components/ContributionBand.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 
 interface Props {
@@ -56,7 +56,7 @@ const { lang } = Astro.props;
     <Trust lang={lang} />
     <Faq lang={lang} />
     <Team lang={lang} />
-    <DonateBand lang={lang} />
+    <ContributionBand lang={lang} />
 </main>
 
 <SiteFooter lang={lang} />

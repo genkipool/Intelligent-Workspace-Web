@@ -48,13 +48,13 @@ export const team: readonly Person[] = [
     { name: 'Flor Chávez', roleKey: 'team.design' },
 ];
 
-/** Preset donation amounts, in whole euros. Mirrored by the server-side clamp. */
-export const donationAmounts = [1, 5, 10] as const;
+/** Preset contribution amounts, in whole euros. Mirrored by the server-side clamp. */
+export const contributionAmounts = [1, 5, 10] as const;
 
 /**
- * The chip selected on arrival. It has to exist in `donationAmounts`, or the sheet opens
- * with an amount no chip is showing as chosen. `DONATION_DEFAULT_AMOUNT` in the
+ * The chip selected on arrival. It has to exist in `contributionAmounts`, or the sheet opens
+ * with an amount no chip is showing as chosen. `CONTRIBUTION_DEFAULT_AMOUNT` in the
  * extension's `config/payments.js` is the same number and has to move with it.
  */
-export const defaultDonationAmount = 1;
-export const donationCurrency = 'eur';
+export const defaultContributionAmount = 1;
+export const contributionCurrency = 'eur';

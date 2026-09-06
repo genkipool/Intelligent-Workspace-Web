@@ -31,9 +31,9 @@
  */
 
 import type { APIRoute } from 'astro';
-import { donationCurrency } from '@/data/site';
+import { contributionCurrency } from '@/data/site';
 // The rules live in a pure module so they can be tested without a server or a Stripe
-// key. See `src/lib/donation.test.ts` — those cases are the guard between a query
+// key. See `src/lib/contribution.test.ts` — those cases are the guard between a query
 // string and a card charge.
 import {
     clampAmount,
@@ -43,7 +43,7 @@ import {
     MAX_AMOUNT,
     cardFormMethodsFrom,
     isCardFormSource,
-} from '@/lib/donation';
+} from '@/lib/contribution';
 
 export const prerender = false;
 
@@ -72,7 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const amount = clampAmount(body.amount);
-    const currency = String(body.currency ?? donationCurrency).toLowerCase();
+    const currency = String(body.currency ?? contributionCurrency).toLowerCase();
 
     if (amount === null) {
         return json({ error: `Choose an amount between ${MIN_AMOUNT} and ${MAX_AMOUNT}.` }, 400);
