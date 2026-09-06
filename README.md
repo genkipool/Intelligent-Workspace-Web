@@ -125,16 +125,36 @@ Swap `pk_test_…` for `pk_live_…` when going live.
 
 **Extension IDs.** `frame-ancestors` currently allows two:
 
-| ID                                 | Which build                                                          |
-| ---------------------------------- | -------------------------------------------------------------------- |
-| `cmkbnppbnhoklenlngmbdfecgbnlojoo` | The Web Store listing — the same ID `src/data/site.ts` links to      |
-| `phfhghnjjimkbbmfjcjgaegjombeophi` | The unpacked build loaded from `…/Intelligent_Tab_Group_Svelte/dist` |
+| ID                                 | Which build                                                     |
+| ---------------------------------- | --------------------------------------------------------------- |
+| `cmkbnppbnhoklenlngmbdfecgbnlojoo` | The Web Store listing — the same ID `src/data/site.ts` links to |
+| `phfhghnjjimkbbmfjcjgaegjombeophi` | Any unpacked build of the extension repository                  |
 
-The second is derived from the SHA-256 of that absolute path, so **it changes if the
-folder moves or if you build on another machine**. Read the real one at
-`chrome://extensions` and update `vercel.json` if it differs. The symptom of a mismatch
-is a blank frame in the panel and a console message about the ancestor violating the CSP
-directive — that is the guard working, not a bug.
+Neither is derived from a path any more, and this file said for a while that the second
+one was. It is not: the extension's `manifest.json` carries a `key`, the public half of
+`dev-key.pem`, and Chrome takes the ID from the SHA-256 of that key. So the unpacked ID is
+now the same on every machine and in every folder — which is what it is for, since the ID
+is named here and a value that moved with the directory had to be chased after every
+checkout.
+
+The consequence is worth stating plainly, because it is easy to read as a leak and is not
+one: that public key is committed, so **anyone who clones the extension and loads it
+unpacked gets `phfhghn…` too**, and their build may frame `/pay`. It buys them nothing.
+The private half is git-ignored and has never been committed, so no one else can sign an
+update or touch the listing; the sheet hands its embedder only `pay:ready`, `pay:success`,
+`pay:error` and `pay:external`, none of which carries card data, the client secret or
+anything personal; and card fields live in Stripe's own cross-origin frames, out of an
+embedder's reach. Anyone able to load an unpacked extension into someone's browser can ask
+for `<all_urls>` and do far worse than frame a payment page.
+
+What is still worth doing is making the two rows one. The `key` is a development key
+rather than the Web Store item's, so the published build and a local one still have
+different IDs. Put the listing's own public key in the manifest — it is in the header of
+the published `.crx` — and both become `cmkbnpp…`, leaving this table with a single row
+that never changes again.
+
+The symptom of a mismatch is a blank frame in the panel and a console message about the
+ancestor violating the CSP directive — that is the guard working, not a bug.
 
 The extension's `manifest.json` used to carry
 `"key": "ahdppjdbnhpnkphnmogldfgcngekhfgb"` — the extension _ID_ in the field that expects
@@ -145,10 +165,10 @@ of nothing in particular and derived a third ID from them —
 `hkhhkopgecahfoileckcppkkchclljoa`, which appears in neither row above. Every attempt to
 frame `/pay` was refused, and the panel showed "refused to connect".
 
-The field is gone now, so an unpacked build is path-derived again and matches the second
-row. The proper long-term fix is still to put the _real_ public key there, so unpacked and
-Web Store builds share one ID — but a wrong value is worse than none, because it invents
-an ID no allowlist will ever contain.
+The field carries a real RSA public key now, which is why the second row is stable. The
+remaining step is the one above: make it the listing's key rather than a development one.
+A wrong value is worse than none, because it invents an ID no allowlist will ever
+contain.
 
 **The marketing pages name `js.stripe.com` in `script-src` too, and only for a prefetch.**
 The landing page warms `js.stripe.com/v3` with `<link rel="prefetch" as="script">` so the
