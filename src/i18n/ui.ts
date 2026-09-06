@@ -1358,7 +1358,7 @@ export const ui = {
         'fhub.keys.f4':
             'Modo oscuro, sepia, escala de grises o claro para una pestaña o para todas, pantalla dividida, picture-in-picture y lectura en voz alta, cada uno con su tecla.',
 
-        // Tab 5: Reproductor de música y radio online
+        // Tab 5: Music player and online radio
         'fhub.media.title': 'Tu música, y la radio, sin una pestaña que las sostenga',
         'fhub.media.lead':
             'Un reproductor dentro del panel lateral, alimentado por una carpeta de tu propio disco y por las emisoras que guardes. El sonido lo produce un documento offscreen y no el panel, así que sigue sonando cuando ocultas el cajón, cambias de vista o cierras la página.',
