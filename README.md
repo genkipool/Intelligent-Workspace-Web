@@ -127,8 +127,8 @@ Swap `pk_test_…` for `pk_live_…` when going live.
 
 | ID                                 | Which build                                                          |
 | ---------------------------------- | -------------------------------------------------------------------- |
-| `ahdppjdbnhpnkphnmogldfgcngekhfgb` | The Web Store listing                                                |
-| `lblolblfmhglgakodagcifikmpfppbib` | The unpacked build loaded from `…/Intelligent_Tab_Group_Svelte/dist` |
+| `cmkbnppbnhoklenlngmbdfecgbnlojoo` | The Web Store listing — the same ID `src/data/site.ts` links to      |
+| `phfhghnjjimkbbmfjcjgaegjombeophi` | The unpacked build loaded from `…/Intelligent_Tab_Group_Svelte/dist` |
 
 The second is derived from the SHA-256 of that absolute path, so **it changes if the
 folder moves or if you build on another machine**. Read the real one at
