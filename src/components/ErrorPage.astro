@@ -41,8 +41,10 @@ const payUrl = localisePath(lang, '/pay');
 <DocTopbar lang={lang} back={false} />
 
 <main class="error-main" id="main">
-    <!-- The status code, set as scenery. `aria-hidden` because the pill below already
-         says it in words, and a screen reader should hear it once. -->
+    {
+        /* The status code, set as scenery. `aria-hidden` because the pill below already
+         says it in words, and a screen reader should hear it once. */
+    }
     <div class="error-ghost" aria-hidden="true">{status}</div>
     <div class="error-glow" aria-hidden="true"></div>
 

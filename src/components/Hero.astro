@@ -40,32 +40,46 @@ const slides = [
 
 <section id="hero" class="hero-section wrap">
     <div class="hero-grid" id="hero-carousel-root">
-        <!-- Left Column: 3-Slide Content Deck & CTAs -->
+        {/* Left Column: 3-Slide Content Deck & CTAs */}
         <div class="hero-content" data-reveal>
-            <!-- Slides Container -->
+            {/* Slides Container */}
             <div class="hero-slides-wrapper">
                 {
-                    slides.map((slide, index) => (
-                        <div
-                            class:list={['hero-slide-item', { active: index === 0 }]}
-                            data-slide-index={index}
-                        >
-                            <div class="hero-slide-badge">
-                                <span class="badge-dot" />
-                                <span>{slide.tag}</span>
+                    slides.map((slide, index) => {
+                        /*
+                         * Only the first slide is the page's <h1>.
+                         *
+                         * All three were, and a document with three level-one headings has
+                         * no main one: nothing in the outline says which of the three the
+                         * page is about, and a screen reader announces three where there is
+                         * one heading and two carousel captions. The other two are <h2>s —
+                         * same class, same type, and now sitting under the <h1> where they
+                         * belong. Astro renders a capitalised variable holding a tag name as
+                         * that tag, so the markup below is the only thing that changes.
+                         */
+                        const Title = index === 0 ? 'h1' : 'h2';
+                        return (
+                            <div
+                                class:list={['hero-slide-item', { active: index === 0 }]}
+                                data-slide-index={index}
+                            >
+                                <div class="hero-slide-badge">
+                                    <span class="badge-dot" />
+                                    <span>{slide.tag}</span>
+                                </div>
+                                <Title class="hero-title">
+                                    <span class="title-line-1">{slide.line1}</span>
+                                    <br />
+                                    <span class="text-gradient title-line-2">{slide.line2}</span>
+                                </Title>
+                                <p class="hero-lede">{slide.lede}</p>
                             </div>
-                            <h1 class="hero-title">
-                                <span class="title-line-1">{slide.line1}</span>
-                                <br />
-                                <span class="text-gradient title-line-2">{slide.line2}</span>
-                            </h1>
-                            <p class="hero-lede">{slide.lede}</p>
-                        </div>
-                    ))
+                        );
+                    })
                 }
             </div>
 
-            <!-- CTAs and Standard Action Row -->
+            {/* CTAs and Standard Action Row */}
             <div class="hero-ctas">
                 <a
                     href={site.storeUrl}
@@ -88,7 +102,7 @@ const slides = [
                 </a>
             </div>
 
-            <!-- Carousel Progress Controls (3 Radix-style bars + Chevrons) -->
+            {/* Carousel Progress Controls (3 Radix-style bars + Chevrons) */}
             <div class="carousel-nav-row" role="region" aria-label="Hero Carousel Navigation">
                 <button
                     type="button"
@@ -125,17 +139,19 @@ const slides = [
             </div>
         </div>
 
-        <!-- Right Column: the extension's own panels, one per slide -->
+        {/* Right Column: the extension's own panels, one per slide */}
         <div class="hero-media-wrapper" data-reveal>
-            <!--
+            {
+                /*
                 No browser frame around them. These are the extension's interfaces
                 drawn with its own classes from `src/styles/extension-ui.css`: the
                 group list, the floating omnibar, and the side panel's view switcher.
                 A fake window would only put a second, invented chrome in front of the
                 real one.
-            -->
+            */
+            }
             <div class="shot-stage">
-                <!-- Screen 1: the rules manager, where the grouping is decided -->
+                {/* Screen 1: the rules manager, where the grouping is decided */}
                 <div class="mockup-panel active" data-panel-index="0">
                     <div class="panel-frame">
                         <PanelRules
@@ -168,7 +184,7 @@ const slides = [
                     </div>
                 </div>
 
-                <!-- Screen 2: the floating omnibar, from `hint/omnibar.js` -->
+                {/* Screen 2: the floating omnibar, from `hint/omnibar.js` */}
                 <div class="mockup-panel" data-panel-index="1">
                     <div class="iw-omni">
                         <div class="hint-omni-input-wrapper">
@@ -214,7 +230,7 @@ const slides = [
                     </div>
                 </div>
 
-                <!-- Screen 3: the group list, the panel all of it ends up in -->
+                {/* Screen 3: the group list, the panel all of it ends up in */}
                 <div class="mockup-panel" data-panel-index="2">
                     <div class="panel-frame">
                         <PanelGroupList

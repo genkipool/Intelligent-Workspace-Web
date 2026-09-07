@@ -64,10 +64,10 @@ const solutions: readonly { icon: IconName; title: string; desc: string }[] = [
 ---
 
 <section id="problema" class="section-container wrap">
-    <!-- Section Header (No Pill Badge) -->
+    {/* Section Header (No Pill Badge) */}
     <SectionHeader lang={lang} titleKey="problem.title" subtitleKey="problem.subtitle" />
 
-    <!-- 3 Problem Cards -->
+    {/* 3 Problem Cards */}
     <div class="problem-grid" data-reveal>
         {
             problems.map((item) => (
@@ -82,12 +82,12 @@ const solutions: readonly { icon: IconName; title: string; desc: string }[] = [
         }
     </div>
 
-    <!-- Central VS Section Indicator -->
+    {/* Central VS Section Indicator */}
     <div class="vs-divider-row" data-reveal>
         <span class="vs-label">{t('problem.vs')}</span>
     </div>
 
-    <!-- 3 Solution Cards -->
+    {/* 3 Solution Cards */}
     <div class="solution-grid" data-reveal>
         {
             solutions.map((item) => (

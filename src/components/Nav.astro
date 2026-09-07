@@ -40,7 +40,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
 
 <header class="site-header" id="top">
     <div class="header-inner wrap">
-        <!-- Brand identity with seamless Extension Logo -->
+        {/* Brand identity with seamless Extension Logo */}
         <a href={homeUrl} class="brand-link" id="nav-brand-logo">
             <img
                 src="/assets/logo.svg"
@@ -57,7 +57,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
             </div>
         </a>
 
-        <!-- Desktop Navigation Links (Clean & Essential) -->
+        {/* Desktop Navigation Links (Clean & Essential) */}
         <nav class="nav-links" aria-label="Main Navigation">
             {
                 links.map((link) => (
@@ -68,18 +68,20 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
             }
         </nav>
 
-        <!-- Right Side Controls & CTA -->
+        {/* Right Side Controls & CTA */}
         <div class="nav-actions">
             <LangToggle lang={lang} />
             <ThemeToggle lang={lang} />
 
-            <!--
+            {
+                /*
                 `data-astro-reload` is not optional. The site navigates with the view
                 transitions router, and `/pay` is served with a strict CSP of its own so
                 that Stripe can be framed there and nowhere else; swapped in as a
                 fragment it would inherit this page's policy instead and the sheet would
                 come up blank. `ContributionBand` does the same for the same reason.
-            -->
+            */
+            }
             <a
                 href={payUrl}
                 class="btn-secondary nav-contribute-btn"
@@ -101,7 +103,8 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 <span>{t('nav.install')}</span>
             </a>
 
-            <!--
+            {
+                /*
                 THREE BARS, NOT TWO ICONS.
 
                 It used to be `<Icon name="menu">` and `<Icon name="close">` stacked, with
@@ -111,7 +114,8 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 gets out of the way — so the same press reads as one thing becoming
                 another. Nothing else can animate that: the sprite's lines live inside a
                 `<use>` shadow tree and cannot be reached by a stylesheet.
-            -->
+            */
+            }
             <button
                 id="mobile-menu-btn"
                 type="button"
@@ -129,14 +133,16 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         </div>
     </div>
 
-    <!--
+    {
+        /*
         The page behind the drawer, dimmed. It is what makes the drawer read as being in
         front of something rather than as part of the header, and it is the target most
         people reach for to dismiss a menu.
-    -->
+    */
+    }
     <div id="mobile-scrim" class="mobile-scrim" aria-hidden="true"></div>
 
-    <!-- Mobile Navigation Drawer -->
+    {/* Mobile Navigation Drawer */}
     <div id="mobile-drawer" class="mobile-drawer">
         <div class="mobile-drawer-inner">
             {
@@ -150,7 +156,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
                 <a href={site.storeUrl} target="_blank" rel="noopener noreferrer" class="btn-primary w-full">
                     {t('nav.install')}
                 </a>
-                <!-- Second, because installing is what most readers came for. -->
+                {/* Second, because installing is what most readers came for. */}
                 <a href={payUrl} class="btn-secondary w-full mobile-contribute-link" data-astro-reload>
                     <Icon name="heart" size={16} />
                     <span>{t('nav.contribute')}</span>

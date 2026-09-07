@@ -18,12 +18,12 @@ const t = useTranslations(lang);
 ---
 
 <section id="pilares" class="section-container wrap">
-    <!-- Section Header (No Pill Badge) -->
+    {/* Section Header (No Pill Badge) */}
     <SectionHeader lang={lang} titleKey="fhub.title" subtitleKey="fhub.subtitle" />
 
-    <!-- Interactive Tabs Hub -->
+    {/* Interactive Tabs Hub */}
     <div class="feature-hub-container" data-tabs-container data-reveal>
-        <!-- Tab Navigation (Clean SVG Icons) -->
+        {/* Tab Navigation (Clean SVG Icons) */}
         <div class="tab-nav" role="tablist" aria-label={t('fhub.tablistLabel')} aria-orientation="horizontal">
             {
                 pillars.map((pillar, index) => (
@@ -44,13 +44,15 @@ const t = useTranslations(lang);
             }
         </div>
 
-        <!-- Autonomous Agent Panel -->
+        {/* Autonomous Agent Panel */}
 
-        <!-- Autonomous agent -->
+        {/* Autonomous agent */}
         <PillarPanel lang={lang} pillar={pillars[0]} active>
             <div class="panel-preview">
-                <!-- One exchange in the assistant's own card: the question as the
-                                         heading, the tools it ran as agent steps, then the answer. -->
+                {
+                    /* One exchange in the assistant's own card: the question as the
+                                         heading, the tools it ran as agent steps, then the answer. */
+                }
                 <div class="iw-shot">
                     <PanelChrome
                         title={t('fhub.agent.mockup.badge')}
@@ -90,13 +92,15 @@ const t = useTranslations(lang);
             </div>
         </PillarPanel>
 
-        <!-- Tabs, groups and rules -->
+        {/* Tabs, groups and rules */}
         <PillarPanel lang={lang} pillar={pillars[1]}>
             <div class="panel-preview">
-                <!--
+                {
+                    /*
                             The same panel the hero shows, with another window's worth of
                             groups in it: one component, two sets of content.
-                        -->
+                        */
+                }
                 <PanelGroupList
                     title={t('fhub.tabs.mockup.badge')}
                     duplicates="5"
@@ -151,11 +155,13 @@ const t = useTranslations(lang);
             </div>
         </PillarPanel>
 
-        <!-- Time, limits and focus -->
+        {/* Time, limits and focus */}
         <PillarPanel lang={lang} pillar={pillars[2]}>
             <div class="panel-preview">
-                <!-- The web activity panel's own box for one site, with the three
-                                                 rules it is under, and the timer that runs beside it. -->
+                {
+                    /* The web activity panel's own box for one site, with the three
+                                                 rules it is under, and the timer that runs beside it. */
+                }
                 <div class="iw-shot">
                     <PanelChrome
                         title={t('fhub.focus.mockup.badge')}
@@ -228,7 +234,7 @@ const t = useTranslations(lang);
                             </div>
                         </div>
 
-                        <!-- And the Pomodoro panel the toolbar's tomato opens. -->
+                        {/* And the Pomodoro panel the toolbar's tomato opens. */}
                         <div class="group-item pomo-box">
                             <div class="group-header">
                                 <span class="pomo-icon"><Icon name="pomodoro" size={18} /></span>
@@ -248,16 +254,18 @@ const t = useTranslations(lang);
             </div>
         </PillarPanel>
 
-        <!-- Keyboard, omnibar and snippets -->
+        {/* Keyboard, omnibar and snippets */}
         <PillarPanel lang={lang} pillar={pillars[3]}>
             <div class="panel-preview">
-                <!--
+                {
+                    /*
                                 A page, with what the two engines put on top of it. The links
                                 are spans that only look like links: nothing here is clickable,
                                 and an anchor would promise a destination this page has not
                                 got. The depth comes from the overlays, not from a card around
                                 the whole thing.
-                            -->
+                            */
+                }
                 <div class="keys-preview">
                     <article class="keys-page">
                         <nav class="keys-nav">
@@ -307,12 +315,14 @@ const t = useTranslations(lang);
             </div>
         </PillarPanel>
 
-        <!-- Music and radio -->
+        {/* Music and radio */}
         <PillarPanel lang={lang} pillar={pillars[4]}>
             <div class="panel-preview">
-                <!-- The player's drawer with the list open on "All": the stations it
+                {
+                    /* The player's drawer with the list open on "All": the stations it
                                      keeps above the folders you handed it, a station on the air, and the
-                                     live bar a stream gets where a file would have a seek bar. -->
+                                     live bar a stream gets where a file would have a seek bar. */
+                }
                 <PanelMusicPlayer
                     title={t('fhub.media.mockup.badge')}
                     searchPlaceholder={t('fhub.media.mockup.searchPlaceholder')}

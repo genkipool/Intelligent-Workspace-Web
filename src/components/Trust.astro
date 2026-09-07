@@ -35,10 +35,10 @@ const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
 ---
 
 <section id="privacidad" class="section-container wrap">
-    <!-- Section Header (No Pill Badge) -->
+    {/* Section Header (No Pill Badge) */}
     <SectionHeader lang={lang} titleKey="trust.heading" subtitle={lede} />
 
-    <!-- 3 Core Privacy Pillars -->
+    {/* 3 Core Privacy Pillars */}
     <div class="trust-cards-grid" data-reveal>
         {
             trustCards.map((card) => (
@@ -53,7 +53,7 @@ const trustCards: readonly { icon: IconName; title: string; desc: string }[] = [
         }
     </div>
 
-    <!-- Permissions Breakdown Table -->
+    {/* Permissions Breakdown Table */}
     <div class="permissions-matrix" data-reveal>
         <div class="matrix-header">
             <span>{t('trust.colPermissions')}</span>

@@ -33,13 +33,15 @@ const bullets: readonly ShowcaseBullet[] = [
     reverse
     alt
 >
-    <!--
+    {
+        /*
         The bookmarks view of the side panel: `BookmarksView.svelte` and the
         renderer in `bookmarks.js`. It is a flat scrolling list, not a set of
         cards: folders are `<details>` whose contents are indented behind a
         hairline, and each row carries the five actions the item template
         holds. The filters underneath are the scan dialog's own.
-    -->
+    */
+    }
     <div class="iw-shot">
         <PanelChrome
             title={t('bookmarks.m.title')}

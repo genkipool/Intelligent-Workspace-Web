@@ -67,8 +67,10 @@ const trackCount = folders.reduce((total, folder) => total + folder.tracks.lengt
     />
 
     <section class="music-panel" aria-hidden="true">
-        <!-- ① The row the track name lives in. With the list open it is the search
-                 field instead, and the radio and add-folder buttons stay put. -->
+        {
+            /* ① The row the track name lives in. With the list open it is the search
+                 field instead, and the radio and add-folder buttons stay put. */
+        }
         <div class="music-row music-row-title">
             <div class="music-search-wrap">
                 <span class="music-search-icon"><Icon name="search" size={16} /></span>
@@ -79,7 +81,7 @@ const trackCount = folders.reduce((total, folder) => total + folder.tracks.lengt
             <span class="music-icon-btn"><Icon name="addFolder" size={16} /></span>
         </div>
 
-        <!-- ② Music · Radio · All, each with what it holds. -->
+        {/* ② Music · Radio · All, each with what it holds. */}
         <div class="music-tabs">
             <span class="music-tab-btn">
                 <Icon name="music" size={14} />
@@ -98,7 +100,7 @@ const trackCount = folders.reduce((total, folder) => total + folder.tracks.lengt
             </span>
         </div>
 
-        <!-- ③ The list: the stations first, then a folder per folder you handed over. -->
+        {/* ③ The list: the stations first, then a folder per folder you handed over. */}
         <div class="music-results">
             <div class="music-folder music-all-section is-open">
                 <div class="music-folder-title">
@@ -160,16 +162,20 @@ const trackCount = folders.reduce((total, folder) => total + folder.tracks.lengt
             }
         </div>
 
-        <!-- ④ A stream has no length, so the bar is hatched and the duration is the
-                 radio mark. On a file this is the seek bar with its handle. -->
+        {
+            /* ④ A stream has no length, so the bar is hatched and the duration is the
+                 radio mark. On a file this is the seek bar with its handle. */
+        }
         <div class="music-row music-row-progress is-radio">
             <span class="music-time">{elapsed}</span>
             <span class="music-progress-radio-container"></span>
             <span class="music-time music-time-live"><Icon name="radio" size={13} /></span>
         </div>
 
-        <!-- ⑤ Transport and volume. Rewind and fast-forward are the ten-second jumps,
-                 and they are the two the panel greys out while a stream is on. -->
+        {
+            /* ⑤ Transport and volume. Rewind and fast-forward are the ten-second jumps,
+                 and they are the two the panel greys out while a stream is on. */
+        }
         <div class="music-row music-row-controls">
             <div class="music-controls-center">
                 <div class="music-transport">

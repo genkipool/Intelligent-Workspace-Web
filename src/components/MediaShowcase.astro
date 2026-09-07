@@ -29,19 +29,23 @@ const bullets: readonly ShowcaseBullet[] = [
     subtitleKey="media.subtitle"
     bullets={bullets}
 >
-    <!--
+    {
+        /*
         The floating player, drawn from the markup `videoPip.js` builds and the
         stylesheet `videoPipUi.js` injects with it: the gradient bar, the progress
         track whose played part takes the interactive colour, and the row of 34px
         transparent buttons. The loop button is the one this extension also adds
         to YouTube's own control bar, and it is shown switched on.
-    -->
+    */
+    }
     <div class="iw-pip">
         <div class="pip-frame" aria-hidden="true">
             <span class="pip-frame-glow"></span>
-            <!-- The player is opened from a YouTube tab in this shot, and the
+            {
+                /* The player is opened from a YouTube tab in this shot, and the
                      extension puts its own PiP and loop buttons in that player's
-                     own control bar. -->
+                     own control bar. */
+            }
             <span class="pip-source"><Icon name="youtube" size={44} /></span>
         </div>
         <div class="itg-pip-bar">

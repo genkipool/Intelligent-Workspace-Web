@@ -13,10 +13,10 @@ const t = useTranslations(lang);
 ---
 
 <section id="teclado" class="section-container wrap">
-    <!-- Clean Section Header (No Nested Outer Box) -->
+    {/* Clean Section Header (No Nested Outer Box) */}
     <SectionHeader lang={lang} titleKey="kb.title" subtitleKey="kb.desc" />
 
-    <!-- One column per way in: the omnibar, the page itself, and the browser -->
+    {/* One column per way in: the omnibar, the page itself, and the browser */}
     <div class="keyboard-columns-grid" data-reveal>
         {
             keyboardZones.map((zone) => (
