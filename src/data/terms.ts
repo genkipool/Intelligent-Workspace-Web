@@ -98,7 +98,7 @@ export const sections: readonly TermsSection[] = [
  */
 export const identity = {
     /** The natural person who publishes the extension. */
-    name: 'Luis Reoyo Blanco',
+    name: 'Luis Reoyo',
 } as const;
 
 export interface IdentityRow {
