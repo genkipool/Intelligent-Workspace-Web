@@ -58,12 +58,4 @@ export const pillars: readonly Pillar[] = [
         leadKey: 'fhub.keys.lead',
         checkKeys: ['fhub.keys.f1', 'fhub.keys.f2', 'fhub.keys.f3', 'fhub.keys.f4'],
     },
-    {
-        id: 'media',
-        icon: 'music',
-        tabKey: 'fhub.tab5',
-        titleKey: 'fhub.media.title',
-        leadKey: 'fhub.media.lead',
-        checkKeys: ['fhub.media.f1', 'fhub.media.f2', 'fhub.media.f3', 'fhub.media.f4'],
-    },
 ];

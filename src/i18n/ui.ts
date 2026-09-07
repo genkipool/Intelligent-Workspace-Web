@@ -111,7 +111,6 @@ export const ui = {
         'fhub.tab2': 'Tabs & rules',
         'fhub.tab3': 'Time & focus',
         'fhub.tab4': 'Keyboard',
-        'fhub.tab5': 'Music & radio',
 
         // Tab 1: AI Agent
         'fhub.agent.title': 'An assistant that can act on the browser, not just talk about it',
@@ -166,17 +165,6 @@ export const ui = {
             'Dark, sepia, grayscale or light mode for one tab or all of them, split screen, picture-in-picture, and read-aloud, each on its own key.',
 
         // Tab 5: Music player and online radio
-        'fhub.media.title': 'Your own music, and the radio, with no tab holding them',
-        'fhub.media.lead':
-            'A player inside the side panel, fed by a folder on your own disk and by the stations you save. The sound is made by an offscreen document rather than by the panel, so it carries on when you hide the drawer, change view or close the page.',
-        'fhub.media.f1':
-            'Point it at a folder, or at a handful of files, and it takes the audio in it: up to five hundred tracks, grouped by the folder they came from, reordered by dragging and searchable by name.',
-        'fhub.media.f2':
-            'Online radio in the same player: search the Radio Browser directory by name, country or tag, or paste a stream address yourself, and the stations sit above your files in the list.',
-        'fhub.media.f3':
-            'Transport, ten-second jumps, volume and mute in the panel, and the same controls under the toolbar button while the drawer is closed. A stream shows a live bar instead of a seek bar, because it has no end to seek to.',
-        'fhub.media.f4':
-            'Nothing is uploaded. The folder is handed over by the File System Access API rather than by a file input, and the playlist and the stations live in your browser’s own storage.',
 
         // Feature Hub Mockups & Visual Previews (Bilingual)
         'fhub.tablistLabel': 'Feature Tabs',
@@ -394,13 +382,6 @@ export const ui = {
         'fhub.keys.mockup.pageLink': 'this one too',
         'fhub.keys.mockup.pageBodyB':
             ', and in any text field on it two dollar signs open the snippets you use most.',
-        'fhub.media.mockup.badge': 'Music player',
-        'fhub.media.mockup.searchPlaceholder': 'Search tracks…',
-        'fhub.media.mockup.tabMusic': 'Music',
-        'fhub.media.mockup.tabRadio': 'Radio',
-        'fhub.media.mockup.tabAll': 'All',
-        'fhub.media.mockup.savedStations': 'Saved stations',
-        'fhub.media.mockup.folder': 'Focus',
 
         // Swiss Army Bento Grid & 18-Tool Arsenal (Expanded)
         'bento.badge': 'The full inventory',
@@ -603,26 +584,8 @@ export const ui = {
         'bento.qrTools.h3': 'Export in high-resolution PNG or vector SVG',
 
         // 20. Online Radio
-        'bento.radio.title': 'Online radio, directory included',
-        'bento.radio.desc':
-            'Search the Radio Browser directory by name, country or tag, or paste the address of a stream yourself. The stations you keep live in the same player as your files, under their own tab.',
-        'bento.radio.tag': 'Radio',
-        'bento.radio.badge': 'Live streams',
-        'bento.radio.h1': 'Thousands of stations to search, or an address you paste in',
-        'bento.radio.h2': 'Export and import the list as JSON',
-        'bento.radio.h3': 'Optional sync of your stations across the Chromes you are signed in to',
 
         // 21. Music Player
-        'bento.musicPlayer.title': 'A music player, in the side panel',
-        'bento.musicPlayer.desc':
-            'Hand it a folder, or a handful of files, and it plays them beside the page you are reading. The sound is made by an offscreen document rather than by the panel, so hiding the drawer, changing view or closing the page does not stop the music.',
-        'bento.musicPlayer.tag': 'Audio',
-        'bento.musicPlayer.badge': 'Keeps playing when hidden',
-        'bento.musicPlayer.h1': 'A folder or a file selection, grouped by folder and reordered by dragging',
-        'bento.musicPlayer.h2':
-            'Seek bar, ten-second jumps, volume and mute, and the same controls under the toolbar button',
-        'bento.musicPlayer.h3':
-            'Nothing is uploaded: the folder is read on your machine and kept in your own browser',
 
         // Legacy compatibility keys for footer
         'bento.c1.title': 'Dual-Tab Split Screen',
@@ -895,12 +858,6 @@ export const ui = {
         'privacy.net.r2.host': 'Chrome’s built-in on-device model',
         'privacy.net.r2.what': 'Nothing. It runs inside Chrome, on this machine, and makes no request at all',
         'privacy.net.r2.when': 'When you choose it instead of Gemini',
-        'privacy.net.r3.what': 'The station name or genre you typed, and nothing else',
-        'privacy.net.r3.when': 'While you search or browse online radio',
-        'privacy.net.r4.host': 'The radio station you press play on',
-        'privacy.net.r4.what':
-            'An ordinary audio request to that station’s own server, which sees your IP address as any website does',
-        'privacy.net.r4.when': 'While a station is playing',
         'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
         'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
         'privacy.net.r7.what':
@@ -1147,7 +1104,7 @@ export const ui = {
         'terms.third.li2':
             'The Chrome Web Store, which distributes and updates the extension under Google’s terms.',
         'terms.third.li3':
-            'The online radio directory and the stations it lists, YouTube for video previews, and the CDN that serves the on-device text-recognition model.',
+            'YouTube, for video previews, and the CDN that serves the text-recognition model that runs on your machine.',
         'terms.third.li4': 'Stripe, for tips, as described in section 8.',
         'terms.third.p2':
             'Content you reach through the extension belongs to whoever published it, and linking to it is not an endorsement. The privacy policy lists every host the extension can contact, what it sends and when.',
@@ -1522,7 +1479,6 @@ export const ui = {
         'fhub.tab2': 'Pestañas y reglas',
         'fhub.tab3': 'Tiempo y foco',
         'fhub.tab4': 'Teclado',
-        'fhub.tab5': 'Música y radio',
 
         // Tab 1: AI Agent
         'fhub.agent.title': 'Un asistente que actúa sobre el navegador, no que habla de él',
@@ -1577,17 +1533,6 @@ export const ui = {
             'Modo oscuro, sepia, escala de grises o claro para una pestaña o para todas, pantalla dividida, picture-in-picture y lectura en voz alta, cada uno con su tecla.',
 
         // Tab 5: Music player and online radio
-        'fhub.media.title': 'Tu música, y la radio, sin una pestaña que las sostenga',
-        'fhub.media.lead':
-            'Un reproductor dentro del panel lateral, alimentado por una carpeta de tu propio disco y por las emisoras que guardes. El sonido lo produce un documento offscreen y no el panel, así que sigue sonando cuando ocultas el cajón, cambias de vista o cierras la página.',
-        'fhub.media.f1':
-            'Le señalas una carpeta, o un puñado de archivos, y coge el audio que haya en ella: hasta quinientas pistas, agrupadas por la carpeta de la que vienen, reordenables arrastrando y buscables por nombre.',
-        'fhub.media.f2':
-            'Radio online en el mismo reproductor: busca en el directorio de Radio Browser por nombre, país o etiqueta, o pega tú mismo la dirección de una emisión, y las emisoras quedan por encima de tus archivos en la lista.',
-        'fhub.media.f3':
-            'Transporte, saltos de diez segundos, volumen y silencio en el panel, y los mismos controles bajo el botón de la barra mientras el cajón está cerrado. Una emisión muestra una barra en directo en lugar de una barra de posición, porque no tiene final al que ir.',
-        'fhub.media.f4':
-            'No se sube nada. La carpeta se entrega con la File System Access API y no con un campo de archivo, y la lista de reproducción y las emisoras viven en el almacenamiento del propio navegador.',
 
         // Feature Hub Mockups & Visual Previews (Bilingual)
         'fhub.tablistLabel': 'Pestañas de Funcionalidades',
@@ -1805,13 +1750,6 @@ export const ui = {
         'fhub.keys.mockup.pageLink': 'este también',
         'fhub.keys.mockup.pageBodyB':
             ', y en cualquier campo de texto de la página dos signos de dólar abren los snippets que más usas.',
-        'fhub.media.mockup.badge': 'Reproductor de música',
-        'fhub.media.mockup.searchPlaceholder': 'Buscar pista…',
-        'fhub.media.mockup.tabMusic': 'Música',
-        'fhub.media.mockup.tabRadio': 'Radio',
-        'fhub.media.mockup.tabAll': 'Todo',
-        'fhub.media.mockup.savedStations': 'Emisoras guardadas',
-        'fhub.media.mockup.folder': 'Concentración',
 
         // Swiss Army Bento Grid & 18-Tool Arsenal (Expanded)
         'bento.badge': 'El inventario completo',
@@ -2014,27 +1952,8 @@ export const ui = {
         'bento.qrTools.h3': 'Exportación en PNG de alta resolución y SVG vectorial',
 
         // 20. Online Radio
-        'bento.radio.title': 'Radio online, con el directorio incluido',
-        'bento.radio.desc':
-            'Busca en el directorio de Radio Browser por nombre, país o etiqueta, o pega tú mismo la dirección de una emisión. Las emisoras que guardes viven en el mismo reproductor que tus archivos, en su propia pestaña.',
-        'bento.radio.tag': 'Radio',
-        'bento.radio.badge': 'Emisiones en directo',
-        'bento.radio.h1': 'Miles de emisoras que buscar, o una dirección que pegas tú',
-        'bento.radio.h2': 'Exporta e importa la lista en JSON',
-        'bento.radio.h3': 'Sincronización opcional de tus emisoras entre los Chrome con tu sesión iniciada',
 
         // 21. Music Player
-        'bento.musicPlayer.title': 'Un reproductor de música, en el panel lateral',
-        'bento.musicPlayer.desc':
-            'Le das una carpeta, o un puñado de archivos, y suenan junto a la página que estás leyendo. El sonido lo produce un documento offscreen y no el panel, así que ocultar el cajón, cambiar de vista o cerrar la página no detiene la música.',
-        'bento.musicPlayer.tag': 'Audio',
-        'bento.musicPlayer.badge': 'Sigue sonando oculto',
-        'bento.musicPlayer.h1':
-            'Una carpeta o una selección de archivos, agrupados por carpeta y reordenables arrastrando',
-        'bento.musicPlayer.h2':
-            'Barra de posición, saltos de diez segundos, volumen y silencio, y los mismos controles bajo el botón de la barra',
-        'bento.musicPlayer.h3':
-            'No se sube nada: la carpeta se lee en tu equipo y se guarda en tu propio navegador',
 
         // Legacy compatibility keys for footer
         'bento.c1.title': 'Pantalla Dividida (Split Screen)',
@@ -2311,12 +2230,6 @@ export const ui = {
         'privacy.net.r2.what':
             'Nada. Se ejecuta dentro de Chrome, en esta máquina, y no hace ninguna petición',
         'privacy.net.r2.when': 'Cuando lo eliges en lugar de Gemini',
-        'privacy.net.r3.what': 'El nombre o el género de emisora que escribes, y nada más',
-        'privacy.net.r3.when': 'Mientras buscas o exploras la radio en línea',
-        'privacy.net.r4.host': 'La emisora a la que le das al play',
-        'privacy.net.r4.what':
-            'Una petición de audio corriente al servidor de la propia emisora, que ve tu IP como la ve cualquier web',
-        'privacy.net.r4.when': 'Mientras suena una emisora',
         'privacy.net.r5.what': 'El identificador del vídeo, para la miniatura y el reproductor incrustado',
         'privacy.net.r5.when': 'Solo con un enlace de YouTube que previsualizas o reproduces',
         'privacy.net.r7.what': 'Nada sobre ti. Descarga el modelo de idioma del OCR, que Chrome luego cachea',
@@ -2566,7 +2479,7 @@ export const ui = {
         'terms.third.li2':
             'La Chrome Web Store, que distribuye y actualiza la extensión bajo las condiciones de Google.',
         'terms.third.li3':
-            'El directorio de radios en línea y las emisoras que lista, YouTube para las vistas previas de vídeo, y la CDN que sirve el modelo de reconocimiento de texto que corre en tu equipo.',
+            'YouTube, para las vistas previas de vídeo, y la CDN que sirve el modelo de reconocimiento de texto que corre en tu equipo.',
         'terms.third.li4': 'Stripe, para las propinas, según se describe en el apartado 8.',
         'terms.third.p2':
             'Los contenidos a los que llegues a través de la extensión son de quien los publicó, y enlazarlos no supone respaldarlos. La política de privacidad enumera todos los servidores con los que la extensión puede contactar, qué envía y cuándo.',
