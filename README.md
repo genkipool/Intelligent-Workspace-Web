@@ -54,23 +54,17 @@ pnpm verify      # everything CI runs, in one command
 pnpm perf        # Lighthouse against the real build, mobile and desktop
 pnpm og          # redraw the social cards, one per language
 pnpm favicons    # redraw the icon set from public/assets/logo.svg
-pnpm shots       # retake the Web Store screenshots, both languages
 ```
 
-`pnpm og`, `pnpm favicons` and `pnpm shots` are the only commands here that are not pure
-Node: between them they need `rsvg-convert` (librsvg), `magick` (ImageMagick) and
-`google-chrome-stable` on the PATH. None of them runs during a build. What they write is committed, because a crawler asks for `/favicon.ico` and a
+`pnpm og` and `pnpm favicons` are the only commands here that are not pure Node: they need
+`rsvg-convert` (librsvg) and `magick` (ImageMagick) on the PATH. Neither runs during a
+build. What they write is committed, because a crawler asks for `/favicon.ico` and a
 scraper asks for the card long after any build has finished, and because a content hash on
 either would break the URL every share already points at.
 
 Run `pnpm og` after touching a headline in `scripts/og.mjs`, and bump `OG_VERSION` in
 `src/layouts/Base.astro` in the same commit — Facebook, X, Slack and WhatsApp keep a
 scraped card for days, and only a changed URL evicts it.
-
-`pnpm shots` reads the build rather than the dev server, so run `pnpm build` first. It
-writes `assets/chrome-web-store/1280x800/<lang>/`, which is the Web Store listing's
-screenshots and not part of the site; `assets/chrome-web-store/README.md` says what each
-one shows.
 
 `pnpm perf` builds, serves the output the way the host serves it — gzipped, with
 `immutable` on the hashed assets — and runs Lighthouse twice. Both of those matter. The
