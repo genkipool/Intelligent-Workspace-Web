@@ -16,6 +16,7 @@
         "check:headers": "node scripts/check-headers.mjs",
         "og": "node scripts/og.mjs",
         "favicons": "node scripts/favicons.mjs",
+        "shots": "node scripts/store-shots.mjs",
         "perf": "node scripts/lighthouse.mjs",
         "serve:built": "node scripts/serve-built.mjs",
         "verify": "pnpm run check && pnpm run build && pnpm run test && pnpm run check:headers && pnpm run format",
