@@ -56,9 +56,24 @@
     --radius-lg: 22px;
     --radius-full: 9999px;
 
-    /* Ambient Atmosphere */
-    --ambient-glow-1: rgba(22, 160, 133, 0.16);
-    --ambient-glow-2: rgba(26, 188, 156, 0.1);
+    /*
+     * Ambient Atmosphere — black into viridian.
+     *
+     * The page used to be a flat `--bg-color` with two green blobs at 0.16 and 0.10
+     * opacity floating on it, which at those strengths read as noise rather than as a
+     * gradient: on anything but an OLED panel in a dark room the background was one
+     * uniform slate. These are the three layers that replace it, and they are deliberate
+     * enough to survive a bright office and a cheap laptop screen.
+     *
+     * `--ambient-ink` is the black corner, `--ambient-moss` the green one, and the two
+     * glows are the highlights over them. The band veil below is what keeps the
+     * alternating sections from cutting the gradient into flat stripes.
+     */
+    --ambient-ink: #04080a;
+    --ambient-moss: #0b3229;
+    --ambient-glow-1: rgba(26, 188, 156, 0.2);
+    --ambient-glow-2: rgba(46, 204, 113, 0.26);
+    --band-veil: rgba(3, 10, 8, 0.5);
     --grid-dot-color: rgba(26, 188, 156, 0.07);
 
     /* The wash behind a chip or an inline key, and the hairline round it. */
@@ -107,8 +122,12 @@
     --band-soft: var(--text-soft);
     --band-hair: var(--border-color);
 
-    --ambient-glow-1: rgba(22, 160, 133, 0.06);
-    --ambient-glow-2: rgba(14, 102, 85, 0.03);
+    /* The light theme keeps its paper: a wash, not a gradient. */
+    --ambient-ink: #ffffff;
+    --ambient-moss: #e4f1ea;
+    --ambient-glow-1: rgba(22, 160, 133, 0.08);
+    --ambient-glow-2: rgba(14, 102, 85, 0.06);
+    --band-veil: var(--bg-surface);
     --grid-dot-color: rgba(22, 160, 133, 0.07);
 
     --accent-tint: #eaf5f0;
@@ -249,8 +268,13 @@ svg {
     contain-intrinsic-size: auto 800px;
 }
 
+/*
+ * An alternating band, dark enough to separate the sections and translucent enough that
+ * the gradient behind it carries straight through. An opaque `--bg-surface` here painted
+ * a flat stripe over the middle of the page and broke the black-to-green run in half.
+ */
 .section-alt {
-    background-color: var(--bg-surface);
+    background-color: var(--band-veil);
     border-top: 1px solid var(--border-subtle);
     border-bottom: 1px solid var(--border-subtle);
 }
@@ -263,28 +287,12 @@ svg {
     z-index: 0;
     overflow: hidden;
     transform: translate3d(0, 0, 0);
-}
-
-.ambient-gradient-1 {
-    position: absolute;
-    top: -200px;
-    left: 20%;
-    width: 800px;
-    height: 800px;
-    background: radial-gradient(circle, var(--ambient-glow-1) 0%, transparent 68%);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.ambient-gradient-2 {
-    position: absolute;
-    top: 40%;
-    right: -150px;
-    width: 900px;
-    height: 900px;
-    background: radial-gradient(circle, var(--ambient-glow-2) 0%, transparent 68%);
-    border-radius: 50%;
-    pointer-events: none;
+    /* Black top-left, viridian bottom-right, with the page's own surface holding the
+       middle so panels and borders keep the contrast they were drawn against. */
+    background:
+        radial-gradient(120% 95% at 100% 100%, var(--ambient-glow-2) 0%, transparent 58%),
+        radial-gradient(90% 70% at 0% 0%, var(--ambient-glow-1) 0%, transparent 55%),
+        linear-gradient(152deg, var(--ambient-ink) 0%, var(--bg-color) 46%, var(--ambient-moss) 100%);
 }
 
 .dot-grid {
