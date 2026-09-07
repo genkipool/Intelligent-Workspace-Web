@@ -55,6 +55,8 @@ jobs:
             # know until a donation did not happen.
             - name: Payment routes are covered by the strict CSP
               run: pnpm run check:headers
+            - name: Legal pages identify somebody and point at no dead platform
+              run: pnpm run check:legal
 
             - name: Format
               run: pnpm run format

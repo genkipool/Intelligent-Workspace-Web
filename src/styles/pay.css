@@ -70,7 +70,20 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * THE SHEET HAS TO BE LIFTED OFF THE AMBIENT BACKGROUND, and this is not cosmetic.
+ *
+ * `Base.astro` paints `.ambient-bg` behind every page: `position: fixed; inset: 0;
+ * z-index: 0`. A positioned element with `z-index: 0` paints above the in-flow content of
+ * the same stacking context, so a `<main>` that is merely static disappears underneath
+ * it. Every other page already knows this and lifts itself: `.doc-topbar` is `z-index: 2`,
+ * `.policy-main` is `z-index: 1`. This one did not, so opening `/pay` as an ordinary page
+ * painted the gradient over the whole form: a contributor coming back from a PayPal
+ * redirect, or following the link from the about page, got a blank screen.
+ */
 .sheet {
+    position: relative;
+    z-index: 1;
     max-width: 460px;
     margin: 0 auto;
     padding: 20px 16px 32px;
@@ -529,6 +542,28 @@ form[hidden] {
     font-size: 0.76rem;
     color: var(--muted-color);
     text-align: center;
+}
+
+/* The one link in the fine print. `.fineprint` is deliberately dim, so the link takes the
+   interactive colour to stay a link at this size, and keeps its underline rather than
+   relying on that colour alone to say so. */
+.fineprint-link {
+    color: var(--interactive-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* The hover state is the underline getting thicker, not a colour change: the extension
+   hands this page one accent, so `--action-color` and `--interactive-color` are usually
+   the same value and a colour swap between them would be a hover that does nothing. */
+.fineprint-link:hover {
+    text-decoration-thickness: 2px;
+}
+
+.fineprint-link:focus-visible {
+    outline: 2px solid var(--interactive-color);
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────

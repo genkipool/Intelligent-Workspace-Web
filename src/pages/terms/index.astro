@@ -1,0 +1,26 @@
+---
+/**
+ * The terms of service, in English.
+ *
+ * Prerendered and indexable, for the same reason the privacy policy is: terms nobody can
+ * find are not terms. The Spanish copy lives at the same path under `/es/` so the
+ * canonical and the `hreflang` pair `Base.astro` builds from the path keep working.
+ *
+ * The extension links here from its About page, so this URL is effectively published in
+ * a shipped build — moving it means shipping a new version of the extension too.
+ */
+import Base from '@/layouts/Base.astro';
+import TermsOfService from '@/components/TermsOfService.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<Base
+    lang="en"
+    title={t('terms.meta.title')}
+    description={t('terms.meta.description')}
+    icons={['sun', 'moon', 'back', 'shieldCheck', 'heart', 'globe', 'github']}
+>
+    <TermsOfService lang="en" />
+</Base>

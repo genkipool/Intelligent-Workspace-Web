@@ -1,0 +1,23 @@
+---
+/**
+ * The same terms in Spanish, at the same path under `/es/` — see `pages/terms/` for why
+ * the route is not translated along with the copy.
+ *
+ * This is the version that governs: the document says so in its own closing section, and
+ * says it in both languages.
+ */
+import Base from '@/layouts/Base.astro';
+import TermsOfService from '@/components/TermsOfService.astro';
+import { useTranslations } from '@/i18n/utils';
+
+const t = useTranslations('es');
+---
+
+<Base
+    lang="es"
+    title={t('terms.meta.title')}
+    description={t('terms.meta.description')}
+    icons={['sun', 'moon', 'back', 'shieldCheck', 'heart', 'globe', 'github']}
+>
+    <TermsOfService lang="es" />
+</Base>
