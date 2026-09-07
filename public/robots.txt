@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://intelligentworkspace.genkipool.com/sitemap.xml

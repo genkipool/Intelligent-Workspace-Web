@@ -75,50 +75,6 @@ export const icons = {
         viewBox: '0 0 24 24',
         body: '<path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>',
     },
-    music: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M9 18V6l11-2v12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="6" cy="18" r="3" fill="currentColor"></circle><circle cx="17" cy="16" r="3" fill="currentColor"></circle>',
-    },
-    radio: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M4 8h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="m5 8 10.5-4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><circle cx="8" cy="14" r="2.5" stroke="currentColor" stroke-width="2" fill="none"></circle><line x1="14" y1="12" x2="18" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line><line x1="14" y1="16" x2="18" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line>',
-    },
-    playlist: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M3 6h11M3 12h11M3 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"></path><path d="M18 16V7l4-1v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><circle cx="16" cy="16" r="2.2" fill="currentColor"></circle>',
-    },
-    speaker: {
-        viewBox: '0 0 24 24',
-        body: '<g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M3 16V8h3l5-4v16l-5-4z"></path><path d="M13 9s2 .5 2 3-2 3-2 3m2-8s3 .833 3 5-3 5-3 5"></path><path d="M17 5s4 1.167 4 7-4 7-4 7"></path></g>',
-    },
-    pauseSolid: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M10 4H6v16h4V4zM18 4h-4v16h4V4z" fill="currentColor"></path>',
-    },
-    stopSolid: {
-        viewBox: '0 0 24 24',
-        body: '<rect x="4" y="4" width="16" height="16" rx="2" fill="currentColor"></rect>',
-    },
-    trackPrev: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M20 5v14l-11-7 11-7z" fill="currentColor"></path><rect x="4" y="5" width="3" height="14" rx="1" fill="currentColor"></rect>',
-    },
-    trackNext: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M4 5v14l11-7-11-7z" fill="currentColor"></path><rect x="17" y="5" width="3" height="14" rx="1" fill="currentColor"></rect>',
-    },
-    rewindFast: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M20 6l-7 6 7 6M12 6l-7 6 7 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>',
-    },
-    forwardFast: {
-        viewBox: '0 0 24 24',
-        body: '<path d="M4 6l7 6-7 6M12 6l7 6-7 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>',
-    },
-    folderOpen: {
-        viewBox: '0 0 24 24',
-        body: '<g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M4 9V6.472a2 2 0 0 1 .211-.894L5 4h5l1 2h10a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2h-2"></path><path d="M17.236 9H2.31a1 1 0 0 0-.965 1.263l2.254 8.263A2 2 0 0 0 5.528 20H19.69a1 1 0 0 0 .965-1.263l-2.455-9A1 1 0 0 0 17.236 9Z"></path></g>',
-    },
     expandAll: {
         viewBox: '0 0 32 32',
         body: '<path d="M12 10h14a2.003 2.003 0 0 0 2-2V4a2.003 2.003 0 0 0-2-2H12a2.003 2.003 0 0 0-2 2v1H6V2H4v23a2.003 2.003 0 0 0 2 2h4v1a2.003 2.003 0 0 0 2 2h14a2.003 2.003 0 0 0 2-2v-4a2.003 2.003 0 0 0-2-2H12a2.003 2.003 0 0 0-2 2v1H6v-8h4v1a2.003 2.003 0 0 0 2 2h14a2.003 2.003 0 0 0 2-2v-4a2.003 2.003 0 0 0-2-2H12a2.003 2.003 0 0 0-2 2v1H6V7h4v1a2.003 2.003 0 0 0 2 2m0-6h14l.001 4H12Zm0 20h14l.001 4H12Zm0-10h14l.001 4H12Z" fill="currentColor"></path>',

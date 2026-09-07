@@ -5,26 +5,26 @@ import { bentoCards, bentoCategories, type BentoCategory } from '@/data/capabili
 import { ui } from '@/i18n/ui';
 import { icons } from '@/data/icons';
 
-describe('Milestone 2: SwissArmyBento & 21-Tool Feature Arsenal', () => {
-    it('has exactly 21 bento cards defined', () => {
-        expect(bentoCards).toHaveLength(21);
+describe('Milestone 2: SwissArmyBento & 19-Tool Feature Arsenal', () => {
+    it('has exactly 19 bento cards defined', () => {
+        expect(bentoCards).toHaveLength(19);
     });
 
-    it('has unique IDs across all 21 cards', () => {
+    it('has unique IDs across all 19 cards', () => {
         const ids = bentoCards.map((c) => c.id);
         const uniqueIds = new Set(ids);
-        expect(uniqueIds.size).toBe(21);
+        expect(uniqueIds.size).toBe(19);
     });
 
-    it('distributes cards correctly across the 3 categories (4 tabs, 8 productivity, 9 tools)', () => {
+    it('distributes cards correctly across the 3 categories (4 tabs, 8 productivity, 7 tools)', () => {
         const tabs = bentoCards.filter((c) => c.category === 'tabs');
         const productivity = bentoCards.filter((c) => c.category === 'productivity');
         const tools = bentoCards.filter((c) => c.category === 'tools');
 
         expect(tabs).toHaveLength(4);
         expect(productivity).toHaveLength(8);
-        expect(tools).toHaveLength(9);
-        expect(tabs.length + productivity.length + tools.length).toBe(21);
+        expect(tools).toHaveLength(7);
+        expect(tabs.length + productivity.length + tools.length).toBe(19);
     });
 
     it('defines only valid column spans (col-span-1 or col-span-2)', () => {
@@ -112,7 +112,7 @@ describe('Milestone 2: SwissArmyBento & 21-Tool Feature Arsenal', () => {
         };
 
         // All
-        expect(filterCards('all')).toHaveLength(21);
+        expect(filterCards('all')).toHaveLength(19);
 
         // Tabs
         const tabFiltered = filterCards('tabs');
@@ -126,7 +126,7 @@ describe('Milestone 2: SwissArmyBento & 21-Tool Feature Arsenal', () => {
 
         // Tools
         const toolsFiltered = filterCards('tools');
-        expect(toolsFiltered).toHaveLength(9);
+        expect(toolsFiltered).toHaveLength(7);
         expect(toolsFiltered.every((c) => c.category === 'tools')).toBe(true);
 
         // Edge case: invalid filter returns 0 cards
@@ -149,13 +149,13 @@ describe('Milestone 2: SwissArmyBento & 21-Tool Feature Arsenal', () => {
         expect(enHtml).toContain('id="navaja-suiza"');
         expect(enHtml).toContain('class="bento-grid"');
         const enCardCount = (enHtml.match(/<article[^>]*class="[^"]*\bbento-card\b[^"]*"/g) || []).length;
-        expect(enCardCount).toBe(21);
+        expect(enCardCount).toBe(19);
 
         // Check Spanish static page
         expect(esHtml).toContain('id="navaja-suiza"');
         expect(esHtml).toContain('class="bento-grid"');
         const esCardCount = (esHtml.match(/<article[^>]*class="[^"]*\bbento-card\b[^"]*"/g) || []).length;
-        expect(esCardCount).toBe(21);
+        expect(esCardCount).toBe(19);
 
         // Check all 21 tool titles exist in respective HTML
         for (const card of bentoCards) {

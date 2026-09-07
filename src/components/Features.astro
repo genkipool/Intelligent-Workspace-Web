@@ -7,7 +7,6 @@ import SectionHeader from '@/components/SectionHeader.astro';
 import Icon from '@/components/Icon.astro';
 import PanelGroupList from '@/components/shots/PanelGroupList.astro';
 import PanelChrome from '@/components/shots/PanelChrome.astro';
-import PanelMusicPlayer from '@/components/shots/PanelMusicPlayer.astro';
 
 interface Props {
     lang: Lang;
@@ -312,37 +311,6 @@ const t = useTranslations(lang);
                         </div>
                     </article>
                 </div>
-            </div>
-        </PillarPanel>
-
-        {/* Music and radio */}
-        <PillarPanel lang={lang} pillar={pillars[4]}>
-            <div class="panel-preview">
-                {
-                    /* The player's drawer with the list open on "All": the stations it
-                                     keeps above the folders you handed it, a station on the air, and the
-                                     live bar a stream gets where a file would have a seek bar. */
-                }
-                <PanelMusicPlayer
-                    title={t('fhub.media.mockup.badge')}
-                    searchPlaceholder={t('fhub.media.mockup.searchPlaceholder')}
-                    tabMusic={t('fhub.media.mockup.tabMusic')}
-                    tabRadio={t('fhub.media.mockup.tabRadio')}
-                    tabAll={t('fhub.media.mockup.tabAll')}
-                    savedStations={t('fhub.media.mockup.savedStations')}
-                    elapsed="42:07"
-                    volumePct={72}
-                    stations={[
-                        { name: 'Radio Paradise · Mellow Mix', playing: true },
-                        { name: 'BBC World Service' },
-                    ]}
-                    folders={[
-                        {
-                            name: t('fhub.media.mockup.folder'),
-                            tracks: ['Nils Frahm - Says.flac', 'Bonobo - Kerala.mp3'],
-                        },
-                    ]}
-                />
             </div>
         </PillarPanel>
     </div>
