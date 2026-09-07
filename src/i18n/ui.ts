@@ -10,7 +10,9 @@ export const ui = {
         // Metadata & Global
         'meta.title': 'Intelligent Workspace: a browser that files itself',
         'meta.description':
-            'Rules that group your tabs, a floating omnibar and letter labels on every link, an AI assistant with fifty-eight tools onto the browser, screen time with caps that actually block, and fourteen panels beside the page you are reading. All local, no account.',
+            'Tab rules that file every window, a floating omnibar, an AI assistant with 58 tools, screen-time caps that block, and 14 panels. All local, no account.',
+        /** The `alt` on the social card, and the only description a screen reader gets of it. */
+        'meta.ogAlt': 'Intelligent Workspace — a browser that files itself',
 
         // Navigation
         'nav.features': 'Features',
@@ -781,7 +783,7 @@ export const ui = {
         // Privacy Policy: the standalone /privacy page
         'privacy.meta.title': 'Privacy Policy | Intelligent Workspace',
         'privacy.meta.description':
-            'What Intelligent Workspace stores, where it stores it, and the handful of moments something leaves your browser. No account, no server of ours, no analytics inside the extension.',
+            'What Intelligent Workspace stores, where it stores it, and the few moments anything leaves your browser. No account, no server of ours, no analytics.',
         'privacy.eyebrow': 'Legal',
         'privacy.title': 'Privacy Policy',
         'privacy.effective': 'In effect since',
@@ -1103,7 +1105,7 @@ export const ui = {
         // Support centre
         'support.meta.title': 'Support — Intelligent Workspace',
         'support.meta.description':
-            'Help with Intelligent Workspace: fixes for the problems that come up most, what to put in a report so it can be answered in one reply, and the three places a message actually reaches.',
+            'Help with Intelligent Workspace: fixes for the problems that come up most, what to put in a report, and the three places a message actually reaches.',
         'support.eyebrow': 'Support',
         'support.title': 'Help with Intelligent Workspace',
         'support.lede':
@@ -1205,7 +1207,8 @@ export const ui = {
         // Metadata & Global
         'meta.title': 'Intelligent Workspace: un navegador que se archiva solo',
         'meta.description':
-            'Reglas que agrupan tus pestañas, un omnibar flotante y etiquetas de letra en cada enlace, un asistente de IA con cincuenta y ocho herramientas sobre el navegador, tiempo de pantalla con topes que bloquean de verdad, y catorce paneles junto a la página que lees. Todo en local y sin cuenta.',
+            'Reglas que agrupan tus pestañas, omnibar flotante, asistente de IA con 58 herramientas, topes de tiempo que bloquean y 14 paneles. Todo local, sin cuenta.',
+        'meta.ogAlt': 'Intelligent Workspace — un navegador que se archiva solo',
 
         // Navigation
         'nav.features': 'Capacidades',
@@ -1977,7 +1980,7 @@ export const ui = {
         // Privacy Policy: the standalone /privacy page
         'privacy.meta.title': 'Política de Privacidad | Intelligent Workspace',
         'privacy.meta.description':
-            'Qué guarda Intelligent Workspace, dónde lo guarda y las contadas veces que algo sale de tu navegador. Sin cuenta, sin servidor nuestro y sin analíticas dentro de la extensión.',
+            'Qué guarda Intelligent Workspace, dónde lo guarda y las contadas veces que algo sale de tu navegador. Sin cuenta, sin servidor nuestro y sin analíticas.',
         'privacy.eyebrow': 'Legal',
         'privacy.title': 'Política de Privacidad',
         'privacy.effective': 'En vigor desde el',
@@ -2303,7 +2306,7 @@ export const ui = {
         // Support centre
         'support.meta.title': 'Soporte — Intelligent Workspace',
         'support.meta.description':
-            'Ayuda con Intelligent Workspace: la solución a los problemas más frecuentes, qué incluir en un informe para poder responderlo de una, y los tres sitios a los que un mensaje llega de verdad.',
+            'Ayuda con Intelligent Workspace: la solución a los problemas más frecuentes, qué incluir en un informe y los tres sitios a los que un mensaje llega.',
         'support.eyebrow': 'Soporte',
         'support.title': 'Ayuda con Intelligent Workspace',
         'support.lede':

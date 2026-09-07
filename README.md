@@ -18,6 +18,7 @@ src/i18n/utils.ts     getLangFromUrl · useTranslations · localisePath
 src/data/             features, shortcuts, site facts — typed, not markup
 src/scripts/pay.ts    the only client-side JavaScript on the whole site
 src/styles/           global tokens and the pay sheet; the rest is scoped per component
+public/               favicons, the web manifest and the two social cards, served verbatim
 vercel.json           per-route security headers
 ```
 
@@ -51,7 +52,19 @@ pnpm check       # astro check — types across .astro and .ts
 pnpm test        # vitest
 pnpm verify      # everything CI runs, in one command
 pnpm perf        # Lighthouse against the real build, mobile and desktop
+pnpm og          # redraw the social cards, one per language
+pnpm favicons    # redraw the icon set from public/assets/logo.svg
 ```
+
+`pnpm og` and `pnpm favicons` are the only commands here that are not pure Node: they need
+`rsvg-convert` (librsvg) and `magick` (ImageMagick) on the PATH. Neither runs during a
+build. What they write is committed, because a crawler asks for `/favicon.ico` and a
+scraper asks for the card long after any build has finished, and because a content hash on
+either would break the URL every share already points at.
+
+Run `pnpm og` after touching a headline in `scripts/og.mjs`, and bump `OG_VERSION` in
+`src/layouts/Base.astro` in the same commit — Facebook, X, Slack and WhatsApp keep a
+scraped card for days, and only a changed URL evicts it.
 
 `pnpm perf` builds, serves the output the way the host serves it — gzipped, with
 `immutable` on the hashed assets — and runs Lighthouse twice. Both of those matter. The
