@@ -96,7 +96,7 @@ export const ui = {
         'problem.s2.title': 'The list keeps itself short',
         'problem.s2.desc':
             'A group nobody has touched folds itself when its timer runs out, the duplicate counter clears them in one click, and a whole group can be backed up and reopened days later exactly as it was.',
-        'problem.s3.title': 'It is all in the same column',
+        'problem.s3.title': 'It is all in the same panel',
         'problem.s3.desc':
             'Bookmarks, history, recently closed tabs, the reading list, downloads, notes, the screenshot gallery and the assistant are nine views of one side panel, beside the page rather than instead of it.',
         'problem.s4.title': 'One key for each of them',
@@ -297,7 +297,7 @@ export const ui = {
         'activity.title': 'Web activity: where your day goes, and what you do about it',
         'activity.subtitle':
             'The side panel holds today; the full page holds the rest. Time per site and per category, and rules that stop a site once it has had enough of your day. All of it recorded on this device, and none of it sent anywhere.',
-        'activity.f1.title': 'Today, in the column beside the page',
+        'activity.f1.title': 'Today, beside the page you are on',
         'activity.f1.desc':
             'One box per site, folded, with the time it has taken. Unfold it and you get visits, average time per visit, its share of the day, and the three rules that govern it.',
         'activity.f2.title': 'A daily cap, a weekly cap, and opening hours',
@@ -319,9 +319,9 @@ export const ui = {
 
         // Dedicated Showcase 5: Bookmarks & Link Auditor
         'bookmarks.badge': 'The lists you already have',
-        'bookmarks.title': 'Bookmarks, history and downloads, in the column beside the page',
+        'bookmarks.title': 'Bookmarks, history and downloads, without leaving the page',
         'bookmarks.subtitle':
-            'Chrome keeps five of these lists in pages you have to go and open. Here they are five views of one panel, with a search that filters as you type and an action on every row.',
+            'Chrome scatters these five lists across pages you have to go and open. Here they are five views of one panel, beside whatever you are reading, with a search that filters as you type and an action on every row.',
         'bookmarks.f1.title': 'The whole bookmark tree, editable',
         'bookmarks.f1.desc':
             'Search across every folder, create, rename, delete and drag things around, import and export, and turn a single bookmark or an entire folder into a grouping rule.',
@@ -1292,7 +1292,7 @@ export const ui = {
         'problem.s2.title': 'La lista se mantiene corta sola',
         'problem.s2.desc':
             'El grupo que nadie toca se pliega al vencer su temporizador, el contador de duplicadas las limpia de un clic, y un grupo entero se respalda y se reabre días después tal y como estaba.',
-        'problem.s3.title': 'Todo está en la misma columna',
+        'problem.s3.title': 'Todo está en el mismo panel',
         'problem.s3.desc':
             'Marcadores, historial, pestañas cerradas, lista de lectura, descargas, notas, galería de capturas y asistente son nueve vistas de un mismo panel lateral, junto a la página y no en lugar de ella.',
         'problem.s4.title': 'Una tecla para cada cosa',
@@ -1493,7 +1493,7 @@ export const ui = {
         'activity.title': 'Actividad web: a dónde se va tu día y qué haces con él',
         'activity.subtitle':
             'El panel lateral guarda el día de hoy; la página completa guarda el resto. Tiempo por sitio y por categoría, y reglas que paran un sitio cuando ya ha tenido bastante de tu día. Todo se registra en este equipo y nada sale de aquí.',
-        'activity.f1.title': 'Hoy, en la columna junto a la página',
+        'activity.f1.title': 'Hoy, junto a la página que estás viendo',
         'activity.f1.desc':
             'Una caja por sitio, plegada, con el tiempo que se ha llevado. La despliegas y tienes visitas, tiempo medio por visita, su parte del día y las tres reglas que lo gobiernan.',
         'activity.f2.title': 'Tope diario, tope semanal y horario',
@@ -1515,9 +1515,9 @@ export const ui = {
 
         // Dedicated Showcase 5: Bookmarks & Link Auditor
         'bookmarks.badge': 'Las listas que ya tienes',
-        'bookmarks.title': 'Marcadores, historial y descargas, en la columna junto a la página',
+        'bookmarks.title': 'Marcadores, historial y descargas, sin salir de la página',
         'bookmarks.subtitle':
-            'Chrome guarda cinco de estas listas en páginas que hay que ir a abrir. Aquí son cinco vistas de un mismo panel, con una búsqueda que filtra mientras escribes y una acción en cada fila.',
+            'Chrome reparte estas cinco listas en páginas a las que hay que ir. Aquí son cinco vistas de un mismo panel, junto a lo que estés leyendo, con un buscador que filtra mientras escribes y una acción en cada fila.',
         'bookmarks.f1.title': 'El árbol de marcadores entero, editable',
         'bookmarks.f1.desc':
             'Busca en todas las carpetas, crea, renombra, borra y arrastra, importa y exporta, y convierte un marcador suelto o una carpeta completa en una regla de agrupación.',
