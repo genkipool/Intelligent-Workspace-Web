@@ -38,7 +38,7 @@ export const ui = {
         'hero.slide1.line1': 'Transform your browser into an',
         'hero.slide1.line2': 'autonomous workstation',
         'hero.slide1.lede':
-            'A rule is a list of URL fragments and the group they belong to. Write it once and every tab whose address contains one of them lands in that group, under its name, in its colour. Everything else sorts itself by domain, subdomain, IP address or local file, a group you stop touching folds itself, and the assistant in the panel rearranges the lot if you ask it in a sentence.',
+            'Intelligent Workspace works as a control panel for managing the browser. Organize your tabs into groups with web activity, give your tabs basic features that improve productivity, browsing speed, and focus. It allows you to manage bookmarks, history, tabs, recently closed tabs, and tabs pending to be read from the side panel, omnibox, keyboard shortcuts, artificial intelligence, and context menu.',
         'hero.slide1.tag': 'Smart Workspaces & AI Assistant',
 
         'hero.slide2.line1': 'Universal Omnibar search and',
@@ -1234,7 +1234,7 @@ export const ui = {
         'hero.slide1.line1': 'Transforma tu navegador en una',
         'hero.slide1.line2': 'estación de trabajo autónoma',
         'hero.slide1.lede':
-            'Una regla es una lista de fragmentos de URL y el grupo al que pertenecen. La escribes una vez y cada pestaña cuya dirección contenga uno de ellos cae en ese grupo, con su nombre y su color. Lo demás se ordena solo por dominio, subdominio, dirección IP o archivo local, el grupo que dejas de tocar se pliega, y el asistente del panel te lo reorganiza todo si se lo pides en una frase.',
+            'Intelligent Workspace funciona como un panel de control para gestionar el navegador. Organiza tus pestañas en grupos con actividad web, dota a tus pestañas de funciones básicas que mejoran la productividad, la velocidad de navegación y el foco. Te permite gestionar marcadores, historial, pestañas, pestañas cerradas recientemente y pestañas pendientes de leer desde el panel lateral, el omnibox, atajos de teclado, inteligencia artificial y el menú contextual.',
         'hero.slide1.tag': 'Espacios Inteligentes y Asistente IA',
 
         'hero.slide2.line1': 'Búsqueda universal Omnibar y',
