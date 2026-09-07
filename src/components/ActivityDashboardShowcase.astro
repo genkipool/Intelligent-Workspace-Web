@@ -32,12 +32,14 @@ const bullets: readonly ShowcaseBullet[] = [
     bullets={bullets}
     centreVisual
 >
-    <!--
+    {
+        /*
         The web activity side panel, rebuilt from the extension's own markup:
         `ActivityPanel.svelte` for the header and the search row, `PanelSite.svelte`
         for the boxes. The classes, the order of the rows, the wording of the labels
         and the palette are the panel's: see `src/styles/extension-ui.css`.
-    -->
+    */
+    }
     <div class="iw-shot wa-shot">
         <PanelChrome
             title={t('activity.panel.title')}
@@ -47,7 +49,7 @@ const bullets: readonly ShowcaseBullet[] = [
         />
 
         <div class="iw-body">
-            <!-- One site unfolded: the figures, then one row per part of the rule. -->
+            {/* One site unfolded: the figures, then one row per part of the rule. */}
             <div class="wa-panel-box is-open">
                 <div class="wa-panel-head">
                     <span class="favicon fav-yt"></span>
@@ -100,7 +102,7 @@ const bullets: readonly ShowcaseBullet[] = [
                 </div>
             </div>
 
-            <!-- A site a rule is stopping right now: the badge says which one. -->
+            {/* A site a rule is stopping right now: the badge says which one. */}
             <div class="wa-panel-box is-blocked">
                 <div class="wa-panel-head">
                     <span class="favicon fav-rd"></span>

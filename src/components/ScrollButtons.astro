@@ -33,11 +33,13 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<!-- Both buttons start hidden, so a page that turns out not to scroll never flashes a
-     pair of controls at the reader before the script has had a chance to look. -->
+{
+    /* Both buttons start hidden, so a page that turns out not to scroll never flashes a
+     pair of controls at the reader before the script has had a chance to look. */
+}
 <div class="scroll-buttons" data-scroll-buttons>
     <button type="button" class="scroll-btn" data-scroll-to="top" aria-label={t('doc.scrollTop')} hidden>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 15L12 9L18 15" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
         </svg>
     </button>
@@ -48,7 +50,7 @@ const t = useTranslations(lang);
         aria-label={t('doc.scrollBottom')}
         hidden
     >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="square"></path>
         </svg>
     </button>

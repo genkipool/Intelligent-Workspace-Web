@@ -32,13 +32,15 @@ const bullets: readonly ShowcaseBullet[] = [
     reverse
     alt
 >
-    <!--
+    {
+        /*
         What the reader actually puts on a page. The player is a 50px column of
         round buttons pinned to the right edge (`read-aloud.css`), not a
         toolbar; the two marks are the ones `paintHighlights()` writes: the
         paragraph at the action colour and 0.3 alpha, the word at 0.8 with ink
         light enough to read on it.
-    -->
+    */
+    }
     <div class="reader-stage">
         <article class="reader-page">
             <h3 class="reader-page-title">{t('reader.m.articleTitle')}</h3>

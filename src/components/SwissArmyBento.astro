@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 
 <section id="navaja-suiza" class="section-container section-alt">
     <div class="wrap">
-        <!-- Section Header -->
+        {/* Section Header */}
         <SectionHeader
             lang={lang}
             eyebrowKey="bento.badge"
@@ -23,7 +23,7 @@ const t = useTranslations(lang);
             subtitleKey="bento.subtitle"
         />
 
-        <!-- Interactive Category Filters -->
+        {/* Interactive Category Filters */}
         <div class="bento-filter-bar" role="tablist" aria-label="Arsenal Category Filter" data-reveal>
             {
                 bentoCategories.map((cat, index) => (
@@ -40,7 +40,7 @@ const t = useTranslations(lang);
             }
         </div>
 
-        <!-- Bento Grid: 18 Modules -->
+        {/* Bento Grid: 18 Modules */}
         <div class="bento-grid" data-reveal>
             {
                 bentoCards.map((card) => (
@@ -66,12 +66,7 @@ const t = useTranslations(lang);
 
                         <ul class="bento-highlights">
                             {card.highlightKeys.map((hKey) => (
-                                <li>
-                                    <span class="highlight-check" aria-hidden="true">
-                                        ✓
-                                    </span>
-                                    <span>{t(hKey)}</span>
-                                </li>
+                                <li>{t(hKey)}</li>
                             ))}
                         </ul>
                     </article>
@@ -380,6 +375,15 @@ const t = useTranslations(lang);
         border-top: 1px dashed var(--border-subtle);
     }
 
+    /*
+     * The tick is drawn, not written.
+     *
+     * Each of the sixty-three highlights on this page used to carry its own
+     * `<span class="highlight-check" aria-hidden="true">✓</span>` — a glyph no reader is
+     * ever told about, repeated as markup, at about four kilobytes of the document. A
+     * `::before` says exactly the same thing to the eye, is invisible to the
+     * accessibility tree for free, and leaves the `<li>` holding only its sentence.
+     */
     .bento-highlights li {
         display: flex;
         align-items: flex-start;
@@ -389,7 +393,8 @@ const t = useTranslations(lang);
         line-height: 1.45;
     }
 
-    .highlight-check {
+    .bento-highlights li::before {
+        content: '\2713';
         color: var(--action-color);
         font-weight: 800;
         font-size: 0.85rem;
@@ -397,7 +402,7 @@ const t = useTranslations(lang);
         flex-shrink: 0;
     }
 
-    :root[data-theme='light'] .highlight-check {
+    :root[data-theme='light'] .bento-highlights li::before {
         color: var(--header-color);
     }
 

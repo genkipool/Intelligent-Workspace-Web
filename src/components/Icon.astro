@@ -18,6 +18,11 @@
  * `.faq-item[open] .faq-chevron { transform: rotate(180deg) }` computes to the identity
  * matrix and the chevron simply never turns. Twenty bytes an icon buys that back.
  *
+ * There is no `focusable="false"`. It only ever meant anything to IE and the first
+ * Edge, and at around 280 glyphs on the landing page the attribute was five kilobytes of
+ * HTML for browsers that have not shipped in years. `aria-hidden` is what keeps the
+ * glyph out of the accessibility tree, and that stays.
+ *
  * A scoped style in the calling component cannot reach this `<svg>`: it carries this
  * component's scope, not the caller's. Consumers that style a glyph use `:global()`.
  */
@@ -32,11 +37,6 @@ interface Props {
 const { name, size = 20, class: className } = Astro.props;
 ---
 
-<svg
-    width={size}
-    height={size}
-    viewBox={icons[name].viewBox}
-    class={className}
-    aria-hidden="true"
-    focusable="false"><use href={`#iw-${name}`}></use></svg
+<svg width={size} height={size} viewBox={icons[name].viewBox} class={className} aria-hidden="true"
+    ><use href={`#iw-${name}`}></use></svg
 >

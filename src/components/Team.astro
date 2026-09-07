@@ -13,10 +13,10 @@ const t = useTranslations(lang);
 ---
 
 <section id="equipo" class="section-container wrap">
-    <!-- Section Header -->
+    {/* Section Header */}
     <SectionHeader lang={lang} titleKey="team.heading" subtitleKey="team.subtitle" />
 
-    <!-- Team Cards Grid -->
+    {/* Team Cards Grid */}
     <div class="team-grid" data-reveal>
         {
             team.map((member) => (
@@ -36,7 +36,7 @@ const t = useTranslations(lang);
         }
     </div>
 
-    <!-- Philosophy Quote Box -->
+    {/* Philosophy Quote Box */}
     <div class="quote-box" data-reveal>
         <p class="quote-text">“{t('team.quote')}”</p>
         <p class="quote-sub">{t('team.acknowledgement')}</p>

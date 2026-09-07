@@ -47,7 +47,7 @@ const dots = [
         actions={[{ icon: 'pin', on: true }, { icon: 'tabGroups' }, { icon: 'home' }, { icon: 'back' }]}
     />
 
-    <!-- Four buttons sharing the width, icon only: the labels are hidden at this size. -->
+    {/* Four buttons sharing the width, icon only: the labels are hidden at this size. */}
     <div class="rules-action-buttons" aria-hidden="true">
         <span class="action-button"><Icon name="plus" size={19} /></span>
         <span class="action-button"><Icon name="export" size={19} /></span>
@@ -78,13 +78,7 @@ const dots = [
                             class:list={['svg-toggle-button', 'rule-actions-button', { 'is-on': !rule.off }]}
                         >
                             <span class="svg-toggle">
-                                <svg
-                                    width="100%"
-                                    height="100%"
-                                    viewBox="0 0 24 24"
-                                    aria-hidden="true"
-                                    focusable="false"
-                                >
+                                <svg width="100%" height="100%" viewBox="0 0 24 24" aria-hidden="true">
                                     <text
                                         class="svg-toggle-text"
                                         x="50%"

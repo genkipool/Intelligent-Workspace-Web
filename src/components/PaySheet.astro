@@ -110,12 +110,14 @@ const METHOD_MARK = {
     <p class="divider" id="divider" hidden><span>{t('pay.orCard')}</span></p>
 
     <form id="payment-form" novalidate>
-        <!--
+        {
+            /*
             Shown until Stripe's Elements report themselves ready. Cold, that takes
             seconds — the frame has to fetch `js.stripe.com/v3` and stand up three more
             frames behind it — and an empty gap above a greyed-out button is
             indistinguishable from a page that failed. This says which of the two it is.
-        -->
+        */
+        }
         <div id="payment-loading" class="loading" role="status">
             <span class="loading-spinner" aria-hidden="true"></span>
             <span>{t('pay.loading')}</span>
@@ -127,7 +129,8 @@ const METHOD_MARK = {
         </button>
     </form>
 
-    <!--
+    {
+        /*
         WHAT THE PANEL GETS INSTEAD OF THE CARD FORM.
 
         Chrome decides whether a payment form is in a secure context from the URL of the
@@ -143,24 +146,20 @@ const METHOD_MARK = {
         the verdict flips. `pay.ts` decides which of the two blocks is shown; the buttons
         come from `CARD_FORM_METHODS`, so this list cannot drift from the one the card
         form and the PaymentIntent are built from.
-    -->
+    */
+    }
     <div id="handoff" class="handoff" hidden>
         {
             CARD_FORM_METHODS.map((method) => (
                 <button type="button" class="handoff-option" data-method={method}>
-                    <svg
-                        class="mark"
-                        viewBox={METHOD_MARK[method].viewBox}
-                        aria-hidden="true"
-                        focusable="false"
-                    >
+                    <svg class="mark" viewBox={METHOD_MARK[method].viewBox} aria-hidden="true">
                         {METHOD_MARK[method].paths.map((path) => (
                             <path {...path} />
                         ))}
                     </svg>
                     <span class="name">{t(CARD_FORM_METHOD_LABEL[method])}</span>
                     {/* Opens in its own window, said in the place the press happens. */}
-                    <svg class="away" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <svg class="away" viewBox="0 0 24 24" aria-hidden="true">
                         <path
                             d="M14 4h6v6M20 4l-8.5 8.5M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"
                             fill="none"
@@ -181,8 +180,10 @@ const METHOD_MARK = {
     <p class="fineprint">{t('pay.secured')}</p>
 </main>
 
-<!-- Strings the client script needs. Read from the DOM rather than duplicated in
-     TypeScript, so the dictionary stays the only place copy lives. -->
+{
+    /* Strings the client script needs. Read from the DOM rather than duplicated in
+     TypeScript, so the dictionary stays the only place copy lives. */
+}
 <script
     type="application/json"
     id="pay-strings"
