@@ -66,7 +66,7 @@ const pageDescription = description ?? t('meta.description');
  * template. `OG_VERSION` is what makes a redraw reach the caches: Facebook, X, Slack and
  * WhatsApp keep a scraped card for days and only a changed URL evicts it.
  */
-const OG_VERSION = 4;
+const OG_VERSION = 5;
 const ogImage = new URL(`/assets/og-${lang}.png?v=${OG_VERSION}`, Astro.site).href;
 const ogAlt = t('meta.ogAlt');
 const ogLocale = lang === 'es' ? 'es_ES' : 'en_GB';

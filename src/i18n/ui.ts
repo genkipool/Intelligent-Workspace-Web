@@ -12,7 +12,7 @@ export const ui = {
         'meta.description':
             'Tab rules that file every window, a floating omnibar, an AI assistant with 58 tools, screen-time caps that block, and 14 panels. All local, no account.',
         /** The `alt` on the social card, and the only description a screen reader gets of it. */
-        'meta.ogAlt': 'Intelligent Workspace — a browser that files itself',
+        'meta.ogAlt': 'Intelligent Workspace — transform your browser into an autonomous workstation',
 
         // Navigation
         'nav.features': 'Features',
@@ -1208,7 +1208,7 @@ export const ui = {
         'meta.title': 'Intelligent Workspace: un navegador que se archiva solo',
         'meta.description':
             'Reglas que agrupan tus pestañas, omnibar flotante, asistente de IA con 58 herramientas, topes de tiempo que bloquean y 14 paneles. Todo local, sin cuenta.',
-        'meta.ogAlt': 'Intelligent Workspace — un navegador que se archiva solo',
+        'meta.ogAlt': 'Intelligent Workspace — transforma tu navegador en una estación de trabajo autónoma',
 
         // Navigation
         'nav.features': 'Capacidades',

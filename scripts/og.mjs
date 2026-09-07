@@ -41,15 +41,15 @@ const SAFE = WIDTH - MARGIN * 2;
 const CARDS = {
     en: {
         wordmark: 'Intelligent Workspace',
-        headline: ['A browser that', 'files itself'],
-        lede: 'Tab rules, a floating omnibar, an AI assistant and 14 panels.',
-        meta: '100% local  ·  No account  ·  Chrome, Edge, Brave, Opera',
+        headline: ['Transform your browser into an', 'autonomous workstation'],
+        lede: 'Tab rules, a floating omnibar and an AI assistant.',
+        meta: '100% local  ·  No account  ·  Chrome',
     },
     es: {
         wordmark: 'Intelligent Workspace',
-        headline: ['Un navegador que', 'se archiva solo'],
-        lede: 'Reglas de pestañas, omnibar, asistente de IA y 14 paneles.',
-        meta: '100% local  ·  Sin cuenta  ·  Chrome, Edge, Brave, Opera',
+        headline: ['Transforma tu navegador en una', 'estación de trabajo autónoma'],
+        lede: 'Reglas de pestañas, omnibar y asistente de IA.',
+        meta: '100% local  ·  Sin cuenta  ·  Chrome',
     },
 };
 
@@ -98,8 +98,10 @@ function card(lang) {
     const markScale = 0.21;
     const wordmarkX = MARGIN + 508 * markScale + 28;
 
+    const headlineSize = 48;
+
     fits('wordmark', wordmark, 34, true, SAFE - (wordmarkX - MARGIN));
-    headline.forEach((line, i) => fits(`headline line ${i + 1}`, line, 66, true));
+    headline.forEach((line, i) => fits(`headline line ${i + 1}`, line, headlineSize, true));
     fits('lede', lede, 27, false);
     fits('meta', meta, 22, false);
 
@@ -135,13 +137,13 @@ function card(lang) {
   </g>
   <text x="${wordmarkX}" y="128" font-family="${FONT}" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="-0.4">${wordmark}</text>
 
-  <text font-family="${FONT}" font-size="66" font-weight="800" fill="#FFFFFF" letter-spacing="-2">
-    <tspan x="${MARGIN}" y="296">${headline[0]}</tspan>
-    <tspan x="${MARGIN}" y="374">${headline[1]}</tspan>
+  <text font-family="${FONT}" font-size="${headlineSize}" font-weight="800" fill="#FFFFFF" letter-spacing="-1.5">
+    <tspan x="${MARGIN}" y="290">${headline[0]}</tspan>
+    <tspan x="${MARGIN}" y="356">${headline[1]}</tspan>
   </text>
 
-  <text x="${MARGIN}" y="444" font-family="${FONT}" font-size="27" font-weight="400" fill="#cfe6de">${lede}</text>
-  <text x="${MARGIN}" y="548" font-family="${FONT}" font-size="22" font-weight="600" fill="#6fe0c2" letter-spacing="0.3">${meta}</text>
+  <text x="${MARGIN}" y="432" font-family="${FONT}" font-size="27" font-weight="400" fill="#cfe6de">${lede}</text>
+  <text x="${MARGIN}" y="544" font-family="${FONT}" font-size="22" font-weight="600" fill="#6fe0c2" letter-spacing="0.3">${meta}</text>
 
   <rect x="0" y="${HEIGHT - 8}" width="${WIDTH}" height="8" fill="url(#rule)"/>
 </svg>
