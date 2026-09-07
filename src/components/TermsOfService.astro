@@ -1,0 +1,382 @@
+---
+/**
+ * The terms of service, as a page rather than a wall.
+ *
+ * Structurally the privacy policy's twin, on purpose: same `DocTopbar`/`DocFooter` (every
+ * link in `Nav.astro` is an anchor into the landing page and would be dead here), same
+ * centred column, same sticky contents rail, same tables, and the same stylesheet —
+ * `@/styles/policy.css`, which both import. What differs is what the two documents are
+ * for: one says what happens to your data, this one says what you are agreeing to.
+ *
+ * THE TWO TABLES ARE THE DOCUMENT. The first is the identification block article 10 of
+ * the LSSI asks for, in the six fields a Spanish reviewer looks for. The second states the
+ * tip as two columns, what it is and what it is not, because that distinction is the one
+ * claim in here that has to survive being read quickly, by somebody leaving a tip and by a
+ * payment provider alike. Both come from `@/data/terms`, so the page cannot say something
+ * the data does not.
+ *
+ * The contents rail's script lives in `PrivacyPolicy.astro` and is duplicated here rather
+ * than shared, which is a deliberate ten lines: hoisting it would mean a component that
+ * renders nothing and exists only to carry a `<script>`, and Astro would still ship it
+ * per-page. If a third legal page ever appears, that is the moment to extract it.
+ */
+import { useTranslations, localisePath } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/data/site';
+import { sections, identityRows, tipRows, effectiveDate } from '@/data/terms';
+import Icon from '@/components/Icon.astro';
+import DocTopbar from '@/components/DocTopbar.astro';
+import DocFooter from '@/components/DocFooter.astro';
+/* The look of the document, shared with the privacy policy. See the file's header for
+   why three of its selectors carry two classes. */
+import '@/styles/policy.css';
+
+interface Props {
+    lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const privacyUrl = localisePath(lang, '/privacy');
+const payUrl = localisePath(lang, '/pay');
+const supportUrl = localisePath(lang, '/support');
+
+const effectiveLabel = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+}).format(new Date(`${effectiveDate}T00:00:00Z`));
+
+const summaryCards = [
+    { icon: 'shieldCheck', title: t('terms.sum1.title'), desc: t('terms.sum1.desc') },
+    { icon: 'heart', title: t('terms.sum2.title'), desc: t('terms.sum2.desc') },
+    { icon: 'globe', title: t('terms.sum3.title'), desc: t('terms.sum3.desc') },
+] as const;
+---
+
+<DocTopbar lang={lang} />
+
+<main class="policy-main" id="main">
+    <div class="wrap policy-head">
+        <span class="section-eyebrow">{t('terms.eyebrow')}</span>
+        <h1 class="policy-title">{t('terms.title')}</h1>
+        <p class="policy-date">
+            {t('terms.effective')}{' '}<time datetime={effectiveDate}>{effectiveLabel}</time>
+        </p>
+        <p class="policy-lede">{t('terms.lede')}</p>
+
+        <div class="policy-summary" data-reveal>
+            {
+                summaryCards.map((card) => (
+                    <div class="glass-card policy-sum-card">
+                        <div class="policy-sum-icon">
+                            <Icon name={card.icon} size={20} />
+                        </div>
+                        <h2 class="policy-sum-title">{card.title}</h2>
+                        <p class="policy-sum-desc">{card.desc}</p>
+                    </div>
+                ))
+            }
+        </div>
+
+        {
+            /* Article 10 of the LSSI: who is behind this, where they are, and how to
+             reach them — before anything is agreed to rather than after. */
+        }
+        <section class="policy-basic" aria-labelledby="terms-identity-heading">
+            <h2 class="policy-basic-heading" id="terms-identity-heading">{t('terms.id.heading')}</h2>
+            <dl class="policy-basic-list">
+                {
+                    identityRows.map((row) => (
+                        <div class="policy-basic-row">
+                            <dt>{t(row.labelKey)}</dt>
+                            <dd>{row.value ?? t(row.valueKey!)}</dd>
+                        </div>
+                    ))
+                }
+            </dl>
+        </section>
+    </div>
+
+    <div class="wrap policy-body">
+        <nav class="policy-toc" aria-label={t('terms.toc')}>
+            <p class="policy-toc-title">{t('terms.toc')}</p>
+            <ol class="policy-toc-list">
+                {
+                    sections.map((section) => (
+                        <li>
+                            <a href={`#${section.id}`} data-toc={section.id}>
+                                {t(section.titleKey)}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ol>
+        </nav>
+
+        <article class="policy-article">
+            <section id="scope">
+                <h2>{t('terms.scope.title')}</h2>
+                <p>{t('terms.scope.p1')}</p>
+                <p>{t('terms.scope.p2')}</p>
+                <p>{t('terms.scope.p3')}</p>
+            </section>
+
+            <section id="service">
+                <h2>{t('terms.service.title')}</h2>
+                <p>{t('terms.service.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.service.li1')}</li>
+                    <li>{t('terms.service.li2')}</li>
+                    <li>{t('terms.service.li3')}</li>
+                </ul>
+                <p>{t('terms.service.p2')}</p>
+            </section>
+
+            <section id="licence">
+                <h2>{t('terms.licence.title')}</h2>
+                <p>{t('terms.licence.p1')}</p>
+                <p>{t('terms.licence.p2')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.licence.li1')}</li>
+                    <li>{t('terms.licence.li2')}</li>
+                    <li>{t('terms.licence.li3')}</li>
+                    <li>{t('terms.licence.li4')}</li>
+                </ul>
+                <p>{t('terms.licence.p3')}</p>
+            </section>
+
+            <section id="use">
+                <h2>{t('terms.use.title')}</h2>
+                <p>{t('terms.use.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.use.li1')}</li>
+                    <li>{t('terms.use.li2')}</li>
+                    <li>{t('terms.use.li3')}</li>
+                    <li>{t('terms.use.li4')}</li>
+                    <li>{t('terms.use.li5')}</li>
+                </ul>
+                <p>{t('terms.use.p2')}</p>
+            </section>
+
+            <section id="updates">
+                <h2>{t('terms.updates.title')}</h2>
+                <p>{t('terms.updates.p1')}</p>
+                <p>{t('terms.updates.p2')}</p>
+                <p>{t('terms.updates.p3')}</p>
+            </section>
+
+            <section id="tips">
+                <h2>{t('terms.tips.title')}</h2>
+                <p>{t('terms.tips.p1')}</p>
+
+                <div class="policy-table-scroll">
+                    <table class="policy-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">{t('terms.tips.colIs')}</th>
+                                <th scope="col">{t('terms.tips.colIsNot')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                tipRows.map((row) => (
+                                    <tr>
+                                        <td>{t(row.isKey)}</td>
+                                        <td>{t(row.isNotKey)}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>{t('terms.tips.p2')}</p>
+                <p>{t('terms.tips.p3')}</p>
+                <p class="policy-note">{t('terms.tips.note')}</p>
+                <p class="policy-actions">
+                    <a href={payUrl} class="policy-link" data-astro-reload>{t('terms.tips.cta')}</a>
+                </p>
+            </section>
+
+            <section id="refunds">
+                <h2>{t('terms.refunds.title')}</h2>
+                <p>{t('terms.refunds.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.refunds.li1')}</li>
+                    <li>{t('terms.refunds.li2')}</li>
+                    <li>{t('terms.refunds.li3')}</li>
+                </ul>
+                <p>{t('terms.refunds.p2')}</p>
+                <p>{t('terms.refunds.p3')}</p>
+            </section>
+
+            <section id="payments">
+                <h2>{t('terms.payments.title')}</h2>
+                <p>{t('terms.payments.p1')}</p>
+                <p>{t('terms.payments.p2')}</p>
+                <p>{t('terms.payments.p3')}</p>
+            </section>
+
+            <section id="third-party">
+                <h2>{t('terms.third.title')}</h2>
+                <p>{t('terms.third.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.third.li1')}</li>
+                    <li>{t('terms.third.li2')}</li>
+                    <li>{t('terms.third.li3')}</li>
+                    <li>{t('terms.third.li4')}</li>
+                </ul>
+                <p>{t('terms.third.p2')}</p>
+            </section>
+
+            <section id="data">
+                <h2>{t('terms.data.title')}</h2>
+                <p>{t('terms.data.p1')}</p>
+                <p>{t('terms.data.p2')}</p>
+                <p class="policy-actions">
+                    <a href={privacyUrl} class="policy-link">{t('terms.data.cta')}</a>
+                </p>
+            </section>
+
+            <section id="warranty">
+                <h2>{t('terms.warranty.title')}</h2>
+                <p>{t('terms.warranty.p1')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.warranty.li1')}</li>
+                    <li>{t('terms.warranty.li2')}</li>
+                    <li>{t('terms.warranty.li3')}</li>
+                </ul>
+                <p>{t('terms.warranty.p2')}</p>
+                <p class="policy-note">{t('terms.warranty.note')}</p>
+            </section>
+
+            <section id="liability">
+                <h2>{t('terms.liability.title')}</h2>
+                <p>{t('terms.liability.p1')}</p>
+                <p>{t('terms.liability.p2')}</p>
+                <ul class="policy-list">
+                    <li>{t('terms.liability.li1')}</li>
+                    <li>{t('terms.liability.li2')}</li>
+                    <li>{t('terms.liability.li3')}</li>
+                </ul>
+                <p>{t('terms.liability.p3')}</p>
+            </section>
+
+            <section id="consumers">
+                <h2>{t('terms.consumers.title')}</h2>
+                <p>{t('terms.consumers.p1')}</p>
+                <p>{t('terms.consumers.p2')}</p>
+                <p>{t('terms.consumers.p3')}</p>
+                <p class="policy-actions">
+                    <a href={supportUrl} class="policy-link">{t('terms.consumers.cta')}</a>
+                </p>
+            </section>
+
+            <section id="termination">
+                <h2>{t('terms.termination.title')}</h2>
+                <p>{t('terms.termination.p1')}</p>
+                <p>{t('terms.termination.p2')}</p>
+                <p>{t('terms.termination.p3')}</p>
+            </section>
+
+            <section id="changes">
+                <h2>{t('terms.changes.title')}</h2>
+                <p>{t('terms.changes.p1')}</p>
+                <p>{t('terms.changes.p2')}</p>
+            </section>
+
+            <section id="law">
+                <h2>{t('terms.law.title')}</h2>
+                <p>{t('terms.law.p1')}</p>
+                <p>{t('terms.law.p2')}</p>
+                <p>{t('terms.law.p3')}</p>
+                <p>{t('terms.law.p4')}</p>
+            </section>
+
+            <section id="contact">
+                <h2>{t('terms.contact.title')}</h2>
+                <p>{t('terms.contact.p1')}</p>
+                <p class="policy-contact-address">
+                    <a href={`mailto:${site.privacyEmail}`}>{site.privacyEmail}</a>
+                </p>
+                <div class="policy-actions">
+                    <a href={`mailto:${site.privacyEmail}`} class="btn-primary policy-btn">
+                        {t('terms.contact.email')}
+                    </a>
+                    <a
+                        href={site.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-secondary policy-btn"
+                    >
+                        <Icon name="github" size={16} />
+                        <span>{t('terms.contact.source')}</span>
+                    </a>
+                </div>
+            </section>
+        </article>
+    </div>
+</main>
+
+<script>
+    /**
+     * The contents rail follows the reader — the same mechanism as the privacy policy's,
+     * and the reasoning behind every part of it is written out there. In short: the
+     * observer only maintains the set of visible sections and the topmost of that set is
+     * the one marked, because "visible" and "being read" are different questions; the
+     * `rootMargin` crops the viewport to a strip near the top; and the scroll listener
+     * pins the last entry at the bottom of the page, which the observer alone can never
+     * reach.
+     */
+    function initTermsToc(): void {
+        const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')];
+        if (links.length === 0) return;
+
+        const sections = links
+            .map((link) => document.getElementById(link.dataset.toc!))
+            .filter((section): section is HTMLElement => section !== null);
+        if (sections.length === 0) return;
+
+        const visible = new Set<string>();
+        let pinned: string | null = null;
+
+        const paint = () => {
+            const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
+            const current = atBottom
+                ? sections[sections.length - 1]!.id
+                : (sections.find((section) => visible.has(section.id))?.id ?? pinned);
+
+            if (current === pinned && current !== null) return;
+            pinned = current;
+
+            for (const link of links) {
+                const isCurrent = link.dataset.toc === current;
+                link.classList.toggle('active', isCurrent);
+                if (isCurrent) link.setAttribute('aria-current', 'true');
+                else link.removeAttribute('aria-current');
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) visible.add(entry.target.id);
+                    else visible.delete(entry.target.id);
+                }
+                paint();
+            },
+            { rootMargin: '0px 0px -66% 0px', threshold: 0 },
+        );
+
+        for (const section of sections) observer.observe(section);
+        window.addEventListener('scroll', paint, { passive: true });
+        paint();
+    }
+
+    initTermsToc();
+    document.addEventListener('astro:page-load', initTermsToc);
+</script>
+
+<DocFooter lang={lang} current="terms" />

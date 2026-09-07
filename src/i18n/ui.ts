@@ -1009,6 +1009,218 @@ export const ui = {
             'Questions about any of this, including the ones that begin “I do not believe you”, go to the address below. The source code is public, so a claim on this page that the code does not back up is a bug report worth filing.',
         'privacy.contact.email': 'Write to us',
         'privacy.contact.source': 'Read the source',
+        // Terms of service
+        'terms.meta.title': 'Terms of Service | Intelligent Workspace',
+        'terms.meta.description':
+            'The terms for using Intelligent Workspace: a free extension, a licence that costs nothing, and tips that are voluntary and buy no feature.',
+        'terms.eyebrow': 'Legal',
+        'terms.title': 'Terms of Service',
+        'terms.effective': 'In effect since',
+        'terms.lede':
+            'This document says what you are agreeing to when you install Intelligent Workspace, and, because it is the question that actually matters here, what a tip is and is not. The extension is free, complete and identical for everyone. Money is never the difference between two copies of it.',
+        'terms.toc': 'On this page',
+
+        'terms.sum1.title': 'Free, and complete',
+        'terms.sum1.desc':
+            'Every feature ships to everyone. There is no paid tier, no trial that expires, no account and no advertising, and nothing below creates one.',
+        'terms.sum2.title': 'A tip buys nothing',
+        'terms.sum2.desc':
+            'Leaving a tip is voluntary, the amount is yours to choose, and it unlocks nothing at all. It is a thank-you, not a purchase.',
+        'terms.sum3.title': 'Your consumer rights stand',
+        'terms.sum3.desc':
+            'Nothing here takes away a right Spanish or EU law gives you, including suing where you live. Where a clause and the law disagree, the law wins.',
+
+        'terms.id.heading': 'Who provides this service',
+        'terms.id.holder': 'Holder',
+        'terms.id.contact': 'Contact',
+        'terms.id.activity': 'Activity',
+        'terms.id.activityV':
+            'Development and free distribution of the Intelligent Workspace browser extension, and the operation of this website.',
+        'terms.id.law': 'Governed by',
+        'terms.id.lawV':
+            'Spanish law, in particular Act 34/2002 on information society services (LSSI-CE) and Royal Legislative Decree 1/2007, the consolidated Consumer Protection Act.',
+
+        'terms.scope.title': 'Purpose and acceptance',
+        'terms.scope.p1':
+            'These terms govern the use of the Intelligent Workspace browser extension, of this website, and of the page it serves for leaving a tip. "The holder" is the person identified above; "you" is whoever installs the extension or visits the site.',
+        'terms.scope.p2':
+            'Installing the extension, or using this site, means you accept these terms. If you do not accept them, do not install it. And if you already have, uninstalling it is the way to end the agreement, at any moment and with no formality.',
+        'terms.scope.p3':
+            'The extension itself asks nothing of you and can be used by anyone. Leaving a tip is different: it is a payment, so you must be of legal age and have capacity to make it, and you must use a payment method that belongs to you.',
+
+        'terms.service.title': 'What Intelligent Workspace is',
+        'terms.service.p1':
+            'It is an extension for Chrome and Chromium-based browsers, distributed through the Chrome Web Store, that turns the browser into a workspace: tab groups and rules, a side panel with notes, bookmarks, history, screenshots, a timer and a music player, keyboard navigation, and an optional assistant.',
+        'terms.service.li1':
+            'It works without an account, without registration and without a server of ours holding your data.',
+        'terms.service.li2':
+            'It runs in your browser, on your machine. A handful of features reach out to a third-party service, and only when you use that feature.',
+        'terms.service.li3':
+            'It is installed and updated through the Chrome Web Store, whose own terms govern that distribution and which we do not control.',
+        'terms.service.p2':
+            'It is software running on your computer rather than a service we host on your behalf, so there is nothing here for us to switch off remotely. What that also means is that the copy you have keeps working on its own terms; see the sections on updates and on termination.',
+
+        'terms.licence.title': 'Licence and intellectual property',
+        'terms.licence.p1':
+            'You are granted a free, personal, non-exclusive, non-transferable and revocable licence to install and use the extension as it is published, for as long as you comply with these terms. No fee is charged for it, and no tip is required to obtain or keep it.',
+        'terms.licence.p2':
+            'The extension, its source code, its design, its name and its logo belong to the holder. The code is published on GitHub so that anyone can audit what it does. That is not the same as open source, and no permission beyond reading, auditing and proposing changes is given by publishing it.',
+        'terms.licence.li1':
+            'Republishing or distributing it, in whole or in part, on the Chrome Web Store or any other distribution channel.',
+        'terms.licence.li2':
+            'Building or distributing derivative works, forks or repackaged versions intended for use outside this project.',
+        'terms.licence.li3': 'Any commercial exploitation, including selling, sublicensing or bundling it.',
+        'terms.licence.li4':
+            'Removing or altering copyright notices, licence text, authorship or brand marks.',
+        'terms.licence.p3':
+            'The LICENSE file in the repository is the full text and prevails over this summary on anything to do with the code. Nothing here limits the rights that copyright law grants you regardless, in particular the study and interoperability rights in article 100 of the Spanish Copyright Act.',
+
+        'terms.use.title': 'How you may use it',
+        'terms.use.p1':
+            'You use the extension under your own responsibility and on pages you are entitled to visit. In particular, you agree not to use it for the following.',
+        'terms.use.li1': 'Breaking the law, or breaking the terms of the websites you browse with it.',
+        'terms.use.li2':
+            'Reaching content, accounts or systems you have no right to reach, or getting round a technical restriction placed by a third party.',
+        'terms.use.li3':
+            'Interfering with the extension, altering its behaviour to impersonate the original, or presenting a modified build as this one.',
+        'terms.use.li4':
+            'Automating abusive traffic against third-party services through the extension, including the assistant.',
+        'terms.use.li5': 'Anything that damages the holder, other users, or the reputation of the project.',
+        'terms.use.p2':
+            'Your data is yours and stays on your machine, which also makes it your responsibility: keep your own copies of anything that matters, using the export the extension provides. A serious breach of this section ends the licence in section 3, though as a practical matter the only thing that ends is your right to keep using the copy you have.',
+
+        'terms.updates.title': 'Updates, changes and availability',
+        'terms.updates.p1':
+            'Chrome updates extensions on its own. A new version may add features, change how one behaves, or remove one that can no longer be maintained. The changelog on this site and in the repository records what changed and when.',
+        'terms.updates.p2':
+            'Several features depend on interfaces we do not own: the browser’s own APIs, and the third-party services listed in section 9. A change on their side can break a feature without warning, and repairing it is not always in our hands.',
+        'terms.updates.p3':
+            'There is no commitment to publish new versions indefinitely. If development stops, the version you have installed keeps working for as long as your browser supports it, and everything it stored stays where it always was: on your machine.',
+
+        'terms.tips.title': 'Voluntary support (tips)',
+        'terms.tips.p1':
+            'The extension is free and stays free. If you use it, find it useful and feel like supporting the work behind it, this site has a page where you can leave a tip of an amount you choose. It is a tip from someone who uses the extension, not payment for anything. It is worth being exact about what it is, because everything else in this section follows from it.',
+        'terms.tips.colIs': 'What a tip is',
+        'terms.tips.colIsNot': 'What it is not',
+        'terms.tips.r1.is': 'A voluntary, one-off tip, for an amount you decide yourself.',
+        'terms.tips.r1.isNot': 'A price, a fee, a subscription or a recurring charge.',
+        'terms.tips.r2.is': 'A thank-you for work that is already published and already free.',
+        'terms.tips.r2.isNot': 'Payment for a feature, a licence, a key or a future version.',
+        'terms.tips.r3.is': 'Help towards hosting, tooling and the hours the project takes.',
+        'terms.tips.r3.isNot': 'A contract for services, support, maintenance or development.',
+        'terms.tips.r4.is': 'Independent of the software, which is the same whether you give or not.',
+        'terms.tips.r4.isNot':
+            'A claim to priority, privileges, or anything a person who gives nothing does not also have.',
+        'terms.tips.p2':
+            'No feature is behind a payment, now or in any published version. Leaving a tip gives you no additional function, no early access, no priority in support, no vote on what gets built, and no promise that anything at all gets built. Nothing is sent to you in return, and no reward is offered.',
+        'terms.tips.p3':
+            'That is also why a tip carries no invoice and no VAT: you set the amount freely, and it does not pay for any particular thing, so it is not consideration for a supply. The holder receives it as what it is, a tip, and declares it as such.',
+        'terms.tips.note':
+            'If a future version ever offers something in exchange for a payment, that will be a sale. It will be described as a sale, with its own terms, its price and its invoice. It will not be called a tip.',
+        'terms.tips.cta': 'Leave a tip',
+
+        'terms.refunds.title': 'Refunds and charges you do not recognise',
+        'terms.refunds.p1':
+            'A tip is final by its nature, but a payment can still go wrong, and a wrong payment is not a tip. So, on request and with no explanation needed, a tip is refunded in full within 14 calendar days of the charge in any of these cases.',
+        'terms.refunds.li1': 'You tipped by mistake, or the same tip went through twice.',
+        'terms.refunds.li2': 'The amount charged is not the amount you meant to give.',
+        'terms.refunds.li3':
+            'The payment was made with a card or account that is not yours, in which case tell your bank as well.',
+        'terms.refunds.p2':
+            'Write to the address in section 17 with the date, the amount and the last four digits of the card. The money goes back to the same payment method, which usually takes between five and ten working days depending on your bank.',
+        'terms.refunds.p3':
+            'After those 14 days, write anyway: cases are looked at one by one and a genuine mistake is refunded. Please ask before opening a chargeback with your bank, because a disputed payment carries a fixed fee larger than most tips, so a one-euro tip ends up costing the project money.',
+
+        'terms.payments.title': 'Payments and payment data',
+        'terms.payments.p1':
+            'Tips are processed by Stripe Payments Europe, Ltd. Your card details are typed into Stripe’s own fields and travel to Stripe. Neither this website, nor the extension, nor the holder ever sees or stores a card number.',
+        'terms.payments.p2':
+            'The payment sheet is served by this site and may be shown inside the extension’s side panel. Some methods, PayPal among them, cannot authenticate inside another site’s frame and will open a window of their own. Stripe’s terms and privacy notice govern the processing of the payment itself.',
+        'terms.payments.p3':
+            'Tips are charged in euros, for the amount shown before you confirm. If your account is held in another currency, your bank may apply its own conversion and charges, which are outside our control.',
+
+        'terms.third.title': 'Third-party services',
+        'terms.third.p1':
+            'Some features talk to services that are not ours, and only when you use that feature. Their own terms apply to them, and we neither control them nor answer for them.',
+        'terms.third.li1':
+            'Google Gemini, for the assistant. The API key is yours, entered by you and stored on your machine: the quota, the cost and the terms of that key are between you and Google.',
+        'terms.third.li2':
+            'The Chrome Web Store, which distributes and updates the extension under Google’s terms.',
+        'terms.third.li3':
+            'The online radio directory and the stations it lists, YouTube for video previews, and the CDN that serves the on-device text-recognition model.',
+        'terms.third.li4': 'Stripe, for tips, as described in section 8.',
+        'terms.third.p2':
+            'Content you reach through the extension belongs to whoever published it, and linking to it is not an endorsement. The privacy policy lists every host the extension can contact, what it sends and when.',
+
+        'terms.data.title': 'Personal data',
+        'terms.data.p1':
+            'The extension has no accounts and no telemetry. Your groups, rules, notes, screenshots and activity stay in your browser’s own storage on your machine, and what leaves it does so only because you used a feature that had to send something.',
+        'terms.data.p2':
+            'The privacy policy is the document that governs all of this, and it forms part of these terms. It is written as a layered notice, with the summary first and the detail underneath.',
+        'terms.data.cta': 'Read the privacy policy',
+
+        'terms.warranty.title': 'No warranty',
+        'terms.warranty.p1':
+            'The extension is supplied free of charge and as it is, with no warranty of any kind beyond what the law requires. To the fullest extent permitted, no promise is made that it is free of errors or fit for a particular purpose.',
+        'terms.warranty.li1':
+            'It is not warranted to run without interruption or error, nor to be compatible with every browser version, operating system or other extension you have installed.',
+        'terms.warranty.li2':
+            'A feature that depends on a third-party service is not warranted to keep working if that service changes or closes.',
+        'terms.warranty.li3':
+            'You are responsible for your own copies. Uninstalling the extension, or losing the browser profile, takes its local data with it, so export what matters before either happens.',
+        'terms.warranty.p2': 'None of this excludes a warranty that the law does not allow to be excluded.',
+        'terms.warranty.note':
+            'If you are a consumer, the rules on conformity of digital content and services apply where they apply by law. Those are articles 115 and following of Royal Legislative Decree 1/2007, which transposes Directive (EU) 2019/770, and this section does not displace them.',
+
+        'terms.liability.title': 'Limitation of liability',
+        'terms.liability.p1':
+            'To the maximum extent the law permits, the holder is not liable for indirect or consequential harm arising from using the extension or from being unable to use it: loss of data, of profit, of business or of opportunity, however caused.',
+        'terms.liability.p2': 'The following are never excluded, and no clause here tries to:',
+        'terms.liability.li1': 'Wilful misconduct or gross negligence on the part of the holder.',
+        'terms.liability.li2': 'Death or personal injury caused by the holder’s acts or omissions.',
+        'terms.liability.li3':
+            'Any liability that Spanish law does not permit to be excluded or limited, in particular towards consumers.',
+        'terms.liability.p3':
+            'Where a limit is lawful, the holder’s total liability is capped at the greater of fifty euros or the sum of the tips received from you in the twelve months before the event. The extension is free, and this figure is what stands in for a price that does not exist.',
+
+        'terms.consumers.title': 'If you are a consumer',
+        'terms.consumers.p1':
+            'You are a consumer if you use the extension outside a trade, business or profession, as article 3 of Royal Legislative Decree 1/2007 defines it. Everything in this section is in addition to your rights, never instead of them.',
+        'terms.consumers.p2':
+            'The statutory fourteen-day right of withdrawal applies to contracts where goods or services are supplied for a price. A voluntary tip is not one: nothing is bought, and nothing is supplied in exchange. The fourteen-day refund in section 7 is given voluntarily and is at least as favourable, and it stands whether or not the statutory right applies.',
+        'terms.consumers.p3':
+            'If something is wrong, write first; most things are resolved in one reply. The holder is not adhered to any consumer arbitration scheme. You can also take a complaint to the consumer authority of your autonomous community or your country, and for a cross-border complaint the European Consumer Centre network is the route; the European ODR platform is not, as it was shut down in July 2025.',
+        'terms.consumers.cta': 'Support centre',
+
+        'terms.termination.title': 'Duration and termination',
+        'terms.termination.p1':
+            'The licence runs for as long as you use the extension. You end it whenever you like by uninstalling, with no notice, no formality and nothing to cancel: there is no subscription to stop.',
+        'terms.termination.p2':
+            'The holder may end the licence if you seriously breach section 4 or section 3. In practice that means you must stop using the extension and remove it; there is no remote switch, and none is claimed.',
+        'terms.termination.p3':
+            'Removing the extension deletes the data it kept in your browser. Export anything you want to keep before you uninstall, because after that neither you nor we can recover it.',
+
+        'terms.changes.title': 'Changes to these terms',
+        'terms.changes.p1':
+            'These terms may change: a new feature, a new payment method, a change in the law. The date at the top of this page says which version is in effect, and every earlier version is in the public history of the repository this site is built from.',
+        'terms.changes.p2':
+            'A substantial change is announced on this page, and on the page where tips are taken when it touches them. Using the extension after the new date means accepting the new text; if you would rather not, uninstalling is the answer. No change ever applies backwards to a tip already given.',
+
+        'terms.law.title': 'Governing law and jurisdiction',
+        'terms.law.p1':
+            'These terms are governed by Spanish law, and are written for the Spanish and European Union framework the holder operates in.',
+        'terms.law.p2':
+            'If you are a consumer resident in another EU country, choosing Spanish law does not deprive you of the mandatory protections of your own country, as article 6 of the Rome I Regulation provides. Where the two differ, whichever protects you more is the one that applies.',
+        'terms.law.p3':
+            'A consumer may bring a claim before the courts of their own place of residence, and may only be sued there, under articles 17 to 19 of Regulation (EU) 1215/2012. No clause here asks you to give that up, and one that appeared to would be void.',
+        'terms.law.p4':
+            'Where the user is not a consumer, the parties submit to the courts of the holder’s domicile in Spain. If any clause of these terms is held void, the rest stays in force and the void clause is read down to the closest lawful meaning. The Spanish version prevails in case of discrepancy between the two languages.',
+
+        'terms.contact.title': 'Contact',
+        'terms.contact.p1':
+            'One inbox for all of it: a question about these terms, a refund, a bug, or anything about your data. It is a real address rather than a form, and it is read by the person who wrote the code. Spanish and English both work.',
+        'terms.contact.email': 'Write to us',
+        'terms.contact.source': 'Read the source',
 
         // Tab Strip & Screenshots
 
@@ -1074,6 +1286,8 @@ export const ui = {
         'pay.thanks': 'Thank you. Your support payment went through.',
         'pay.notConfigured': 'Payments are not configured on this deployment yet.',
         'pay.contributeNow': 'Support',
+        'pay.tipNote': 'A tip is voluntary and unlocks nothing.',
+        'pay.termsLink': 'Terms of service',
         'pay.secured': 'Payments are processed by Stripe. This page never stores your card.',
         'pay.failed': 'The payment could not be completed.',
         'pay.badAmount': 'Choose an amount between 1 and 500 euros.',
@@ -1197,6 +1411,7 @@ export const ui = {
         'footer.toolsTitle': 'Utilities',
         'footer.privacyTitle': 'Privacy & Trust',
         'footer.policy': 'Privacy Policy',
+        'footer.terms': 'Terms of Service',
         'footer.support': 'Support',
         'footer.navLabel': 'Site pages',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. All rights reserved.',
@@ -2209,6 +2424,222 @@ export const ui = {
             'Cualquier duda sobre todo esto, incluidas las que empiezan por «no me lo creo», a la dirección de abajo. El código fuente es público, así que una afirmación de esta página que el código no respalde es un informe de error que merece la pena abrir.',
         'privacy.contact.email': 'Escríbenos',
         'privacy.contact.source': 'Leer el código fuente',
+        // Terms of service
+        'terms.meta.title': 'Condiciones del servicio | Intelligent Workspace',
+        'terms.meta.description':
+            'Las condiciones de uso de Intelligent Workspace: una extensión gratuita, una licencia que no cuesta nada y propinas voluntarias que no compran ninguna función.',
+        'terms.eyebrow': 'Legal',
+        'terms.title': 'Condiciones del servicio',
+        'terms.effective': 'En vigor desde',
+        'terms.lede':
+            'Este documento dice qué aceptas al instalar Intelligent Workspace y, porque es la pregunta que de verdad importa aquí, qué es y qué no es una propina. La extensión es gratuita, está completa y es idéntica para todo el mundo. El dinero nunca es la diferencia entre dos copias de ella.',
+        'terms.toc': 'En esta página',
+
+        'terms.sum1.title': 'Gratis, y completa',
+        'terms.sum1.desc':
+            'Todas las funciones llegan a todo el mundo. No hay versión de pago, ni prueba que caduque, ni cuenta, ni publicidad, y nada de lo que sigue crea ninguna de esas cosas.',
+        'terms.sum2.title': 'Una propina no compra nada',
+        'terms.sum2.desc':
+            'Dejar una propina es voluntario, el importe lo eliges tú y no desbloquea absolutamente nada. Es un gracias, no una compra.',
+        'terms.sum3.title': 'Tus derechos de consumidor siguen intactos',
+        'terms.sum3.desc':
+            'Nada de esto te quita un derecho que te reconozcan las leyes españolas o europeas, incluido demandar donde vives. Donde una cláusula y la ley discrepen, gana la ley.',
+
+        'terms.id.heading': 'Quién presta este servicio',
+        'terms.id.holder': 'Titular',
+        'terms.id.contact': 'Contacto',
+        'terms.id.activity': 'Actividad',
+        'terms.id.activityV':
+            'Desarrollo y distribución gratuita de la extensión de navegador Intelligent Workspace, y explotación de este sitio web.',
+        'terms.id.law': 'Norma aplicable',
+        'terms.id.lawV':
+            'Legislación española, en particular la Ley 34/2002 de servicios de la sociedad de la información (LSSI-CE) y el Real Decreto Legislativo 1/2007, texto refundido de la Ley General para la Defensa de los Consumidores y Usuarios.',
+
+        'terms.scope.title': 'Objeto y aceptación',
+        'terms.scope.p1':
+            'Estas condiciones regulan el uso de la extensión de navegador Intelligent Workspace, de este sitio web y de la página que sirve para dejar una propina. «El titular» es la persona identificada arriba; «tú» es quien instala la extensión o visita el sitio.',
+        'terms.scope.p2':
+            'Instalar la extensión, o usar este sitio, supone que aceptas estas condiciones. Si no las aceptas, no la instales; y si ya lo hiciste, desinstalarla es la forma de terminar el acuerdo, en cualquier momento y sin ninguna formalidad.',
+        'terms.scope.p3':
+            'La extensión no te pide nada y puede usarla cualquiera. Dejar una propina es distinto: es un pago, así que debes ser mayor de edad y tener capacidad para realizarlo, y debes usar un medio de pago que sea tuyo.',
+
+        'terms.service.title': 'Qué es Intelligent Workspace',
+        'terms.service.p1':
+            'Es una extensión para Chrome y navegadores basados en Chromium, distribuida a través de la Chrome Web Store, que convierte el navegador en una estación de trabajo: grupos de pestañas y reglas, un panel lateral con notas, marcadores, historial, capturas, temporizador y reproductor de música, navegación por teclado y un asistente opcional.',
+        'terms.service.li1':
+            'Funciona sin cuenta, sin registro y sin ningún servidor nuestro que guarde tus datos.',
+        'terms.service.li2':
+            'Se ejecuta en tu navegador, en tu máquina. Unas pocas funciones se comunican con un servicio de terceros, y solo cuando usas esa función.',
+        'terms.service.li3':
+            'Se instala y se actualiza a través de la Chrome Web Store, cuyas propias condiciones rigen esa distribución y que no controlamos.',
+        'terms.service.p2':
+            'Es software que corre en tu ordenador, no un servicio que alojemos por ti, así que no hay nada aquí que podamos apagar en remoto. Eso también significa que la copia que tienes sigue funcionando por su cuenta: mira los apartados de actualizaciones y de terminación.',
+
+        'terms.licence.title': 'Licencia y propiedad intelectual',
+        'terms.licence.p1':
+            'Se te concede una licencia gratuita, personal, no exclusiva, intransferible y revocable para instalar y usar la extensión tal como se publica, mientras cumplas estas condiciones. No se cobra nada por ella, y no hace falta ninguna propina para obtenerla ni para conservarla.',
+        'terms.licence.p2':
+            'La extensión, su código fuente, su diseño, su nombre y su logotipo pertenecen al titular. El código está publicado en GitHub para que cualquiera pueda auditar lo que hace: eso no es lo mismo que ser software libre, y publicarlo no concede ningún permiso más allá de leerlo, auditarlo y proponer cambios.',
+        'terms.licence.li1':
+            'Republicarla o distribuirla, entera o en parte, en la Chrome Web Store o en cualquier otro canal de distribución.',
+        'terms.licence.li2':
+            'Crear o distribuir obras derivadas, bifurcaciones o versiones reempaquetadas destinadas a usarse fuera de este proyecto.',
+        'terms.licence.li3':
+            'Cualquier explotación comercial, incluida su venta, sublicencia o inclusión en un paquete.',
+        'terms.licence.li4':
+            'Eliminar o alterar los avisos de copyright, el texto de la licencia, la autoría o las marcas.',
+        'terms.licence.p3':
+            'El fichero LICENSE del repositorio es el texto completo y prevalece sobre este resumen en todo lo relativo al código. Nada de esto limita los derechos que la ley te reconoce de todos modos, en particular los de estudio e interoperabilidad del artículo 100 del texto refundido de la Ley de Propiedad Intelectual.',
+
+        'terms.use.title': 'Cómo puedes usarla',
+        'terms.use.p1':
+            'Usas la extensión bajo tu responsabilidad y en páginas a las que tienes derecho a acceder. En particular, te comprometes a no usarla para lo siguiente.',
+        'terms.use.li1':
+            'Incumplir la ley, o incumplir las condiciones de los sitios web que visitas con ella.',
+        'terms.use.li2':
+            'Acceder a contenidos, cuentas o sistemas a los que no tienes derecho, o sortear una restricción técnica puesta por un tercero.',
+        'terms.use.li3':
+            'Interferir en la extensión, alterar su comportamiento para hacerla pasar por la original, o presentar una versión modificada como si fuera esta.',
+        'terms.use.li4':
+            'Automatizar tráfico abusivo contra servicios de terceros a través de la extensión, incluido el asistente.',
+        'terms.use.li5':
+            'Cualquier cosa que perjudique al titular, a otros usuarios o a la reputación del proyecto.',
+        'terms.use.p2':
+            'Tus datos son tuyos y viven en tu máquina, lo que también los pone bajo tu responsabilidad: guarda tus propias copias de lo que te importe, con la exportación que la extensión incluye. Un incumplimiento grave de este apartado extingue la licencia del apartado 3, aunque en la práctica lo único que se extingue es tu derecho a seguir usando la copia que tienes.',
+
+        'terms.updates.title': 'Actualizaciones, cambios y disponibilidad',
+        'terms.updates.p1':
+            'Chrome actualiza las extensiones por su cuenta. Una versión nueva puede añadir funciones, cambiar el comportamiento de alguna o retirar una que ya no se pueda mantener. El registro de cambios de este sitio y del repositorio deja constancia de qué cambió y cuándo.',
+        'terms.updates.p2':
+            'Varias funciones dependen de interfaces que no son nuestras: las propias API del navegador y los servicios de terceros del apartado 9. Un cambio en su lado puede romper una función sin previo aviso, y arreglarlo no siempre está en nuestra mano.',
+        'terms.updates.p3':
+            'No hay compromiso de publicar versiones nuevas indefinidamente. Si el desarrollo se detiene, la versión que tengas instalada seguirá funcionando mientras tu navegador la admita, y todo lo que guardó se queda donde siempre estuvo: en tu máquina.',
+
+        'terms.tips.title': 'Apoyo voluntario (propinas)',
+        'terms.tips.p1':
+            'La extensión es gratuita y va a seguir siéndolo. Si la usas, te resulta útil y te apetece apoyar el trabajo que hay detrás, este sitio tiene una página donde puedes dejar una propina por el importe que decidas. Es una propina de quien usa la extensión, no el pago de nada. Conviene ser exacto sobre lo que es, porque de ahí sale todo lo demás de este apartado.',
+        'terms.tips.colIs': 'Qué es una propina',
+        'terms.tips.colIsNot': 'Qué no es',
+        'terms.tips.r1.is': 'Una propina voluntaria y puntual, por un importe que decides tú.',
+        'terms.tips.r1.isNot': 'Un precio, una tarifa, una suscripción ni un cargo recurrente.',
+        'terms.tips.r2.is': 'Un gracias por un trabajo ya publicado y ya gratuito.',
+        'terms.tips.r2.isNot': 'El pago de una función, una licencia, una clave o una versión futura.',
+        'terms.tips.r3.is':
+            'Una ayuda para el alojamiento, las herramientas y las horas que lleva el proyecto.',
+        'terms.tips.r3.isNot': 'Un contrato de servicios, soporte, mantenimiento o desarrollo.',
+        'terms.tips.r4.is': 'Algo independiente del software, que es el mismo aportes o no.',
+        'terms.tips.r4.isNot':
+            'Un derecho a prioridad, a privilegios ni a nada que no tenga también quien no aporta nada.',
+        'terms.tips.p2':
+            'Ninguna función está detrás de un pago, ni ahora ni en ninguna versión publicada. Dejar una propina no te da ninguna función adicional, ni acceso anticipado, ni prioridad en el soporte, ni voto sobre lo que se construye, ni promesa alguna de que se construya nada. No se te envía nada a cambio y no se ofrece ninguna recompensa.',
+        'terms.tips.p3':
+            'Por eso mismo una propina no lleva factura ni IVA: el importe lo fijas libremente y no retribuye ninguna prestación concreta, así que no es contraprestación de una operación. El titular la recibe por lo que es, una propina, y así la declara.',
+        'terms.tips.note':
+            'Si alguna versión futura llega a ofrecer algo a cambio de un pago, eso será una venta. Se describirá como una venta, con sus propias condiciones, su precio y su factura. No se llamará propina.',
+        'terms.tips.cta': 'Dejar una propina',
+
+        'terms.refunds.title': 'Devoluciones y cargos que no reconoces',
+        'terms.refunds.p1':
+            'Una propina es definitiva por naturaleza, pero un pago puede salir mal, y un pago equivocado no es una propina. Por eso, a petición tuya y sin necesidad de explicar nada, una propina se devuelve íntegra dentro de los 14 días naturales siguientes al cargo en cualquiera de estos casos.',
+        'terms.refunds.li1': 'Dejaste la propina por error, o la misma propina se cobró dos veces.',
+        'terms.refunds.li2': 'El importe cobrado no es el que querías dar.',
+        'terms.refunds.li3':
+            'El pago se hizo con una tarjeta o una cuenta que no es tuya; en ese caso, avisa también a tu banco.',
+        'terms.refunds.p2':
+            'Escribe a la dirección del apartado 17 con la fecha, el importe y los cuatro últimos dígitos de la tarjeta. El dinero vuelve al mismo medio de pago, lo que suele tardar entre cinco y diez días hábiles según tu banco.',
+        'terms.refunds.p3':
+            'Pasados esos 14 días, escribe igualmente: los casos se miran uno a uno y un error de verdad se devuelve. Te pedimos que preguntes antes de abrir una reclamación de cargo con tu banco, porque un pago disputado lleva una comisión fija mayor que la mayoría de las propinas, así que una propina de un euro acaba costándole dinero al proyecto.',
+
+        'terms.payments.title': 'Pagos y datos de pago',
+        'terms.payments.p1':
+            'Las propinas las procesa Stripe Payments Europe, Ltd. Los datos de tu tarjeta se escriben en campos de la propia Stripe y viajan a Stripe. Ni este sitio web, ni la extensión, ni el titular ven ni guardan nunca un número de tarjeta.',
+        'terms.payments.p2':
+            'La hoja de pago la sirve este sitio y puede mostrarse dentro del panel lateral de la extensión. Algunos métodos, PayPal entre ellos, no pueden autenticarse dentro del marco de otro sitio y abrirán una ventana propia. Las condiciones y el aviso de privacidad de Stripe rigen el tratamiento del pago en sí.',
+        'terms.payments.p3':
+            'Las propinas se cobran en euros, por el importe que se muestra antes de que confirmes. Si tu cuenta está en otra divisa, tu banco puede aplicar su propia conversión y sus comisiones, que quedan fuera de nuestro control.',
+
+        'terms.third.title': 'Servicios de terceros',
+        'terms.third.p1':
+            'Algunas funciones se comunican con servicios que no son nuestros, y solo cuando usas esa función. Sus propias condiciones les son de aplicación, y ni los controlamos ni respondemos por ellos.',
+        'terms.third.li1':
+            'Google Gemini, para el asistente. La clave de API es tuya, la introduces tú y se guarda en tu máquina: la cuota, el coste y las condiciones de esa clave son cosa entre Google y tú.',
+        'terms.third.li2':
+            'La Chrome Web Store, que distribuye y actualiza la extensión bajo las condiciones de Google.',
+        'terms.third.li3':
+            'El directorio de radios en línea y las emisoras que lista, YouTube para las vistas previas de vídeo, y la CDN que sirve el modelo de reconocimiento de texto que corre en tu equipo.',
+        'terms.third.li4': 'Stripe, para las propinas, según se describe en el apartado 8.',
+        'terms.third.p2':
+            'Los contenidos a los que llegues a través de la extensión son de quien los publicó, y enlazarlos no supone respaldarlos. La política de privacidad enumera todos los servidores con los que la extensión puede contactar, qué envía y cuándo.',
+
+        'terms.data.title': 'Datos personales',
+        'terms.data.p1':
+            'La extensión no tiene cuentas ni telemetría. Tus grupos, reglas, notas, capturas y actividad se quedan en el almacenamiento del propio navegador, en tu máquina, y lo que sale de ahí sale únicamente porque has usado una función que tenía que enviar algo.',
+        'terms.data.p2':
+            'La política de privacidad es el documento que regula todo esto, y forma parte de estas condiciones. Está escrita por capas, con el resumen delante y el detalle debajo.',
+        'terms.data.cta': 'Leer la política de privacidad',
+
+        'terms.warranty.title': 'Ausencia de garantías',
+        'terms.warranty.p1':
+            'La extensión se entrega gratuitamente y tal cual está, sin más garantía que la que exija la ley. En la máxima medida permitida, no se promete que esté libre de errores ni que sirva para un fin concreto.',
+        'terms.warranty.li1':
+            'No se garantiza que funcione sin interrupciones ni errores, ni que sea compatible con cualquier versión del navegador, sistema operativo u otra extensión que tengas instalada.',
+        'terms.warranty.li2':
+            'No se garantiza que una función que depende de un servicio de terceros siga funcionando si ese servicio cambia o cierra.',
+        'terms.warranty.li3':
+            'Tus copias son responsabilidad tuya. Desinstalar la extensión, o perder el perfil del navegador, se lleva por delante sus datos locales: exporta lo que te importe antes de que pase cualquiera de las dos cosas.',
+        'terms.warranty.p2': 'Nada de esto excluye una garantía que la ley no permita excluir.',
+        'terms.warranty.note':
+            'Si eres consumidor, las normas sobre conformidad de los contenidos y servicios digitales se aplican donde la ley diga. Son los artículos 115 y siguientes del Real Decreto Legislativo 1/2007, que traspone la Directiva (UE) 2019/770, y este apartado no las desplaza.',
+
+        'terms.liability.title': 'Limitación de responsabilidad',
+        'terms.liability.p1':
+            'En la máxima medida que permite la ley, el titular no responde de los daños indirectos o consecuenciales derivados de usar la extensión o de no poder usarla: pérdida de datos, de beneficios, de negocio o de oportunidad, cualquiera que sea su causa.',
+        'terms.liability.p2': 'Lo siguiente no se excluye nunca, y ninguna cláusula de aquí lo intenta:',
+        'terms.liability.li1': 'El dolo o la culpa grave del titular.',
+        'terms.liability.li2': 'La muerte o los daños personales causados por actos u omisiones del titular.',
+        'terms.liability.li3':
+            'Cualquier responsabilidad que la ley española no permita excluir ni limitar, en particular frente a consumidores.',
+        'terms.liability.p3':
+            'Donde el límite sea lícito, la responsabilidad total del titular queda limitada a la mayor de estas dos cantidades: cincuenta euros, o la suma de las propinas recibidas de ti en los doce meses anteriores al hecho. La extensión es gratuita, y esta cifra es lo que sustituye a un precio que no existe.',
+
+        'terms.consumers.title': 'Si eres consumidor',
+        'terms.consumers.p1':
+            'Eres consumidor si usas la extensión al margen de una actividad empresarial o profesional, tal como lo define el artículo 3 del Real Decreto Legislativo 1/2007. Todo lo de este apartado se suma a tus derechos, nunca los sustituye.',
+        'terms.consumers.p2':
+            'El derecho legal de desistimiento de catorce días se aplica a los contratos en los que se entregan bienes o se prestan servicios por un precio. Una propina voluntaria no lo es: no se compra nada y no se entrega nada a cambio. La devolución de catorce días del apartado 7 se concede voluntariamente, es al menos igual de favorable, y rige tanto si el derecho legal resulta aplicable como si no.',
+        'terms.consumers.p3':
+            'Si algo va mal, escribe primero: casi todo se resuelve en una respuesta. El titular no está adherido a ningún sistema arbitral de consumo. También puedes acudir al organismo de consumo de tu comunidad autónoma o de tu país, y para una reclamación transfronteriza el camino es la red de Centros Europeos del Consumidor; la plataforma europea de resolución de litigios en línea no lo es, porque dejó de funcionar en julio de 2025.',
+        'terms.consumers.cta': 'Centro de soporte',
+
+        'terms.termination.title': 'Duración y terminación',
+        'terms.termination.p1':
+            'La licencia dura mientras uses la extensión. La terminas cuando quieras desinstalándola, sin preaviso, sin formalidades y sin nada que cancelar: no hay ninguna suscripción que parar.',
+        'terms.termination.p2':
+            'El titular puede terminar la licencia si incumples gravemente el apartado 4 o el apartado 3. En la práctica eso significa que debes dejar de usar la extensión y retirarla; no hay ningún interruptor remoto, y no se afirma tenerlo.',
+        'terms.termination.p3':
+            'Retirar la extensión borra los datos que guardaba en tu navegador. Exporta lo que quieras conservar antes de desinstalar, porque después no podréis recuperarlo ni tú ni nosotros.',
+
+        'terms.changes.title': 'Cambios en estas condiciones',
+        'terms.changes.p1':
+            'Estas condiciones pueden cambiar: una función nueva, un medio de pago nuevo, un cambio en la ley. La fecha de la cabecera de esta página dice qué versión está en vigor, y todas las anteriores están en el historial público del repositorio con el que se construye este sitio.',
+        'terms.changes.p2':
+            'Un cambio sustancial se anuncia en esta página, y también en la página donde se dejan las propinas cuando les afecte. Usar la extensión después de la fecha nueva supone aceptar el texto nuevo; si prefieres no hacerlo, la respuesta es desinstalarla. Ningún cambio se aplica hacia atrás a una propina ya dejada.',
+
+        'terms.law.title': 'Ley aplicable y jurisdicción',
+        'terms.law.p1':
+            'Estas condiciones se rigen por la ley española, y están escritas para el marco español y de la Unión Europea en el que opera el titular.',
+        'terms.law.p2':
+            'Si eres consumidor y resides en otro país de la Unión, elegir la ley española no te priva de las protecciones imperativas de tu propio país, según el artículo 6 del Reglamento Roma I. Cuando ambas difieran, se aplica la que más te proteja.',
+        'terms.law.p3':
+            'Un consumidor puede demandar ante los tribunales de su lugar de residencia, y solo puede ser demandado allí, conforme a los artículos 17 a 19 del Reglamento (UE) 1215/2012. Ninguna cláusula de aquí te pide renunciar a eso, y una que lo pareciera sería nula.',
+        'terms.law.p4':
+            'Cuando el usuario no sea consumidor, las partes se someten a los juzgados del domicilio del titular en España. Si alguna cláusula se declarara nula, el resto sigue en vigor y la cláusula nula se interpretará con el alcance lícito más próximo. En caso de discrepancia entre los dos idiomas, prevalece la versión española.',
+
+        'terms.contact.title': 'Contacto',
+        'terms.contact.p1':
+            'Un solo buzón para todo: una duda sobre estas condiciones, una devolución, un fallo o cualquier cosa sobre tus datos. Es una dirección real, no un formulario, y la lee la persona que escribió el código. Vale en español y en inglés.',
+        'terms.contact.email': 'Escríbenos',
+        'terms.contact.source': 'Leer el código fuente',
 
         // Tab Strip & Screenshots
 
@@ -2274,6 +2705,8 @@ export const ui = {
         'pay.thanks': 'Gracias. Tu aportación de apoyo se ha completado.',
         'pay.notConfigured': 'Los pagos aún no están configurados en este despliegue.',
         'pay.contributeNow': 'Apoyar',
+        'pay.tipNote': 'La propina es voluntaria y no desbloquea nada.',
+        'pay.termsLink': 'Condiciones del servicio',
         'pay.secured': 'Los pagos los procesa Stripe. Esta página nunca guarda tu tarjeta.',
         'pay.failed': 'No se ha podido completar el pago.',
         'pay.badAmount': 'Elige un importe entre 1 y 500 euros.',
@@ -2401,6 +2834,7 @@ export const ui = {
         'footer.toolsTitle': 'Utilidades',
         'footer.privacyTitle': 'Privacidad y Confianza',
         'footer.policy': 'Política de Privacidad',
+        'footer.terms': 'Condiciones del servicio',
         'footer.support': 'Soporte',
         'footer.navLabel': 'Páginas del sitio',
         'footer.copyright': '© 2026 GENKI Organización / Luis Reoyo. Todos los derechos reservados.',

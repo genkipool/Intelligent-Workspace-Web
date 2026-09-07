@@ -543,6 +543,29 @@ form[hidden] {
     color: var(--muted-color);
     text-align: center;
 }
+
+/* The one link in the fine print. `.fineprint` is deliberately dim, so the link takes the
+   interactive colour to stay a link at this size, and keeps its underline rather than
+   relying on that colour alone to say so. */
+.fineprint-link {
+    color: var(--interactive-color);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* The hover state is the underline getting thicker, not a colour change: the extension
+   hands this page one accent, so `--action-color` and `--interactive-color` are usually
+   the same value and a colour swap between them would be a hover that does nothing. */
+.fineprint-link:hover {
+    text-decoration-thickness: 2px;
+}
+
+.fineprint-link:focus-visible {
+    outline: 2px solid var(--interactive-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 /* ── Scrollbar ───────────────────────────────────────────────────
    The extension's own, copied from `listGroup.css` rather than approximated: a rounded
    thumb drawn as the page's background inside a 2px outline in the border colour, which

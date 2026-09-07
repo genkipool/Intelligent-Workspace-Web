@@ -16,7 +16,7 @@ import type { Lang } from '@/i18n/ui';
 interface Props {
     lang: Lang;
     /** The page this footer is on, so it does not link to itself. */
-    current?: 'privacy' | 'support';
+    current?: 'privacy' | 'terms' | 'support';
 }
 
 const { lang, current } = Astro.props;
@@ -24,6 +24,7 @@ const t = useTranslations(lang);
 
 const links = [
     { id: 'privacy', href: localisePath(lang, '/privacy'), label: t('footer.policy') },
+    { id: 'terms', href: localisePath(lang, '/terms'), label: t('footer.terms') },
     { id: 'support', href: localisePath(lang, '/support'), label: t('footer.support') },
 ].filter((link) => link.id !== current);
 ---

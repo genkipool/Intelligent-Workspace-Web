@@ -10,7 +10,7 @@
  * runs. `pay.ts` only wires up Stripe.
  */
 import type { Lang } from '@/i18n/ui';
-import { useTranslations } from '@/i18n/utils';
+import { useTranslations, localisePath } from '@/i18n/utils';
 import { contributionAmounts } from '@/data/site';
 import { CARD_FORM_METHODS, CARD_FORM_METHOD_LABEL } from '@/lib/contribution';
 
@@ -20,6 +20,21 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
+
+/**
+ * The terms, linked from the one screen where money is actually asked for.
+ *
+ * IT HAS TO BE `target="_blank"`, and that is not a style choice. This sheet is usually
+ * running inside the extension's side panel, and every other page of the site is served
+ * with `frame-ancestors 'none'` — a plain link would navigate this frame to a document
+ * the browser then refuses to render, and the contributor would be left staring at a
+ * blank panel with no way back. Opening a tab is the only route that behaves the same
+ * framed and unframed.
+ *
+ * It does not need the `pay:external` bridge either: that exists for redirects the sheet
+ * has to keep control of, and this is a link a person chose to follow.
+ */
+const termsUrl = localisePath(lang, '/terms');
 
 /**
  * The mark on each hand-off button, drawn here rather than pulled from Stripe.
@@ -178,6 +193,12 @@ const METHOD_MARK = {
     <p id="status" class="status" role="status" aria-live="polite"></p>
     <p class="fineprint" id="wallet-note" hidden>{t('pay.walletUnavailable')}</p>
     <p class="fineprint">{t('pay.secured')}</p>
+    <p class="fineprint">
+        {t('pay.tipNote')}{' '}
+        <a class="fineprint-link" href={termsUrl} target="_blank" rel="noopener noreferrer">
+            {t('pay.termsLink')}
+        </a>
+    </p>
 </main>
 
 {
