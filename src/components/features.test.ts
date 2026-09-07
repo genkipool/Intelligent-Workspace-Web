@@ -35,8 +35,8 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain('aria-orientation="horizontal"');
                 expect(pilarHtml).toContain('aria-label=');
 
-                // Check 4 tabs
-                const expectedTabIds = ['tab-agent', 'tab-tabs', 'tab-focus', 'tab-keys'];
+                // Check 5 tabs
+                const expectedTabIds = ['tab-agent', 'tab-tabs', 'tab-focus', 'tab-keys', 'tab-media'];
                 for (const tabId of expectedTabIds) {
                     const btnId = `tab-btn-${tabId.replace('tab-', '')}`;
                     expect(pilarHtml).toContain(`id="${btnId}"`);
@@ -44,9 +44,9 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                     expect(pilarHtml).toContain(`aria-controls="${tabId}"`);
                 }
 
-                // Check exactly 4 tabs in section
+                // Check exactly 5 tabs in section
                 const tabButtons = pilarHtml.match(/<button[^>]*role="tab"[^>]*>/g) || [];
-                expect(tabButtons).toHaveLength(4);
+                expect(tabButtons).toHaveLength(5);
 
                 // Check initial active and inactive roving tabindex states in SSR
                 expect(pilarHtml).toContain(
@@ -61,8 +61,11 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain(
                     'id="tab-btn-keys" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-keys" tabindex="-1"',
                 );
+                expect(pilarHtml).toContain(
+                    'id="tab-btn-media" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-media" tabindex="-1"',
+                );
 
-                // Check 4 tabpanels
+                // Check 5 tabpanels
                 for (const tabId of expectedTabIds) {
                     const btnId = `tab-btn-${tabId.replace('tab-', '')}`;
                     expect(pilarHtml).toContain(`id="${tabId}"`);
@@ -70,7 +73,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 }
 
                 const tabPanels = pilarHtml.match(/<div[^>]*role="tabpanel"[^>]*>/g) || [];
-                expect(tabPanels).toHaveLength(4);
+                expect(tabPanels).toHaveLength(5);
 
                 // Active panel is tab-agent, others hidden
                 expect(pilarHtml).toContain(
@@ -85,10 +88,13 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
                 expect(pilarHtml).toContain(
                     'id="tab-keys" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-keys" tabindex="0" hidden',
                 );
+                expect(pilarHtml).toContain(
+                    'id="tab-media" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-media" tabindex="0" hidden',
+                );
 
                 // Check SVG vector icons inside tab buttons have aria-hidden="true"
                 const svgs = pilarHtml.match(/<svg[^>]*aria-hidden="true"[^>]*>/g) || [];
-                expect(svgs.length).toBeGreaterThanOrEqual(4);
+                expect(svgs.length).toBeGreaterThanOrEqual(5);
             }
         });
     });
@@ -102,6 +108,7 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             'fhub.tab2',
             'fhub.tab3',
             'fhub.tab4',
+            'fhub.tab5',
             'fhub.agent.title',
             'fhub.agent.lead',
             'fhub.agent.f1',
@@ -159,6 +166,19 @@ describe('Milestone 3: Interactive Features Tab-Nav & WAI-ARIA Semantics', () =>
             'fhub.keys.mockup.snippetLabel',
             'fhub.keys.mockup.snippetTrigger',
             'fhub.keys.mockup.snippetResult',
+            'fhub.media.title',
+            'fhub.media.lead',
+            'fhub.media.f1',
+            'fhub.media.f2',
+            'fhub.media.f3',
+            'fhub.media.f4',
+            'fhub.media.mockup.badge',
+            'fhub.media.mockup.searchPlaceholder',
+            'fhub.media.mockup.tabMusic',
+            'fhub.media.mockup.tabRadio',
+            'fhub.media.mockup.tabAll',
+            'fhub.media.mockup.savedStations',
+            'fhub.media.mockup.folder',
         ] as const;
 
         it('defines all fhub translation keys in both en and es with non-empty strings', () => {
