@@ -25,6 +25,11 @@
     --text-muted: #9eb5ad;
     --text-dim: #7f9990;
 
+    /* The ground a pinned header sits on: the page colour, thinned so what scrolls
+       under it shows through the blur. Shared by the landing nav and the document
+       topbar, which are the same header in two shapes. */
+    --header-veil: rgba(27, 38, 49, 0.92);
+
     /* Legacy Tokens Mapping */
     --paper: var(--bg-color);
     --ink: var(--text-color);
@@ -109,6 +114,8 @@
     --text-soft: #1e382e;
     --text-muted: #3d5a4e;
     --text-dim: #5c786d;
+
+    --header-veil: rgba(255, 255, 255, 0.94);
 
     --paper: var(--bg-color);
     --ink: var(--text-color);

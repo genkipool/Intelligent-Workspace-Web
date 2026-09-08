@@ -1,15 +1,24 @@
 /**
  * Proves the Content-Security-Policy in `vercel.json` matches the build, in the two
- * ways it can silently stop doing so: a payment page with no policy of its own, and an
- * inline script the policy does not name.
+ * ways it can silently stop doing so: a page that the extension must be able to frame
+ * having no policy of its own, and an inline script the policy does not name.
  *
  * Both failures are invisible in `dev`, where no policy is served at all.
  *
- * The first exists because it is silent and expensive. The payment pages
- * are generated per language, so adding a third language creates `/fr/pay`. If nothing
- * in `vercel.json` names it, it inherits the landing page's policy — whose
+ * The first exists because it is silent and expensive. These pages are generated per
+ * language, so adding a third creates `/fr/pay` and `/fr/support`. If nothing in
+ * `vercel.json` names one, it inherits the landing page's policy — whose
  * `frame-ancestors` is `'none'` — and the extension's side panel shows a blank frame.
- * Nobody notices until a donation does not happen.
+ * Nobody notices until a donation does not happen, or a policy link opens onto nothing.
+ *
+ * Two families of route are framable, and for different reasons:
+ *
+ *  - the payment pages, which the panel frames directly to take a contribution;
+ *  - the support, terms and privacy pages, which the popup's footer links open in the
+ *    panel. They are read-only documents with no form and no session, which is why they
+ *    can be framed at all — nothing else on the site may be, and the extension does not
+ *    strip the site's headers to get its way (see `NEVER_STRIP_FRAMING_HOSTS` in the
+ *    extension's `dnr.js`): the grant is the site's to give, and it is given here.
  *
  * It reads the built output rather than a list of expected routes, so it checks what
  * really shipped.
@@ -21,14 +30,17 @@ import { createHash } from 'node:crypto';
 
 const STATIC_DIR = '.vercel/output/static';
 
-/** Every `…/pay` route present in the build. */
-function payRoutes(dir = STATIC_DIR, prefix = '') {
+/** The page names the extension has to be able to frame, in any language. */
+const FRAMABLE_PAGES = ['pay', 'support', 'terms', 'privacy'];
+
+/** Every route present in the build whose last segment is one of those pages. */
+function framableRoutes(dir = STATIC_DIR, prefix = '') {
     const found = [];
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
         if (!entry.isDirectory()) continue;
         const route = `${prefix}/${entry.name}`;
-        if (entry.name === 'pay') found.push(route);
-        else found.push(...payRoutes(join(dir, entry.name), route));
+        if (FRAMABLE_PAGES.includes(entry.name)) found.push(route);
+        else found.push(...framableRoutes(join(dir, entry.name), route));
     }
     return found;
 }
@@ -52,26 +64,32 @@ const payBlocks = (config.headers ?? []).filter((block) =>
 if (payBlocks.length === 0) fail('No block in vercel.json grants frame-ancestors to the extension.');
 
 const covered = new Set(payBlocks.map((block) => block.source));
-const routes = payRoutes();
+const routes = framableRoutes();
 
-if (routes.length === 0) fail('The build contains no /pay route at all. Something is very wrong.');
+if (routes.length === 0) fail('The build contains no framable route at all. Something is very wrong.');
 
 const uncovered = routes.filter((route) => !covered.has(route));
 if (uncovered.length) {
     fail(
-        `These payment routes have no strict-CSP block in vercel.json:\n` +
+        `These routes have no framing-CSP block in vercel.json:\n` +
             uncovered.map((r) => `  ${r}`).join('\n') +
             `\n\nThey would inherit the landing policy, whose frame-ancestors is 'none' —` +
             `\nthe extension's panel would show a blank frame. Add a block with source "${uncovered[0]}".`,
     );
 }
 
-// The other direction: a block for a route that no longer exists is dead configuration.
+// The other direction, and the one that keeps this a guard rather than a rubber stamp:
+// framing rights handed to anything that is not one of those pages. A block for a route
+// the build no longer produces is dead configuration; a block for, say, the landing page
+// is the site quietly agreeing to be framed when it never meant to.
 const orphans = [...covered].filter((source) => !routes.includes(source));
 if (orphans.length)
-    fail(`vercel.json protects routes that the build does not produce: ${orphans.join(', ')}`);
+    fail(
+        `vercel.json grants framing to routes that are not framable pages: ${orphans.join(', ')}\n` +
+            `Only ${FRAMABLE_PAGES.join(', ')} may be framed by the extension.`,
+    );
 
-console.log(`${routes.length} payment route(s), each with its own strict CSP: ${routes.join(', ')}`);
+console.log(`${routes.length} framable route(s), each with its own CSP: ${routes.join(', ')}`);
 
 /**
  * Second check: every inline script in the build is named by the policy that covers it.
