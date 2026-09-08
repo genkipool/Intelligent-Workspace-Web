@@ -21,8 +21,8 @@
  *   if the channel survived: a tile the store rejects is worth catching here, not on upload.
  *
  * TEXT STAYS AWAY FROM THE EDGES. The store crops these tiles at some sizes, so nothing
- * is placed in the outer margin, and the only thing that touches an edge is the ground
- * and the accent rule that is meant to be cut.
+ * is placed in the outer margin. The only things that reach an edge are the ground and
+ * the hem, and both are meant to be cut.
  *
  * Needs `rsvg-convert` (librsvg) and `magick` (ImageMagick) on the PATH. The PNGs are
  * committed next to the screenshots, in `assets/chrome-web-store/`, which is outside
@@ -124,17 +124,32 @@ function defs() {
       <stop offset="0%" stop-color="#1abc9c" stop-opacity="0.16"/>
       <stop offset="100%" stop-color="#1abc9c" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#16a085"/>
-      <stop offset="100%" stop-color="#2ecc71"/>
-    </linearGradient>
+    <!--
+      The hem: a bloom rising out of the bottom edge, drawn with no edge of its own.
+
+      Two tries got here. It began as a 5-7px bar of flat colour, and a flat bar has a
+      hard top edge that reads as a border somebody drew around the image. Replacing it
+      with a tall vertical fade removed the border and introduced a different fault: a
+      band of even brightness straight across a ground whose own gradient runs diagonally,
+      which is a horizon line, and the eye finds it just as fast.
+
+      So it is a radial centred below the bottom edge and painted over the whole canvas.
+      It has no straight edge anywhere, it falls off in every direction at once, and it
+      leans the same way the ground already does.
+    -->
+    <radialGradient id="hem" cx="46%" cy="108%" r="66%">
+      <stop offset="0%" stop-color="#2ecc71" stop-opacity="0.5"/>
+      <stop offset="55%" stop-color="#1abc9c" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#1abc9c" stop-opacity="0"/>
+    </radialGradient>
   </defs>`;
 }
 
 function ground(width, height) {
     return `  <rect width="${width}" height="${height}" fill="url(#ground)"/>
   <rect width="${width}" height="${height}" fill="url(#glow)"/>
-  <rect width="${width}" height="${height}" fill="url(#lift)"/>`;
+  <rect width="${width}" height="${height}" fill="url(#lift)"/>
+  <rect width="${width}" height="${height}" fill="url(#hem)"/>`;
 }
 
 /**
@@ -179,7 +194,6 @@ ${ground(WIDTH, HEIGHT)}
     <tspan x="${WIDTH / 2}" y="222">${headline[1]}</tspan>
   </text>
 
-  <rect x="0" y="${HEIGHT - 5}" width="${WIDTH}" height="5" fill="url(#rule)"/>
 </svg>
 `;
 }
@@ -275,7 +289,6 @@ ${ground(WIDTH, HEIGHT)}
 
 ${groupCard(lang, cardX, 111, cardWidth)}
 
-  <rect x="0" y="${HEIGHT - 7}" width="${WIDTH}" height="7" fill="url(#rule)"/>
 </svg>
 `;
 }
