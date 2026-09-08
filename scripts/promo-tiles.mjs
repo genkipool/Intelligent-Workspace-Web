@@ -175,7 +175,7 @@ function smallTile(lang) {
     const markY = 36;
 
     const nameSize = 26;
-    const headlineSize = 15;
+    const headlineSize = 16.5;
 
     fits('small: name', name, nameSize, true, SAFE);
     headline.forEach((line, i) => fits(`small: headline ${i + 1}`, line, headlineSize, false, SAFE));
@@ -190,8 +190,8 @@ ${ground(WIDTH, HEIGHT)}
   <text x="${WIDTH / 2}" y="168" text-anchor="middle" font-family="${FONT}" font-size="${nameSize}" font-weight="800" fill="#FFFFFF" letter-spacing="-0.7">${name}</text>
 
   <text text-anchor="middle" font-family="${FONT}" font-size="${headlineSize}" font-weight="500" fill="#8fe3c9" letter-spacing="0.2">
-    <tspan x="${WIDTH / 2}" y="200">${headline[0]}</tspan>
-    <tspan x="${WIDTH / 2}" y="222">${headline[1]}</tspan>
+    <tspan x="${WIDTH / 2}" y="201">${headline[0]}</tspan>
+    <tspan x="${WIDTH / 2}" y="225">${headline[1]}</tspan>
   </text>
 
 </svg>
