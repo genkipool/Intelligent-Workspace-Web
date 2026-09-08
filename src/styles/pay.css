@@ -29,10 +29,25 @@
     --border-color: #c8dcd2;
     --error-color: #c0392b;
 
+    /* Read by the caret and by `::selection`. Declared here so the sheet still stands on
+       its own: the panel sends this one, a reader arriving at /pay directly does not. */
+    --text-on-color: #16a085;
+
     /* The panel's own dim ink when it sends one; otherwise the text colour faded towards
        the ground. `pay.ts` computes the same thing as a literal for Stripe, which cannot
        evaluate `color-mix` inside its own iframes. */
     --muted-color: var(--text-dim, color-mix(in srgb, var(--text-color) 60%, transparent));
+}
+
+/**
+ * Opened by the extension's panel, so the ground is the panel's own colour and nothing
+ * else. The site's ambient wash is mixed from tokens the panel does not send — see
+ * `applyTheme` in `pay.ts` — so left up it puts the site's dark ink and viridian moss in
+ * the corners behind a sheet wearing the reader's theme, which is what the background
+ * looked wrong in every theme but viridian.
+ */
+:root.is-panel-themed .ambient-bg {
+    display: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -274,9 +289,9 @@ legend {
     border-radius: 10px;
     background-image: linear-gradient(
         90deg,
-        var(--panel-color) 0%,
-        color-mix(in srgb, var(--accent-color) 12%, var(--panel-color)) 50%,
-        var(--panel-color) 100%
+        var(--bg-panel-color) 0%,
+        color-mix(in srgb, var(--action-color) 12%, var(--bg-panel-color)) 50%,
+        var(--bg-panel-color) 100%
     );
     background-size: 220% 100%;
     animation: express-wait 1.4s ease-in-out infinite;
@@ -301,7 +316,7 @@ legend {
     .express.is-pending {
         animation: none;
         background-image: none;
-        background-color: var(--panel-color);
+        background-color: var(--bg-panel-color);
     }
 }
 
