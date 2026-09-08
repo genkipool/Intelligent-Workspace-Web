@@ -254,12 +254,26 @@ function applyTheme(): void {
     }
     if (!tokens || typeof tokens !== 'object') return;
 
+    let applied = 0;
     for (const [name, value] of Object.entries(tokens as Record<string, unknown>)) {
         // Only plain colour-ish values. Anything with a bracket or a semicolon is not a
         // token we sent, and has no business in a style attribute.
         if (typeof value !== 'string' || /[;{}()<>]/.test(value)) continue;
         document.documentElement.style.setProperty(`--${name}`, value);
+        applied += 1;
     }
+
+    /**
+     * Says the page is wearing somebody else's palette, which the stylesheet needs to
+     * know about for one thing it cannot recolour.
+     *
+     * `Base.astro` paints `.ambient-bg` behind every page, and its wash is mixed from
+     * `--ambient-ink`, `--ambient-moss` and two glows — none of which the panel sends,
+     * and none of which it could sensibly derive. Only the middle stop, `--bg-color`,
+     * was being replaced, so the sheet sat on the site's dark green corners wearing the
+     * reader's colours. Flat ground instead: `pay.css` takes the wash down under this.
+     */
+    if (applied > 0) document.documentElement.classList.add('is-panel-themed');
 }
 
 applyTheme();
