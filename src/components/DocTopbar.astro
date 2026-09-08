@@ -61,11 +61,21 @@ const homeUrl = localisePath(lang, '/');
 </header>
 
 <style>
+    /* Pinned, like the landing page's nav: the brand mark, the language toggle and the
+       theme toggle stay reachable however far down a policy the reader has scrolled.
+       Same veil and blur as `.site-header`, so the two headers read as one header. */
     .doc-topbar {
-        position: relative;
-        z-index: 2;
+        position: sticky;
+        top: 0;
+        z-index: 50;
         padding-block: 18px;
+        background: var(--header-veil);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid var(--border-subtle);
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease;
     }
 
     .doc-topbar-inner {
