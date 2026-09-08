@@ -16,6 +16,7 @@
         "check:headers": "node scripts/check-headers.mjs",
         "check:legal": "node scripts/check-legal.mjs",
         "og": "node scripts/og.mjs",
+        "promo": "node scripts/promo-tiles.mjs",
         "favicons": "node scripts/favicons.mjs",
         "shots": "node scripts/store-shots.mjs",
         "perf": "node scripts/lighthouse.mjs",
