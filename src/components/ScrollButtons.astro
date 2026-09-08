@@ -135,6 +135,60 @@ const t = useTranslations(lang);
         const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(schedule);
         observer?.observe(document.documentElement);
 
+        let chase = 0;
+        const stopChase = () => {
+            if (chase !== 0) cancelAnimationFrame(chase);
+            chase = 0;
+        };
+
+        /**
+         * Going to the bottom of a page that grows while it is being read.
+         *
+         * The landing page's sections carry `content-visibility: auto`, so each is laid
+         * out only as it nears the viewport: by the time the jump arrives the document is
+         * taller than it was when the jump was aimed, and a single `scrollTo` stops short
+         * of the end — which is the whole of this bug.
+         *
+         * So the target is re-aimed every frame for as long as it keeps moving. Passing a
+         * larger target to a smooth scroll already in flight retargets it rather than
+         * restarting it, so the reader sees one continuous travel. It gives up once the
+         * page has been still at the bottom for a few frames, and at a deadline besides,
+         * because a page that grows for ever must not mean a loop that runs for ever.
+         */
+        const SETTLED_FRAMES = 3;
+        const CHASE_TIMEOUT_MS = 4000;
+
+        const chaseBottom = (behavior: ScrollBehavior) => {
+            stopChase();
+            let aimedAt = -1;
+            let settled = 0;
+            const deadline = performance.now() + CHASE_TIMEOUT_MS;
+
+            const step = () => {
+                const distance = runway();
+                if (distance > aimedAt) {
+                    aimedAt = distance;
+                    settled = 0;
+                    window.scrollTo({ top: distance, behavior });
+                } else if (window.scrollY >= distance - 1) {
+                    settled += 1;
+                }
+                chase =
+                    settled >= SETTLED_FRAMES || performance.now() > deadline
+                        ? 0
+                        : requestAnimationFrame(step);
+            };
+            chase = requestAnimationFrame(step);
+        };
+
+        /* Reaching for the wheel, the screen or the keys is the reader taking over; the
+           chase stops rather than dragging them back down. `scroll` cannot be used for
+           this — the chase raises it itself. */
+        const yieldToReader = () => stopChase();
+        window.addEventListener('wheel', yieldToReader, { passive: true });
+        window.addEventListener('touchstart', yieldToReader, { passive: true });
+        window.addEventListener('keydown', yieldToReader);
+
         const jump = (event: MouseEvent) => {
             const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(
                 '[data-scroll-to]',
@@ -143,10 +197,15 @@ const t = useTranslations(lang);
             /* `scroll-behavior: smooth` is on `html` globally, so `auto` would still
                animate; `instant` is the only value that actually honours the setting. */
             const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            window.scrollTo({
-                top: button.dataset.scrollTo === 'top' ? 0 : runway(),
-                behavior: reduced ? 'instant' : 'smooth',
-            });
+            const behavior: ScrollBehavior = reduced ? 'instant' : 'smooth';
+
+            if (button.dataset.scrollTo === 'top') {
+                // The top never moves, so there is nothing to chase.
+                stopChase();
+                window.scrollTo({ top: 0, behavior });
+                return;
+            }
+            chaseBottom(behavior);
         };
         root.addEventListener('click', jump);
 
@@ -155,8 +214,12 @@ const t = useTranslations(lang);
         teardown = () => {
             window.removeEventListener('scroll', schedule);
             window.removeEventListener('resize', schedule);
+            window.removeEventListener('wheel', yieldToReader);
+            window.removeEventListener('touchstart', yieldToReader);
+            window.removeEventListener('keydown', yieldToReader);
             root.removeEventListener('click', jump);
             observer?.disconnect();
+            stopChase();
             if (frame !== 0) cancelAnimationFrame(frame);
         };
     }
