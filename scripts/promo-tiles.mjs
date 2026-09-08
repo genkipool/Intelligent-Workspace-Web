@@ -40,16 +40,18 @@ const OUT = path.join(ROOT, 'assets', 'chrome-web-store');
 /**
  * The copy, taken from the site rather than written again here.
  *
- * `name` and `headline` are `meta.title` and `hero.slide1` in `src/i18n/ui.ts`; `tagline`
- * is the second half of `meta.title`, which is the one line that says what the extension
- * is. If any of them changes there, change it here: this file is the only place they are
- * duplicated, and the duplication is deliberate, since a Node script cannot import the
- * dictionary's TypeScript.
+ * `name` is `meta.title` and `headline` is `hero.slide1` in `src/i18n/ui.ts`. Both tiles
+ * set the same headline under the name, so it lives here once: the small tile used to
+ * carry a shorter line of its own, and two sentences saying the same thing in two sizes
+ * is how a set of promotional images starts disagreeing with itself.
+ *
+ * If the copy changes on the site, change it here too. The duplication is deliberate —
+ * a Node script cannot import the dictionary's TypeScript — and `fits()` is what keeps
+ * it honest: a line that outgrows its box stops the run instead of being clipped.
  */
 const COPY = {
     en: {
         name: 'Intelligent Workspace',
-        tagline: 'A browser that files itself',
         headline: ['Transform your browser into an', 'autonomous workstation'],
         lede: 'Tab rules, a floating omnibar and an AI assistant.',
         meta: '100% local  ·  No account  ·  Chrome',
@@ -57,7 +59,6 @@ const COPY = {
     },
     es: {
         name: 'Intelligent Workspace',
-        tagline: 'Un navegador que se archiva solo',
         headline: ['Transforma tu navegador en una', 'estación de trabajo autónoma'],
         lede: 'Reglas de pestañas, omnibar y asistente de IA.',
         meta: '100% local  ·  Sin cuenta  ·  Chrome',
@@ -144,24 +145,25 @@ function ground(width, height) {
  * empty right half reads as a mistake. Three elements, no more.
  */
 function smallTile(lang) {
-    const { name, tagline } = COPY[lang];
+    const { name, headline } = COPY[lang];
     const WIDTH = 440;
     const HEIGHT = 280;
     const MARGIN = 34;
     const SAFE = WIDTH - MARGIN * 2;
 
     /* Bigger than the type needs, on purpose: in a grid of tiles the mark is what gets
-       recognised, and the store shows this one smaller than 440 wide more often than not. */
-    const markWidth = 94;
+       recognised, and the store shows this one smaller than 440 wide more often than not.
+       It came down from 94 when the headline grew to two lines and wanted the room. */
+    const markWidth = 86;
     const scale = markWidth / LOGO_BOX.width;
     const markX = (WIDTH - markWidth) / 2;
-    const markY = 40;
+    const markY = 36;
 
-    const nameSize = 27;
-    const taglineSize = 15.5;
+    const nameSize = 26;
+    const headlineSize = 15;
 
     fits('small: name', name, nameSize, true, SAFE);
-    fits('small: tagline', tagline, taglineSize, false, SAFE);
+    headline.forEach((line, i) => fits(`small: headline ${i + 1}`, line, headlineSize, false, SAFE));
 
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
 ${defs()}
@@ -170,8 +172,12 @@ ${ground(WIDTH, HEIGHT)}
   <g transform="translate(${markX}, ${markY}) scale(${scale})">${LOGO}
   </g>
 
-  <text x="${WIDTH / 2}" y="190" text-anchor="middle" font-family="${FONT}" font-size="${nameSize}" font-weight="800" fill="#FFFFFF" letter-spacing="-0.7">${name}</text>
-  <text x="${WIDTH / 2}" y="220" text-anchor="middle" font-family="${FONT}" font-size="${taglineSize}" font-weight="500" fill="#8fe3c9" letter-spacing="0.2">${tagline}</text>
+  <text x="${WIDTH / 2}" y="168" text-anchor="middle" font-family="${FONT}" font-size="${nameSize}" font-weight="800" fill="#FFFFFF" letter-spacing="-0.7">${name}</text>
+
+  <text text-anchor="middle" font-family="${FONT}" font-size="${headlineSize}" font-weight="500" fill="#8fe3c9" letter-spacing="0.2">
+    <tspan x="${WIDTH / 2}" y="200">${headline[0]}</tspan>
+    <tspan x="${WIDTH / 2}" y="222">${headline[1]}</tspan>
+  </text>
 
   <rect x="0" y="${HEIGHT - 5}" width="${WIDTH}" height="5" fill="url(#rule)"/>
 </svg>
