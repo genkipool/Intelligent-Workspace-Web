@@ -139,6 +139,7 @@ const t = useTranslations(lang);
         const stopChase = () => {
             if (chase !== 0) cancelAnimationFrame(chase);
             chase = 0;
+            document.documentElement.classList.remove('is-measuring-page');
         };
 
         /**
@@ -158,8 +159,28 @@ const t = useTranslations(lang);
         const SETTLED_FRAMES = 3;
         const CHASE_TIMEOUT_MS = 4000;
 
+        /**
+         * Lays the whole page out, so its height is final before anything travels.
+         *
+         * Reading a layout property is what forces the work; the class is what makes
+         * there be work to do. Without it the sections the reader has not reached are
+         * still an estimate, and the travel below has to keep re-aiming at a bottom that
+         * moves — which is the stutter on the first press of a freshly loaded page.
+         */
+        const settlePageHeight = () => {
+            document.documentElement.classList.add('is-measuring-page');
+            void document.documentElement.scrollHeight;
+        };
+
+        /** Gives the sections their skipping back; the heights are known now, so nothing moves. */
+        const releasePageHeight = () => {
+            document.documentElement.classList.remove('is-measuring-page');
+        };
+
         const chaseBottom = (behavior: ScrollBehavior) => {
             stopChase();
+            settlePageHeight();
+
             let aimedAt = -1;
             let settled = 0;
             const deadline = performance.now() + CHASE_TIMEOUT_MS;
@@ -173,10 +194,17 @@ const t = useTranslations(lang);
                 } else if (window.scrollY >= distance - 1) {
                     settled += 1;
                 }
-                chase =
-                    settled >= SETTLED_FRAMES || performance.now() > deadline
-                        ? 0
-                        : requestAnimationFrame(step);
+
+                if (settled >= SETTLED_FRAMES || performance.now() > deadline) {
+                    chase = 0;
+                    releasePageHeight();
+                    // The remembered heights are exact now, so this should not move the
+                    // page; it is here so that if one of them is not, the reader still
+                    // ends up at the bottom rather than a few pixels above it.
+                    window.scrollTo({ top: runway(), behavior: 'instant' });
+                    return;
+                }
+                chase = requestAnimationFrame(step);
             };
             chase = requestAnimationFrame(step);
         };

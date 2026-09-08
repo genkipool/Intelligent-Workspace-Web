@@ -280,6 +280,20 @@ svg {
 }
 
 /*
+ * While a jump to the foot of the page is in flight, every section is laid out for real.
+ *
+ * `contain-intrinsic-size` is an *estimate* — 800px — for any section the browser has
+ * not drawn yet, so on a freshly loaded page the document's height is a guess that
+ * corrects itself section by section as the travel passes them. The jump has to be
+ * re-aimed each time, and a smooth scroll re-aimed a dozen times is the stutter people
+ * see on the first press. Laying the page out first settles the height, so the travel is
+ * aimed once. `ScrollButtons.astro` puts this on and takes it off again.
+ */
+:root.is-measuring-page .section-container {
+    content-visibility: visible;
+}
+
+/*
  * An alternating band, dark enough to separate the sections and translucent enough that
  * the gradient behind it carries straight through. An opaque `--bg-surface` here painted
  * a flat stripe over the middle of the page and broke the black-to-green run in half.
