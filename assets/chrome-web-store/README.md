@@ -7,9 +7,15 @@ Astro no las copia a `dist/` ni existe ninguna ruta pública que las sirva. Est�
 solo para tenerlas versionadas y localizadas a la hora de publicar la extensión.
 
 ```
-1280x800/en/   las diecisiete de la ficha inglesa
+1280x800/en/   las diecisiete capturas de la ficha inglesa
 1280x800/es/   las mismas diecisiete, de la versión en español del sitio
+440x280/<lang>/   mosaico promocional pequeño
+1400x560/<lang>/  mosaico promocional con desplazamiento (marquee)
 ```
+
+Las capturas y los mosaicos no se hacen igual, y conviene no confundirlos: una captura es
+una fotografía del sitio construido, y un mosaico es un gráfico diseñado. Por eso hay dos
+scripts.
 
 ## Cómo se hacen
 
@@ -23,6 +29,30 @@ pnpm shots -- en 09 # solo una, por su número
 `scripts/store-shots.mjs` sirve `.vercel/output/static`, lanza `google-chrome-stable` sin
 ventana y lo maneja por el protocolo de DevTools. Necesita además `magick` (ImageMagick).
 No se ejecuta durante el build.
+
+## Los mosaicos promocionales
+
+```bash
+pnpm promo          # los cuatro: dos tamaños por dos idiomas
+```
+
+`scripts/promo-tiles.mjs` no fotografía nada: dibuja un SVG por mosaico, con la misma
+forma que `og.mjs`, y lo pasa por `rsvg-convert`. No hace falta compilar el sitio antes.
+
+Dos cosas que la tienda exige y que el script comprueba solo:
+
+- **24 bits sin canal alfa.** librsvg escribe siempre RGBA, así que cada fichero pasa
+  después por ImageMagick, que lo aplana sobre el negro del fondo y lo escribe como
+  `PNG24`. Luego el script vuelve a leerlo con `identify` y falla si no salió
+  `TrueColor` de 8 bits o si el tamaño no es el pedido.
+- **El texto no toca los bordes.** La tienda recorta estos mosaicos a según qué tamaños.
+  Lo único que llega al borde es el fondo y la línea de acento de abajo, que está puesta
+  para que se corte.
+
+Si cambia la redacción del sitio, cambia la tabla `COPY` del script: los textos están
+duplicados ahí porque un script de Node no puede importar el diccionario de TypeScript,
+y `fits()` se niega a dibujar una línea que se saldría de su caja en vez de recortarla
+en silencio.
 
 ## Las reglas de encuadre
 
