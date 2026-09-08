@@ -25,6 +25,10 @@
     --text-muted: #9eb5ad;
     --text-dim: #7f9990;
 
+    /* How tall a pinned header is. Anything that has to clear it — the policy pages'
+       contents rail, for one — offsets by this rather than by a number of its own. */
+    --header-height: 70px;
+
     /* The ground a pinned header sits on: the page colour, thinned so what scrolls
        under it shows through the blur. Shared by the landing nav and the document
        topbar, which are the same header in two shapes. */

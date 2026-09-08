@@ -68,7 +68,6 @@ const homeUrl = localisePath(lang, '/');
         position: sticky;
         top: 0;
         z-index: 50;
-        padding-block: 18px;
         background: var(--header-veil);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
@@ -83,6 +82,9 @@ const homeUrl = localisePath(lang, '/');
         align-items: center;
         justify-content: space-between;
         gap: 20px;
+        /* The same height as the landing page's header, so one token describes both and
+           whatever has to clear a header clears either. */
+        height: var(--header-height);
     }
 
     .doc-brand {
