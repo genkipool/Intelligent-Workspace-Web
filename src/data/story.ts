@@ -1,5 +1,5 @@
 /**
- * The questions a reader raises before installing anything that asks for twenty-three
+ * The questions a reader raises before installing anything that asks for twenty-one
  * permissions, in the order they raise them.
  *
  * Kept as data for the same reason everything else is: adding a question is one entry

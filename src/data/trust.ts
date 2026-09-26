@@ -1,7 +1,7 @@
 /**
  * Why an extension that touches this much of the browser is still safe to install.
  *
- * An extension asking for twenty-four permissions is a reasonable thing to be
+ * An extension asking for twenty-one permissions is a reasonable thing to be
  * suspicious of, and hiding the number would be the wrong answer. So every one of
  * them is here: the list below is `manifest.json`'s `permissions` array, in its own
  * order, grouped by the feature that cannot exist without it. A reader can check the
@@ -21,16 +21,16 @@ export interface Grant {
 }
 
 export const grants: readonly Grant[] = [
-    { permissions: ['tabs', 'tabGroups', 'windows', 'sessions'], forKey: 'trust.tabs' },
+    { permissions: ['tabs', 'tabGroups', 'sessions'], forKey: 'trust.tabs' },
     {
         permissions: ['bookmarks', 'history', 'readingList', 'downloads', 'downloads.open'],
         forKey: 'trust.lists',
     },
     {
-        permissions: ['scripting', 'declarativeNetRequest', 'declarativeNetRequestWithHostAccess'],
+        permissions: ['scripting', 'declarativeNetRequestWithHostAccess'],
         forKey: 'trust.pages',
     },
-    { permissions: ['sidePanel', 'commands', 'contextMenus'], forKey: 'trust.entry' },
+    { permissions: ['sidePanel', 'contextMenus'], forKey: 'trust.entry' },
     { permissions: ['storage', 'alarms', 'idle', 'offscreen'], forKey: 'trust.state' },
     { permissions: ['notifications', 'clipboardWrite'], forKey: 'trust.tell' },
     { permissions: ['favicon', 'system.display'], forKey: 'trust.chrome' },

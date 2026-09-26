@@ -894,7 +894,7 @@ export const ui = {
 
         'privacy.perm.title': 'Permissions, and what they are not for',
         'privacy.perm.p1':
-            'Chrome will tell you the extension asks for twenty-three permissions plus access to every site. That is a lot, and being suspicious about it is the right instinct, so each group is set out on the home page beside the feature that cannot exist without it. None of them builds a profile, and none feeds anything that leaves this machine except the connections listed above.',
+            'Chrome will tell you the extension asks for twenty-one permissions plus access to every site. That is a lot, and being suspicious about it is the right instinct, so each group is set out on the home page beside the feature that cannot exist without it. None of them builds a profile, and none feeds anything that leaves this machine except the connections listed above.',
         'privacy.perm.p2':
             'Access to every site is what lets the link labels, reader mode, snippet expansion and the activity blocker work anywhere rather than on a list Chrome would have to approve first. It is not used to read pages in the background: those scripts wake up when you press the key that calls them.',
         'privacy.perm.p3':
@@ -2265,7 +2265,7 @@ export const ui = {
 
         'privacy.perm.title': 'Los permisos, y para qué no son',
         'privacy.perm.p1':
-            'Chrome te dirá que la extensión pide veintitrés permisos más acceso a todos los sitios. Son muchos, y desconfiar es el instinto correcto, así que cada grupo está explicado en la portada junto a la función que no puede existir sin él. Ninguno construye un perfil, y ninguno alimenta nada que salga de esta máquina más allá de las conexiones de arriba.',
+            'Chrome te dirá que la extensión pide veintiún permisos más acceso a todos los sitios. Son muchos, y desconfiar es el instinto correcto, así que cada grupo está explicado en la portada junto a la función que no puede existir sin él. Ninguno construye un perfil, y ninguno alimenta nada que salga de esta máquina más allá de las conexiones de arriba.',
         'privacy.perm.p2':
             'El acceso a todos los sitios es lo que permite que las etiquetas de enlace, el modo lectura, los snippets y el bloqueo por actividad funcionen en cualquier web y no en una lista que Chrome tendría que aprobar antes. No se usa para leer páginas en segundo plano: esos scripts se despiertan cuando pulsas la tecla que los llama.',
         'privacy.perm.p3':
