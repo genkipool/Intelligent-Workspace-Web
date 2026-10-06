@@ -1,12 +1,12 @@
 # Intelligent Workspace
 
-> Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+> Intelligent Workspace wata ingantacciyar manhaja ce ta ƙarin bincike (browser extension) mai tushe a kan Manifest V3 da kuma yanayi na aiki mai inganci wanda aka gina da Svelte, Vite, da CRXJS. Tana tafiyar da tsara shafukan yanar gizo (tabs) cikin fasaha, tattara shafuka ta atomatik ko bisa ƙa'idoji, gudanar da wakilan AI masu cin gashin kansu (tana goyon bayan Google Gemini Cloud API da kuma Chrome Built-in Prompt API), kewayawa cikin shafi ta salon Vim don bin hanyoyin yanar gizo (links), tsarin umarnin Omnibar mai prefixes 41, ɗaukar bayanan kula ta hanyoyi da dama (cikakken rubutu, lissafin duba ayyuka, Kanban, zane-zanen Mermaid, dabarun lissafi na KaTeX), ɗaukar hotuna da faifan bidiyo masu inganci da fasahar WASM OCR a cikin manhaja, ƙididdigar lokaci ta Pomodoro tare da ƙararrawar da ba ta da kuskuren lokaci da kunna sauti a ɓoye, da kuma auna ayyukan yanar gizo ta Declarative Net Request (DNR), kayyade lokacin shafuka, da toshe shafukan yanar gizo.
 
 ---
 
-## Multilingual Editions / Global Directory
+## Ɗaba'un Harsuna Daban-daban / Jagoran Duniya
 
-This technical specification is available in the top 25 languages worldwide:
+Wannan bayanin fasaha yana samuwa a cikin manyan harsuna 25 na duniya:
 
 | Language | Native Name | ISO Code | Specification Link |
 | :--- | :--- | :--- | :--- |
@@ -38,956 +38,956 @@ This technical specification is available in the top 25 languages worldwide:
 
 ---
 
-## Navigation & Quick Reference Index
+## Kewayawa da Jerin Dubawa Mai Sauri
 
-- [1. Architectural Foundation & Runtime Lifecycle](#1-architectural-foundation--runtime-lifecycle)
-- [2. Section 1: Rules Management (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
-  - [2.1 Data Schema (`CustomRule`)](#21-data-schema-customrule)
-  - [2.2 Precedence Architecture](#22-precedence-architecture)
-  - [2.3 URL Normalization & Matching Semantics](#23-url-normalization--matching-semantics)
-  - [2.4 Rules Management Settings Breakdown](#24-rules-management-settings-breakdown)
-  - [2.5 Operations & Persistence (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
-  - [2.6 Invocation Modalities](#26-invocation-modalities)
-- [3. Section 2: Group Listing & Operations (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
-  - [3.1 UI Architecture](#31-ui-architecture)
-  - [3.2 Group Lifecycle & Behaviors](#32-group-lifecycle--behaviors)
-  - [3.3 Group Operations & Memory Management](#33-group-operations--memory-management)
-  - [3.4 Group Backups & Restore Subsystem](#34-group-backups--restore-subsystem)
-  - [3.5 Parked YouTube Player in Hidden Groups Bar](#35-parked-youtube-player-in-hidden-groups-bar)
-- [4. Section 3: Navigation & Tab Management (Navegación)](#4-section-3-navigation--tab-management-navegación)
-  - [4.1 Fast Tab Jump Gesture](#41-fast-tab-jump-gesture)
-  - [4.2 Stepping, Swapping & Lifecycle Keys](#42-stepping-swapping--lifecycle-keys)
-  - [For power users](#for-power-users)
-  - [4.3 Audio & Sound Management](#43-audio--sound-management)
-  - [4.4 Split Screen Workflows](#44-split-screen-workflows)
-  - [4.5 YouTube Looping Subsystem](#45-youtube-looping-subsystem)
-  - [4.6 YouTube Shorts Preview Audio](#46-youtube-shorts-preview-audio)
-  - [4.7 Picture-in-Picture (PiP) Architecture](#47-picture-in-picture-pip-architecture)
-  - [4.8 Page Reading Modes & Visual Overlays](#48-page-reading-modes--visual-overlays)
-  - [4.9 Text Snippets Subsystem with Template Variables](#49-text-snippets-subsystem-with-template-variables)
-  - [4.10 Embedded Productivity Tools](#410-embedded-productivity-tools)
-  - [4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
-- [5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
-  - [5.1 Dual Model Engine Architecture](#51-dual-model-engine-architecture)
-  - [5.2 Autonomous Browser Agent (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
-  - [5.3 Taint Tracking & Prompt Injection Defense](#53-taint-tracking--prompt-injection-defense)
-  - [5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
-  - [5.5 Gemini Conversation Management & Export](#55-gemini-conversation-management--export)
-  - [5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
-  - [5.7 Invocation Modalities](#57-invocation-modalities)
-- [6. Section 5: Notes View & Knowledge Management (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
-  - [6.1 Storage Architecture (`notesStore`)](#61-storage-architecture-notesstore)
-  - [6.2 Specialized Note Formats & Advanced Rendering](#62-specialized-note-formats--advanced-rendering)
-  - [6.3 Scoping & Context Hierarchy](#63-scoping--context-hierarchy)
-  - [6.4 Invocation Modalities](#64-invocation-modalities)
-- [7. Section 6: Media & Gallery View (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
-  - [7.1 Capture Modes & Engineering (All 7 Capture Types)](#71-capture-modes--engineering-all-7-capture-types)
-  - [7.2 Gallery UI & Persistence](#72-gallery-ui--persistence)
-  - [7.3 Export, In-Browser OCR & External Markup](#73-export-in-browser-ocr--external-markup)
-  - [7.4 Invocation Modalities](#74-invocation-modalities)
-- [8. Section 7: Pomodoro & Timing Suite (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
-  - [8.1 Timing Engine & Background Architecture](#81-timing-engine--background-architecture)
-  - [8.2 Exhaustive 4 Timing Modes](#82-exhaustive-4-timing-modes)
-  - [8.3 In-Page Floating Timer Widget](#83-in-page-floating-timer-widget)
-  - [8.4 Group Auto-Collapse Idle Timer](#84-group-auto-collapse-idle-timer)
-  - [8.5 Project Tagging & Metadata](#85-project-tagging--metadata)
-  - [8.6 Analytics Engine & 19 KPI Cards](#86-analytics-engine--19-kpi-cards)
-- [9. Section 8: Activity & History Panel (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
-  - [9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
-  - [9.2 Declarative Net Request (DNR) Site Blocker](#92-declarative-net-request-dnr-site-blocker)
-  - [9.3 Asymmetric Security Lock (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
-  - [9.4 Categorization & Visual Analytics](#94-categorization--visual-analytics)
-  - [9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
-  - [9.6 Recently Closed Tabs & Browsing History Subsystem](#96-recently-closed-tabs--browsing-history-subsystem)
-  - [9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
-  - [9.8 Compact Sidepanel View](#98-compact-sidepanel-view)
-- [10. Multi-Modal Invocation Matrix](#10-multi-modal-invocation-matrix)
-  - [10.1 Popup UI Interface](#101-popup-ui-interface)
-  - [10.2 Sidepanel Navigation Routes (`?view=...`)](#102-sidepanel-navigation-routes-view)
-  - [10.3 Manifest Keyboard Shortcuts (24 Commands)](#103-manifest-keyboard-shortcuts-24-commands)
-  - [10.4 In-Page Vim Hint Keys (40+ Combinations)](#104-in-page-vim-hint-keys-40-combinations)
-  - [10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
-  - [10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
-- [11. Storage Schemas & Data Persistence](#11-storage-schemas--data-persistence)
-  - [11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
-  - [11.2 Chrome Storage Dual-Routing (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
-  - [11.3 Chrome Storage Session (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
-- [12. Defensive Engineering & Edge Case Handling](#12-defensive-engineering--edge-case-handling)
-
----
-
-## 1. Architectural Foundation & Runtime Lifecycle
-
-The extension runs under Google Chrome's Manifest V3 architecture, decoupling persistent processes across a background Service Worker, sandboxed UI panels, offscreen audio documents, and in-page content script overlays:
-
-1. **Manifest Configuration (`manifest.json`)**:
-   - **Permissions (21 items)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, and `idle`.
-   - **Host Permissions**: `["<all_urls>"]`.
-   - **Service Worker**: `src/core/background.js` using synchronous `importScripts` modular loading.
-   - **Toolbar Action**: Deliberately omits `default_popup`. Runtime enforces `chrome.action.setPopup({ popup: '' })`, ensuring `chrome.action.onClicked` fires synchronously and opens `chrome.sidePanel` to the user's pinned view without popup initialization latency.
-   - **Omnibox Keyword**: Registered keyword `"find"`.
-   - **Commands**: 24 system-level keyboard shortcuts registered under `commands`.
-   - **Content Security Policy**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
-
-2. **Inter-Process Communication Security**:
-   - `src/core/background/messaging.js` filters messages from content scripts against an explicit whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Unprivileged web frames cannot invoke internal storage writers, arbitrary Chrome APIs, or rule mutators.
-
-3. **Dual Execution Worlds**:
-   - Content scripts operate across both `ISOLATED` (extension scope) and `MAIN` (page execution scope) worlds. Scripts like `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, and `youtubeShortsFeedHook.js` run in `MAIN` to intercept prototype methods, override property descriptors, and handle custom events directly.
+- [1. Tushen Tsarin Gine-gine da Yanayin Gudanarwa](#1-architectural-foundation--runtime-lifecycle)
+- [2. Sashe na 1: Gudanar da Ƙa'idoji (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
+  - [2.1 Tsarin Bayanai (`CustomRule`)](#21-data-schema-customrule)
+  - [2.2 Tsarin Fifiko](#22-precedence-architecture)
+  - [2.3 Daidaita URL da Ma'anar Daidaitawa](#23-url-normalization--matching-semantics)
+  - [2.4 Rarraba Saitunan Gudanar da Ƙa'idoji](#24-rules-management-settings-breakdown)
+  - [2.5 Ayyuka da Adanawa (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
+  - [2.6 Hanyoyin Kira](#26-invocation-modalities)
+- [3. Sashe na 2: Jerin Rukunoni da Ayyuka (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
+  - [3.1 Tsarin Fuskar Mai Amfani (UI)](#31-ui-architecture)
+  - [3.2 Yanayi da Halayyar Rukunoni](#32-group-lifecycle--behaviors)
+  - [3.3 Ayyukan Rukunoni da Sarrafa Ma'ajiya](#33-group-operations--memory-management)
+  - [3.4 Tsarin Ajiye Kwafi da Maido da Rukunoni](#34-group-backups--restore-subsystem)
+  - [3.5 Na'urar Kunna YouTube da Aka Ajiye a Wurin Rukunoni Masu Ɓoye](#35-parked-youtube-player-in-hidden-groups-bar)
+- [4. Sashe na 3: Kewayawa da Sarrafa Shafuka (Navegación)](#4-section-3-navigation--tab-management-navegación)
+  - [4.1 Motsin Tsallaka Shafuka Cikin Sauri](#41-fast-tab-jump-gesture)
+  - [4.2 Maɓallan Takawa, Musayawa, da Sarrafa Rayuwar Shafi](#42-stepping-swapping--lifecycle-keys)
+  - [Ga ƙwararrun masu amfani](#for-power-users)
+  - [4.3 Sarrafa Sauti da Saututtuka](#43-audio--sound-management)
+  - [4.4 Hanyoyin Raba Fuska](#44-split-screen-workflows)
+  - [4.5 Tsarin Maimaita Bidiyon YouTube](#45-youtube-looping-subsystem)
+  - [4.6 Sautin Duba YouTube Shorts](#46-youtube-shorts-preview-audio)
+  - [4.7 Tsarin Hoto-cikin-Hoto (PiP)](#47-picture-in-picture-pip-architecture)
+  - [4.8 Hanyoyin Karanta Shafi da Sauye-sauyen Bayyanar Gani](#48-page-reading-modes--visual-overlays)
+  - [4.9 Tsarin Gajerun Rubuce-rubuce tare da Sauye-sauyen Samfuri](#49-text-snippets-subsystem-with-template-variables)
+  - [4.10 Kayan Aikin Ƙwarewa Masu Haɗe](#410-embedded-productivity-tools)
+  - [4.11 Cikakken Tsarin Matakai 3 na Cire Kwafi da Watsar da Shafuka Masu Barci](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
+- [5. Sashe na 4: Mataimakin AI da Wakili Mai Cin Gashin Kansa (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
+  - [5.1 Tsarin Injunan Ƙirar Biyu](#51-dual-model-engine-architecture)
+  - [5.2 Wakilin Manhaja Mai Cin Gashin Kansa (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
+  - [5.3 Bibiyar Gurɓatawa da Kariya Daga Kutsen Umarni](#53-taint-tracking--prompt-injection-defense)
+  - [5.4 Tsarin Shirya Tambayoyin Gemini na Lokaci (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
+  - [5.5 Gudanar da Tattaunawar Gemini da Fitarwa](#55-gemini-conversation-management--export)
+  - [5.6 Bayanan Hanyoyi Daban-daban da Maƙala Fayiloli (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
+  - [5.7 Hanyoyin Kira](#57-invocation-modalities)
+- [6. Sashe na 5: Duba Bayanan Kula da Gudanar da Ilimi (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
+  - [6.1 Tsarin Ma'ajiya (`notesStore`)](#61-storage-architecture-notesstore)
+  - [6.2 Tsarukan Bayanan Kula na Musamman da Ƙarin Nuni](#62-specialized-note-formats--advanced-rendering)
+  - [6.3 Keɓancewa da Tsarin Muhalli](#63-scoping--context-hierarchy)
+  - [6.4 Hanyoyin Kira](#64-invocation-modalities)
+- [7. Sashe na 6: Duba Kafofin Watsa Labarai da Rumbun Hoto (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
+  - [7.1 Hanyoyin Ɗauka da Fasaha (Dukkan Nau'o'in Ɗauka 7)](#71-capture-modes--engineering-all-7-capture-types)
+  - [7.2 Fuskar Rumbun Hoto da Dorewa](#72-gallery-ui--persistence)
+  - [7.3 Fitarwa, OCR a Cikin Manhaja, da Zane na Waje](#73-export-in-browser-ocr--external-markup)
+  - [7.4 Hanyoyin Kira](#74-invocation-modalities)
+- [8. Sashe na 7: Rukunin Pomodoro da Ƙididdigar Lokaci (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
+  - [8.1 Injin Ƙididdigar Lokaci da Tsarin Bayan Fage](#81-timing-engine--background-architecture)
+  - [8.2 Cikakkun Hanyoyin Ƙididdigar Lokaci 4](#82-exhaustive-4-timing-modes)
+  - [8.3 Ƙaramin Na'urar Auna Lokaci Mai Yawo a Cikin Shafi](#83-in-page-floating-timer-widget)
+  - [8.4 Lokacin Naɗe Rukunoni Masu Barci ta Automatik](#84-group-auto-collapse-idle-timer)
+  - [8.5 Lambobin Ayyuka da Ƙarin Bayanai](#85-project-tagging--metadata)
+  - [8.6 Injin Kididdiga da Katunan KPI 19](#86-analytics-engine--19-kpi-cards)
+- [9. Sashe na 8: Allon Ayyuka da Tarihi (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
+  - [9.1 Injin Bayanai da Yanayin Ma'ajiya (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
+  - [9.2 Mai Toshe Shafuka na Declarative Net Request (DNR)](#92-declarative-net-request-dnr-site-blocker)
+  - [9.3 Makullin Tsaro na Asymmetric (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
+  - [9.4 Rarraba Rukuni da Kididdigar Gani](#94-categorization--visual-analytics)
+  - [9.5 Tsarin Sarrafa Saukakkun Fayiloli (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
+  - [9.6 Tsarin Shafukan da Aka Rufe Kwanan Nan da Tarihin Bincike](#96-recently-closed-tabs--browsing-history-subsystem)
+  - [9.7 Tsarin Shirya Lokutan Launukan Fage (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
+  - [9.8 Ƙaramar Fuskar Sidepanel](#98-compact-sidepanel-view)
+- [10. Jadawalin Hanyoyin Kira Daban-daban](#10-multi-modal-invocation-matrix)
+  - [10.1 Fuskar Mai Amfani ta Popup](#101-popup-ui-interface)
+  - [10.2 Hanyoyin Kewayawa na Sidepanel (`?view=...`)](#102-sidepanel-navigation-routes-view)
+  - [10.3 Gajerun Hanyoyin Maɓallan Manifest (Umarni 24)](#103-manifest-keyboard-shortcuts-24-commands)
+  - [10.4 Maɓallan Hanyar Vim a Cikin Shafi (Haɗe-haɗe 40+)](#104-in-page-vim-hint-keys-40-combinations)
+  - [10.5 Prefixes na Tsarin Omnibar a Cikin Shafi (Prefixes 41)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
+  - [10.6 Tsarin Zaɓuɓɓukan Danna Dama (Dukkan Rukunoni 5 da Ayyuka 30+)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
+- [11. Tsarin Ma'ajiya da Adana Bayanai](#11-storage-schemas--data-persistence)
+  - [11.1 Ma'ajiyar Bayanai ta IndexedDB: `Intelligent_Workspace` (Tsari Na 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
+  - [11.2 Rarraba Hanyoyin Ma'ajiya Biyu na Chrome (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
+  - [11.3 Ma'ajiyar Zama ta Chrome (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
+- [12. Fasahar Tsaron Kariya da Magance Matsalolin Gefe](#12-defensive-engineering--edge-case-handling)
 
 ---
 
-## 2. Section 1: Rules Management (Gestionar Reglas)
+## 1. Tushen Tsarin Gine-gine da Yanayin Gudanarwa
 
-The Rules Management subsystem automates tab grouping based on strict deterministic criteria defined by the user.
+Wannan ƙarin manhaja yana aiki ne a ƙarƙashin tsarin Manifest V3 na Google Chrome, yana raba ayyuka masu ci gaba tsakanin Service Worker na bayan fage, fuskokin UI da aka killace a keɓe, takardun sauti na wajen allo, da kuma rubutun abubuwan ciki (content scripts) masu yawo a cikin shafi:
 
-### 2.1 Data Schema (`CustomRule`)
-Each custom rule adheres to the following interface:
+1. **Tsarin Manifest (`manifest.json`)**:
+   - **Izini (abubuwa 21)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, da `idle`.
+   - **Izinin Masauki (Host Permissions)**: `["<all_urls>"]`.
+   - **Service Worker**: `src/core/background.js` yana amfani da saukar da kayayyaki a lokaci guda ta `importScripts`.
+   - **Aikin Kayan Aiki (Toolbar Action)**: Da gangan aka bar `default_popup`. Tsarin yana tilasta `chrome.action.setPopup({ popup: '' })`, yana tabbatar da cewa `chrome.action.onClicked` yana aiki nan take kuma yana buɗe `chrome.sidePanel` zuwa fuskar da mai amfani ya maƙala ba tare da jinkirin fara buɗe popup ba.
+   - **Kalmar Sirri ta Omnibox**: Kalmar da aka yi rajista ita ce `"find"`.
+   - **Umarni**: Gajerun hanyoyin maɓallai 24 na matakin tsarin kwamfuta da aka yi wa rajista a ƙarƙashin `commands`.
+   - **Ƙa'idar Tsaron Abun Ciki**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
+
+2. **Tsaron Sadarwa Tsakanin Hanyoyin Aiki**:
+   - `src/core/background/messaging.js` yana tace saƙonni daga rubutun abubuwan ciki (content scripts) bisa wani sahihin jerin sunaye da aka amince da su (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Shafukan yanar gizo marasa izini ba za su iya kiran masu rubuta ma'ajiya ta ciki, Chrome APIs na kowane iri, ko masu canza ƙa'idoji ba.
+
+3. **Duniyoyin Aiwatarwa Biyu**:
+   - Rubutun abubuwan ciki suna aiki ne a cikin duniyoyi biyu: `ISOLATED` (fannin ƙarin manhaja) da kuma `MAIN` (fannin aiwatar da shafi). Rubuce-rubuce kamar `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, da `youtubeShortsFeedHook.js` suna aiki a cikin `MAIN` don tare hanyoyin prototype, sauya bayanan kaddarori, da kula da abubuwan da ke faruwa na musamman kai tsaye.
+
+---
+
+## 2. Sashe na 1: Gudanar da Ƙa'idoji (Gestionar Reglas)
+
+Tsarin Gudanar da Ƙa'idoji yana tsara shafuka zuwa rukunoni ta atomatik bisa ƙayyadaddun sharuɗɗan da mai amfani ya bayyana.
+
+### 2.1 Tsarin Bayanai (`CustomRule`)
+Kowace ƙa'ida ta musamman tana bin wannan tsari:
 ```typescript
 interface CustomRule {
-  name: string;        // 1 to 16 characters. Must contain no whitespace characters.
-  color: RuleColor;    // One of 9 colors: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
-  urls: string[];      // Array of valid URLs, domains, or hostnames.
-  active: boolean;     // Master toggle enabling or disabling rule evaluation.
-  isStarred?: boolean; // Optional flag marking rule as a favorite for prioritized UI ordering.
+  name: string;        // Haruffa 1 zuwa 16. Kada ya ƙunshi kowane sarari (whitespace).
+  color: RuleColor;    // Ɗaya daga cikin launuka 9: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
+  urls: string[];      // Jerin sahihan URLs, yankuna (domains), ko sunayen masauki (hostnames).
+  active: boolean;     // Babban maɓallin kunnawa ko kashe duba ƙa'ida.
+  isStarred?: boolean; // Alamar zaɓi da ke nuna ƙa'ida a matsayin wacce aka fi so don fifita ta a jerin UI.
 }
 ```
 
-### 2.2 Precedence Architecture
-When tabs are processed by `groupTabs()` in `src/core/background/groupManager.js`, tabs are evaluated against grouping layers in strict hierarchical order:
-1. **Custom Rules (`applyCustomRules`)**: Matches active custom rules in order of appearance or user priority. Once grouped, tab IDs are registered in `groupedTabIds` and excluded from subsequent layers.
-2. **Special System Groups**: System URLs are intercepted and clustered into dedicated colored groups:
-   - `chrome://` and internal browser pages
-   - `file:///` local disk files
-   - `chrome-extension://` extension pages
-   - IP Addresses & Localhost (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 hosts)
-3. **Domain Clustering**: Tabs sharing the same root domain are grouped if the tab count meets or exceeds `domainThreshold` (default: 2 tabs).
-4. **Subdomain Clustering**: If enabled, tabs within domains are grouped by specific subdomains (e.g., `docs.github.com` vs `gist.github.com`).
-5. **Miscellaneous ("Misc") Group**: Residual unclustered tabs that do not meet grouping thresholds are placed into the `Misc` group (placement configurable: `start`, `end`, or alphabetical `alpha`).
+### 2.2 Tsarin Fifiko
+Lokacin da `groupTabs()` a cikin `src/core/background/groupManager.js` ke sarrafa shafuka, ana duba shafukan ne a kan matakan rukuni bisa tsari mai tsauri:
+1. **Ƙa'idoji na Musamman (`applyCustomRules`)**: Yana duba ƙa'idojin da ke aiki bisa jerin bayyanarsu ko fifikon mai amfani. Da zarar an rarraba su, ana yin rijistar lambobin ID na shafukan a cikin `groupedTabIds` kuma a cire su daga matakai na gaba.
+2. **Rukunonin Tsarin Kwamfuta na Musamman**: Ana tare adiresoshin URL na tsarin kwamfuta tare da sanya su a cikin rukunoni masu launuka na musamman:
+   - `chrome://` da shafukan ciki na manhajar bincike
+   - `file:///` fayilolin faifan kwamfuta na gida
+   - `chrome-extension://` shafukan ƙarin manhajoji
+   - IP Addresses da Localhost (`localhost`, `127.0.0.1`, `[::1]`, rundunonin IPv4/IPv6)
+3. **Tattara Yankuna (Domain Clustering)**: Shafukan da ke da yanki ɗaya ana haɗa su wuri guda idan yawan shafukan ya kai ko ya zarce `domainThreshold` (asali: shafuka 2).
+4. **Tattara Ƙananan Yankuna (Subdomain Clustering)**: Idan an kunna shi, shafukan da ke cikin yanki ɗaya ana raba su bisa ƙananan yankuna na musamman (misali, `docs.github.com` daban da `gist.github.com`).
+5. **Rukunin Sauran Abubuwa ("Misc")**: Shafukan da suka rage waɗanda ba su shiga ko'ina ba kuma ba su kai adadin da ake buƙata ba ana sanya su a rukunin `Misc` (wurin sanyawa yana da zaɓi: farko `start`, ƙarshe `end`, ko bin haruffa `alpha`).
 
-### 2.3 URL Normalization & Matching Semantics
-The matching engine (`matchesRule(tabUrl, ruleUrl)` in `src/core/background/utils.js`) applies rigorous normalization:
-- **Scheme Agnostic**: HTTP and HTTPS protocols are treated as interchangeable (`http://example.com` matches `https://example.com`). Non-web protocols (`file://`, `chrome://`) require exact scheme matches.
-- **Host Normalization**: Leading `www.` prefixes are stripped (`www.github.com` normalizes to `github.com`). Hostnames are lowercased and support internationalized domain names (IDNs) via punycode.
-- **Port Sensitivity**: If a rule specifies a port (e.g., `localhost:3000`), the tab must match that exact port.
-- **Path Matching**: Trailing slashes are stripped. If a rule specifies a path (e.g., `example.com/docs`), it matches tabs with that exact path OR subpaths (`example.com/docs/api`), but does not match sibling paths (`example.com/blog`).
-- **Query & Hash Matching**: If a rule explicitly contains a query string (`?page=1`) or hash (`#section`), the tab must match those parameters verbatim.
-- **Numeric Dword Protection (`ruleValidation.js`)**: The validator strictly rejects bare numeric inputs (e.g., `3242342424`) that WHATWG URL parsers treat as valid IPv4 integer DWORDs, preventing accidental grouping distortions.
+### 2.3 Daidaita URL da Ma'anar Daidaitawa
+Injin daidaitawa (`matchesRule(tabUrl, ruleUrl)` a cikin `src/core/background/utils.js`) yana amfani da ingantaccen tsarin daidaitawa:
+- **Rashin Nuna Bambancin Tsarin Sadarwa (Scheme Agnostic)**: Ana ɗaukar hanyoyin sadarwa na HTTP da HTTPS a matsayin abu ɗaya (`http://example.com` yana daidaita da `https://example.com`). Hanyoyin da ba na yanar gizo ba (`file://`, `chrome://`) suna buƙatar daidaituwar tsari ta ainihi.
+- **Daidaita Sunan Masauki**: Ana cire harafin farko na `www.` (`www.github.com` yana komawa `github.com`). Ana mayar da sunayen masauki zuwa ƙananan haruffa kuma suna goyon bayan sunayen yanki na ƙasa da ƙasa (IDNs) ta hanyar punycode.
+- **Kula da Lambar Ƙofa (Port Sensitivity)**: Idan wata ƙa'ida ta ƙayyade lambar ƙofa (misali, `localhost:3000`), dole ne shafin ya dace da ainihin wannan lambar ƙofar.
+- **Daidaita Hanyar Shafi (Path Matching)**: Ana cire alamar raba hanya ta ƙarshe. Idan wata ƙa'ida ta ƙayyade wata hanya (misali, `example.com/docs`), tana daidaita da shafukan da ke da wannan ainihin hanyar KO ƙananan hanyoyi (`example.com/docs/api`), amma ba ta dace da hanyoyin gefe ba (`example.com/blog`).
+- **Daidaita Tambaya da Alamar Hash**: Idan wata ƙa'ida ta ƙunshi rubutun tambaya a bayyane (`?page=1`) ko alamar hash (`#section`), dole ne shafin ya dace da waɗannan sharuɗɗan dalla-dalla.
+- **Kariyar Lambobin Dword (`ruleValidation.js`)**: Mai binciken yana ƙin karɓar lambobi zalla (misali, `3242342424`) waɗanda masu fassara URL na WHATWG ke ɗauka a matsayin ingantattun lambobin IPv4 integer DWORDs, yana hana rikicewar rarraba rukuni cikin kuskure.
 
-### 2.4 Rules Management Settings Breakdown
-The Rules Manager provides an exhaustive suite of behavioral controls and settings:
-- **Storage Routing Selection**: Users can route rule storage between `chrome.storage.sync` (for synchronized settings across all devices signed into the Google profile, subject to Chrome sync quotas of 100 KB total and 8 KB per item) and `chrome.storage.local` (for unlimited local capacity suitable for large rule sets containing hundreds of patterns).
-- **Clustering Master Toggle & Thresholds**:
-  - `toggle-clustering`: Master keyboard shortcut and UI toggle enabling or disabling automated domain/subdomain clustering without disabling user-created custom rules.
-  - `domainThreshold`: Minimum tab count required from the same domain to trigger an automatic tab group (default: 2 tabs). Configurable from 1 to 50.
-  - `subdomainThreshold`: Minimum tab count for subdomains before creating separated subgroup clusters.
-  - Subdomain toggle (`toggle-subdomain-grouping`): Distinguishes independent subdomains (e.g., `news.ycombinator.com` vs `ycombinator.com`).
-- **Auto-Sort Groups Alphabetically (`toggle-sort-alpha`)**: Real-time sorting engine enforcing alphabetical ordering across all open tab groups in the browser tab strip (`Ctrl+Shift+S` / `Cmd+Shift+S`).
-- **Visual Status Prefixes (`toggle-prefixes`)**: Emoji markers dynamically prepended to group titles to indicate inspection state:
-  - `🔒` (Lock): The group contains unvisited, unread tabs.
-  - `🔍` (Loupe): The group contains partially visited tabs.
-  - `🗝️` (Open Key): All tabs in the group have been opened and reviewed.
-  - `⚠️` (Warning): Duplicate group name collision detected with another window group.
-- **Auto-Collapse Idle Groups (`toggle-collapse-timer`)**: Automatically collapses groups when inactive to maintain a tidy tab strip.
-- **Master Pause Grouping (`feature_pauseGrouping`)**: Master freeze switch that temporarily suspends all automated grouping operations (both rule matches and heuristic clustering) during active research sessions where tabs should remain in arbitrary user arrangements.
-- **Single Tab Grouping (`featureSingleTabGrouping`)**: Allows custom rules to immediately create a tab group for a single matching tab, bypassing the multi-tab threshold requirement.
-- **Compact View (`toggle-compact-mode`)**: Minimizes tab header width in the browser tab strip by rendering only single-letter badges for group titles.
-- **Drag-and-Drop Priority**: Reordering rules in the `Rules.svelte` list instantly changes their evaluation precedence. Rules at the top evaluate first.
-- **Fuzzy Search**: Live filtering in the Rules Manager and Omnibar allowing instant location of rules by title or matching URL patterns.
-- **JSON Import / Export**:
-  - Mode `add`: Merges imported rules into the existing collection, discarding duplicates.
-  - Mode `overwrite`: Completely replaces the active rule collection with the imported payload after schema validation.
-- **Dynamic Rule Creation**: One-click creation of custom rules directly from Chrome bookmark folders or subgroup domain collections.
-- **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs or domains to existing custom rules, preventing rule inflation and redundant evaluations.
+### 2.4 Rarraba Saitunan Gudanar da Ƙa'idoji
+Mai Gudanar da Ƙa'idoji yana ba da cikakkun kayan sarrafa halaye da saituna:
+- **Zaɓin Hanyar Ma'ajiya**: Masu amfani za su iya tura ma'ajiyar ƙa'ida tsakanin `chrome.storage.sync` (don daidaita saituna a duk na'urorin da aka shiga da asusun Google, bisa ƙayyadaddun ma'aunin Chrome sync na jimillar 100 KB da 8 KB ga kowane abu) da kuma `chrome.storage.local` (don samun ma'ajiya marar iyaka da ta dace da manyan rukunonin ƙa'idoji masu ɗauke da ɗaruruwan tsare-tsare).
+- **Babban Maɓallin Tattara Shafuka da Ƙa'idojin Adadi**:
+  - `toggle-clustering`: Babban gajeriyar hanyar maɓalli da maɓallin UI na kunnawa ko kashe tattara yankuna/ƙananan yankuna ta atomatik ba tare da kashe ƙa'idojin da mai amfani ya ƙirƙira ba.
+  - `domainThreshold`: Mafi ƙarancin shafukan da ake buƙata daga yanki ɗaya don ƙirƙirar rukunin shafuka ta atomatik (asali: shafuka 2). Ana iya daidaita shi daga 1 zuwa 50.
+  - `subdomainThreshold`: Mafi ƙarancin shafukan da ake buƙata don ƙananan yankuna kafin a ƙirƙiri rukunoni na musamman a keɓe.
+  - Maɓallin sauya ƙananan yankuna (`toggle-subdomain-grouping`): Yana bambanta ƙananan yankuna masu zaman kansu (misali, `news.ycombinator.com` daban da `ycombinator.com`).
+- **Shirya Rukunoni ta Haruffan Haruffa ta Automatik (`toggle-sort-alpha`)**: Injin jera abubuwa nan take da ke tilasta bin tsarin haruffan haruffa a duk rukunonin shafukan da ke buɗe a cikin mashigin shafukan manhaja (`Ctrl+Shift+S` / `Cmd+Shift+S`).
+- **Alamomin Hali na Gani (`toggle-prefixes`)**: Alamomin emoji da ake sakawa a farkon sunayen rukunoni don nuna halin bincikensu:
+  - `🔒` (Kulle): Rukunin yana ɗauke da shafukan da ba a ziyarta ba kuma ba a karanta ba.
+  - `🔍` (Madubin Dubawa): Rukunin yana ɗauke da shafukan da aka ziyarta wani ɓangare nasu.
+  - `🗝️` (Mabuɗi Buɗaɗɗe): Dukkan shafukan da ke cikin rukunin an buɗe su kuma an duba su.
+  - `⚠️` (Gargaɗi): An gano karo na sunan rukuni iri ɗaya da wani rukunin a wata taga daban.
+- **Naɗe Rukunoni Masu Barci ta Automatik (`toggle-collapse-timer`)**: Yana naɗe rukunoni ta atomatik idan ba a amfani da su don tsabtace mashigin shafuka.
+- **Babban Dakatarwar Rarraba Rukuni (`feature_pauseGrouping`)**: Babban maɓallin daskarewa wanda ke dakatar da duk ayyukan rarraba rukuni ta atomatik na wucin gadi (na dacewar ƙa'idoji da na tattara shafuka) a lokacin ayyukan bincike inda ya kamata shafuka su kasance a tsarin da mai amfani ya zaɓa.
+- **Rarraba Shafi Guda ɗaya zuwa Rukuni (`featureSingleTabGrouping`)**: Yana ba wa ƙa'idoji na musamman damar ƙirƙirar rukunin shafi nan take don shafi guda ɗaya da ya dace, yana tsallake ƙa'idar neman shafuka da yawa.
+- **Ƙaramar Fuska (`toggle-compact-mode`)**: Yana rage faɗin kan shafi a cikin mashigin shafukan manhaja ta hanyar nuna harafi guda ɗaya kawai a matsayin alama ta sunan rukuni.
+- **Fifiko ta Jawo da Saukewa**: Sake tsara ƙa'idoji a jerin `Rules.svelte` yana canza fifikon bincikensu nan take. Ƙa'idojin da ke sama ana fara duba su tukuna.
+- **Bincike Mai Sauƙi (Fuzzy Search)**: Tace bayanai nan take a cikin Mai Gudanar da Ƙa'idoji da Omnibar yana ba da damar gano ƙa'idoji cikin sauri ta taken suna ko hanyoyin URL da suka dace.
+- **Shigarwa / Fitarwar JSON**:
+  - Yanayin `add`: Yana haɗa ƙa'idojin da aka shigo da su cikin tarin da ake da su, yana cire kwafi.
+  - Yanayin `overwrite`: Yana canza dukkan ƙa'idojin da ke aiki gaba ɗaya da sabbin bayanan da aka shigo da su bayan an tabbatar da ingancinsu.
+- **Ƙirƙirar Ƙa'ida Cikin Sauri**: Ƙirƙirar ƙa'idoji na musamman da dannawa ɗaya kai tsaye daga manyan foldojin alamun shafi na Chrome ko tarin yankuna na ƙananan rukunoni.
+- **Cire Kwafin Ƙa'idoji (`feature_v100_dedup_add_to_rule`)**: Yana cire kwafin hanyoyin URL ta atomatik yayin ƙara sabbin URLs ko yankuna zuwa ƙa'idojin da ake da su, yana hana hauhawar ƙa'idoji da bincike marar amfani.
 
-### 2.5 Operations & Persistence (`mutateRulesAndSync`)
-- **Centralized Mutator**: All rule modifications route through `mutateRulesAndSync(mutateFn, sendResponse)` in `src/core/background/handlers/rules.js`. This guarantees storage synchronization, in-memory cache refreshment (`extensionSettings.customRules`), UI notification (`rulesUpdated`), and automatic tab regrouping (`groupTabs()`).
-- **Live Validation**: Real-time validation checks for name uniqueness, length (1-16 chars), character restrictions, and valid URL syntax before saving.
+### 2.5 Ayyuka da Adanawa (`mutateRulesAndSync`)
+- **Tsakiyar Sauye-sauye**: Dukkan gyare-gyaren ƙa'idoji suna bi ta `mutateRulesAndSync(mutateFn, sendResponse)` a cikin `src/core/background/handlers/rules.js`. Wannan yana ba da tabbacin daidaita ma'ajiya, sabunta bayanan cikin ƙwaƙwalwa (`extensionSettings.customRules`), sanarwar UI (`rulesUpdated`), da sake rarraba shafuka ta atomatik (`groupTabs()`).
+- **Tabbatarwa Nan Take**: Binciken tabbatarwa na ainihin lokaci yana duba keɓantaccen suna, tsayi (haruffa 1-16), ƙuntatawar haruffa, da ingantaccen tsarin URL kafin adanawa.
 
-### 2.6 Invocation Modalities
-- **Rules Manager Page (`Rules.svelte`)**: Accessible in full-tab view or side panel (`?view=rules` / `pg`). Provides full drag-and-drop reordering, inline color picker, URL tag chips, and rule toggles.
-- **Omnibar Commands**:
-  - `rl:` — Search rules and open associated URLs.
-  - `cr: <name> [, url1, url2]` — Create a new rule directly from the command bar.
-  - `atcr:` — Add the active tab's domain or URL to an existing rule.
-  - `atr:` — Add selected open tabs or manual URLs to an existing rule.
-  - `ccr:` — Change the color of a custom rule.
-  - `dr:` — Delete rules or individual URLs from a rule.
-  - `er:` — Edit or rename an existing rule.
-- **Context Menus**:
-  - Right-click page -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Reglas" -> Toggle active state, open all rule URLs, or close matching tabs.
-- **Keyboard Shortcuts**:
-  - `Alt+R`: Open Rules Manager.
-  - `Alt+M`: Toggle activation of all rules simultaneously (`toggle-all-rules`).
-
----
-
-## 3. Section 2: Group Listing & Operations (Listar Grupos)
-
-The Group Listing view provides an interactive workspace for inspecting, manipulating, and reordering browser tab groups and individual tabs.
-
-### 3.1 UI Architecture
-- **Component Stack**: Built with `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, and `TabActions.svelte`.
-- **Card Features**: Displays group title, color badge, tab count pill, collapse/expand accordion toggle, card pinning, and customizable action button groups.
-- **Tab Items**: Displays tab favicon with color fallback, title, audible sound badge, mute indicator, active state indicator, and per-tab actions (close, duplicate, pin, split, discard).
-
-### 3.2 Group Lifecycle & Behaviors
-- **Accordion Control**: Smooth expand and collapse states. Optional auto-accordion mode automatically collapses idle groups when a new group is expanded.
-- **Inactivity Auto-Collapse Idle Timer**:
-  - Automatically collapses idle tab groups to reduce visual clutter.
-  - Two distinct thresholds: Inactive groups collapse after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), while the active group collapses after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-- **Inline Renaming & Grace Period**:
-  - Users can rename groups directly in the browser tab strip or UI.
-  - `GROUP_NAMING_GRACE_MS` (5000ms) pauses automatic regrouping while a user edits, preventing title overwrites mid-typing.
-  - Zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) are stripped during evaluation.
-  - Renaming an automatically generated group converts it to a user-named group, updating the corresponding custom rule or marking it permanent.
-- **Visual Group Prefix Indicators**:
-  - Dynamically prepends status symbols: `🔒` (unvisited), `🔍` (partial), `🗝️` (all viewed), `⚠️` (collision).
-- **Drag-and-Drop Reordering**: Integrated with `sortable.js` for reordering tabs within groups, moving tabs between groups, or reordering group cards.
-- **Hidden Groups Feature**:
-  - Prefixes group title with `_hidden_` in the browser tab strip.
-  - Hides group cards from the main list view, transferring them to `HiddenGroupsBar.svelte`.
-  - Users can unhide or restore groups instantly with a single click.
-
-### 3.3 Group Operations & Memory Management
-- **Ungroup**: Disbands the group, leaving tabs open in the window.
-- **Close Group**: Closes all tabs in the group and releases the group ID.
-- **Close Other Groups**: Closes all tab groups except the currently focused group.
-- **Regroup All Tabs (`Alt+Shift+R`)**: Executes a comprehensive re-evaluation pass across custom rules, system groups, and domain clusters.
-- **Group Screenshot Walk**: Sequentially cycles through and captures every tab in the group (`Cs` visible, `Cp` full page, `CP` full page parts).
-
-### 3.4 Group Backups & Restore Subsystem
-- **IndexedDB `backupsGroups` Store**:
-  - Backs up single tab groups or workspace-wide snapshots of all open groups into IndexedDB `Intelligent_Workspace` store `backupsGroups`.
-  - Captures complete group structures: group title, color, collapsed state, tab titles, URLs, favicons, pinned status, and relative tab positions.
-  - **Memory Conservation**: Backed-up tabs are cleanly closed to reclaim system RAM and reduce CPU overhead.
-  - **Restore Mechanisms**:
-    - Backups UI View in `ListGroup.svelte` with one-click group restoration.
-    - Keyboard shortcut `br` (restore) and `bg` (backup all).
-    - Omnibar command `bgr:` (search and restore backed-up groups) and `b:` (bookmark search).
-  - **JSON Export & Import**: Full JSON backup export and import for seamless migration between machines and long-term offline archiving.
-
-### 3.5 Parked YouTube Player in Hidden Groups Bar
-- **Architecture (`HiddenGroupsBar.svelte`)**:
-  - When a user navigates away from an active YouTube video view or launches video content inside the side panel, the player is not closed or lost. It is automatically docked in `HiddenGroupsBar.svelte` as a parked YouTube indicator (`.youtube-indicator`).
-  - Managed reactively via the `hiddenYoutubeView` store in `src/ui/stores/appStore.svelte.js`.
-  - **One-Click Actions**:
-    - Clicking the parked indicator invokes `restoreYoutubeView()`, returning the player immediately to the active workspace view.
-    - Clicking the delete badge invokes `discardYoutubeView()`, cleanly terminating playback and reclaiming resources.
-  - Sits seamlessly alongside hidden tab groups at the top of the ListGroup view without cluttering active tab lists.
+### 2.6 Hanyoyin Kira
+- **Shafin Mai Gudanar da Ƙa'idoji (`Rules.svelte`)**: Ana iya shiga ta cikakken shafin bincike ko a ɓangaren gefe (`?view=rules` / `pg`). Yana ba da cikakken tsarin jawo da saukewa, zaɓin launi a layi, alamun URL, da maɓallan kunna ƙa'idoji.
+- **Umarnin Omnibar**:
+  - `rl:` — Bincika ƙa'idoji kuma buɗe adiresoshin URL da ke da alaƙa.
+  - `cr: <name> [, url1, url2]` — Ƙirƙiri sabuwar ƙa'ida kai tsaye daga mashigin umarni.
+  - `atcr:` — Ƙara yanki ko URL na shafin da ke aiki zuwa ƙa'idar da ake da ita.
+  - `atr:` — Ƙara buɗaɗɗun shafukan da aka zaɓa ko adiresoshin URL na hannu zuwa ƙa'idar da ake da ita.
+  - `ccr:` — Canza launi na wata ƙa'ida ta musamman.
+  - `dr:` — Goge ƙa'idoji ko takamaiman URLs daga wata ƙa'ida.
+  - `er:` — Gyara ko canza sunan wata ƙa'ida da ake da ita.
+- **Zaɓuɓɓukan Danna Dama (Context Menus)**:
+  - Danna dama a kan shafi -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Danna dama a kan shafi -> "Añadir a Regla Existente" -> Zaɓi ƙa'ida -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Danna dama a kan shafi -> "Reglas" -> Kunna ko kashe ƙa'ida, buɗe duk adiresoshin URL na ƙa'idar, ko rufe shafukan da suka dace.
+- **Gajerun Hanyoyin Maɓallai**:
+  - `Alt+R`: Buɗe Mai Gudanar da Ƙa'idoji.
+  - `Alt+M`: Kunna ko kashe aikin duk ƙa'idoji a lokaci guda (`toggle-all-rules`).
 
 ---
 
-## 4. Section 3: Navigation & Tab Management (Navegación)
+## 3. Sashe na 2: Jerin Rukunoni da Ayyuka (Listar Grupos)
 
-Accelerated keyboard navigation and workspace controls allow seamless multi-tab control without mouse interaction.
+Fuskar Jerin Rukunoni tana ba da wuri mai sauƙin aiki don dubawa, sarrafawa, da sake tsara rukunonin shafukan manhaja da shafuka ɗai-ɗaiku.
 
-### 4.1 Fast Tab Jump Gesture
-- **Gesture Syntax**: `Alt + [groupPrefix] + [tabIndex] + Enter`
-- **Execution**:
-  - Hold `Alt` and type the group's name or prefix letters, followed by the desired 1-based tab index, then press `Enter`.
-  - Example: `Alt + git + 2 + Enter` jumps directly to the second tab in the "GitHub" group.
-  - Index `0` acts as a shortcut for the *last* tab in the group.
-  - Omitting the index jumps to the *first* tab in the group.
-  - Accents are automatically folded (`deaccent`) and matching normalizes diacritics.
+### 3.1 Tsarin Fuskar Mai Amfani (UI)
+- **Tarin Abubuwan Ciki**: An gina shi da `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, da `TabActions.svelte`.
+- **Siffofin Kati**: Yana nuna taken rukuni, alamar launi, adadin shafuka, maɓallin naɗe/buɗe accordion, maƙala kati, da rukunin maɓallan ayyuka da za a iya daidaitawa.
+- **Abubuwan Shafi**: Yana nuna alamar favicon ta shafi tare da launi na daban idan babu, taken shafi, alamar sauti mai jiwuwa, alamar kashe sauti, alamar nuna shafi mai aiki, da ayyukan kowane shafi (rufe, yi kwafi, maƙala, raba, watsar).
 
-### 4.2 Stepping, Swapping & Lifecycle Keys
-- `s`: Instantly swap to the previously active tab (`previousActiveTabId`).
-- `h` / `l`: Step to the previous / next tab (or scroll horizontally if the page allows).
-- `H` / `L`: Navigate back / forward in browser history.
-- `t`: Open a new blank tab.
-- `x`: Close the current active tab.
-- `yt`: Duplicate the current tab.
-- `r` / `R`: Reload page / Force reload bypassing cache.
-- `d` / `u`: Scroll to bottom / top of page.
-- `j` / `k`: Smooth scroll down / up (75px step).
-- `f`: Activate Vim link hints (letters appear over clickable elements to click).
-- `cf`: Activate Vim link hints to copy target URL to clipboard.
+### 3.2 Yanayi da Halayyar Rukunoni
+- **Sarrafa Accordion**: Yanayin buɗewa da naɗewa cikin sauƙi. Yanayin naɗe abubuwa ta atomatik yana naɗe rukunoni marasa aiki idan an buɗe sabon rukuni.
+- **Lokacin Naɗe Rukunoni Masu Barci ta Automatik**:
+  - Yana naɗe rukunonin shafuka marasa aiki ta atomatik don rage cunkoson gani.
+  - Matakan lokaci biyu mabanbanta: Rukunonin da ba sa aiki suna naɗewa bayan minti 1 na rashin aiki (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), yayin da rukunin da ke aiki yake naɗewa bayan mintuna 15 na rashin aiki (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Ana iya daidaita shi daga mintuna 0 zuwa 1440.
+- **Canza Suna a Layi da Lokacin Dakatawa**:
+  - Masu amfani za su iya canza sunan rukunoni kai tsaye a cikin mashigin shafukan manhaja ko a fuskar UI.
+  - `GROUP_NAMING_GRACE_MS` (5000ms) yana dakatar da sake rarraba rukuni ta atomatik yayin da mai amfani ke gyara rubutu, yana hana goge take a tsakiyar rubutu.
+  - Ana cire sarari marar faɗi (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) yayin bincike.
+  - Canza sunan rukunin da aka ƙirƙira ta atomatik yana mayar da shi zuwa rukunin da mai amfani ya sa wa suna, yana sabunta ƙa'idar da ta dace ko mai da shi na dindindin.
+- **Alamomin Farko na Rukunoni**:
+  - Yana sanya alamomin hali a gaba: `🔒` (ba a ziyarta ba), `🔍` (wani ɓangare), `🗝️` (an duba duka), `⚠️` (karo da wani).
+- **Sake Tsari ta Jawo da Saukewa**: An haɗa shi da `sortable.js` don sake tsara shafuka a cikin rukunoni, matsar da shafuka tsakanin rukunoni, ko sake tsara katin rukunoni.
+- **Siffar Rukunoni Masu Ɓoye**:
+  - Yana sanya `_hidden_` a farkon taken rukuni a cikin mashigin shafukan manhaja.
+  - Yana ɓoye katunan rukunoni daga babban jerin shafuka, yana tura su zuwa `HiddenGroupsBar.svelte`.
+  - Masu amfani za su iya bayyana ko dawo da rukunoni nan take da dannawa ɗaya.
 
-### Ga ƙwararrun masu amfani (For power users)
+### 3.3 Ayyukan Rukunoni da Sarrafa Ma'ajiya
+- **Warware Rukuni (Ungroup)**: Yana warware rukunin, yana barin shafukan a buɗe a cikin taga.
+- **Rufe Rukuni**: Yana rufe duk shafukan da ke cikin rukunin tare da sakin lambar ID ta rukunin.
+- **Rufe Sauran Rukunoni**: Yana rufe duk rukunonin shafuka ban da rukunin da aka mai da hankali a kansa a halin yanzu.
+- **Sake Rarraba Duk Shafuka (`Alt+Shift+R`)**: Yana gudanar da cikakken bincike a kan ƙa'idoji na musamman, rukunonin tsarin kwamfuta, da tattara yankuna.
+- **Ɗaukar Hoton Dukkan Shafukan Rukuni**: Yana bi shafukan rukunin ɗaya bayan ɗaya yana ɗaukar hotonsu (`Cs` wanda ake gani, `Cp` cikakken shafi, `CP` sassan cikakken shafi).
 
-Ƙwararrun masu amfani za su iya saka burauza a yanayin cikakken allo kuma su kewaya gaba ɗaya ta hanyar madannai, ba tare da amfani da bera (mouse) ko kaɗan ba.
+### 3.4 Tsarin Ajiye Kwafi da Maido da Rukunoni
+- **Ma'ajiyar `backupsGroups` a IndexedDB**:
+  - Yana ajiye kwafin rukunin shafi ɗaya ko duk rukunonin da ke buɗe a wurin aiki a cikin ma'ajiyar IndexedDB `Intelligent_Workspace` mai suna `backupsGroups`.
+  - Yana ɗaukar cikakken tsarin rukuni: taken rukuni, launi, yanayin naɗewa, taken shafuka, URLs, alamun favicon, matsayin maƙalawa, da wuraren shafuka.
+  - **Kare Ma'ajiya**: Shafukan da aka ajiye kwafinsu ana rufe su cikin tsabta don dawo da ƙarfin RAM da rage nauyin CPU.
+  - **Hanyoyin Mayarwa**:
+    - Fuskar UI ta Kwafi a cikin `ListGroup.svelte` tare da maido da rukuni da dannawa ɗaya.
+    - Gajerun hanyoyin maɓallai `br` (maido) da `bg` (ajiye kwafin duka).
+    - Umarnin Omnibar `bgr:` (bincika da maido da rukunonin da aka ajiye kwafinsu) da `b:` (binciken alamun shafi).
+  - **Fitarwa da Shigarwar JSON**: Cikakken fitarwa da shigar da kwafin JSON don sauƙin matsawa tsakanin kwamfutoci da adana bayanai na dogon lokaci ba tare da intanet ba.
 
-#### Full-Screen Immersion & Mouse-Free Browsing
-- **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.
-- **In-Page Vim Link Navigation (`f` / `cf`)**:
-  - Press `f` to generate high-contrast two-character yellow link hints over every clickable element, button, input, and link in the DOM.
-  - Type the two letters matching your target to simulate a direct click without mouse interaction.
-  - Press `cf` to trigger hint badges that copy the target link's URL directly to your system clipboard.
-  - Press `vp` to open an in-page preview modal of the target link.
-  - Press `Esc` at any time to cancel link hints and return to normal scrolling.
-- **Instant Tab Jumping & Switching**:
-  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Execute the Fast Tab Jump gesture (e.g., `Alt + dev + 1 + Enter` jumps directly to the first tab in the "Dev" group; index `0` selects the last tab in the group).
-  - `s`: Instantly swap between the current tab and the previously active tab (`previousActiveTabId`).
-  - `h` / `l`: Step sequentially to the previous / next tab in the tab strip.
-  - `H` / `L`: Move backward / forward through browser navigation history.
-  - `t` / `x` / `yt`: Open a new tab (`t`), close current tab (`x`), or duplicate tab (`yt`).
-- **Floating Omnibar Command Subsystem (`o`)**:
-  - Press `o` on any page to summon the centered Omnibar overlay.
-  - Press `@` to display the interactive directory of all 41 command prefixes.
-  - Type `f: <query>` to execute deep full-text tab search across all open windows.
-  - Type `sp:` to route navigation directly into any Sidepanel view (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
-  - Type `qai: <query>` or `qaia: <task>` to query Gemini or instruct the autonomous browser agent without lifting hands from the keyboard.
-  - Type `ts:` to split open tabs into side-by-side split screen.
-- **In-Page Navigation & Focus**:
-  - `j` / `k`: Smooth scroll down / up (75px increment).
-  - `d` / `u`: Half-page scroll down / up.
-  - `i`: Jump cursor focus immediately into the primary text input field on the page.
-  - `ESC`: Unfocus inputs and return keyboard focus to navigation mode.
-
-### 4.3 Audio & Sound Management
-- Tabs playing audio display a speaker badge in the ListGroup UI.
-- `st`: Toggle mute on the current active tab.
-- `so`: Mute all audible tabs across the entire browser.
-- Context menu: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
-
-### 4.4 Split Screen Workflows
-- **Trigger**: Vim hint `ts` or Omnibar prefix `ts:`.
-- **Behavior**: Uses `chrome.system.display` to calculate screen geometry. Splits two tabs side-by-side into adjacent windows, grouping them under a dedicated `Split` tab group.
-- **Restoration**: Closing the split window or toggling split screen restores original window dimensions and coordinates.
-
-### 4.5 YouTube Looping Subsystem
-The YouTube looping subsystem provides precision media looping controls integrated directly into the YouTube player:
-- **Desktop Player Button (`#itg-yt-loop-button`)**: Injected into the standard YouTube player control bar (`.ytp-right-controls`), positioned to the left of the Cast / Remote button or PiP launcher. Features animated SVG looping glyphs, toggle highlight styling (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), and `aria-pressed` states.
-- **Shorts Player Button (`#itg-yt-shorts-loop-button`)**: Injected inside `#itg-yt-shorts-loop-wrapper` into the YouTube Shorts right-side control column (`ytd-shorts`), providing one-click looping for vertical video content.
-- **Loop Menu & PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Hovering or clicking the loop button opens the comprehensive loop settings menu:
-  - **A-B Looping**: Users can set custom start point (A) and end point (B) down to millisecond precision with interactive range sliders and manual time fields.
-  - **Cycle Mode & Sequence Repetitions**: Set repetition count for specific loops or toggle infinite loop mode (`itg-loop-seq-inf`).
-  - **Loop List & Multi-Segment Sequences**: Queue multiple A-B loop intervals that play consecutively according to configured repetitions.
-  - **Status & Duration Display**: Shows real-time playback position within current loop interval and total media duration (`00:00 / 00:00`).
-  - **Master Toggle (`youtubeLoopEnabled`)**: Persisted in `chrome.storage.sync` and `local`, allowing users to enable or disable the loop buttons across YouTube and YouTube Shorts via the Customize Hints settings page (`YoutubeLoopSection.svelte`).
-
-### 4.6 YouTube Shorts Preview Audio
-- **Audio Unmute Hook (`youtubePreviewAudioHook.js`)**:
-  - Runs in the `MAIN` execution world to access the `#inline-preview-player` property on `ytd-video-preview` elements.
-  - **Overcoming Forced Mute**: YouTube enforces a forced mute on Shorts previews by clearing audio controls and restoring `muted = true` via internal `volumechange` listeners.
-  - The extension hooks `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover. It drops YouTube's forced re-mute while allowing user unmuting, ensuring sound plays continuously without being interrupted across loop restarts until mouse leave.
-
-### 4.7 Picture-in-Picture (PiP) Architecture
-- **Document Picture-in-Picture (`wp`)**:
-  - Leverages the modern `documentPictureInPicture` API to open an entire webpage or text snippet inside an always-on-top floating window.
-  - Automatically synchronizes video playback timestamps when transferring media.
-  - Features retry logic (`itgRetryIfPipFrameRefused`) and cleans up DNR iframe headers upon close.
-- **Video Picture-in-Picture (`wv`)**:
-  - Hooks `HTMLVideoElement.prototype.requestPictureInPicture` via `videoPipHook.js`.
-  - Redirects video players into custom PiP frames with loop controls and playback speed selectors.
-- **Auto-PiP**:
-  - `as`: Toggle Auto-PiP on scroll (launches video in PiP when scrolled out of viewport).
-  - `ah`: Toggle Auto-PiP on tab hide (launches video in PiP when switching to another tab).
-
-### 4.8 Page Reading Modes & Visual Overlays
-- **CSS Filter Themes**: Injects non-destructive styles into web pages:
-  - `mb` / `mB`: Black (Dark High-Contrast) — tab scope / global scope.
-  - `ms` / `mS`: Sepia (Warm Paper) — tab scope / global scope.
-  - `mp` / `mP`: Paper (Monochrome Grayscale) — tab scope / global scope.
-  - `ml` / `mL`: Light (Soft White) — tab scope / global scope.
-  - `me` / `mE`: Custom user-defined CSS filter — tab scope / global scope.
-  - `ESC`: Immediately removes active page filter.
-- **Reader Mode & TTS Read Aloud**:
-  - `fetchContentForReaderView`: Extracts clean article content, removing advertisements, sidebars, and navigation noise.
-  - Built-in Text-to-Speech (TTS) engine reading text aloud sentence by sentence.
-  - Keyboard navigation controls: `zp` (play/pause), `zn` (next sentence), `zb` (previous sentence), `zq` (close reader overlay).
-
-### 4.9 Text Snippets Subsystem with Template Variables
-The Text Snippets subsystem (`SnippetManager` in `src/utils/hint/snippets.js` and `src/utils/snippet-panel.js`) accelerates typing by expanding text shortcuts in any input, textarea, or rich editor:
-- **Trigger Modalities**: Type shortcut followed by Space, or type `$$` to summon the interactive snippets search popup.
-- **Clipboard API Integration**: Supports formatted HTML and plain text insertion via the Clipboard API, ensuring 100% compatibility with complex editors like Google Docs, Notion, and Slack.
-- **Template Variables**: Dynamically resolves variables at the moment of expansion:
-  - `{{date}}` / `date`: Formatted locale date (`toLocaleDateString`).
-  - `{{isodate}}` / `isodate`: ISO 8601 date (`YYYY-MM-DD`).
-  - `{{longdate}}` / `longdate`: Long date with weekday, day, month, and year.
-  - `{{time}}` / `time`: 2-digit formatted time (`HH:MM`).
-  - `{{datetime}}` / `datetime`: Date and time combined.
-  - `{{weekday}}` / `weekday`: Full day name (e.g., Monday).
-  - `{{day}}` / `day`: Day of month (1-31).
-  - `{{month}}` / `month`: Full month name (e.g., October).
-  - `{{year}}` / `year`: Full 4-digit year.
-  - `{{tomorrow}}` / `tomorrow`: Next day's date (+1 day).
-  - `{{yesterday}}` / `yesterday`: Previous day's date (-1 day).
-  - `{{nextweek}}` / `nextweek`: Date 7 days ahead (+7 days).
-  - `{{timestamp}}` / `timestamp`: Epoch millisecond timestamp (`Date.now()`).
-  - `{{url}}` / `url`: Active webpage URL (`window.location.href`).
-  - `{{domain}}` / `domain`: Active domain hostname (`window.location.hostname`).
-  - `{{pagetitle}}` / `pagetitle`: Active document title (`document.title`).
-  - `{{uuid}}` / `uuid`: Cryptographically secure unique identifier (`crypto.randomUUID()`).
-  - `{{random}}` / `random`: Random integer between 1 and 1000.
-  - `{{clipboard}}` / `clipboard`: System clipboard buffer text.
-
-### 4.10 Embedded Productivity Tools
-- **Allow Right Click Hook (`allowRightClickHook.js`)**:
-  - Injected into the `MAIN` execution world to neutralize hostile web scripts that disable right-click context menus, copy, cut, or text selection.
-  - Intercepts `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-  - Clears inline `oncontextmenu="return false"` handlers via a persistent `MutationObserver`.
-  - Verifies clipboard payloads to prevent breaking legitimate web editors (Google Docs, Telegram Web).
-- **Cookie Editor**: In-page modal inspecting, editing, creating, and deleting HTTP and HTTPS cookies for the active domain.
-- **QR Code Generator**: Generates SVG/Canvas QR codes for the active tab URL for rapid mobile handover.
-- **Clean PDF Print Export**: Routes target pages through `print.html` with headers, ads, and navigational noise stripped for clean document archiving.
-
-### 4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding
-- **Comprehensive 3-Tier Duplicate Removal**:
-  1. **Tab Deduplication (`removeDuplicateTabsCommand`)**: Scans open tabs across windows or focused groups, identifies duplicate URLs, exempts `Split` screen tabs, and closes redundant tabs while keeping the active or oldest tab. Displays a desktop summary notification.
-  2. **Bookmark Deduplication**: Deep scans Chrome bookmark trees, locates identical URL duplicates across folders, and provides batch consolidation to keep bookmarks clean.
-  3. **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs to existing custom grouping rules, preventing rule inflation.
-- **Intelligent Memory Discarding (`suspendInactiveTabsIntelligently`)**:
-  - Evaluated every 1 minute via alarm `itg-periodic-tasks`.
-  - Discards tabs inactive >= `discardingTimeMinutes` (default: 60 minutes).
-  - Built-in immunity protections: Never discards active tabs, audible tabs playing audio, pinned tabs, or already suspended tabs.
+### 3.5 Na'urar Kunna YouTube da Aka Ajiye a Wurin Rukunoni Masu Ɓoye
+- **Tsarin Gine-gine (`HiddenGroupsBar.svelte`)**:
+  - Lokacin da mai amfani ya fita daga shafin bidiyon YouTube ko ya buɗe bidiyo a cikin side panel, ba a rufe na'urar kunna bidiyon ko rasa ta. Ana ajiye ta ta atomatik a cikin `HiddenGroupsBar.svelte` a matsayin alamar YouTube da aka ajiye (`.youtube-indicator`).
+  - Ana sarrafa ta ta hanyar ma'ajiyar `hiddenYoutubeView` a cikin `src/ui/stores/appStore.svelte.js`.
+  - **Ayyuka da Dannawa Ɗaya**:
+    - Danna alamar da aka ajiye yana kiran `restoreYoutubeView()`, yana mayar da na'urar kunna bidiyo nan take zuwa wurin aiki mai aiki.
+    - Danna alamar gogewa yana kiran `discardYoutubeView()`, yana dakatar da kunna bidiyon cikin tsabta tare da dawo da kayan aiki.
+  - Tana zama cikin sauƙi tare da rukunonin shafuka masu ɓoye a saman fuskar ListGroup ba tare da cika jerin shafuka masu aiki ba.
 
 ---
 
-## 5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)
+## 4. Sashe na 3: Kewayawa da Sarrafa Shafuka (Navegación)
 
-The AI Assistant integrates large language models into the browser to provide contextual understanding, automated workflows, and direct browser automation.
+Saurin kewayawa ta maɓallan kwamfuta da sarrafa wurin aiki suna ba da damar cikakken iko a kan shafuka da yawa ba tare da amfani da linzamin kwamfuta (mouse) ba.
 
-### 5.1 Dual Model Engine Architecture
+### 4.1 Motsin Tsallaka Shafuka Cikin Sauri
+- **Tsarin Umarni**: `Alt + [groupPrefix] + [tabIndex] + Enter`
+- **Yadda Ake Yi**:
+  - Riƙe `Alt` sannan ka rubuta sunan rukunin ko haruffan farko, sannan ka sanya lambar shafin da kake so (farawa daga 1), sannan ka danna `Enter`.
+  - Misali: `Alt + git + 2 + Enter` yana tsallakawa kai tsaye zuwa shafi na biyu a cikin rukunin "GitHub".
+  - Lambar `0` tana aiki ne a matsayin gajeriyar hanya zuwa shafi na *ƙarshe* a cikin rukunin.
+  - Barin lambar yana tsallakawa ne zuwa shafi na *farko* a cikin rukunin.
+  - Ana daidaita alamomin rubutu ta atomatik (`deaccent`) kuma bincike yana cire bambancin alamomi.
+
+### 4.2 Maɓallan Takawa, Musayawa, da Sarrafa Rayuwar Shafi
+- `s`: Musanya nan take zuwa shafin da ke aiki a baya (`previousActiveTabId`).
+- `h` / `l`: Matsa zuwa shafin da ya gabata / na gaba (ko gungura gefe idan shafin ya ba da dama).
+- `H` / `L`: Koma baya / ci gaba a tarihin manhaja.
+- `t`: Buɗe sabon shafi marar komai.
+- `x`: Rufe shafin da ke aiki a halin yanzu.
+- `yt`: Yi kwafin shafin da ke aiki a halin yanzu.
+- `r` / `R`: Sake loda shafi / Tilasta sake lodawa ba tare da amfani da cache ba.
+- `d` / `u`: Gungura zuwa ƙasan / saman shafi.
+- `j` / `k`: Gungura ƙasa / sama a hankali (matakin 75px).
+- `f`: Kunna alamomin hanyoyin Vim (haruffa suna bayyana a kan abubuwan da za a iya dannawa).
+- `cf`: Kunna alamomin hanyoyin Vim don kwafar URL zuwa allon kwafi (clipboard).
+
+### Ga ƙwararrun masu amfani
+
+Ƙwararrun masu amfani za su iya sanya manhajar bincike a yanayin cikakken allo (full-screen) kuma su kewaya gaba ɗaya ta hanyar maɓallan kwamfuta, ba tare da amfani da linzamin kwamfuta ko kaɗan ba.
+
+#### Cikakken Shiga Ciki da Yin Bincike Ba Tare da Linzamin Kwamfuta Ba
+- **Shiga/Fita Cikakken Allo**: Danna `F11` (Windows/Linux) ko `Command+Control+F` (macOS). Kayan aikin manhaja, mashigin adireshi, mashigin shafuka, da allunan tsarin kwamfuta za su ɓuya, suna barin 100% na allon don abun ciki kawai.
+- **Kewayawa ta Hanyoyin Vim a Shafi (`f` / `cf`)**:
+  - Danna `f` don samar da alamomin haruffa biyu masu launin rawaya a kan kowane abu da za a iya dannawa, maɓalli, wurin rubutu, da hanyar yanar gizo a cikin DOM.
+  - Rubuta haruffa biyu da suka dace da inda kake son shiga don dannawa kai tsaye ba tare da linzamin kwamfuta ba.
+  - Danna `cf` don kunna alamomin da ke kwafar URL na hanyar da aka nufa kai tsaye zuwa allon kwafin kwamfutarka.
+  - Danna `vp` don buɗe ƙaramar taga ta duba hanyar da aka nufa a cikin shafi.
+  - Danna `Esc` a kowane lokaci don soke alamomin hanyoyi da komawa gungurawa ta al'ada.
+- **Tsallaka da Canza Shafuka Cikin Sauri**:
+  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Yi motsin tsallaka shafi cikin sauri (misali, `Alt + dev + 1 + Enter` yana tsallakawa kai tsaye zuwa shafi na farko a rukunin "Dev"; lamba `0` tana zaɓar shafi na ƙarshe a rukunin).
+  - `s`: Musanya nan take tsakanin shafin yanzu da shafin da ya yi aiki a baya (`previousActiveTabId`).
+  - `h` / `l`: Taka a jere zuwa shafin da ya gabata / na gaba a mashigin shafuka.
+  - `H` / `L`: Matsa baya / gaba a cikin tarihin kewayawa na manhaja.
+  - `t` / `x` / `yt`: Buɗe sabon shafi (`t`), rufe shafin yanzu (`x`), ko yi kwafin shafi (`yt`).
+- **Tsarin Umarnin Omnibar Mai Yawo (`o`)**:
+  - Danna `o` a kowane shafi don kiran Omnibar a tsakiyar allo.
+  - Danna `@` don nuna cikakken jerin dukkan prefixes 41 na umarni.
+  - Rubuta `f: <query>` don gudanar da cikakken binciken rubutu a duk shafukan da ke buɗe a duk tagogi.
+  - Rubuta `sp:` don tura kewayawa kai tsaye zuwa kowace fuskar Sidepanel (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
+  - Rubuta `qai: <query>` ko `qaia: <task>` don tambayar Gemini ko ba wa wakilin manhaja umarni ba tare da cire hannu daga kan maɓallai ba.
+  - Rubuta `ts:` don raba shafukan da ke buɗe su zama gefe-da-gefe.
+- **Kewayawa Cikin Shafi da Mayar da Hankali**:
+  - `j` / `k`: Gungura ƙasa / sama a hankali (ƙarin 75px).
+  - `d` / `u`: Gungura rabin shafi ƙasa / sama.
+  - `i`: Mayar da maƙallin rubutu (cursor) nan take zuwa babban filin rubutu a shafin.
+  - `ESC`: Cire mayar da hankali daga filin rubutu da komawa yanayin kewayawa.
+
+### 4.3 Sarrafa Sauti da Saututtuka
+- Shafukan da ke kunna sauti suna nuna alamar lasifika a cikin ListGroup UI.
+- `st`: Kunna ko kashe sautin shafin da ke aiki a halin yanzu.
+- `so`: Kashe sautin duk shafuka masu sauti a cikin dukkan manhajar bincike.
+- Zaɓin danna dama: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
+
+### 4.4 Hanyoyin Raba Fuska
+- **Kunnawa**: Alamar Vim `ts` ko prefix na Omnibar `ts:`.
+- **Aiki**: Yana amfani da `chrome.system.display` don lissafin girman allo. Yana raba shafuka biyu gefe-da-gefe zuwa tagogi biyu da ke kusa da juna, yana haɗa su a ƙarƙashin rukunin shafuka na musamman mai suna `Split`.
+- **Maidowa**: Rufe tagar da aka raba ko sauya yanayin raba fuska yana mayar da girman taga da wurinta na asali.
+
+### 4.5 Tsarin Maimaita Bidiyon YouTube
+Tsarin maimaita bidiyon YouTube yana ba da ingantaccen iko na maimaita faifan bidiyo wanda aka haɗa kai tsaye a cikin na'urar kunna bidiyo ta YouTube:
+- **Maɓallin Na'urar Kwamfuta (`#itg-yt-loop-button`)**: An sanya shi a cikin mashigin sarrafa na'urar YouTube (`.ytp-right-controls`), a gefen hagu na maɓallin Cast / Remote ko na buɗe PiP. Yana ɗauke da hoton SVG mai motsi, launin nunawa (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), da yanayin `aria-pressed`.
+- **Maɓallin Shorts (`#itg-yt-shorts-loop-button`)**: An sanya shi a ciki `#itg-yt-shorts-loop-wrapper` a shafi na hannun dama na YouTube Shorts (`ytd-shorts`), yana ba da damar maimaita gajerun bidiyoyi da dannawa ɗaya.
+- **Zaɓuɓɓukan Maimaitawa da Tagar PiP (`#itg-yt-loop-menu` da `#itg-pip-loop-popup`)**: Tsayawa a kai ko danna maɓallin maimaitawa yana buɗe cikakken menu na saitunan maimaitawa:
+  - **Maimaita A-B**: Masu amfani za su iya saita wurin farawa (A) da wurin ƙarewa (B) har zuwa matakin millisecond tare da sandunan zamewa da filayen saka lokaci na hannu.
+  - **Yanayin Zagaye da Adadin Maimaitawa**: Saita adadin maimaita takamaiman sashe ko kunna yanayin maimaitawa marar iyaka (`itg-loop-seq-inf`).
+  - **Jerin Maimaitawa da Jerin Sassa Masu Yawa**: Jeranta sassa da yawa na A-B waɗanda za su riƙa tashi a jere bisa adadin da aka saita.
+  - **Nuna Hali da Tsawon Lokaci**: Yana nuna matsayin bidiyon a cikin sashen da ake ciki da kuma jimillar tsawon lokacin bidiyon (`00:00 / 00:00`).
+  - **Babban Maɓalli (`youtubeLoopEnabled`)**: Ana adana shi a cikin `chrome.storage.sync` da `local`, yana ba masu amfani damar kunna ko kashe maɓallan maimaitawa a YouTube da YouTube Shorts ta shafin Customize Hints (`YoutubeLoopSection.svelte`).
+
+### 4.6 Sautin Duba YouTube Shorts
+- **Dabarar Buɗe Sauti (`youtubePreviewAudioHook.js`)**:
+  - Yana aiki a duniyar `MAIN` don samun damar shiga kaddarar `#inline-preview-player` a kan abubuwan `ytd-video-preview`.
+  - **Shawo Kan Tilasta Kashe Sauti**: YouTube yana tilasta kashe sauti a kan duban Shorts ta hanyar share kayan sarrafa sauti da mayar da `muted = true` ta hanyar masu sauraron `volumechange` na ciki.
+  - Wannan ƙarin manhaja yana tare kaddarar `HTMLMediaElement.prototype.muted` a kan asalin `<video>` lokacin da linzamin kwamfuta ya tsaya a kai. Yana hana sake kashe sauti da YouTube ke tilastawa yayin da yake barin mai amfani ya kunna sauti, yana tabbatar da cewa sauti yana tashi ba tare da katsewa ba har sai linzamin kwamfuta ya fita.
+
+### 4.7 Tsarin Hoto-cikin-Hoto (PiP)
+- **Hoto-cikin-Hoto na Takarda (`wp`)**:
+  - Yana amfani da sabuwar hanyar `documentPictureInPicture` API don buɗe cikakken shafin yanar gizo ko guntun rubutu a cikin ƙaramar taga mai yawo a saman komai.
+  - Yana daidaita lokacin bidiyo ta atomatik lokacin canja wurin kallo.
+  - Yana da tsarin sake gwadawa (`itgRetryIfPipFrameRefused`) kuma yana share bayanan kai na DNR iframe idan an rufe.
+- **Hoto-cikin-Hoto na Bidiyo (`wv`)**:
+  - Yana tare `HTMLVideoElement.prototype.requestPictureInPicture` ta hanyar `videoPipHook.js`.
+  - Yana tura na'urorin kunna bidiyo zuwa fuskokin PiP na musamman tare da kayan sarrafa maimaitawa da zaɓin saurin kallo.
+- **Auto-PiP (Kunnawa ta Automatik)**:
+  - `as`: Kunna/kashe Auto-PiP yayin gungurawa (yana buɗe bidiyo a PiP idan ya fita daga allon kallo).
+  - `ah`: Kunna/kashe Auto-PiP yayin ɓoye shafi (yana buɗe bidiyo a PiP idan aka canza zuwa wani shafin).
+
+### 4.8 Hanyoyin Karanta Shafi da Sauye-sauyen Bayyanar Gani
+- **Launukan Tacewar CSS**: Yana sanya salo a cikin shafukan yanar gizo ba tare da ɓata su ba:
+  - `mb` / `mB`: Baƙi (Babban Bambancin Duhu) — fannin shafi / fannin duniya baki ɗaya.
+  - `ms` / `mS`: Sepia (Takarda Mai Dumi) — fannin shafi / fannin duniya baki ɗaya.
+  - `mp` / `mP`: Takarda (Fari da Baƙi Zalla) — fannin shafi / fannin duniya baki ɗaya.
+  - `ml` / `mL`: Haske (Fari Mai Taushi) — fannin shafi / fannin duniya baki ɗaya.
+  - `me` / `mE`: Tacewar CSS ta musamman da mai amfani ya tsara — fannin shafi / fannin duniya baki ɗaya.
+  - `ESC`: Yana cire salon tacewar shafi nan take.
+- **Yanayin Karatu da Karanta da Murya (TTS)**:
+  - `fetchContentForReaderView`: Yana ciro sahihin abun cikin maƙala, yana cire tallace-tallace, shafukan gefe, da abubuwan ɗauke hankali na kewayawa.
+  - Injin karanta rubutu da murya (TTS) da ke karanta rubutu jumla-jumla da babbar murya.
+  - Kayan sarrafa kewayawa na maɓallai: `zp` (kunna/tsayar), `zn` (jumla ta gaba), `zb` (jumla ta baya), `zq` (rufe yanayin karatu).
+
+### 4.9 Tsarin Gajerun Rubuce-rubuce tare da Sauye-sauyen Samfuri
+Tsarin Gajerun Rubuce-rubuce (`SnippetManager` a cikin `src/utils/hint/snippets.js` da `src/utils/snippet-panel.js`) yana saurin rubutu ta hanyar buɗe gajerun kalmomi a cikin kowane filin shigarwa, textarea, ko babban edita:
+- **Hanyoyin Kunnawa**: Rubuta gajeriyar kalma sannan ka danna Space, ko ka rubuta `$$` don kiran tagar binciken gajerun rubuce-rubuce.
+- **Haɗin Clipboard API**: Yana goyon bayan shigar da tsarin HTML da rubutu zalla ta Clipboard API, yana tabbatar da 100% dacewa da manyan editoci kamar Google Docs, Notion, da Slack.
+- **Sauye-sauyen Samfuri (Template Variables)**: Yana mayar da sauye-sauye zuwa ainihin bayansu a lokacin buɗewa:
+  - `{{date}}` / `date`: Kwanan wata na yanki (`toLocaleDateString`).
+  - `{{isodate}}` / `isodate`: Kwanan wata na ISO 8601 (`YYYY-MM-DD`).
+  - `{{longdate}}` / `longdate`: Dogon kwanan wata tare da ranar mako, rana, wata, da shekara.
+  - `{{time}}` / `time`: Lokaci mai lamba biyu (`HH:MM`).
+  - `{{datetime}}` / `datetime`: Haɗin kwanan wata da lokaci.
+  - `{{weekday}}` / `weekday`: Cikakken sunan rana (misali, Litinin).
+  - `{{day}}` / `day`: Ranar wata (1-31).
+  - `{{month}}` / `month`: Cikakken sunan wata (misali, Oktoba).
+  - `{{year}}` / `year`: Cikakkiyar shekara mai lamba 4.
+  - `{{tomorrow}}` / `tomorrow`: Kwanan watan gobe (+rana 1).
+  - `{{yesterday}}` / `yesterday`: Kwanan watan jiya (-rana 1).
+  - `{{nextweek}}` / `nextweek`: Kwanan watan mako mai zuwa (+kwanaki 7).
+  - `{{timestamp}}` / `timestamp`: Lokacin millisecond na zamani (`Date.now()`).
+  - `{{url}}` / `url`: URL na shafin da ke aiki (`window.location.href`).
+  - `{{domain}}` / `domain`: Sunan masaukin yanki mai aiki (`window.location.hostname`).
+  - `{{pagetitle}}` / `pagetitle`: Taken shafin da ke aiki (`document.title`).
+  - `{{uuid}}` / `uuid`: Lambar shaida ta musamman mai tsaro (`crypto.randomUUID()`).
+  - `{{random}}` / `random`: Lambar bazuwar tsakanin 1 da 1000.
+  - `{{clipboard}}` / `clipboard`: Rubutun da ke cikin allon kwafin kwamfuta.
+
+### 4.10 Kayan Aikin Ƙwarewa Masu Haɗe
+- **Kariyar Danna Dama (`allowRightClickHook.js`)**:
+  - An sanya shi a duniyar `MAIN` don kawar da rubutun shafukan yanar gizo da ke hana danna dama, kwafi, yanke, ko zaɓar rubutu.
+  - Yana tare `preventDefault()` da `stopPropagation()` a kan `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, da `mouseup`.
+  - Yana share tsarin `oncontextmenu="return false"` ta hanyar `MutationObserver` mai dorewa.
+  - Yana duba bayanan allon kwafi don guje wa lalata sahihan editocin yanar gizo (Google Docs, Telegram Web).
+- **Mai Gyara Cookies**: Ƙaramar taga a cikin shafi mai dubawa, gyarawa, ƙirƙira, da goge cookies na HTTP da HTTPS na yankin da ke aiki.
+- **Mai Samar da Lambar QR**: Yana samar da lambobin QR na SVG/Canvas don URL na shafin da ke aiki don sauƙin turawa zuwa wayar hannu.
+- **Fitar da PDF Cikin Tsabta**: Yana tura shafuka ta `print.html` tare da cire bayanan kai, tallace-tallace, da hayaniyar kewayawa don adana sahihin takarda.
+
+### 4.11 Cikakken Tsarin Matakai 3 na Cire Kwafi da Watsar da Shafuka Masu Barci
+- **Cikakken Tsarin Matakai 3 na Cire Kwafi**:
+  1. **Cire Kwafin Shafuka (`removeDuplicateTabsCommand`)**: Yana duba shafukan da ke buɗe a duk tagogi ko rukunonin da aka mai da hankali a kansu, yana gano adiresoshin URL iri ɗaya, yana keɓe shafukan raba fuska na `Split`, kuma yana rufe shafukan da ba a buƙata yayin da yake barin shafi mai aiki ko wanda ya fi daɗewa. Yana nuna taƙaitaccen sanarwa a kan allon kwamfuta.
+  2. **Cire Kwafin Alamun Shafi (Bookmarks)**: Yana zurfafa bincike a kan rassan alamun shafi na Chrome, yana gano URLs iri ɗaya a cikin manyan foldoji daban-daban, yana ba da damar haɗa su wuri guda don tsabtace alamun shafi.
+  3. **Cire Kwafin Ƙa'idoji (`feature_v100_dedup_add_to_rule`)**: Yana cire kwafin hanyoyin URL ta atomatik yayin ƙara sabbin URLs zuwa ƙa'idojin rarraba rukuni da ake da su, yana hana hauhawar ƙa'idoji.
+- **Watsar da Shafuka Masu Barci Cikin Hikima (`suspendInactiveTabsIntelligently`)**:
+  - Ana duba shi kowane minti 1 ta hanyar ƙararrawar `itg-periodic-tasks`.
+  - Yana watsar da shafukan da ba su yi aiki ba na tsawon >= `discardingTimeMinutes` (asali: mintuna 60).
+  - Kariya ta musamman: Ba ya taɓa watsar da shafuka masu aiki, shafuka masu kunna sauti, shafukan da aka maƙala, ko shafukan da aka riga aka watsar da su.
+
+---
+
+## 5. Sashe na 4: Mataimakin AI da Wakili Mai Cin Gashin Kansa (Asistente AI)
+
+Mataimakin AI yana haɗa manyan samfuran harshe (LLMs) a cikin manhaja don samar da fahimtar mahallin aiki, ayyuka masu sarrafa kansu, da kuma cikakken iko a kan manhajar bincike.
+
+### 5.1 Tsarin Injunan Ƙirar Biyu
 1. **Google Gemini Cloud API (`gemini-api.js`)**:
-   - Integrates with Google Generative Language REST endpoints (`v1beta/models/{model}:generateContent` and `:streamGenerateContent`).
-   - Supports Gemini 2.5 Flash, Gemini 2.5 Pro, and custom model endpoints.
-   - **Multi-Key Rotation**: Manages key pools in `geminiApiKeysList`. Storage obfuscation uses `enc_` prefixes.
-   - **Exponential Backoff**: Handles HTTP 429 quota exhaustion with automated backoff retry (1.5s -> 3s -> 6s).
-   - **Search Grounding**: Enables Google Search Grounding (`google_search: {}`). If HTTP 403 occurs due to quota restrictions on search tools, it automatically retries without grounding.
-2. **Chrome Built-in AI / Prompt API (`localAiService.js`)**:
-   - On-device Gemini Nano integration via `window.LanguageModel`.
-   - Supports zero-network local execution. Includes model availability checking and live download progress tracking.
+   - Yana haɗuwa da hanyoyin Google Generative Language REST (`v1beta/models/{model}:generateContent` da `:streamGenerateContent`).
+   - Yana goyon bayan Gemini 2.5 Flash, Gemini 2.5 Pro, da hanyoyin samfuran musamman.
+   - **Sauya Maɓallan Sirri**: Yana sarrafa maɓallan sirri da yawa a cikin `geminiApiKeysList`. Boye ma'ajiya yana amfani da prefixes na `enc_`.
+   - **Jinkirin Sakewa (Exponential Backoff)**: Yana shawo kan matsalar ƙarewar ƙa'idar HTTP 429 ta hanyar sake gwadawa a hankali (1.5s -> 3s -> 6s).
+   - **Kafa Hujja da Bincike (Search Grounding)**: Yana kunna Google Search Grounding (`google_search: {}`). Idan kuskuren HTTP 403 ya faru saboda ƙuntatawar kayan aikin bincike, yana sake gwadawa ta atomatik ba tare da binciken ba.
+2. **AI da Aka Gina Cikin Chrome / Prompt API (`localAiService.js`)**:
+   - Haɗin Gemini Nano a cikin na'ura ta hanyar `window.LanguageModel`.
+   - Yana goyon bayan aiki a cikin na'ura ba tare da intanet ba. Ya haɗa da duba samun samfurin da kuma bin diddigin saukar da shi kai tsaye.
 
-### 5.2 Autonomous Browser Agent (`agent-backend.js`)
-The autonomous agent provides full browser control through 40+ structured tools:
-- **Tab & Group Control**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
-- **Navigation & Search**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
-- **Knowledge & Bookmarks**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
-- **Rules & Appearance**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
+### 5.2 Wakilin Manhaja Mai Cin Gashin Kansa (`agent-backend.js`)
+Wakili mai cin gashin kansa yana ba da cikakken iko a kan manhaja ta hanyar kayan aiki sama da 40:
+- **Sarrafa Shafi da Rukuni**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
+- **Kewayawa da Bincike**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
+- **Ilimi da Alamun Shafi**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
+- **Ƙa'idoji da Bayyanar Siffa**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
 
-### 5.3 Taint Tracking & Prompt Injection Defense
-To neutralize indirect prompt injection attacks from untrusted web pages, the agent backend implements strict taint tracking:
-- **Taint Marking**: Calling `getActiveTabContent` extracts text from a web page and marks the current execution run as tainted (`taintedAgentRuns.add(runId)`).
-- **Egress Guard**: Tainted runs are strictly prohibited from invoking egress tools (`AGENT_EGRESS_TOOLS`):
+### 5.3 Bibiyar Gurɓatawa da Kariya Daga Kutsen Umarni
+Don kare kai daga harin kutsen umarni ta kaikaice daga shafukan yanar gizo marasa aminci, tsarin wakilin yana amfani da ingantaccen bibiyar gurɓatawa:
+- **Alamar Gurɓatawa**: Kiran `getActiveTabContent` yana ciro rubutu daga shafin yanar gizo kuma yana sanya wa aikin da ake ciki alamar gurɓatacce (`taintedAgentRuns.add(runId)`).
+- **Kariyar Fitar da Bayanai**: Ayyukan da aka yi wa alamar gurɓatacce an hana su sosai kiran kayan aikin fitar da bayanai (`AGENT_EGRESS_TOOLS`):
   * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`.
-- **Refusal Mechanism**: Rather than throwing an unhandled exception, the engine returns a structured security explanation. The LLM then informs the user that external data cannot be exfiltrated without explicit user consent.
+- **Hanyar Ƙin Karɓa**: Maimakon jefa kuskuren da ba a kula da shi ba, injin yana dawo da bayanin tsaro na musamman. Daga nan LLM zai sanar da mai amfani cewa ba za a iya fitar da bayanan waje ba tare da cikakken izininsa ba.
 
-### 5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)
-- **Background Execution Engine**:
-  - Automates scheduled AI prompt execution directly within the background service worker via `chrome.alarms` (`gemini-scheduled-*`).
-  - Supports up to 6 scheduled queries per day (`MAX_TIMES = 6`).
-  - **Schedules Modes**:
-    - Recurring Schedules: Executes repeatedly on selected days of the week (`selectedDays`).
-    - One-Time Schedules: Executes at a specific target date and time (`formDate`).
-  - **Prompt Limits**: Enforces a strict 1,000-character prompt limit (`MAX_QUERY_CHARS = 1000`) with real-time character counters.
-  - **Background Notifications**: Fires a desktop notification with a snippet preview when the background query finishes. Clicking the notification immediately opens the response thread inside the sidepanel chat.
+### 5.4 Tsarin Shirya Tambayoyin Gemini na Lokaci (`GeminiScheduleModal.svelte`)
+- **Injin Aiki na Bayan Fage**:
+  - Yana sarrafa gudanar da umarnin AI na lokaci kai tsaye a cikin service worker na bayan fage ta hanyar `chrome.alarms` (`gemini-scheduled-*`).
+  - Yana goyon bayan tambayoyi har guda 6 da aka shirya a rana ɗaya (`MAX_TIMES = 6`).
+  - **Yanayin Shirye-shiryen Lokaci**:
+    - Shirye-shiryen Maimaitawa: Yana aiki akai-akai a ranakun mako da aka zaɓa (`selectedDays`).
+    - Shirye-shirye na Sau Ɗaya: Yana aiki a takamaiman kwanan wata da lokaci (`formDate`).
+  - **Ƙuntatawar Umarni**: Yana tilasta ƙa'idar haruffa 1,000 kawai don kowane umarni (`MAX_QUERY_CHARS = 1000`) tare da ma'aunin ƙidayar haruffa na ainihin lokaci.
+  - **Sanarwar Bayan Fage**: Yana tura sanarwa a kan allon kwamfuta tare da taƙaitaccen duba abun ciki lokacin da tambayar bayan fage ta kammala. Danna sanarwar yana buɗe zaren amsar nan take a cikin hira ta sidepanel.
 
-### 5.5 Gemini Conversation Management & Export
-- **Persistent IndexedDB Storage (`geminiConversations`)**: Multi-turn chat sessions are stored in IndexedDB `Intelligent_Workspace` store `geminiConversations`.
-- **Full-Text History Search**: Instant search across all past conversations and individual messages via Omnibar commands `lai:` (browse conversations) and `laiq:` (search messages).
-- **Four Export Formats**:
-  1. **Styled HTML**: Formatted standalone HTML document with styled conversational bubbles, role badges, timestamps, and syntax-highlighted code blocks.
-  2. **Raw JSON**: Complete structured data dump including message arrays, token usage, model configuration, and search citations.
-  3. **Markdown**: Standard Markdown file formatted with headers, timestamps, and fenced code blocks (` ``` `).
-  4. **Plain Text**: Clean, unformatted conversational transcript suitable for email or notes.
-- **Grounding Metadata Tracking**: Tracks model ID, token usage statistics, execution timestamps, and source citations returned by Google Search Grounding.
+### 5.5 Gudanar da Tattaunawar Gemini da Fitarwa
+- **Ma'ajiyar IndexedDB Mai Dorewa (`geminiConversations`)**: Ana adana zaman hira na dogon lokaci a cikin ma'ajiyar IndexedDB `Intelligent_Workspace` mai suna `geminiConversations`.
+- **Cikakken Binciken Tarihin Rubutu**: Bincike nan take a duk tattaunawar da ta gabata da saƙonni ɗai-ɗaiku ta hanyar umarnin Omnibar `lai:` (duba tattaunawa) da `laiq:` (bincika saƙonni).
+- **Tsarukan Fitarwa Guda Huɗu**:
+  1. **HTML Mai Salo**: Takardar HTML mai zaman kanta tare da kumfar hira mai kyau, alamomin matsayi, lokutan aikawa, da akwatunan lamba masu launi.
+  2. **JSON Zalla**: Cikakkun bayanai da suka haɗa da tsarin saƙonni, yawan token da aka yi amfani da su, tsarin samfuri, da hanyoyin bincike.
+  3. **Markdown**: Fayil na Markdown da aka tsara da kanun labarai, lokuta, da akwatunan lamba (` ``` `).
+  4. **Rubutu Zalla**: Rubutun tattaunawa mai tsabta ba tare da wani salo ba wanda ya dace da imel ko bayanan kula.
+- **Bibiyar Bayanan Hujja**: Yana bin diddigin ID na samfuri, kididdigar amfani da token, lokutan aiwatarwa, da hanyoyin da Google Search Grounding ya dawo da su.
 
-### 5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)
-- **Multimodal Attachments**: Toggle `feature_geminiAttachFiles` enables direct image and document attachments in chat prompts:
-  - Image files (JPEG, PNG, WebP, HEIC/HEIF).
-  - PDF documents and research papers.
-  - Plain Text files and code files.
-  - CSV structured datasets.
-- **Voice Support**:
-  - Web Speech STT (Speech-to-Text) for dictating prompts hands-free.
-  - Web Speech TTS (Text-to-Speech) for reading responses aloud.
+### 5.6 Bayanan Hanyoyi Daban-daban da Maƙala Fayiloli (`feature_geminiAttachFiles`)
+- **Maƙala Abubuwa Daban-daban**: Maɓallin `feature_geminiAttachFiles` yana ba da damar maƙala hotuna da takardu kai tsaye a cikin umarnin hira:
+  - Fayilolin hoto (JPEG, PNG, WebP, HEIC/HEIF).
+  - Takardun PDF da takardun bincike.
+  - Fayilolin Rubutu zalla da fayilolin lamba (code).
+  - Tsarin bayanai na CSV.
+- **Goyon Bayan Murya**:
+  - Web Speech STT (Mayar da Murya zuwa Rubutu) don faɗar umarni ba tare da rubutawa da hannu ba.
+  - Web Speech TTS (Mayar da Rubutu zuwa Murya) don karanta amsoshi da babbar murya.
 
-### 5.7 Invocation Modalities
-- **Sidepanel Route**: `?view=gemini` or shortcut `pa`.
-- **In-Page Omnibar Prefixes**:
-  - `qai: <query>` — Ask direct question to configured Gemini model.
-  - `qaia: <prompt>` — Execute prompt via autonomous agent with tool execution.
-  - `lai:` — Browse past AI conversations.
-  - `laiq:` — Full-text search across all AI conversation messages.
-- **Omnibox AI Tab Search (`find <query>`)**:
-  - URL bar keyword `find` initiates hybrid search.
-  - Combines regex word-boundary scoring with Gemini semantic resolution to locate and focus open tabs based on natural language queries.
+### 5.7 Hanyoyin Kira
+- **Hanyar Sidepanel**: `?view=gemini` ko gajeriyar hanya `pa`.
+- **Prefixes na Omnibar a Shafi**:
+  - `qai: <query>` — Yi tambaya kai tsaye ga samfurin Gemini da aka saita.
+  - `qaia: <prompt>` — Gudanar da umarni ta hanyar wakili mai cin gashin kansa tare da aiwatar da kayan aiki.
+  - `lai:` — Duba tarihin tattaunawar AI ta baya.
+  - `laiq:` — Bincika cikakken rubutu a cikin saƙonnin tattaunawar AI.
+- **Binciken Shafuka na AI ta Omnibox (`find <query>`)**:
+  - Kalmar sirri ta `find` a mashigin URL tana fara bincike mai haɗe da hanyoyi biyu.
+  - Yana haɗa lissafin kalmomin regex tare da fahimtar ma'ana ta Gemini don gano da buɗe shafukan da ke buɗe bisa tambayoyin harshen yau da kullum.
 
 ---
 
-## 6. Section 5: Notes View & Knowledge Management (Ver Notas)
+## 6. Sashe na 5: Duba Bayanan Kula da Gudanar da Ilimi (Ver Notas)
 
-A local-first, context-aware note-taking engine tied to browser tab groups and navigation contexts.
+Injin ɗaukar bayanan kula wanda ke aiki a cikin na'ura da farko kuma yake la'akari da mahallin kewayawa da rukunonin shafukan manhaja.
 
-### 6.1 Storage Architecture (`notesStore`)
-Stored in IndexedDB database `Intelligent_Workspace` (v8) inside object store `notesStore`:
+### 6.1 Tsarin Ma'ajiya (`notesStore`)
+Ana adana shi a cikin ma'ajiyar bayanai ta IndexedDB `Intelligent_Workspace` (v8) a cikin rumbun adana abubuwa na `notesStore`:
 ```typescript
 interface NoteRecord {
-  id: string;          // Unique note identifier.
-  title: string;       // Note title.
-  text: string;        // Rich text HTML, Markdown, or serialized task payload.
+  id: string;          // Lambar shaidar bayanin kula ta musamman.
+  title: string;       // Taken bayanin kula.
+  text: string;        // Cikakken rubutun HTML, Markdown, ko tsarin aiki da aka adana.
   type: NoteType;      // 'text' | 'checklist' | 'kanban'
-  url?: string;        // Origin URL where note was created.
-  contextKey: string;  // Scoping key binding note to workspace hierarchy.
-  createdAt: number;   // Creation timestamp.
-  modifiedAt: number;  // Last edit timestamp.
-  isPersistent: boolean; // Pin flag protecting note from group deletion cleanup.
+  url?: string;        // Asalin URL inda aka ƙirƙiri bayanin kula.
+  contextKey: string;  // Maɓallin keɓancewa da ke ɗaure bayanin kula da matsayin wurin aiki.
+  createdAt: number;   // Lokacin da aka ƙirƙira.
+  modifiedAt: number;  // Lokacin da aka yi gyara na ƙarshe.
+  isPersistent: boolean; // Alamar maƙalawa da ke kare bayanin kula daga gogewa yayin share rukuni.
 }
 ```
 
-### 6.2 Specialized Note Formats & Advanced Rendering
-1. **Text Note (`NoteTextEditor.svelte`)**:
-   - Rich text `contenteditable` surface.
-   - Embeds media directly: images, audio, video, and PDF documents.
-   - Built-in HTML sanitization and real-time word and character counters.
-   - **Mermaid Diagram Rendering**: Renders dynamic flowcharts, sequence diagrams, class diagrams, and state machines directly from Markdown fences (` ```mermaid `).
-   - **KaTeX Mathematical LaTeX**: Renders inline equations (`$...$`) and block equations (`$$...$$`) with high precision typography.
-2. **Checklist Note (`NoteChecklistEditor.svelte`)**:
-   - Interactive task list with individual completion checkboxes.
-   - Supports keyboard-driven item reordering and progress tracking.
-3. **Kanban Note (`NoteKanbanEditor.svelte`)**:
-   - 3-column workflow board: `To Do` -> `In Progress` -> `Done`.
-   - Cycling status chips for rapid task transitions.
-- **Dynamic Lossless Conversion**: Notes convert losslessly between Text, Checklist, and Kanban representations.
+### 6.2 Tsarukan Bayanan Kula na Musamman da Ƙarin Nuni
+1. **Bayanin Kula na Rubutu (`NoteTextEditor.svelte`)**:
+   - Filin rubutu mai faɗi na `contenteditable`.
+   - Yana saka kafofin watsa labarai kai tsaye: hotuna, sauti, bidiyo, da takardun PDF.
+   - Tsabtace HTML da aka gina a ciki da ma'aunin ƙididdigar kalmomi da haruffa na ainihin lokaci.
+   - **Nuna Zane-zanen Mermaid**: Yana nuna zane-zanen gudun aiki, zane-zanen jeri, zane-zanen aji, da injunan jihohi kai tsaye daga shingen Markdown (` ```mermaid `).
+   - **Dabarun Lissafi na KaTeX LaTeX**: Yana nuna dabarun lissafi a cikin layi (`$...$`) da dabarun lissafi na akwati (`$$...$$`) tare da kyakkyawan tsarin rubutu.
+2. **Bayanin Kula na Lissafin Dubawa (`NoteChecklistEditor.svelte`)**:
+   - Jerin ayyuka masu akwatunan duba cikar aiki.
+   - Yana goyon bayan sake tsara abubuwa ta hanyar maɓallai da bin diddigin ci gaban aiki.
+3. **Bayanin Kula na Kanban (`NoteKanbanEditor.svelte`)**:
+   - Allon tsarin aiki mai ginshiƙai 3: `To Do` -> `In Progress` -> `Done`.
+   - Alamomin canza matsayi cikin sauri don matsawa tsakanin ayyuka.
+- **Canza Tsari Cikin Sauri Ba Tare da Asarar Bayanai Ba**: Bayanan kula suna iya canzawa tsakanin tsarin Rubutu, Lissafin Dubawa, da Kanban ba tare da rasa wani bayani ba.
 
-### 6.3 Scoping & Context Hierarchy
-Notes bind to browsing contexts via `contextKey`:
-- **Group Scope (`g_<groupId>` or `g_<groupKey>`)**: Attached to an entire tab group.
-- **Subgroup Scope (`s_<groupId>_<domain>`)**: Attached to a specific domain within a tab group.
-- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Notes created on tabs outside of tab groups.
-- **Pomodoro & General Scopes (`pomodoro`, `general`)**: Workspace-wide notes.
-- **Orphan Detection Engine**: When tab groups or domains are deleted, associated non-persistent notes are captured by the Orphan Detector. Notes remain accessible in the UI for reassignment or deletion.
+### 6.3 Keɓancewa da Tsarin Muhalli
+Bayanan kula suna ɗaure ne da mahallin bincike ta hanyar `contextKey`:
+- **Keɓancewar Rukuni (`g_<groupId>` ko `g_<groupKey>`)**: Yana maƙale da dukkan rukunin shafuka.
+- **Keɓancewar Ƙaramin Rukuni (`s_<groupId>_<domain>`)**: Yana maƙale da takamaiman yanki a cikin rukunin shafuka.
+- **Keɓancewar Shafukan da Ba Su Cikin Rukuni (`g_ungrouped` / `s_ungrouped_<domain>`)**: Bayanan kula da aka ƙirƙira a kan shafukan da ba sa cikin kowane rukuni.
+- **Keɓancewar Pomodoro da ta Gaba Ɗaya (`pomodoro`, `general`)**: Bayanan kula na dukkan wurin aiki baki ɗaya.
+- **Injin Gano Bayanan Kula Marasa Gata (Orphans)**: Lokacin da aka goge rukunonin shafuka ko yankuna, bayanan kula da ba a maƙala su ba na dindindin ana karɓe su ta hanyar Mai Gano Marasa Gata. Bayanan kula suna ci gaba da kasancewa a bayyane a cikin UI don sake sanya musu wuri ko goge su.
 
-### 6.4 Invocation Modalities
-- **UI Launchers**: "View Notes" button on Group Cards and Subgroup Cards; "Quick Notes" button in popup header; Sidepanel route `?view=notes` (`pk`).
-- **Context Menu Trigger**: Select text on any web page -> Right-click -> "Crear Nota desde Selección" (`note-from-selection`). Automatically extracts the selected text and sets the nearest `h1`-`h3` heading as the title.
-- **Vim Hint**: `ao` creates a note from the current selection.
-- **Omnibar**: `lnt:` opens notes browser with instant full-text search.
-- **Audio Readout**: In-editor TTS button reads note content aloud using Web Speech API.
-
----
-
-## 7. Section 6: Media & Gallery View (Ver Galería)
-
-A high-performance media capture, annotation, and optical character recognition (OCR) pipeline.
-
-### 7.1 Capture Modes & Engineering (All 7 Capture Types)
-The extension implements 7 specialized capture modalities covering single-tab, cross-tab, cropped, and palette operations:
-1. **`visible` (Visible Viewport Capture - `cs`)**:
-   - Captures the exact visible viewport of the active tab using `chrome.tabs.captureVisibleTab`.
-   - Automatically commits the capture to the IndexedDB `screenshots` store and copies the image bitmap directly to the system clipboard (`screenshotSavedAndCopied`).
-2. **`fullPage` (Seamless Full-Page Scrolling Canvas - `cp`)**:
-   - Executes programmatic page scrolling, calculating total document scroll height.
-   - Suppresses scrollbars and hides sticky/fixed navigation bars after the initial segment to eliminate visual stutter.
-   - Stitches bitmap slices onto an `OffscreenCanvas` up to 30,000px high (`captureFullPageDataUrl`), enforcing Chromium-compliant 600ms delays between frame captures.
-3. **`fullPageParts` (Sequential Sliced Segments - `cpp` / `cP`)**:
-   - Slices tall documents into sequential, individual viewport-height image parts (`captureFullPageParts`), generating up to 60 numbered image chunks for pagination.
-4. **`area` (Interactive Rectangular Drag Crop - `ca`)**:
-   - Injects `area-selector.js`, overlaying a crosshair canvas with real-time bounding box dimensions.
-   - Draggable selection handles, dimension tooltip, confirmation trigger, `Esc` key cancellation, and multi-tab crop queueing (`handleCaptureAreaFromShortcut`).
-5. **`groupTabs` (Batch Active Group Tab Walk - `Cs`, `Cp`, `CP`)**:
-   - Sequentially iterates through every tab within the active tab group (`handleCaptureGroupFromShortcut`).
-   - Supports batch capture in visible, full-page, or segmented parts mode, compiling them into a unified collection.
-6. **`omnibarPickedTabs` (Custom Multi-Tab Queue Capture)**:
-   - Initiated via Omnibar commands `cs:`, `cp:`, `cpp:`, or `ca:` (`handleCaptureTabs`).
-   - Executes sequential captures across all user-filtered tabs, providing real-time progress indicators.
-7. **`colorPickerCapture` (Background Screen Eyedropper Fallback)**:
-   - Takes a background screen capture to power the precision hex eyedropper magnifier tool on operating systems lacking native `window.EyeDropper` support (e.g., Linux).
-
-### 7.2 Gallery UI & Persistence
-- **Interface**: Responsive masonry/grid layout with lightbox zoom, pan, and rotate tools.
-- **Persistence (`screenshots` Store)**: Saved in IndexedDB `Intelligent_Workspace`. Unpinned captures are automatically purged during maintenance; clicking the pin icon (`isPersistent = true`) preserves captures indefinitely.
-
-### 7.3 Export, In-Browser OCR & External Markup
-- **Export Formats (`captureDownloadFormats`)**:
-  - High-efficiency formats: PNG, WebP, AVIF.
-  - Multi-page compiled PDF document export via `pdf.js`.
-- **On-Device WASM OCR**:
-  - In-browser Tesseract.js WebWorker utilizing preloaded Spanish and English (`spa+eng`) language models.
-  - Extracts text directly to clipboard without sending image data over the network.
-- **Direct Send Integration**:
-  - One-click transfer of extracted OCR text or image attachments into Notes (`notesStore`) or Gemini AI prompts (`feature_geminiAttachFiles`).
-- **Excalidraw Markup**: One-click export sends captured images directly into `https://excalidraw.com/` for freehand drawing, arrows, and vector annotations.
-
-### 7.4 Invocation Modalities
-- **UI**: Group Card camera button, Popup quick action, Sidepanel gallery route `?view=gallery` (`ps`).
-- **Vim Hints**: `cs` (visible), `cp` (full page), `cP` (parts), `ca` (area crop), `Cs` (group visible), `Cp` (group full page), `CP` (group parts).
-- **Omnibar Prefixes**: `cs:`, `cp:`, `cpp:`, `ca:`, and `limg:` (browse gallery).
+### 6.4 Hanyoyin Kira
+- **Mabuɗan UI**: Maɓallin "View Notes" a kan Katunan Rukunoni da Katunan Ƙananan Rukunoni; maɓallin "Quick Notes" a kan taken popup; Hanyar Sidepanel `?view=notes` (`pk`).
+- **Kira ta Zaɓin Danna Dama**: Zaɓi rubutu a kowane shafin yanar gizo -> Danna dama -> "Crear Nota desde Selección" (`note-from-selection`). Yana ciro zaɓaɓɓen rubutun ta atomatik kuma ya saita kanun labarai mafi kusa na `h1`-`h3` a matsayin taken bayanin kula.
+- **Alamar Vim**: `ao` yana ƙirƙirar bayanin kula daga abin da aka zaɓa a halin yanzu.
+- **Omnibar**: `lnt:` yana buɗe binciken bayanan kula tare da binciken cikakken rubutu nan take.
+- **Karanta da Sauti**: Maɓallin TTS a cikin edita yana karanta abun cikin bayanin kula da babbar murya ta amfani da Web Speech API.
 
 ---
 
-## 8. Section 7: Pomodoro & Timing Suite (Pomodoro)
+## 7. Sashe na 6: Duba Kafofin Watsa Labarai da Rumbun Hoto (Ver Galería)
 
-A focus and timing suite engineered for absolute accuracy across browser sleep cycles.
+Ingantaccen tsarin ɗaukar hoton allo, rubuta bayanan ƙarin haske, da fasahar gane haruffa daga hoto (OCR).
 
-### 8.1 Timing Engine & Background Architecture
-- **Zero-Drift Timestamp Math**: State is persisted in `chrome.storage.local` with absolute Unix timestamps (`startTime`, `pausedAt`). Service worker terminations, browser restarts, and operating system sleep states cause zero clock drift.
-- **Alarm Dispatcher**:
-  - High-resolution countdown ticker driven by `chrome.alarms` (`pomodoroTick` 1s interval).
-  - Background maintenance and long-term interval sweeps managed by `itg-periodic-tasks` (1 min interval).
-- **Offscreen Audio Chimes (`offscreen.html`)**: Audio chimes are generated via a dedicated Chrome Offscreen document created with reason `AUDIO_PLAYBACK`. Automatically closes 3.5 seconds after sound completion to conserve memory.
+### 7.1 Hanyoyin Ɗauka da Fasaha (Dukkan Nau'o'in Ɗauka 7)
+Wannan ƙarin manhaja yana aiwatar da hanyoyin ɗauka na musamman guda 7 da suka shafi shafi guda, shafuka da yawa, yanki da aka yanke, da ayyukan launi:
+1. **`visible` (Ɗaukar Yankin da Ake Gani - `cs`)**:
+   - Yana ɗaukar ainihin abin da ke bayyane a kan shafin da ke aiki ta amfani da `chrome.tabs.captureVisibleTab`.
+   - Yana adana hoton da aka ɗauka ta atomatik a cikin ma'ajiyar `screenshots` ta IndexedDB kuma yana kwafar hoton kai tsaye zuwa allon kwafin kwamfuta (`screenshotSavedAndCopied`).
+2. **`fullPage` (Ɗaukar Cikakken Shafin da Ake Gungurawa Cikin Santsi - `cp`)**:
+   - Yana gudanar da gungura shafi ta atomatik, yana lissafin jimillar tsawon takardar.
+   - Yana ɓoye sandunan gungurawa da mashigin kewayawa mai maƙale bayan ɓangaren farko don kawar da rikicewar gani.
+   - Yana ɗinka sassan hotunan a kan `OffscreenCanvas` har zuwa tsawon 30,000px (`captureFullPageDataUrl`), yana bin ƙa'idar Chromium ta dakatawar 600ms tsakanin ɗaukar kowane hoto.
+3. **`fullPageParts` (Yankakken Sassan Cikakken Shafi a Jere - `cpp` / `cP`)**:
+   - Yana yanka dogayen shafuka zuwa sassa daban-daban masu tsawon allon kallo (`captureFullPageParts`), yana samar da hotuna har guda 60 masu lamba don sauƙin bibiya.
+4. **`area` (Zaɓar Yanki ta Hanyar Jawo Murabba'i - `ca`)**:
+   - Yana sanya `area-selector.js`, yana shimfiɗa allon zaɓe tare da nuna ainihin girman yankin a ainihin lokaci.
+   - Hannun jan zaɓi, bayanin girman yanki, maɓallin tabbatarwa, soke aiki da maɓallin `Esc`, da layin jiran ɗaukar yankuna a shafuka da yawa (`handleCaptureAreaFromShortcut`).
+5. **`groupTabs` (Ɗaukar Dukkan Shafukan Rukunin da Ke Aiki - `Cs`, `Cp`, `CP`)**:
+   - Yana bi dukkan shafukan da ke cikin rukunin shafuka masu aiki ɗaya bayan ɗaya (`handleCaptureGroupFromShortcut`).
+   - Yana goyon bayan ɗaukar hoto a jere a yanayin abin da ake gani, cikakken shafi, ko yankakken sassa, yana haɗa su wuri guda.
+6. **`omnibarPickedTabs` (Ɗaukar Hoton Shafukan da Aka Zaɓa na Musamman)**:
+   - Ana farawa ta hanyar umarnin Omnibar `cs:`, `cp:`, `cpp:`, ko `ca:` (`handleCaptureTabs`).
+   - Yana ɗaukar hotunan shafukan da mai amfani ya tace ɗaya bayan ɗaya, yana nuna ci gaban aikin a ainihin lokaci.
+7. **`colorPickerCapture` (Ɗaukar Hoton Bayan Fage don Zaɓar Launi)**:
+   - Yana ɗaukar hoton bayan fage na allo don samar da madubin duba launi na hex a kan tsarin kwamfuta da ba su da hanyar `window.EyeDropper` ta asali (misali, Linux).
 
-### 8.2 Exhaustive 4 Timing Modes
+### 7.2 Fuskar Rumbun Hoto da Dorewa
+- **Fuska**: Tsarin grid/masonry mai saurin daidaita kansa tare da kayan aikin zuƙo hoto, gungurawa, da juyawa.
+- **Dorewa (Ma'ajiyar `screenshots`)**: Ana adana su a IndexedDB `Intelligent_Workspace`. Hotunan da ba a maƙala su ba ana goge su ta atomatik yayin tsabtace tsari; danna alamar maƙalawa (`isPersistent = true`) yana adana hotunan har abada.
+
+### 7.3 Fitarwa, OCR a Cikin Manhaja, da Zane na Waje
+- **Tsarukan Fitarwa (`captureDownloadFormats`)**:
+  - Tsarukan aiki masu inganci: PNG, WebP, AVIF.
+  - Fitar da cikakkiyar takardar PDF mai shafuka da yawa ta hanyar `pdf.js`.
+- **WASM OCR a Cikin Na'ura**:
+  - Tesseract.js WebWorker a cikin manhaja yana amfani da samfuran harsunan Espanyol da Turanci (`spa+eng`) da aka riga aka loda.
+  - Yana ciro rubutu kai tsaye zuwa allon kwafi ba tare da tura hoton ta intanet ba.
+- **Haɗin Aikawa Kai Tsaye**:
+  - Canja wurin rubutun da aka ciro daga OCR ko maƙalar hoto da dannawa ɗaya zuwa Bayanan Kula (`notesStore`) ko umarnin Gemini AI (`feature_geminiAttachFiles`).
+- **Zane a Excalidraw**: Fitarwa da dannawa ɗaya yana tura hotunan da aka ɗauka kai tsaye zuwa `https://excalidraw.com/` don zana da hannu, sanya kibiyoyi, da ƙarin bayanan zane.
+
+### 7.4 Hanyoyin Kira
+- **UI**: Maɓallin kyamara a Katin Rukuni, aikin gaggawa a Popup, hanyar rumbun hoto a Sidepanel `?view=gallery` (`ps`).
+- **Alamomin Vim**: `cs` (abin da ake gani), `cp` (cikakken shafi), `cP` (sassa), `ca` (yankin da aka yanke), `Cs` (rukuni abin da ake gani), `Cp` (rukuni cikakken shafi), `CP` (rukuni sassa).
+- **Prefixes na Omnibar**: `cs:`, `cp:`, `cpp:`, `ca:`, da `limg:` (bincika rumbun hoto).
+
+---
+
+## 8. Sashe na 7: Rukunin Pomodoro da Ƙididdigar Lokaci (Pomodoro)
+
+Rukunin mai da hankali da auna lokaci wanda aka ƙera don ingantaccen aiki ba tare da kuskuren lokaci ba ko da manhaja ta shiga barci.
+
+### 8.1 Injin Ƙididdigar Lokaci da Tsarin Bayan Fage
+- **Lissafin Lokaci Marar Kuskure**: Ana adana halin da ake ciki a cikin `chrome.storage.local` tare da cikakkun lokutan Unix (`startTime`, `pausedAt`). Kashewar service worker, sake kunna manhaja, da yanayin barcin kwamfuta ba sa haifar da kuskuren lokaci ko kaɗan.
+- **Mai Rarraba Ƙararrawa**:
+  - Ƙididdigar saukar lokaci mai inganci da ke aiki ta `chrome.alarms` (`pomodoroTick` a kowane daƙiƙa 1).
+  - Ayyukan gyare-gyaren bayan fage da share abubuwa na dogon lokaci da ke gudana ta `itg-periodic-tasks` (kowane minti 1).
+- **Sautin Ƙararrawa a Wajen Allo (`offscreen.html`)**: Ana samar da sautin ƙararrawa ta hanyar takardar Chrome Offscreen ta musamman da aka ƙirƙira da dalilin `AUDIO_PLAYBACK`. Tana rufe kanta ta atomatik daƙiƙa 3.5 bayan kammala sauti don adana ƙarfin ma'ajiya.
+
+### 8.2 Cikakkun Hanyoyin Ƙididdigar Lokaci 4
 1. **Pomodoro (`pomodoro`)**:
-   - Work duration: 1 to 180 minutes (default: 25 min).
-   - Short break: 1 to 120 minutes (default: 5 min).
-   - Long break: 1 to 180 minutes (default: 15 min).
-   - Cycles before long break: 1 to 12 cycles (default: 4).
-   - Target cycle goal: 1 to 99 cycles (default: 8).
-   - Configurable autostart work, autostart breaks, and notification alerts.
-2. **Stopwatch (`cronometro`)**: Progressive timer with lap recording and pause-as-stop capability.
-3. **Countdown (`temporizador`)**: Custom countdown timer specifying hours, minutes, and seconds.
-4. **Target Time Alarm (`tiempo`)**: Calendar date picker and clock selector setting an alarm for an exact future timestamp.
+   - Tsawon aiki: mintuna 1 zuwa 180 (asali: mintuna 25).
+   - Ɗan gajeren hutu: mintuna 1 zuwa 120 (asali: mintuna 5).
+   - Dogon hutu: mintuna 1 zuwa 180 (asali: mintuna 15).
+   - Zagaye kafin dogon hutu: zagaye 1 zuwa 12 (asali: 4).
+   - Manufar adadin zagaye: zagaye 1 zuwa 99 (asali: 8).
+   - Zaɓin fara aiki ta atomatik, fara hutu ta atomatik, da sanarwar ƙararrawa.
+2. **Auna Lokaci / Stopwatch (`cronometro`)**: Mai auna ci gaban lokaci tare da ɗaukar lokutan zagaye da damar tsayawa a matsayin cikakken tsayawa.
+3. **Ƙidaya Baya / Countdown (`temporizador`)**: Mai ƙidayar saukar lokaci ta musamman da ke bayyana awoyi, mintuna, da daƙiƙoƙi.
+4. **Ƙararrawar Takamaiman Lokaci (`tiempo`)**: Zaɓin kwanan wata a kalanda da zaɓin agogo don saita ƙararrawa a wani takamaiman lokaci na gaba.
 
-### 8.3 In-Page Floating Timer Widget
-- Draggable, minimal overlay displaying real-time countdown, pause/resume, and skip buttons directly on web pages.
-- Allows monitoring focus sessions without switching back to the extension panel or popup.
+### 8.3 Ƙaramin Na'urar Auna Lokaci Mai Yawo a Cikin Shafi
+- Ƙaramar fuska mai yawo da za a iya jawowa tana nuna ƙidayar lokaci a ainihin lokaci, maɓallin dakatarwa/ci gaba, da maɓallan tsallakewa kai tsaye a kan shafukan yanar gizo.
+- Tana ba da damar lura da zaman aiki ba tare da komawa ga katin ƙarin manhaja ko popup ba.
 
-### 8.4 Group Auto-Collapse Idle Timer
-- Works in tandem with focus routines to automatically collapse inactive groups after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) and the active group after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
+### 8.4 Lokacin Naɗe Rukunoni Masu Barci ta Automatik
+- Yana aiki tare da tsarin mai da hankali don naɗe rukunoni marasa aiki ta atomatik bayan minti 1 na rashin aiki (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) da rukunin da ke aiki bayan mintuna 15 na rashin aiki (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Ana iya daidaita shi daga mintuna 0 zuwa 1440.
 
-### 8.5 Project Tagging & Metadata
-Each session supports categorization metadata:
-- Project Name (up to 18 characters)
-- Project Tag (e.g., `#research`, `#dev`)
-- Project Folder (e.g., `/client/project`)
+### 8.5 Lambobin Ayyuka da Ƙarin Bayanai
+Kowane zama yana goyon bayan ƙarin bayanan rarraba aiki:
+- Sunan Aiki (haruffa har zuwa 18)
+- Lambar Aiki (misali, `#research`, `#dev`)
+- Foldar Aiki (misali, `/client/project`)
 
-### 8.6 Analytics Engine & 19 KPI Cards
-The full dashboard (`dashboard.html` or Sidepanel `dashboard.html?context=sidepanel`) computes 19 key performance indicators from deduplicated sessions (`dedupeSessions` by `sessionStarted`):
-1. `focus`: Total focus time.
-2. `sessions`: Total completed sessions.
-3. `cycles`: Total completed work cycles.
-4. `efficiency`: Average efficiency percentage (`Total Focus / Total Time * 100`).
-5. `activeDays`: Number of unique active days.
-6. `break`: Total break duration.
-7. `interruptions`: Total count of manual pauses/interruptions.
-8. `interruptionTime`: Cumulative duration spent in paused state.
-9. `bestSession`: Longest single uninterrupted focus session.
-10. `avgFocus`: Average focus duration per completed cycle.
-11. `totalTime`: Cumulative time spent in work and breaks.
-12. `workRest`: Ratio of work duration to rest duration (`1 : X`).
-13. `distractionRate`: Interruptions per focus hour.
-14. `bestDay`: Most productive day of the week.
-15. `goldenHour`: Peak focus hour interval of the day (e.g., `10:00 - 11:00`).
-16. `projects`: Number of distinct projects tracked.
-17. `avgIntDuration`: Average duration of each interruption.
-18. `topProject`: Project with the highest accumulated focus time.
-19. `focusIntensity`: Average focus hours per active day.
+### 8.6 Injin Kididdiga da Katunan KPI 19
+Cikakken allon bincike (`dashboard.html` ko Sidepanel `dashboard.html?context=sidepanel`) yana lissafin mahimman alamomin aiki 19 daga zaman da aka cire kwafinsu (`dedupeSessions` ta `sessionStarted`):
+1. `focus`: Jimillar lokacin mai da hankali.
+2. `sessions`: Jimillar zaman da aka kammala.
+3. `cycles`: Jimillar zagayen aiki da aka kammala.
+4. `efficiency`: Matsakaicin kason ƙwarewa (`Total Focus / Total Time * 100`).
+5. `activeDays`: Yawan ranakun aiki na musamman.
+6. `break`: Jimillar lokacin hutu.
+7. `interruptions`: Jimillar adadin dakatarwa da hannu.
+8. `interruptionTime`: Jimillar lokacin da aka ɗauka a dakace.
+9. `bestSession`: Zama ɗaya mafi tsawo na mai da hankali marar katsewa.
+10. `avgFocus`: Matsakaicin tsawon lokacin mai da hankali ga kowane zagaye da aka kammala.
+11. `totalTime`: Jimillar lokacin da aka ɗauka a wajen aiki da hutu.
+12. `workRest`: Ma'aunin tsawon aiki zuwa tsawon hutu (`1 : X`).
+13. `distractionRate`: Adadin katsewar aiki a kowace sa'ar mai da hankali.
+14. `bestDay`: Ranar mako da aka fi yin aiki mai inganci.
+15. `goldenHour`: Sa'ar da aka fi mai da hankali a rana (misali, `10:00 - 11:00`).
+16. `projects`: Adadin ayyuka mabanbanta da aka bibiya.
+17. `avgIntDuration`: Matsakaicin tsawon kowace katsewa.
+18. `topProject`: Aikin da ya tara mafi yawan lokacin mai da hankali.
+19. `focusIntensity`: Matsakaicin sa'o'in mai da hankali a kowace ranar aiki.
 
-Additional visual analytics include a Day Streak Heatmap calendar, an hourly focus distribution bar chart, a Project variety breakdown, and full JSON data import/export.
-
----
-
-## 9. Section 8: Activity & History Panel (Panel de Actividad)
-
-A Declarative Net Request (DNR) tracking, analytics, and web governance engine.
-
-### 9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)
-Managed under `ITG_WEB_ACTIVITY`:
-- `wa:day:YYYY-MM-DD`: Domain counters per day (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
-- `wa:days`: Master index array of recorded date keys.
-- `wa:recent`: Ring buffer storing the latest 400 visit timeline entries.
-- `wa:openSegment`: Active timed segment in `chrome.storage.session`, capped at `WA_MAX_SEGMENT_SECONDS = 900s` (15 minutes) to prevent distorting stats if the machine sleeps without firing idle events.
-- **Idle Detection**: Uses `chrome.idle` (default: 300s / 5m). Audio playback preserves active tracking even when windows are unfocused if `countAudible = true`.
-- **Retention**: Automatically prunes day records older than `retentionDays` (default: 180 days).
-
-### 9.2 Declarative Net Request (DNR) Site Blocker
-- **Dynamic Rule Allocation**: Allocates dynamic rules in the ID range `9000` to `9999`.
-- **Redirect Target**: Blocked requests redirect to `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
-- **Open Tab Sweep**: When a site limit expires, the background worker immediately sweeps and redirects existing open tabs matching the domain.
-- **Overnight Schedule Spanning**: Schedules crossing midnight (e.g., `22:00` to `02:00`) are automatically evaluated across day boundaries.
-- **Grace / Snooze Period (+5 min)**: The block screen allows temporary 5-minute snooze passes, tracked in `wa:snoozeUses`.
-
-### 9.3 Asymmetric Security Lock (`blockLock.js`)
-Site limits can be protected with an asymmetric password lock:
-- **Hash Storage**: Stores random 16-byte salt and SHA-256 hex digest (`wa:settings.blockPassword`).
-- **Asymmetric Rule Policy**: The password is **never requested** when creating new limits or making rules stricter (e.g., reducing time allowances or adding schedule restrictions).
-- **Guarded Actions**: The password is only requested when **loosening rules** (deleting a limit, increasing time allowances, or disabling schedules) or when invoking snooze after exceeding the daily free threshold (`snoozePasswordAfter`).
-
-### 9.4 Categorization & Visual Analytics
-- **16 Built-in Categories**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
-- **Custom Categories**: Supports user-defined categories prefixed with `custom:`.
-- **Focus Ratio**: Contrasts Productive categories (`dev`, `work`, `education`, `reading`, `finance`, `mail`) against Distracting categories (`social`, `video`, `games`, `shopping`, `entertainment`).
-- **Visuals**: Chart.js hourly activity distributions, category donut breakdown, and domain ranking lists.
-
-### 9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)
-- **Dedicated Route**: Accessed in side panel via `switchMainView('downloads')` (`?view=downloads`).
-- **Direct Chrome API Integration**: Hooks `chrome.downloads` to track, manage, and inspect all browser downloads in real time.
-- **Real-Time Fuzzy Search**: Instant search by file name, file path, or download source URL.
-- **Status Filter Chips**: Rapidly filter downloads by state: `All`, `In Progress`, `Complete`, `Paused`, and `Interrupted`.
-- **Calendar Date Range Filtering**: Narrow down downloads by specific dates or time intervals.
-- **Batch Group Downloader**: Extracts all download links from open tabs in the active group and initiates synchronized batch downloads with progress tracking.
-- **File Management**: Direct one-click file opening (`chrome.downloads.open`) and folder reveal (`chrome.downloads.show`).
-
-### 9.6 Recently Closed Tabs & Browsing History Subsystem
-- **Recently Closed Tabs View**:
-  - Integrated directly with `chrome.sessions.getRecentlyClosed`.
-  - Real-time search with automatic diacritic and accent folding (`deaccent`).
-  - Single tab restoration and full window session restoration with a single click or Omnibar command `c:`.
-- **Browsing History View**:
-  - Deep search with 10-second TTL in-memory caching to eliminate redundant `chrome.history.search` query churn.
-  - Search filterable by domain, keyword, and calendar date ranges.
-  - One-click tab activation if already open, or fresh tab creation, accessible via Omnibar `h:`.
-
-### 9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)
-- **Automated Theme Scheduling**:
-  - Managed via `ThemeScheduleModal.svelte` inside the Themes side panel view (`?view=themes` / `pt`).
-  - Supports automatic theme switching based on time of day (`HH:MM`) and active days of the week (`[0..6]`).
-  - Maximum of 7 global theme schedules (`MAX_GLOBAL_SCHEDULES = 7`).
-  - **Auto-Revert**: Automatically returns to default daytime or workplace themes at designated completion hours.
-  - **Desktop Alerts**: Issues desktop notifications when automatic theme switches occur (`chrome.notifications`).
-  - **Dual Persistence**: Persisted in `chrome.storage.sync` (roaming preferences) and `chrome.storage.local` under `savedThemes` and `themeSchedules`.
-
-### 9.8 Compact Sidepanel View
-- **Sidepanel Route (`?view=activity` / `pw`)**: 350px column optimized for real-time monitoring, featuring period selector chips (`Today`, `7d`, `30d`, `All`) and domain limit progress bars.
+Ƙarin kididdigar gani sun haɗa da Taswirar Ranaku (Heatmap calendar), ginshiƙin rarraba lokacin aiki na kowace sa'a, rarraba ire-iren ayyuka, da cikakken shigarwa/fitar da bayanan JSON.
 
 ---
 
-## 10. Multi-Modal Invocation Matrix
+## 9. Sashe na 8: Allon Ayyuka da Tarihi (Panel de Actividad)
 
-### 10.1 Popup UI Interface
-- **Rules Tab**: Quick rule toggles, active status indicators, and rule URL launcher.
-- **Groups Tab**: Compact accordion list with tab switching and group cleanup.
-- **AI Launcher**: Direct chat input box routing queries to the side panel.
-- **Quick Actions Toolbar**: One-click buttons for Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, and Sidepanel expansion.
+Injin bibiyar Declarative Net Request (DNR), kididdiga, da kula da dokokin amfani da yanar gizo.
 
-### 10.2 Sidepanel Navigation Routes (`?view=...`)
-- `?view=rules` — Comprehensive Rules Manager and URL pattern editor (`pg`).
-- `?view=listgroup` — Full Group and Tab workspace with drag-and-drop reordering (`pl`).
-- `?view=notes` — Notes workspace (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
-- `?view=gallery` — Screenshot gallery, OCR, and Excalidraw tools (`ps`).
-- `?view=gemini` — Multimodal AI Assistant and Autonomous Agent interface (`pa`).
-- `?view=activity` — Web Activity tracker, limits, and category metrics (`pw`).
-- `?view=themes` — Theme editor and automated scheduling palette (`pt`).
-- `?view=hints` — Vim shortcuts, Omnibar, and YouTube loop settings (`pn`).
-- `?view=downloads` — Downloads Manager and batch link downloader (`switchMainView('downloads')`).
+### 9.1 Injin Bayanai da Yanayin Ma'ajiya (`ITG_WEB_ACTIVITY`)
+Ana sarrafa shi a ƙarƙashin `ITG_WEB_ACTIVITY`:
+- `wa:day:YYYY-MM-DD`: Ma'aunin yanki na kowace rana (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
+- `wa:days`: Babban jerin maɓallan kwanan wata da aka ɗauka.
+- `wa:recent`: Ma'ajiyar madauwari da ke ɗauke da shigarwar tarihin ziyara 400 na baya-bayan nan.
+- `wa:openSegment`: Sashen lokaci mai aiki a cikin `chrome.storage.session`, wanda aka iyakance a `WA_MAX_SEGMENT_SECONDS = 900s` (mintuna 15) don hana ɓata kididdiga idan kwamfuta ta shiga barci ba tare da tura saƙon rashin aiki ba.
+- **Gano Rashin Aiki**: Yana amfani da `chrome.idle` (asali: 300s / 5m). Kunna sauti yana ci gaba da aikin bibiya koda kuwa ba a mai da hankali a kan tagogi ba idan `countAudible = true`.
+- **Riƙe Bayanai**: Yana goge bayanan ranakun da suka wuce `retentionDays` ta atomatik (asali: kwanaki 180).
 
-### 10.3 Manifest Keyboard Shortcuts (24 Commands)
-1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Toggle collapse of active group.
-2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Toggle collapse of all groups.
-3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Toggle alphabetical group sorting.
-4. `open-popup` (`Alt+Shift+P`): Open popup or focus side panel.
-5. `toggle-collapse-timer`: Toggle group auto-collapse timer.
-6. `toggle-all-rules`: Master toggle for all custom rules (`Alt+M`).
-7. `toggle-expand-all`: Expand all groups in the workspace.
-8. `rules-manager`: Open Rules Manager in a dedicated tab (`Alt+R`).
-9. `toggle-prefixes`: Toggle visual group prefix indicators (`🔒`, `🔍`, `🗝️`, `⚠️`).
-10. `toggle-domain-grouping`: Toggle automatic domain clustering.
-11. `toggle-subdomain-grouping`: Toggle automatic subdomain clustering.
-12. `toggle-compact-mode`: Toggle compact single-letter group titles.
-13. `toggle-chrome-grouping`: Toggle special Chrome internal pages group.
-14. `toggle-files-grouping`: Toggle special local `file://` pages group.
-15. `toggle-extensions-grouping`: Toggle special `chrome-extension://` group.
-16. `toggle-misc-grouping`: Toggle unclustered Miscellaneous group.
-17. `toggle-ip-address-grouping`: Toggle IP address / localhost group.
-18. `toggle-clustering`: Master toggle for all automated clustering.
-19. `regroup-all-tabs`: Trigger comprehensive tab regrouping pass (`Alt+Shift+R`).
-20. `toggle-hints`: Toggle in-page Vim hints overlay engine.
-21. `open-side-panel`: Open extension side panel.
-22. `open-theme-selector`: Open theme customization panel.
-23. `remove-duplicate-tabs`: Clean duplicate tabs across the window.
-24. `open-list-group-sidepanel-command`: Open List Group view in side panel.
+### 9.2 Mai Toshe Shafuka na Declarative Net Request (DNR)
+- **Raba Ƙa'idoji Masu Canzawa**: Yana ba da lambobin ƙa'idoji masu canzawa a cikin kewayon ID `9000` zuwa `9999`.
+- **Wurin Tura Shafin da Aka Toshe**: Shafukan da aka toshe ana tura su zuwa `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
+- **Share Shafukan da Ke Buɗe**: Lokacin da ƙa'idar lokacin shafi ta cika, ma'aikacin bayan fage yana duba tare da tura dukkan shafukan da ke buɗe masu dacewa da yankin nan take.
+- **Kare Lokutan Dare**: Shirye-shiryen da suka ketare tsakar dare (misali, `22:00` zuwa `02:00`) ana duba su ta atomatik a kan ranaku biyu.
+- **Lokacin Daga Ƙafa (+minti 5)**: Allon toshewar yana ba da izinin daga ƙafa na mintuna 5 na wucin gadi, wanda ake bibiya a cikin `wa:snoozeUses`.
 
-### 10.4 In-Page Vim Hint Keys (40+ Combinations)
-- **Scrolling & Movement**:
-  - `j` / `k`: Scroll down / up (75px step).
-  - `d` / `u`: Scroll to bottom / top of page.
-  - `h` / `l`: Scroll left / right (or switch to previous / next tab if page cannot scroll).
-  - `H` / `L`: Navigate back / forward in browser history.
-  - `esc`: Blur active input, unfocus elements.
-- **Tab & Window Management**:
-  - `t`: Open new tab.
-  - `x`: Close current tab.
-  - `yt`: Duplicate current tab.
-  - `s`: Swap to previous active tab.
-  - `ts`: Toggle side-by-side Split Screen window.
-  - `we`: Open active tab in standalone popup window.
-  - `wp`: Open active tab in Document Picture-in-Picture.
-  - `wv`: Open active video in custom Video Picture-in-Picture.
-  - `dg`: Close/delete current tab group.
-- **Link Hints & Interaction**:
-  - `f`: Activate Vim link hints (click element).
-  - `cf`: Activate Vim link hints to copy link URL.
-  - `i`: Focus first text input on page.
-  - `c`: Copy current URL to clipboard.
-  - `y`: Append current selection to clipboard buffer.
-  - `vs`: View page source (`view-source:`).
-  - `vp`: Toggle link preview modal.
-  - `as` / `ah`: Toggle Auto-PiP on scroll / on tab hide.
-  - `ar`: Toggle Text-to-Speech Read Aloud.
-  - `ao`: Create note from selection.
-  - `at`: Translate page.
-- **Sidepanel Direct Access**:
-  - `ph`: Open Main side panel view.
-  - `pt`: Open Themes side panel.
-  - `pl`: Open List Group side panel.
-  - `pk`: Open Notes side panel.
-  - `ps`: Open Screenshot Gallery side panel.
-  - `pa`: Open AI Assistant side panel.
-  - `pw`: Open Web Activity side panel.
-  - `pg`: Open Rules side panel.
-  - `pn`: Open Customize Hints side panel.
-- **Media Capture**:
-  - `cs`: Capture visible viewport.
-  - `cp`: Capture full page (stitched).
-  - `cP`: Capture full page in sequential parts.
-  - `ca`: Capture cropped area.
-  - `Cs`: Capture all tabs in group (visible).
-  - `Cp`: Capture all tabs in group (full page).
-  - `CP`: Capture all tabs in group (parts).
-- **Audio & Reading Modes**:
-  - `st`: Toggle mute on current tab.
-  - `so`: Mute all audible tabs.
-  - `mb` / `mB`: Black page mode (tab / global).
-  - `ms` / `mS`: Sepia page mode (tab / global).
-  - `mp` / `mP`: Paper page mode (tab / global).
-  - `ml` / `mL`: Light page mode (tab / global).
-  - `me` / `mE`: Custom CSS filter mode (tab / global).
-- **Text-to-Speech (Read Aloud) Reader Navigation**:
-  - `zp`: Play / Pause speech synthesis reader overlay.
-  - `zn`: Next sentence in Read Aloud session.
-  - `zb`: Previous sentence in Read Aloud session.
-  - `zq`: Close / Terminate Read Aloud speech overlay.
-- **Group Backups & Rules**:
-  - `bg`: Backup all groups to IndexedDB.
-  - `br`: Restore all groups from IndexedDB.
-  - `cr`: Create custom rule from current page.
-  - `ae`: Add current page to existing rule.
-- **Quick URL Launchers**:
+### 9.3 Makullin Tsaro na Asymmetric (`blockLock.js`)
+Ana iya kare iyakokin shafuka da makullin kalmar sirri na musamman:
+- **Ma'ajiyar Hash**: Yana adana kalmar salt mai girman 16-byte da SHA-256 hex digest (`wa:settings.blockPassword`).
+- **Dokar Ƙa'ida ta Asymmetric**: **Ba a taɓa tambayar** kalmar sirri lokacin ƙirƙirar sabbin iyakoki ko ƙara tsaurara ƙa'idoji (misali, rage lokacin da aka bayar ko ƙara ƙuntatawar lokaci).
+- **Ayyukan da Aka Tsare**: Ana neman kalmar sirri ne kawai lokacin **sassauta ƙa'idoji** (goge iyaka, ƙara lokacin da aka bayar, ko kashe shirye-shiryen lokaci) ko lokacin neman daga ƙafa bayan an wuce iyakar kyauta ta yau da kullum (`snoozePasswordAfter`).
+
+### 9.4 Rarraba Rukuni da Kididdigar Gani
+- **Rukunoni 16 da Aka Gina a Ciki**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
+- **Rukunoni na Musamman**: Yana goyon bayan rukunonin da mai amfani ya tsara masu ɗauke da prefix na `custom:`.
+- **Ma'aunin Mai da Hankali**: Yana kwatanta rukunoni masu amfani (`dev`, `work`, `education`, `reading`, `finance`, `mail`) da rukunoni masu ɗauke hankali (`social`, `video`, `games`, `shopping`, `entertainment`).
+- **Abubuwan Gani**: Rarraba ayyukan kowace sa'a ta Chart.js, zane mai siffar donut na rukunoni, da jerin darajojin yankuna.
+
+### 9.5 Tsarin Sarrafa Saukakkun Fayiloli (`switchMainView('downloads')`)
+- **Hanya ta Musamman**: Ana shiga ta side panel ta `switchMainView('downloads')` (`?view=downloads`).
+- **Haɗin Chrome API Kai Tsaye**: Yana haɗuwa da `chrome.downloads` don bibiya, sarrafawa, da duba duk abubuwan da manhaja ke saukarwa a ainihin lokaci.
+- **Bincike Mai Sauƙi a Ainihin Lokaci**: Bincike nan take ta sunan fayil, hanyar fayil, ko asalin URL da aka saukar da shi daga gare shi.
+- **Alamomin Tace Hali**: Tace saukakkun fayiloli cikin sauri ta halinsu: `All`, `In Progress`, `Complete`, `Paused`, da `Interrupted`.
+- **Tace ta Kwanan Watan Kalanda**: Kayyade saukakkun fayiloli ta takamaiman kwanan wata ko lokaci.
+- **Mai Saukar da Fayilolin Rukuni a Tare**: Yana ciro duk hanyoyin saukar da fayiloli daga buɗaɗɗun shafukan da ke cikin rukunin da ke aiki kuma yana fara saukar da su a tare tare da nuna ci gaban aikin.
+- **Sarrafa Fayil**: Buɗe fayil da dannawa ɗaya kai tsaye (`chrome.downloads.open`) da nuna folda (`chrome.downloads.show`).
+
+### 9.6 Tsarin Shafukan da Aka Rufe Kwanan Nan da Tarihin Bincike
+- **Fuskar Shafukan da Aka Rufe Kwanan Nan**:
+  - An haɗa shi kai tsaye da `chrome.sessions.getRecentlyClosed`.
+  - Bincike a ainihin lokaci tare da daidaita alamomin rubutu ta atomatik (`deaccent`).
+  - Maido da shafi guda ɗaya da maido da dukkan zaman taga da dannawa ɗaya ko ta umarnin Omnibar `c:`.
+- **Fuskar Tarihin Bincike**:
+  - Zurfafa bincike tare da ma'ajiya mai ɗaukar daƙiƙa 10 (TTL) a cikin ƙwaƙwalwa don kawar da yawan tambayoyin `chrome.history.search`.
+  - Bincike da za a iya tacewa ta yanki, kalma, da kwanan watan kalanda.
+  - Kunnawa da dannawa ɗaya idan shafin yana buɗe, ko buɗe sabon shafi, wanda za a iya shiga ta Omnibar `h:`.
+
+### 9.7 Tsarin Shirya Lokutan Launukan Fage (`ThemeScheduleModal.svelte`)
+- **Shirya Launin Fage ta Automatik**:
+  - Ana sarrafa shi ta `ThemeScheduleModal.svelte` a cikin fuskar Themes ta side panel (`?view=themes` / `pt`).
+  - Yana goyon bayan canza launin fage ta atomatik bisa lokaci na rana (`HH:MM`) da ranakun mako da ke aiki (`[0..6]`).
+  - Matsakaicin shirye-shiryen launin fage na duniya guda 7 (`MAX_GLOBAL_SCHEDULES = 7`).
+  - **Komawa ta Automatik**: Yana komawa zuwa launin fage na asali na rana ko na wurin aiki a ƙayyadaddun sa'o'in kammalawa.
+  - **Sanarwar Kwamfuta**: Yana bayar da sanarwa a kan allon kwamfuta lokacin da aka canza launin fage ta atomatik (`chrome.notifications`).
+  - **Adanawa ta Hanyoyi Biyu**: Ana adana shi a cikin `chrome.storage.sync` (saitunan tafiya da su) da `chrome.storage.local` a ƙarƙashin `savedThemes` da `themeSchedules`.
+
+### 9.8 Ƙaramar Fuskar Sidepanel
+- **Hanyar Sidepanel (`?view=activity` / `pw`)**: Ginshiƙi mai faɗin 350px wanda aka tsara don lura a ainihin lokaci, mai ɗauke da alamomin zaɓar lokaci (`Today`, `7d`, `30d`, `All`) da sandunan nuna ci gaban iyakokin yankuna.
+
+---
+
+## 10. Jadawalin Hanyoyin Kira Daban-daban
+
+### 10.1 Fuskar Mai Amfani ta Popup
+- **Shafin Ƙa'idoji (Rules Tab)**: Maɓallan sauya ƙa'idoji cikin sauri, alamomin nuna ƙa'ida mai aiki, da mabuɗin URL na ƙa'ida.
+- **Shafin Rukunoni (Groups Tab)**: Ƙaramin jerin accordion tare da sauya shafuka da tsabtace rukunoni.
+- **Mabuɗin AI**: Filin rubutu kai tsaye na hira da ke tura tambayoyi zuwa side panel.
+- **Mashigin Kayan Aiki na Gaggawa**: Maɓallan dannawa ɗaya don Ɗaukar Hoton Yanki, Ɗaukar Cikakken Shafi, Bayanan Kula Cikin Sauri, Fara/Dakatar da Pomodoro, da faɗaɗa Sidepanel.
+
+### 10.2 Hanyoyin Kewayawa na Sidepanel (`?view=...`)
+- `?view=rules` — Cikakken Mai Gudanar da Ƙa'idoji da editan tsarin URL (`pg`).
+- `?view=listgroup` — Cikakken wurin aiki na Rukuni da Shafi tare da sake tsari ta jawo da saukewa (`pl`).
+- `?view=notes` — Wurin aiki na Bayanan Kula (Rubutu, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
+- `?view=gallery` — Rumbun hotunan allo, OCR, da kayan aikin Excalidraw (`ps`).
+- `?view=gemini` — Mataimakin AI mai hanyoyi daban-daban da fuskar Wakili Mai Cin Gashin Kansa (`pa`).
+- `?view=activity` — Mai bibiyar Ayyukan Yanar Gizo, iyakoki, da ma'aunin rukunoni (`pw`).
+- `?view=themes` — Editan launuka da tsarin sauya launin fage na lokaci (`pt`).
+- `?view=hints` — Gajerun hanyoyin Vim, Omnibar, da saitunan maimaita YouTube (`pn`).
+- `?view=downloads` — Mai Sarrafa Saukakkun Fayiloli da mai saukar da hanyoyin haɗi a tare (`switchMainView('downloads')`).
+
+### 10.3 Gajerun Hanyoyin Maɓallan Manifest (Umarni 24)
+1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Naɗe ko buɗe rukunin da ke aiki.
+2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Naɗe ko buɗe dukkan rukunoni.
+3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Shirya rukunoni bisa haruffan haruffa.
+4. `open-popup` (`Alt+Shift+P`): Buɗe popup ko mai da hankali ga side panel.
+5. `toggle-collapse-timer`: Kunna ko kashe lokacin naɗe rukunoni ta atomatik.
+6. `toggle-all-rules`: Babban maɓallin dukkan ƙa'idoji na musamman (`Alt+M`).
+7. `toggle-expand-all`: Buɗe dukkan rukunoni a wurin aiki.
+8. `rules-manager`: Buɗe Mai Gudanar da Ƙa'idoji a wani shafi na musamman (`Alt+R`).
+9. `toggle-prefixes`: Kunna ko kashe alamomin gani na rukunoni (`🔒`, `🔍`, `🗝️`, `⚠️`).
+10. `toggle-domain-grouping`: Kunna ko kashe tattara yankuna ta atomatik.
+11. `toggle-subdomain-grouping`: Kunna ko kashe tattara ƙananan yankuna ta atomatik.
+12. `toggle-compact-mode`: Kunna ko kashe ƙananan sunayen rukunoni masu harafi ɗaya.
+13. `toggle-chrome-grouping`: Kunna ko kashe rukunin shafukan ciki na musamman na Chrome.
+14. `toggle-files-grouping`: Kunna ko kashe rukunin shafukan fayilolin kwamfuta na `file://`.
+15. `toggle-extensions-grouping`: Kunna ko kashe rukunin musamman na `chrome-extension://`.
+16. `toggle-misc-grouping`: Kunna ko kashe rukunin Sauran Abubuwa (Miscellaneous).
+17. `toggle-ip-address-grouping`: Kunna ko kashe rukunin adiresoshin IP / localhost.
+18. `toggle-clustering`: Babban maɓallin dukkan tsarin tattara shafuka ta atomatik.
+19. `regroup-all-tabs`: Fara gudanar da cikakken sake rarraba shafuka (`Alt+Shift+R`).
+20. `toggle-hints`: Kunna ko kashe injin alamomin Vim a cikin shafi.
+21. `open-side-panel`: Buɗe ɓangaren gefe (side panel) na ƙarin manhaja.
+22. `open-theme-selector`: Buɗe allon keɓance launin fage.
+23. `remove-duplicate-tabs`: Tsabtace shafuka masu kwafi a cikin taga.
+24. `open-list-group-sidepanel-command`: Buɗe fuskar List Group a cikin side panel.
+
+### 10.4 Maɓallan Hanyar Vim a Cikin Shafi (Haɗe-haɗe 40+)
+- **Gungurawa da Motsi**:
+  - `j` / `k`: Gungura ƙasa / sama (matakin 75px).
+  - `d` / `u`: Gungura zuwa ƙasan / saman shafi.
+  - `h` / `l`: Gungura hagu / dama (ko canza zuwa shafin da ya gabata / na gaba idan shafi ba zai gunguro ba).
+  - `H` / `L`: Matsa baya / gaba a cikin tarihin manhaja.
+  - `esc`: Cire mayar da hankali daga rubutu, daina zaɓen abubuwa.
+- **Sarrafa Shafi da Taga**:
+  - `t`: Buɗe sabon shafi.
+  - `x`: Rufe shafin yanzu.
+  - `yt`: Yi kwafin shafin yanzu.
+  - `s`: Musanya zuwa shafin da ya yi aiki a baya.
+  - `ts`: Kunna/kashe Raba Fuska gefe-da-gefe a tagogi.
+  - `we`: Buɗe shafin da ke aiki a matsayin popup mai zaman kansa.
+  - `wp`: Buɗe shafin da ke aiki a cikin Hoto-cikin-Hoto na Takarda (Document PiP).
+  - `wv`: Buɗe bidiyon da ke aiki a cikin Hoto-cikin-Hoto na Bidiyo na musamman.
+  - `dg`: Rufe/goge rukunin shafuka na yanzu.
+- **Alamomin Hanyoyi da Hulɗa**:
+  - `f`: Kunna alamomin hanyoyin Vim (danna abu).
+  - `cf`: Kunna alamomin hanyoyin Vim don kwafar URL na hanyar.
+  - `i`: Mayar da hankali ga filin rubutu na farko a shafi.
+  - `c`: Kwafi URL na yanzu zuwa allon kwafi.
+  - `y`: Ƙara abin da aka zaɓa a yanzu zuwa ma'ajiyar allon kwafi.
+  - `vs`: Duba asalin lissafin lambobin shafi (`view-source:`).
+  - `vp`: Kunna/kashe tagar duba hanyar yanar gizo.
+  - `as` / `ah`: Kunna/kashe Auto-PiP yayin gungurawa / yayin ɓoye shafi.
+  - `ar`: Kunna/kashe Karanta Rubutu da Babbar Murya (TTS).
+  - `ao`: Ƙirƙiri bayanin kula daga abin da aka zaɓa.
+  - `at`: Fassara shafi.
+- **Shiga Sidepanel Kai Tsaye**:
+  - `ph`: Buɗe Babban fuskar side panel.
+  - `pt`: Buɗe side panel na Launukan Fage (Themes).
+  - `pl`: Buɗe side panel na Jerin Rukunoni (List Group).
+  - `pk`: Buɗe side panel na Bayanan Kula (Notes).
+  - `ps`: Buɗe side panel na Rumbun Hotunan Allo (Gallery).
+  - `pa`: Buɗe side panel na Mataimakin AI.
+  - `pw`: Buɗe side panel na Ayyukan Yanar Gizo (Web Activity).
+  - `pg`: Buɗe side panel na Ƙa'idoji (Rules).
+  - `pn`: Buɗe side panel na Keɓance Alamomin Hanyoyi (Customize Hints).
+- **Ɗaukar Hoton Allo**:
+  - `cs`: Ɗauki yankin da ke bayyane.
+  - `cp`: Ɗauki cikakken shafi (haɗe wuri guda).
+  - `cP`: Ɗauki cikakken shafi a sassa daban-daban a jere.
+  - `ca`: Ɗauki yankin da aka yanke.
+  - `Cs`: Ɗauki duk shafukan rukunin (yankin da ke bayyane).
+  - `Cp`: Ɗauki duk shafukan rukunin (cikakken shafi).
+  - `CP`: Ɗauki duk shafukan rukunin (sassa).
+- **Sauti da Yanayin Karatu**:
+  - `st`: Kunna/kashe sautin shafin yanzu.
+  - `so`: Kashe sautin duk shafuka masu sauti.
+  - `mb` / `mB`: Yanayin shafi mai duhu (shafi / duniya baki ɗaya).
+  - `ms` / `mS`: Yanayin shafi mai launin Sepia (shafi / duniya baki ɗaya).
+  - `mp` / `mP`: Yanayin shafi mai launin Takarda (shafi / duniya baki ɗaya).
+  - `ml` / `mL`: Yanayin shafi mai haske (shafi / duniya baki ɗaya).
+  - `me` / `mE`: Yanayin tacewar CSS ta musamman (shafi / duniya baki ɗaya).
+- **Kewayawa a Yanayin Karanta Rubutu da Babbar Murya (TTS)**:
+  - `zp`: Kunna / Tsayar da karanta rubutu da babbar murya.
+  - `zn`: Jumla ta gaba a zaman Karanta da Babbar Murya.
+  - `zb`: Jumla ta baya a zaman Karanta da Babbar Murya.
+  - `zq`: Rufe / Kashe yanayin karanta rubutu da babbar murya.
+- **Kwafin Rukunoni da Ƙa'idoji**:
+  - `bg`: Ajiye kwafin dukkan rukunoni zuwa IndexedDB.
+  - `br`: Maido da dukkan rukunoni daga IndexedDB.
+  - `cr`: Ƙirƙiri ƙa'ida ta musamman daga shafin yanzu.
+  - `ae`: Ƙara shafin yanzu zuwa ƙa'idar da ake da ita.
+- **Hanyoyin Buɗe URLs Cikin Sauri**:
   - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini.
 
-### 10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)
-Type `o` on any page to open the floating Omnibar. Type `@` to view all available commands:
-1. `we:` — Open selected tab as standalone popup window.
-2. `wp:` — Open selected tab as Document Picture-in-Picture.
-3. `wv:` — Open selected tab as Video Picture-in-Picture.
-4. `sp:` — Open URL, search, or tab in the side panel.
-5. `ar:` — Pick a tab and read its text aloud via TTS.
-6. `b:` — Full-text search browser bookmarks.
-7. `h:` — Search browsing history.
-8. `c:` — Browse and reopen recently closed tabs.
-9. `dg:` — Search and delete or switch tab groups.
-10. `dt:` — Search and close multiple tabs.
-11. `ts:` — Select tabs and launch in side-by-side Split Screen.
-12. `cs:` — Capture visible area of chosen tabs.
-13. `cp:` — Capture full page of chosen tabs.
-14. `cpp:` — Capture full page in sequential parts.
-15. `ca:` — Capture custom cropped area on chosen tabs.
-16. `bg:` — Backup tab groups immediately to IndexedDB.
-17. `bgr:` — Search and restore backed-up groups and tabs.
-18. `f:` — Deep full-text search across all open tabs.
-19. `qai:` — Ask a query directly to configured AI model.
-20. `qaia:` — Instruct the Autonomous AI Agent to execute actions.
-21. `lai:` — Browse past AI conversation history.
-22. `laiq:` — Search within AI messages.
-23. `limg:` — Browse captured screenshots and gallery images.
-24. `lnt:` — Search and view saved notes.
-25. `atcr:` — Add active tab URL to an existing custom rule.
-26. `atr:` — Add open tabs or manual URLs to an existing rule.
-27. `rl:` — Search rules and launch associated URLs.
-28. `cr:` — Create a new rule (`cr: name` or `cr: name, url1, url2`).
-29. `ccr:` — Change the color of a custom rule.
-30. `ccg:` — Change the color of an active tab group.
-31. `dr:` — Delete rules or individual URLs from rules.
-32. `er:` — Rename or edit an existing rule.
-33. `st:` — Open Omnibar interactive tutorial.
-34. `g:` — Search Google (`g: <query>`).
-35. `y:` — Search YouTube (`y: <query>`).
-36. `d:` — Search DuckDuckGo (`d: <query>`).
-37. `w:` — Search Wikipedia (`w: <query>`).
-38. `gm:` — Search Google Maps (`gm: <query>`).
-39. `x:` — Search X / Twitter (`x: <query>`).
-40. `am:` — Search Amazon (`am: <query>`).
-41. `ams:` — Search Amazon Spain (`ams: <query>`).
+### 10.5 Prefixes na Tsarin Omnibar a Cikin Shafi (Prefixes 41)
+Rubuta `o` a kowane shafi don buɗe Omnibar mai yawo. Rubuta `@` don ganin dukkan umarnin da ke akwai:
+1. `we:` — Buɗe shafin da aka zaɓa a matsayin popup mai zaman kansa.
+2. `wp:` — Buɗe shafin da aka zaɓa a matsayin Hoto-cikin-Hoto na Takarda.
+3. `wv:` — Buɗe shafin da aka zaɓa a matsayin Hoto-cikin-Hoto na Bidiyo.
+4. `sp:` — Buɗe URL, bincike, ko shafi a cikin side panel.
+5. `ar:` — Zaɓi shafi kuma karanta rubutunsa da babbar murya ta TTS.
+6. `b:` — Bincika cikakken rubutu a alamun shafi na manhaja.
+7. `h:` — Bincika tarihin bincike.
+8. `c:` — Duba kuma sake buɗe shafukan da aka rufe kwanan nan.
+9. `dg:` — Bincika kuma goge ko sauya rukunonin shafuka.
+10. `dt:` — Bincika kuma rufe shafuka da yawa.
+11. `ts:` — Zaɓi shafuka kuma buɗe su gefe-da-gefe a Raba Fuska.
+12. `cs:` — Ɗauki yankin da ke bayyane na shafukan da aka zaɓa.
+13. `cp:` — Ɗauki cikakken shafi na shafukan da aka zaɓa.
+14. `cpp:` — Ɗauki cikakken shafi a sassa daban-daban na shafukan da aka zaɓa.
+15. `ca:` — Ɗauki yankin da aka yanke a shafukan da aka zaɓa.
+16. `bg:` — Ajiye kwafin rukunonin shafuka nan take zuwa IndexedDB.
+17. `bgr:` — Bincika kuma maido da rukunoni da shafukan da aka ajiye kwafinsu.
+18. `f:` — Zurfafa binciken rubutu a duk shafukan da ke buɗe.
+19. `qai:` — Yi tambaya kai tsaye ga samfurin AI da aka saita.
+20. `qaia:` — Umarci Wakilin AI Mai Cin Gashin Kansa ya gudanar da ayyuka.
+21. `lai:` — Duba tarihin tattaunawar AI ta baya.
+22. `laiq:` — Bincika a cikin saƙonnin AI.
+23. `limg:` — Duba hotunan allon da aka ɗauka da hotunan rumbun hoto.
+24. `lnt:` — Bincika kuma duba bayanan kula da aka adana.
+25. `atcr:` — Ƙara URL na shafin da ke aiki zuwa ƙa'idar da ake da ita.
+26. `atr:` — Ƙara buɗaɗɗun shafuka ko adiresoshin URL na hannu zuwa ƙa'idar da ake da ita.
+27. `rl:` — Bincika ƙa'idoji kuma buɗe adiresoshin URL da ke da alaƙa.
+28. `cr:` — Ƙirƙiri sabuwar ƙa'ida (`cr: name` ko `cr: name, url1, url2`).
+29. `ccr:` — Canza launi na wata ƙa'ida ta musamman.
+30. `ccg:` — Canza launi na rukunin shafin da ke aiki.
+31. `dr:` — Goge ƙa'idoji ko takamaiman URLs daga ƙa'idoji.
+32. `er:` — Sake suna ko gyara ƙa'idar da ake da ita.
+33. `st:` — Buɗe darasin koyar da yadda ake amfani da Omnibar.
+34. `g:` — Bincika a Google (`g: <query>`).
+35. `y:` — Bincika a YouTube (`y: <query>`).
+36. `d:` — Bincika a DuckDuckGo (`d: <query>`).
+37. `w:` — Bincika a Wikipedia (`w: <query>`).
+38. `gm:` — Bincika a Google Maps (`gm: <query>`).
+39. `x:` — Bincika a X / Twitter (`x: <query>`).
+40. `am:` — Bincika a Amazon (`am: <query>`).
+41. `ams:` — Bincika a Amazon Spain (`ams: <query>`).
 
-### 10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)
-The context menu provides a complete hierarchical tree organized into 5 functional command groups:
-1. **Group 1: Rules & URL Submenu**:
-   - Master rules checkbox toggle ("Activar/Desactivar Todas las Reglas").
-   - Per-rule toggles enabling or disabling individual custom rules on the fly.
-   - "Abrir Todas las URLs": Opens all target URLs registered in the selected rule.
-   - Individual URL submenus with dynamic open tab counts `[N]`: Displays currently open tab count matching the URL, provides one-click navigation to the URL, and offers "Cerrar Pestañas para esta URL" to terminate all matching tabs.
-   - Quick Rule Creation: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-   - Add to Existing Rule: "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-2. **Group 2: Tab Cleanup & Audio Controls**:
-   - "Eliminar Pestañas Duplicadas [N]": Shows count of detected redundant tabs and closes them across windows.
-   - "Eliminar Pestañas por Dominio": Dynamic submenu listing all domains with open tab counts `[N]`, allowing surgical tab closure by domain.
-   - "Cerrar Todos Excepto el Grupo Activo": Retains active focused group and closes all other groups.
-   - "Reagrupar Todas las Pestañas": Triggers full background regrouping pass across all open tabs.
-   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Global audio mute and unmute controls.
-3. **Group 3: Reading, Selection & Notes**:
-   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader with overlay controls.
-   - "Leer Selección en Voz Alta": Reads highlighted DOM selection aloud using speech synthesis.
-   - "Crear Nota desde Selección": Extracts text selection, automatically derives note title from the nearest heading (`h1`-`h3`), and stores it in `notesStore`.
-4. **Group 4: Open Extension, PiP & Panels**:
-   - "Abrir como PiP" / "Abrir como Ventana Emergente": Launch target page, highlighted selection, or target image into floating Picture-in-Picture or standalone popup window.
-   - "Abrir Extensión": Opens extension popup or expands side panel.
-   - "Gestionar Reglas": Opens full Rules Manager in a dedicated browser tab.
-   - Direct Sidepanel Launchers: One-click routing to List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), and Customize Hints (`?view=hints`).
-5. **Group 5: Settings & Clustering Options**:
-   - **Gestión de Grupos**: Alternar Grupo Actual (toggle active group collapse), Alternar Todos los Grupos (toggle all groups collapse).
+### 10.6 Tsarin Zaɓuɓɓukan Danna Dama (Dukkan Rukunoni 5 da Ayyuka 30+)
+Zaɓuɓɓukan danna dama suna ba da cikakken tsarin rarraba ayyuka da aka tsara zuwa rukunoni 5 na aiki:
+1. **Rukuni na 1: Ƙa'idoji da Zaɓuɓɓukan URL**:
+   - Babban akwatin kunna/kashe ƙa'idoji ("Activar/Desactivar Todas las Reglas").
+   - Maɓallan kowace ƙa'ida na kunna ko kashe ƙa'idoji na musamman cikin sauri.
+   - "Abrir Todas las URLs": Yana buɗe duk adiresoshin URL da aka yi wa rajista a ƙa'idar da aka zaɓa.
+   - Jerin kowane URL tare da nuna adadin shafukan da ke buɗe a ainihin lokaci `[N]`: Yana nuna adadin shafukan da ke buɗe masu dacewa da URL ɗin, yana ba da damar shiga URL ɗin da dannawa ɗaya, kuma yana ba da damar "Cerrar Pestañas para esta URL" don rufe duk shafukan da suka dace.
+   - Ƙirƙirar Ƙa'ida Cikin Sauri: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+   - Ƙara zuwa Ƙa'idar da Ake da Ita: "Añadir a Regla Existente" -> Zaɓi ƙa'ida -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+2. **Rukuni na 2: Tsabtace Shafuka da Kayan Sarrafa Sauti**:
+   - "Eliminar Pestañas Duplicadas [N]": Yana nuna adadin shafukan da aka gano suna da kwafi kuma yana rufe su a duk tagogi.
+   - "Eliminar Pestañas por Dominio": Jerin da ke nuna dukkan yankuna tare da adadin shafukansu da ke buɗe `[N]`, yana ba da damar rufe shafuka bisa takamaiman yanki.
+   - "Cerrar Todos Excepto el Grupo Activo": Yana barin rukunin da ake aiki a kansa a halin yanzu tare da rufe dukkan sauran rukunoni.
+   - "Reagrupar Todas las Pestañas": Yana fara cikakken sake rarraba dukkan buɗaɗɗun shafuka a bayan fage.
+   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Kayan kashewa da kunna sautin manhaja gaba ɗaya.
+3. **Rukuni na 3: Karatu, Zaɓe, da Bayanan Kula**:
+   - "Leer Página en Voz Alta" (TTS): Karanta cikakken shafi da babbar murya tare da kayan sarrafawa a allo.
+   - "Leer Selección en Voz Alta": Karanta rubutun da aka zaɓa a DOM da babbar murya ta amfani da fasahar murya.
+   - "Crear Nota desde Selección": Yana ciro zaɓaɓɓen rubutu, ya samo taken bayanin kula ta atomatik daga kanun labarai mafi kusa (`h1`-`h3`), kuma ya adana shi a cikin `notesStore`.
+4. **Rukuni na 4: Buɗe Ƙarin Manhaja, PiP, da Fuskoki**:
+   - "Abrir como PiP" / "Abrir como Ventana Emergente": Buɗe shafin da aka nufa, rubutun da aka zaɓa, ko hoton da aka nufa a cikin Hoto-cikin-Hoto mai yawo ko popup mai zaman kansa.
+   - "Abrir Extensión": Yana buɗe popup na ƙarin manhaja ko faɗaɗa side panel.
+   - "Gestionar Reglas": Yana buɗe cikakken Mai Gudanar da Ƙa'idoji a wani shafin manhaja na daban.
+   - Mabuɗan Sidepanel Kai Tsaye: Zuwa List Groups (`?view=listgroup`), Themes (`?view=themes`), Mataimakin AI (`?view=gemini`), da Customize Hints (`?view=hints`) da dannawa ɗaya.
+5. **Rukuni na 5: Saituna da Zaɓuɓɓukan Tattara Shafuka**:
+   - **Gestión de Grupos**: Alternar Grupo Actual (naɗe/buɗe rukunin yanzu), Alternar Todos los Grupos (naɗe/buɗe dukkan rukunoni).
    - **Opciones de Agrupación**:
-     - Agrupación Inteligente (toggle automated heuristic clustering).
-     - Modo Compacto (toggle single-letter group title mode).
-     - Dominio / Subdominio (toggle domain and subdomain grouping).
-     - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost.
+     - Agrupación Inteligente (kunna/kashe tattara shafuka ta atomatik).
+     - Modo Compacto (kunna/kashe yanayin sunan rukuni mai harafi ɗaya).
+     - Dominio / Subdominio (kunna/kashe tattara yankuna da ƙananan yankuna).
+     - Páginas Especiales: Shafukan Chrome (`chrome://`), Fayilolin Gida (`file:///`), Ƙarin Manhajoji (`chrome-extension://`), Sauran Abubuwa (`Misc`), Adiresoshin IP da Localhost.
    - **Opciones Generales**:
-     - Ordenar Alfabéticamente (enforce alphabetical sorting across tab strip).
-     - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`).
-     - Temporizador de Auto-Colapso (toggle idle group collapse timer).
-     - Prefijos Visuales (toggle `🔒`, `🔍`, `🗝️`, `⚠️` state markers).
-     - Vista Previa de Enlaces (toggle in-page link preview modal).
+     - Ordenar Alfabéticamente (tilasta tsara shafuka bisa haruffan haruffa).
+     - Ubicación Miscelánea: Farko (`start`), Ƙarshe (`end`), Haruffan Haruffa (`alpha`).
+     - Temporizador de Auto-Colapso (kunna/kashe lokacin naɗe rukunoni marasa aiki).
+     - Prefijos Visuales (kunna/kashe alamomin hali na `🔒`, `🔍`, `🗝️`, `⚠️`).
+     - Vista Previa de Enlaces (kunna/kashe tagar duba hanyar yanar gizo a cikin shafi).
 
 ---
 
-## 11. Storage Schemas & Data Persistence
+## 11. Tsarin Ma'ajiya da Adana Bayanai
 
-The extension uses a multi-tier storage model across IndexedDB and Chrome Storage APIs:
+Wannan ƙarin manhaja yana amfani da tsarin ma'ajiya mai hawa daban-daban a cikin IndexedDB da Chrome Storage APIs:
 
-### 11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)
-1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Secondary index: `'createdAt'`. Holds binary screenshots, canvas data URLs, persistent flags, dimensions, and segment total indices.
-2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 secondary indexes (retrieved/managed by ID). Stores multi-turn chat threads, message roles, token metrics, and search grounding metadata.
-3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 secondary indexes (filtered in memory by contextKey). Stores rich text, checklist arrays, Kanban board cards, Mermaid specifications, and KaTeX formulas.
-4. `backupsGroups`: keyPath: `'group.id'`. 0 secondary indexes (stores backup group objects keyed by nested `'group.id'`). Stores compressed group structures, colors, titles, and closed tab records.
-5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Secondary indexes: `'projectName'` (keyPath `'projectName'`) and `'savedAt'` (keyPath `'savedAt'`) (no `date` index). Holds focus analytics, cycle metrics, and interruption logs.
+### 11.1 Ma'ajiyar Bayanai ta IndexedDB: `Intelligent_Workspace` (Tsari Na 8)
+1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Wurin duba na biyu: `'createdAt'`. Yana adana hotunan allo na binary, URLs na canvas data, alamomin maƙalawa na dindindin, girman hoto, da lambobin sassan hoto.
+2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. Ba shi da wurin duba na biyu (ana sarrafa shi ta ID). Yana adana zaren tattaunawa na dogon lokaci, matsayin saƙonni, ma'aunin token, da bayanan kafa hujja da bincike.
+3. `notesStore`: keyPath: `'id'`, autoIncrement: false. Ba shi da wurin duba na biyu (ana tace shi a ƙwaƙwalwa ta contextKey). Yana adana cikakken rubutu, jerin lissafin duba aiki, katunan Kanban, bayanan Mermaid, da dabarun KaTeX.
+4. `backupsGroups`: keyPath: `'group.id'`. Ba shi da wurin duba na biyu (yana adana abubuwan kwafin rukuni ta hanyar `'group.id'`). Yana adana tsarin rukunoni da aka matse, launuka, sunaye, da bayanan shafukan da aka rufe.
+5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Wuraren duba na biyu: `'projectName'` (keyPath `'projectName'`) da `'savedAt'` (keyPath `'savedAt'`) (babu na `date`). Yana adana kididdigar mai da hankali, ma'aunin zagaye, da tarihin katsewar aiki.
 
-### 11.2 Chrome Storage Dual-Routing (`StorageService`)
-- Dynamically routes reads and writes between `chrome.storage.sync` (for portable settings across user devices) and `chrome.storage.local` (for heavy preferences).
-- Key models:
-  - `customRules`: Array of rule definitions (`[{ name, color, active, urls }]`).
-  - `clusterConfig`: Auto-clustering parameters (thresholds, compact mode, special categories).
-  - `userPrefixes`: Emoji prefix assignments (`{ lock, openKey, loupe, checked, warning }`).
-  - `activeTheme`, `savedThemes`, & `themeSchedules`: 9-palette color configurations and scheduled rotation rules configured via `ThemeScheduleModal.svelte`.
-  - `pomodoroState`: Real-time session timestamps, paused duration, and cycle goals.
-  - `wa:settings` & `wa:limits`: Web activity tracking preferences, site limits, and schedule windows.
-  - `youtubeLoopEnabled`: Boolean flag controlling YouTube and Shorts loop buttons.
+### 11.2 Rarraba Hanyoyin Ma'ajiya Biyu na Chrome (`StorageService`)
+- Yana tura karantawa da rubutawa cikin sauƙi tsakanin `chrome.storage.sync` (don saitunan da za a iya amfani da su a duk na'urorin mai amfani) da `chrome.storage.local` (don manyan abubuwan da aka fi so).
+- Muhimman abubuwan ciki:
+  - `customRules`: Jerin ma'anar ƙa'idoji (`[{ name, color, active, urls }]`).
+  - `clusterConfig`: Saitunan tattara shafuka ta atomatik (adadi, ƙaramar fuska, rukunoni na musamman).
+  - `userPrefixes`: Alamomin emoji da aka saita (`{ lock, openKey, loupe, checked, warning }`).
+  - `activeTheme`, `savedThemes`, da `themeSchedules`: Tsarin launuka 9 da ƙa'idojin canza su a kan lokaci da aka saita ta `ThemeScheduleModal.svelte`.
+  - `pomodoroState`: Cikakkun lokutan zama na ainihin lokaci, tsawon lokacin dakatawa, da manufofin zagaye.
+  - `wa:settings` da `wa:limits`: Saitunan bibiyar ayyukan yanar gizo, iyakokin shafuka, da lokutan aiki.
+  - `youtubeLoopEnabled`: Alamar gaskiya ko ƙarya da ke sarrafa maɓallan maimaitawa a YouTube da Shorts.
 
-### 11.3 Chrome Storage Session (`chrome.storage.session`)
-Used for ultra-fast, ephemeral runtime coordination:
-- `tabsEverActive`: Set of tab IDs activated during the current browser session.
-- `groupExpandedEver`: Record of groups expanded during the current session.
-- `groupInfoMap`: Real-time registry mapping group IDs to dynamic titles and clustering types.
-- `splitScreenState`: Cached window bounds for restoring original screen dimensions.
-- `contextMenusSignature`: Hash signature preventing redundant context menu rebuild churn during rapid tab switches.
-- `wa:openSegment`: Current active website time segment.
-- `hiddenYoutubeView`: Reference to parked YouTube player view docked in `HiddenGroupsBar.svelte`.
+### 11.3 Ma'ajiyar Zama ta Chrome (`chrome.storage.session`)
+Ana amfani da ita don daidaita ayyukan wucin gadi cikin matuƙar sauri:
+- `tabsEverActive`: Jerin lambobin ID na shafukan da suka taɓa yin aiki a zaman manhaja na yanzu.
+- `groupExpandedEver`: Bayanan rukunonin da aka taɓa buɗewa a zaman manhaja na yanzu.
+- `groupInfoMap`: Rajistar ainihin lokaci da ke haɗa lambobin ID na rukunoni da sunaye masu canzawa da nau'o'in tattara shafuka.
+- `splitScreenState`: Girman taga da aka adana don maido da asalin girman allo.
+- `contextMenusSignature`: Shaidar hash da ke hana sake gina menu na danna dama akai-akai yayin sauya shafuka cikin sauri.
+- `wa:openSegment`: Sashen lokaci na gidan yanar gizon da ke aiki a halin yanzu.
+- `hiddenYoutubeView`: Hanyar na'urar kunna YouTube da aka ajiye a cikin `HiddenGroupsBar.svelte`.
 
 ---
 
-## 12. Defensive Engineering & Edge Case Handling
+## 12. Fasahar Tsaron Kariya da Magance Matsalolin Gefe
 
-1. **Declarative Net Request Header Unblocking (`dnr.js`)**:
-   - Modifies response headers via dynamic DNR rules to strip `X-Frame-Options` and restrictive `Content-Security-Policy` headers, allowing external sites to render in the Side Panel and Picture-in-Picture iframes.
-   - **WhatsApp Web Safety**: Explicitly preserves `Cross-Origin-Opener-Policy` (COOP) and `Cross-Origin-Embedder-Policy` (COEP) on `web.whatsapp.com` to prevent breaking its WebAssembly Signal cryptographic implementation.
-2. **Right-Click & Selection Unblocker (`allowRightClickHook.js`)**:
-   - Defeats hostile websites blocking copy, paste, context menu, and text selection.
-   - Runs in `MAIN` world to intercept `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-   - Strips inline `oncontextmenu="return false"` handlers via `MutationObserver`.
-   - Protects legitimate web applications (e.g., Telegram Web, Google Docs) by verifying clipboard contents before re-injecting cancelled paste events.
-3. **YouTube Hover Preview Audio Forced-Mute Override (`youtubePreviewAudioHook.js`)**:
-   - Runs in `MAIN` world on `ytd-video-preview #inline-preview-player`.
-   - Overrides `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover.
-   - Eliminates YouTube's internal `volumechange` forced-mute race condition, maintaining unmuted audio across loop restarts while hovering.
-4. **YouTube Shorts Feed Sequence Navigation Hook (`youtubeShortsFeedHook.js`)**:
-   - Runs in `MAIN` world on `ytd-shorts`.
-   - Intercepts `shortsProcessedSequence` property, which is invisible from the extension's isolated world, and dispatches native `yt-navigate` events on `ytd-app` without reloading the page or losing floating window state.
-5. **Infinite-Scroll Canvas Protection**:
-   - Caps full-page screenshot walks at 60 segments (`MAX_FULL_PAGE_SEGMENTS`) and 30,000px maximum canvas height (`MAX_FULL_PAGE_CANVAS_PX`), avoiding out-of-memory browser tab crashes.
-6. **Linux Screen Color Picker Eyedropper Fallback**:
-   - When running on Linux environments lacking the Chromium `window.EyeDropper` API, the extension injects `screen-color-picker.js`, rendering a 9x magnified pixel lens with RGB/HEX/HSL calculation.
-7. **Startup Session Settling Delay**:
-   - Delays group pruning for 20 seconds (`groupsHaveSettledAfterStartup()`) upon browser launch to allow session tabs and window states to settle before evaluating group assignments.
+1. **Cire Toshewar Bayanan Kai ta Declarative Net Request (`dnr.js`)**:
+   - Yana canza bayanan martaba na kai ta hanyar ƙa'idojin DNR masu canzawa don cire `X-Frame-Options` da ƙuntatawar `Content-Security-Policy`, yana ba wa shafukan waje damar bayyana a cikin Side Panel da fuskokin Picture-in-Picture iframes.
+   - **Tsaron WhatsApp Web**: Yana barin `Cross-Origin-Opener-Policy` (COOP) da `Cross-Origin-Embedder-Policy` (COEP) a bayyane a kan `web.whatsapp.com` don guje wa lalata tsarin ɓoye bayanan sirri na WebAssembly Signal.
+2. **Kariyar Danna Dama da Zaɓen Rubutu (`allowRightClickHook.js`)**:
+   - Yana shawo kan shafukan yanar gizo da ke toshe kwafi, liƙawa, menu na danna dama, da zaɓar rubutu.
+   - Yana aiki a duniyar `MAIN` don tare `preventDefault()` da `stopPropagation()` a kan `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, da `mouseup`.
+   - Yana cire layukan `oncontextmenu="return false"` ta hanyar `MutationObserver`.
+   - Yana kare sahihan manhajojin yanar gizo (misali, Telegram Web, Google Docs) ta hanyar duba abubuwan da ke cikin allon kwafi kafin sake sanya abubuwan liƙawa da aka soke.
+3. **Kawar da Tilasta Kashe Sautin Duba YouTube Shorts (`youtubePreviewAudioHook.js`)**:
+   - Yana aiki a duniyar `MAIN` a kan `ytd-video-preview #inline-preview-player`.
+   - Yana sauya kaddarar `HTMLMediaElement.prototype.muted` a kan asalin `<video>` lokacin da linzamin kwamfuta ya tsaya a kai.
+   - Yana kawar da matsalar gasar `volumechange` ta ciki ta YouTube da ke tilasta kashe sauti, yana kiyaye kunna sauti yayin da bidiyo ke maimaitawa muddin linzamin kwamfuta yana kai.
+4. **Dabarar Kewayawa a Jerin YouTube Shorts Feed (`youtubeShortsFeedHook.js`)**:
+   - Yana aiki a duniyar `MAIN` a kan `ytd-shorts`.
+   - Yana tare kaddarar `shortsProcessedSequence`, wacce ba a iya gani daga fannin ƙarin manhaja mai zaman kansa, kuma yana tura al'amuran `yt-navigate` na asali a kan `ytd-app` ba tare da sake loda shafin ba ko rasa yanayin tagar da ke yawo.
+5. **Kariyar Allon Zane na Shafuka Marasa Ƙarshe**:
+   - Yana iyakance ɗaukar cikakken shafi zuwa sassa 60 kawai (`MAX_FULL_PAGE_SEGMENTS`) da matsakaicin tsawon allon zane na 30,000px (`MAX_FULL_PAGE_CANVAS_PX`), yana hana rushewar shafin manhaja saboda ƙarewar ma'ajiya.
+6. **Madadin Zaɓar Launi a Kan Allon Linux**:
+   - Lokacin aiki a kan tsarin Linux wanda ba shi da Chromium `window.EyeDropper` API, ƙarin manhajar yana sanya `screen-color-picker.js`, yana nuna madubin zuƙo pixel sau 9 tare da lissafin RGB/HEX/HSL.
+7. **Jinkirin Dakatawa Lokacin Fara Zama**:
+   - Yana jinkirta gyaran rukunoni na daƙiƙa 20 (`groupsHaveSettledAfterStartup()`) bayan buɗe manhaja don ba wa shafukan zama da yanayin tagogi damar daidaita kansu kafin a tantance rarraba rukunoni.

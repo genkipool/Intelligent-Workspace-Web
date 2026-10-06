@@ -31,6 +31,7 @@ const LANGS = [
  */
 const LLMS_SPECS = [
     '/llms.txt',
+    '/llms-full.txt',
     '/llms-zh.txt',
     '/llms-hi.txt',
     '/llms-es.txt',

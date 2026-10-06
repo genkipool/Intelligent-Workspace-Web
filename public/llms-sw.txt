@@ -1,16 +1,16 @@
 # Intelligent Workspace
 
-> Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+> Intelligent Workspace ni kirefusho cha hali ya juu cha kivinjari cha Manifest V3 na mazingira ya kazi yenye tija yaliyojengwa kwa Svelte, Vite, na CRXJS. Inaratibu mpangilio mahiri wa vichupo, uwekaji makundi wa kiotomatiki na unaozingatia sheria, utekelezaji huru wa maajenti wa AI (ikisaidia Google Gemini Cloud API na Chrome Built-in Prompt API), urambazaji wa viungo vya ndani ya ukurasa kwa mtindo wa Vim, mfumo wa amri wa Omnibar wenye viambishi awali 41, uandishi wa madokezo ya miundo mbalimbali (maandishi tajiri, orodha za ukaguzi, Kanban, michoro ya Mermaid, fomula za KaTeX), unyakuaji wa maudhui ya vyombo vya habari vya uaminifu wa juu na WASM OCR ya ndani ya kivinjari, kipima muda cha Pomodoro chenye kengele zisizokengeuka (zero-drift) na uchezaji wa sauti nje ya skrini (offscreen), na upimaji wa shughuli za wavuti wa Declarative Net Request (DNR), mipaka ya vikoa, na uzuiaji wa tovuti.
 
 ---
 
-## Multilingual Editions / Global Directory
+## Matoleo ya Lugha Nyingi / Saraka ya Ulimwengu
 
-This technical specification is available in the top 25 languages worldwide:
+Vipimo hivi vya kiufundi vinapatikana katika lugha 25 kuu ulimwenguni:
 
-| Language | Native Name | ISO Code | Specification Link |
+| Lugha | Jina la Asili | Nambari ya ISO | Kiungo cha Vipimo |
 | :--- | :--- | :--- | :--- |
-| **English** (Master) | English | `en` | [llms.txt](/llms.txt) |
+| **English** (Kuu) | English | `en` | [llms.txt](/llms.txt) |
 | **Mandarin Chinese** | 简体中文 | `zh` | [llms-zh.txt](/llms-zh.txt) |
 | **Hindi** | हिन्दी | `hi` | [llms-hi.txt](/llms-hi.txt) |
 | **Spanish** | Español | `es` | [llms-es.txt](/llms-es.txt) |
@@ -38,956 +38,956 @@ This technical specification is available in the top 25 languages worldwide:
 
 ---
 
-## Navigation & Quick Reference Index
+## Urambazaji & Kielezo cha Marejeleo ya Haraka
 
-- [1. Architectural Foundation & Runtime Lifecycle](#1-architectural-foundation--runtime-lifecycle)
-- [2. Section 1: Rules Management (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
-  - [2.1 Data Schema (`CustomRule`)](#21-data-schema-customrule)
-  - [2.2 Precedence Architecture](#22-precedence-architecture)
-  - [2.3 URL Normalization & Matching Semantics](#23-url-normalization--matching-semantics)
-  - [2.4 Rules Management Settings Breakdown](#24-rules-management-settings-breakdown)
-  - [2.5 Operations & Persistence (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
-  - [2.6 Invocation Modalities](#26-invocation-modalities)
-- [3. Section 2: Group Listing & Operations (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
-  - [3.1 UI Architecture](#31-ui-architecture)
-  - [3.2 Group Lifecycle & Behaviors](#32-group-lifecycle--behaviors)
-  - [3.3 Group Operations & Memory Management](#33-group-operations--memory-management)
-  - [3.4 Group Backups & Restore Subsystem](#34-group-backups--restore-subsystem)
-  - [3.5 Parked YouTube Player in Hidden Groups Bar](#35-parked-youtube-player-in-hidden-groups-bar)
-- [4. Section 3: Navigation & Tab Management (Navegación)](#4-section-3-navigation--tab-management-navegación)
-  - [4.1 Fast Tab Jump Gesture](#41-fast-tab-jump-gesture)
-  - [4.2 Stepping, Swapping & Lifecycle Keys](#42-stepping-swapping--lifecycle-keys)
-  - [For power users](#for-power-users)
-  - [4.3 Audio & Sound Management](#43-audio--sound-management)
-  - [4.4 Split Screen Workflows](#44-split-screen-workflows)
-  - [4.5 YouTube Looping Subsystem](#45-youtube-looping-subsystem)
-  - [4.6 YouTube Shorts Preview Audio](#46-youtube-shorts-preview-audio)
-  - [4.7 Picture-in-Picture (PiP) Architecture](#47-picture-in-picture-pip-architecture)
-  - [4.8 Page Reading Modes & Visual Overlays](#48-page-reading-modes--visual-overlays)
-  - [4.9 Text Snippets Subsystem with Template Variables](#49-text-snippets-subsystem-with-template-variables)
-  - [4.10 Embedded Productivity Tools](#410-embedded-productivity-tools)
-  - [4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
-- [5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
-  - [5.1 Dual Model Engine Architecture](#51-dual-model-engine-architecture)
-  - [5.2 Autonomous Browser Agent (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
-  - [5.3 Taint Tracking & Prompt Injection Defense](#53-taint-tracking--prompt-injection-defense)
-  - [5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
-  - [5.5 Gemini Conversation Management & Export](#55-gemini-conversation-management--export)
-  - [5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
-  - [5.7 Invocation Modalities](#57-invocation-modalities)
-- [6. Section 5: Notes View & Knowledge Management (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
-  - [6.1 Storage Architecture (`notesStore`)](#61-storage-architecture-notesstore)
-  - [6.2 Specialized Note Formats & Advanced Rendering](#62-specialized-note-formats--advanced-rendering)
-  - [6.3 Scoping & Context Hierarchy](#63-scoping--context-hierarchy)
-  - [6.4 Invocation Modalities](#64-invocation-modalities)
-- [7. Section 6: Media & Gallery View (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
-  - [7.1 Capture Modes & Engineering (All 7 Capture Types)](#71-capture-modes--engineering-all-7-capture-types)
-  - [7.2 Gallery UI & Persistence](#72-gallery-ui--persistence)
-  - [7.3 Export, In-Browser OCR & External Markup](#73-export-in-browser-ocr--external-markup)
-  - [7.4 Invocation Modalities](#74-invocation-modalities)
-- [8. Section 7: Pomodoro & Timing Suite (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
-  - [8.1 Timing Engine & Background Architecture](#81-timing-engine--background-architecture)
-  - [8.2 Exhaustive 4 Timing Modes](#82-exhaustive-4-timing-modes)
-  - [8.3 In-Page Floating Timer Widget](#83-in-page-floating-timer-widget)
-  - [8.4 Group Auto-Collapse Idle Timer](#84-group-auto-collapse-idle-timer)
-  - [8.5 Project Tagging & Metadata](#85-project-tagging--metadata)
-  - [8.6 Analytics Engine & 19 KPI Cards](#86-analytics-engine--19-kpi-cards)
-- [9. Section 8: Activity & History Panel (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
-  - [9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
-  - [9.2 Declarative Net Request (DNR) Site Blocker](#92-declarative-net-request-dnr-site-blocker)
-  - [9.3 Asymmetric Security Lock (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
-  - [9.4 Categorization & Visual Analytics](#94-categorization--visual-analytics)
-  - [9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
-  - [9.6 Recently Closed Tabs & Browsing History Subsystem](#96-recently-closed-tabs--browsing-history-subsystem)
-  - [9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
-  - [9.8 Compact Sidepanel View](#98-compact-sidepanel-view)
-- [10. Multi-Modal Invocation Matrix](#10-multi-modal-invocation-matrix)
-  - [10.1 Popup UI Interface](#101-popup-ui-interface)
-  - [10.2 Sidepanel Navigation Routes (`?view=...`)](#102-sidepanel-navigation-routes-view)
-  - [10.3 Manifest Keyboard Shortcuts (24 Commands)](#103-manifest-keyboard-shortcuts-24-commands)
-  - [10.4 In-Page Vim Hint Keys (40+ Combinations)](#104-in-page-vim-hint-keys-40-combinations)
-  - [10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
-  - [10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
-- [11. Storage Schemas & Data Persistence](#11-storage-schemas--data-persistence)
-  - [11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
-  - [11.2 Chrome Storage Dual-Routing (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
-  - [11.3 Chrome Storage Session (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
-- [12. Defensive Engineering & Edge Case Handling](#12-defensive-engineering--edge-case-handling)
+- [1. Msingi wa Kiuanifu & Mzunguko wa Maisha wa Wakati wa Utekelezaji](#1-architectural-foundation--runtime-lifecycle)
+- [2. Sehemu ya 1: Usimamizi wa Sheria (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
+  - [2.1 Muundo wa Data (`CustomRule`)](#21-data-schema-customrule)
+  - [2.2 Muundo wa Upeo wa Utangulizi](#22-precedence-architecture)
+  - [2.3 Usanifishaji wa URL & Semantiki za Ulinganishaji](#23-url-normalization--matching-semantics)
+  - [2.4 Mchanganuo wa Mipangilio ya Usimamizi wa Sheria](#24-rules-management-settings-breakdown)
+  - [2.5 Uendeshaji & Udumishaji (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
+  - [2.6 Njia za Uanzishaji](#26-invocation-modalities)
+- [3. Sehemu ya 2: Orodha ya Vikundi & Shughuli Zake (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
+  - [3.1 Muundo wa Kiolesura cha Mtumiaji (UI)](#31-ui-architecture)
+  - [3.2 Mzunguko wa Maisha & Tabia za Vikundi](#32-group-lifecycle--behaviors)
+  - [3.3 Shughuli za Vikundi & Usimamizi wa Kumbukumbu](#33-group-operations--memory-management)
+  - [3.4 Mfumo Mdogo wa Nakala Nakala & Urejeshaji wa Vikundi](#34-group-backups--restore-subsystem)
+  - [3.5 Kicheza YouTube Kilichosimamishwa kwenye Upau wa Vikundi Vilivyofichwa](#35-parked-youtube-player-in-hidden-groups-bar)
+- [4. Sehemu ya 3: Urambazaji & Usimamizi wa Vichupo (Navegación)](#4-section-3-navigation--tab-management-navegación)
+  - [4.1 Ishara ya Kuruka Haraka kwenye Kichupo](#41-fast-tab-jump-gesture)
+  - [4.2 Vifunguo vya Hatua, Kubadilishana & Mzunguko wa Maisha](#42-stepping-swapping--lifecycle-keys)
+  - [Kwa watumiaji mahiri](#for-power-users)
+  - [4.3 Usimamizi wa Sauti](#43-audio--sound-management)
+  - [4.4 Michakato ya Skrini Iliyogawanywa](#44-split-screen-workflows)
+  - [4.5 Mfumo Mdogo wa Kurudia Maudhui wa YouTube](#45-youtube-looping-subsystem)
+  - [4.6 Sauti ya Hakikisho ya YouTube Shorts](#46-youtube-shorts-preview-audio)
+  - [4.7 Muundo wa Picture-in-Picture (PiP)](#47-picture-in-picture-pip-architecture)
+  - [4.8 Njia za Kusoma Ukurasa & Safu za Mwonekano](#48-page-reading-modes--visual-overlays)
+  - [4.9 Mfumo Mdogo wa Vijisehemu vya Maandishi wenye Vigezo vya Violezo](#49-text-snippets-subsystem-with-template-variables)
+  - [4.10 Zana za Tija Zilizopachikwa](#410-embedded-productivity-tools)
+  - [4.11 Uondoaji Kabambe wa Nakala wa Ngazi 3 & Utupaji Mahiri wa Kumbukumbu](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
+- [5. Sehemu ya 4: Msaidizi wa AI & Ajenti Huru (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
+  - [5.1 Muundo wa Injini ya Modeli Mbili](#51-dual-model-engine-architecture)
+  - [5.2 Ajenti Huru wa Kivinjari (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
+  - [5.3 Ufuatiliaji wa Uchafuzi (Taint Tracking) & Ulinzi dhidi ya Prompt Injection](#53-taint-tracking--prompt-injection-defense)
+  - [5.4 Mfumo Mdogo wa Maswali Yaliyoratibiwa ya Gemini (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
+  - [5.5 Usimamizi & Uhamishaji wa Mazungumzo ya Gemini](#55-gemini-conversation-management--export)
+  - [5.6 Michango ya Njia Nyingi (Multimodal) & Viambatisho vya Faili (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
+  - [5.7 Njia za Uanzishaji](#57-invocation-modalities)
+- [6. Sehemu ya 5: Mwonekano wa Madokezo & Usimamizi wa Maarifa (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
+  - [6.1 Muundo wa Uhifadhi (`notesStore`)](#61-storage-architecture-notesstore)
+  - [6.2 Miundo Maalum ya Madokezo & Utoaji wa Hali ya Juu](#62-specialized-note-formats--advanced-rendering)
+  - [6.3 Mipaka ya Upeo & Uongozi wa Muktadha](#63-scoping--context-hierarchy)
+  - [6.4 Njia za Uanzishaji](#64-invocation-modalities)
+- [7. Sehemu ya 6: Mwonekano wa Vyombo vya Habari & Matunzio (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
+  - [7.1 Njia za Unyakuaji & Uhandisi (Aina Zote 7 za Unyakuaji)](#71-capture-modes--engineering-all-7-capture-types)
+  - [7.2 Kiolesura cha Matunzio & Udumishaji](#72-gallery-ui--persistence)
+  - [7.3 Uhamishaji, OCR ya Ndani ya Kivinjari & Alama za Nje](#73-export-in-browser-ocr--external-markup)
+  - [7.4 Njia za Uanzishaji](#74-invocation-modalities)
+- [8. Sehemu ya 7: Pomodoro & Zana za Muda (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
+  - [8.1 Injini ya Muda & Muundo wa Mandharinyuma](#81-timing-engine--background-architecture)
+  - [8.2 Njia 4 Kamili za Kupima Muda](#82-exhaustive-4-timing-modes)
+  - [8.3 Kidude cha Kipima Muda Kinachoelea Ndani ya Ukurasa](#83-in-page-floating-timer-widget)
+  - [8.4 Kipima Muda cha Kukunja Kiotomatiki Vikundi Visivyotumika](#84-group-auto-collapse-idle-timer)
+  - [8.5 Uwekaji Lebo za Mradi & Data ya Ziada (Metadata)](#85-project-tagging--metadata)
+  - [8.6 Injini ya Uchanganuzi & Kadi 19 za KPI](#86-analytics-engine--19-kpi-cards)
+- [9. Sehemu ya 8: Jopo la Shughuli & Historia (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
+  - [9.1 Injini ya Data & Topolojia ya Uhifadhi (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
+  - [9.2 Kizuia Tovuti cha Declarative Net Request (DNR)](#92-declarative-net-request-dnr-site-blocker)
+  - [9.3 Kufuli ya Usalama Isiyo Linganifu (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
+  - [9.4 Uainishaji & Uchanganuzi wa Kuonekana](#94-categorization--visual-analytics)
+  - [9.5 Mfumo Mdogo wa Kidhibiti Vipakuliwa (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
+  - [9.6 Mfumo Mdogo wa Vichupo Vilivyofungwa Hivi Karibuni & Historia ya Kuvinjari](#96-recently-closed-tabs--browsing-history-subsystem)
+  - [9.7 Mfumo Mdogo wa Kuratibu Mandhari (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
+  - [9.8 Mwonekano Sambamba wa Paneli ya Pembeni (Sidepanel)](#98-compact-sidepanel-view)
+- [10. Jedwali la Uanzishaji wa Njia Mbalimbali](#10-multi-modal-invocation-matrix)
+  - [10.1 Kiolesura cha Mtumiaji cha Ibukizi (Popup UI)](#101-popup-ui-interface)
+  - [10.2 Njia za Urambazaji za Paneli ya Pembeni (`?view=...`)](#102-sidepanel-navigation-routes-view)
+  - [10.3 Njia za Mkato za Kibodi za Manifest (Amri 24)](#103-manifest-keyboard-shortcuts-24-commands)
+  - [10.4 Vifunguo vya Vidokezo vya Vim vya Ndani ya Ukurasa (Mchanganyiko 40+)](#104-in-page-vim-hint-keys-40-combinations)
+  - [10.5 Viambishi Awali vya Mfumo Mdogo wa Omnibar wa Ndani ya Ukurasa (Viambishi Awali 41)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
+  - [10.6 Muundo wa Mti wa Menyu ya Muktadha (Vikundi Vyote 5 & Vitendo 30+)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
+- [11. Miundo ya Uhifadhi & Udumishaji wa Data](#11-storage-schemas--data-persistence)
+  - [11.1 Hifadhidata ya IndexedDB: `Intelligent_Workspace` (Toleo la Muundo 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
+  - [11.2 Uelekezaji Pacha wa Hifadhi ya Chrome (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
+  - [11.3 Kikao cha Hifadhi ya Chrome (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
+- [12. Uhandisi wa Kujilinda & Ushughulikiaji wa Hali Zisizo za Kawaida](#12-defensive-engineering--edge-case-handling)
 
 ---
 
 ## 1. Architectural Foundation & Runtime Lifecycle
 
-The extension runs under Google Chrome's Manifest V3 architecture, decoupling persistent processes across a background Service Worker, sandboxed UI panels, offscreen audio documents, and in-page content script overlays:
+Kirefusho hiki kinafanya kazi chini ya usanifu wa Manifest V3 wa Google Chrome, kikitenganisha michakato endelevu kwenye Service Worker ya mandharinyuma, paneli za kiolesura zilizotengwa (sandboxed), hati za sauti zilizo nje ya skrini, na safu za hati za maudhui (content scripts) za ndani ya ukurasa:
 
-1. **Manifest Configuration (`manifest.json`)**:
-   - **Permissions (21 items)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, and `idle`.
-   - **Host Permissions**: `["<all_urls>"]`.
-   - **Service Worker**: `src/core/background.js` using synchronous `importScripts` modular loading.
-   - **Toolbar Action**: Deliberately omits `default_popup`. Runtime enforces `chrome.action.setPopup({ popup: '' })`, ensuring `chrome.action.onClicked` fires synchronously and opens `chrome.sidePanel` to the user's pinned view without popup initialization latency.
-   - **Omnibox Keyword**: Registered keyword `"find"`.
-   - **Commands**: 24 system-level keyboard shortcuts registered under `commands`.
-   - **Content Security Policy**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
+1. **Usanidi wa Manifest (`manifest.json`)**:
+   - **Ruhusa (vipengee 21)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, na `idle`.
+   - **Ruhusa za Seva Mwenyeji**: `["<all_urls>"]`.
+   - **Service Worker**: `src/core/background.js` inayotumia upakiaji wa moduli wa `importScripts` wa usawazishaji.
+   - **Kitendo cha Upau Zana**: Huacha kimakusudi `default_popup`. Wakati wa utekelezaji hulazimisha `chrome.action.setPopup({ popup: '' })`, kuhakikisha `chrome.action.onClicked` inawashwa kwa usawazishaji na kufungua `chrome.sidePanel` kwenye mwonekano uliopachikwa wa mtumiaji bila ucheleweshaji wa uanzishaji wa ibukizi.
+   - **Neno Muhimu la Omnibox**: Neno muhimu lililosajiliwa `"find"`.
+   - **Amri**: Njia 24 za mkato za kibodi za kiwango cha mfumo zilizosajiliwa chini ya `commands`.
+   - **Sera ya Usalama wa Maudhui**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
 
-2. **Inter-Process Communication Security**:
-   - `src/core/background/messaging.js` filters messages from content scripts against an explicit whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Unprivileged web frames cannot invoke internal storage writers, arbitrary Chrome APIs, or rule mutators.
+2. **Usalama wa Mawasiliano Kati ya Michakato**:
+   - `src/core/background/messaging.js` huchuja ujumbe kutoka kwa hati za maudhui dhidi ya orodha rasmi inayoruhusiwa (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Fremu za wavuti zisizo na marupurupu haziwezi kuita waandishi wa hifadhi ya ndani, API zozote za Chrome kiholela, au wabadilishaji wa sheria.
 
-3. **Dual Execution Worlds**:
-   - Content scripts operate across both `ISOLATED` (extension scope) and `MAIN` (page execution scope) worlds. Scripts like `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, and `youtubeShortsFeedHook.js` run in `MAIN` to intercept prototype methods, override property descriptors, and handle custom events directly.
+3. **Ulimwengu Pacha wa Utekelezaji**:
+   - Hati za maudhui hufanya kazi katika ulimwengu wa `ISOLATED` (upeo wa kirefusho) na `MAIN` (upeo wa utekelezaji wa ukurasa). Hati kama vile `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, na `youtubeShortsFeedHook.js` huendeshwa katika `MAIN` ili kuingilia mbinu za modeli ya kwanza (prototype), kubatilisha vifafanuzi vya sifa, na kushughulikia matukio maalum moja kwa moja.
 
 ---
 
 ## 2. Section 1: Rules Management (Gestionar Reglas)
 
-The Rules Management subsystem automates tab grouping based on strict deterministic criteria defined by the user.
+Mfumo mdogo wa Usimamizi wa Sheria huweka vichupo katika vikundi kiotomatiki kulingana na vigezo madhubuti vilivyobainishwa na mtumiaji.
 
 ### 2.1 Data Schema (`CustomRule`)
-Each custom rule adheres to the following interface:
+Kila sheria maalum inafuata kiolesura kifuatacho:
 ```typescript
 interface CustomRule {
-  name: string;        // 1 to 16 characters. Must contain no whitespace characters.
-  color: RuleColor;    // One of 9 colors: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
-  urls: string[];      // Array of valid URLs, domains, or hostnames.
-  active: boolean;     // Master toggle enabling or disabling rule evaluation.
-  isStarred?: boolean; // Optional flag marking rule as a favorite for prioritized UI ordering.
+  name: string;        // Herufi 1 hadi 16. Haipaswi kuwa na herufi za nafasi wazi (whitespace).
+  color: RuleColor;    // Moja ya rangi 9: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
+  urls: string[];      // Safu ya URL halali, vikoa, au majina ya seva mwenyeji.
+  active: boolean;     // Swichi kuu inayowasha au kuzima tathmini ya sheria.
+  isStarred?: boolean; // Bendera ya hiari inayoweka sheria kuwa unayopendelea kwa mpangilio wa kipaumbele wa kiolesura.
 }
 ```
 
 ### 2.2 Precedence Architecture
-When tabs are processed by `groupTabs()` in `src/core/background/groupManager.js`, tabs are evaluated against grouping layers in strict hierarchical order:
-1. **Custom Rules (`applyCustomRules`)**: Matches active custom rules in order of appearance or user priority. Once grouped, tab IDs are registered in `groupedTabIds` and excluded from subsequent layers.
-2. **Special System Groups**: System URLs are intercepted and clustered into dedicated colored groups:
-   - `chrome://` and internal browser pages
-   - `file:///` local disk files
-   - `chrome-extension://` extension pages
-   - IP Addresses & Localhost (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 hosts)
-3. **Domain Clustering**: Tabs sharing the same root domain are grouped if the tab count meets or exceeds `domainThreshold` (default: 2 tabs).
-4. **Subdomain Clustering**: If enabled, tabs within domains are grouped by specific subdomains (e.g., `docs.github.com` vs `gist.github.com`).
-5. **Miscellaneous ("Misc") Group**: Residual unclustered tabs that do not meet grouping thresholds are placed into the `Misc` group (placement configurable: `start`, `end`, or alphabetical `alpha`).
+Vichupo vinapochakatwa na `groupTabs()` katika `src/core/background/groupManager.js`, vinatathminiwa dhidi ya tabaka za uwekaji makundi kwa mpangilio madhubuti wa kihierarkia:
+1. **Sheria Maalum (`applyCustomRules`)**: Hulinganisha sheria maalum zinazofanya kazi kwa mpangilio wa kuonekana au kipaumbele cha mtumiaji. Mara tu vinapowekwa kwenye kikundi, vitambulisho vya vichupo husajiliwa katika `groupedTabIds` na kuondolewa kwenye tabaka zinazofuata.
+2. **Vikundi Maalum vya Mfumo**: URL za mfumo huingiliwa na kukusanywa katika vikundi maalum vyenye rangi:
+   - `chrome://` na kurasa za ndani za kivinjari
+   - Faili za diski ya ndani za `file:///`
+   - Kurasa za virefusho za `chrome-extension://`
+   - Anwani za IP & Localhost (`localhost`, `127.0.0.1`, `[::1]`, seva mwenyeji za IPv4/IPv6)
+3. **Uwekaji Makundi wa Kikoa**: Vichupo vinavyoshiriki kikoa kikuu kimoja huwekwa katika kikundi kimoja ikiwa idadi ya vichupo inafikia au kuzidi `domainThreshold` (chaguo-msingi: vichupo 2).
+4. **Uwekaji Makundi wa Kijikoa**: Ikiwashwa, vichupo vilivyo ndani ya vikoa huwekwa katika vikundi kulingana na vijikoa maalum (k.m., `docs.github.com` dhidi ya `gist.github.com`).
+5. **Kikundi cha Mengineyo ("Misc")**: Vichupo vilivyobaki ambavyo havijawekwa katika makundi na havijafikia viwango vinavyohitajika huwekwa kwenye kikundi cha `Misc` (uwekaji unaweza kusanidiwa: mwanzo `start`, mwisho `end`, au kialfabeti `alpha`).
 
 ### 2.3 URL Normalization & Matching Semantics
-The matching engine (`matchesRule(tabUrl, ruleUrl)` in `src/core/background/utils.js`) applies rigorous normalization:
-- **Scheme Agnostic**: HTTP and HTTPS protocols are treated as interchangeable (`http://example.com` matches `https://example.com`). Non-web protocols (`file://`, `chrome://`) require exact scheme matches.
-- **Host Normalization**: Leading `www.` prefixes are stripped (`www.github.com` normalizes to `github.com`). Hostnames are lowercased and support internationalized domain names (IDNs) via punycode.
-- **Port Sensitivity**: If a rule specifies a port (e.g., `localhost:3000`), the tab must match that exact port.
-- **Path Matching**: Trailing slashes are stripped. If a rule specifies a path (e.g., `example.com/docs`), it matches tabs with that exact path OR subpaths (`example.com/docs/api`), but does not match sibling paths (`example.com/blog`).
-- **Query & Hash Matching**: If a rule explicitly contains a query string (`?page=1`) or hash (`#section`), the tab must match those parameters verbatim.
-- **Numeric Dword Protection (`ruleValidation.js`)**: The validator strictly rejects bare numeric inputs (e.g., `3242342424`) that WHATWG URL parsers treat as valid IPv4 integer DWORDs, preventing accidental grouping distortions.
+Injini ya kulinganisha (`matchesRule(tabUrl, ruleUrl)` katika `src/core/background/utils.js`) inatumia usanifishaji mkali:
+- **Kutojali Itifaki (Scheme Agnostic)**: Itifaki za HTTP na HTTPS huchukuliwa kuwa zinaweza kubadilishana (`http://example.com` inalingana na `https://example.com`). Itifaki zisizo za wavuti (`file://`, `chrome://`) zinahitaji ulinganishaji kamili wa itifaki.
+- **Usanifishaji wa Seva Mwenyeji**: Viambishi awali vya `www.` huondolewa (`www.github.com` husanifishwa kuwa `github.com`). Majina ya seva mwenyeji hubadilishwa kuwa herufi ndogo na kusaidia majina ya vikoa ya kimataifa (IDNs) kupitia punycode.
+- **Uzingatiaji wa Mlango (Port Sensitivity)**: Ikiwa sheria inabainisha mlango (k.m., `localhost:3000`), kichupo lazima kilingane na mlango huo haswa.
+- **Ulinganishaji wa Njia (Path)**: Mikwaju ya mwisho huondolewa. Ikiwa sheria inabainisha njia (k.m., `example.com/docs`), inalingana na vichupo vyenye njia hiyo haswa AU njia ndogo (`example.com/docs/api`), lakini hailingani na njia sambamba (`example.com/blog`).
+- **Ulinganishaji wa Hoja & Alama ya Reli (Query & Hash)**: Ikiwa sheria ina kamba ya hoja waziwazi (`?page=1`) au alama ya reli (`#section`), kichupo lazima kilingane na vigezo hivyo neno kwa neno.
+- **Ulinzi dhidi ya Dword ya Nambari (`ruleValidation.js`)**: Kithibitishaji kinakataa kabisa maingizo ya nambari tupu (k.m., `3242342424`) ambazo vichanganuzi vya URL vya WHATWG huvichukulia kama DWORD halali za nambari kamili za IPv4, kuzuia upotoshaji wa uwekaji makundi kwa bahati mbaya.
 
 ### 2.4 Rules Management Settings Breakdown
-The Rules Manager provides an exhaustive suite of behavioral controls and settings:
-- **Storage Routing Selection**: Users can route rule storage between `chrome.storage.sync` (for synchronized settings across all devices signed into the Google profile, subject to Chrome sync quotas of 100 KB total and 8 KB per item) and `chrome.storage.local` (for unlimited local capacity suitable for large rule sets containing hundreds of patterns).
-- **Clustering Master Toggle & Thresholds**:
-  - `toggle-clustering`: Master keyboard shortcut and UI toggle enabling or disabling automated domain/subdomain clustering without disabling user-created custom rules.
-  - `domainThreshold`: Minimum tab count required from the same domain to trigger an automatic tab group (default: 2 tabs). Configurable from 1 to 50.
-  - `subdomainThreshold`: Minimum tab count for subdomains before creating separated subgroup clusters.
-  - Subdomain toggle (`toggle-subdomain-grouping`): Distinguishes independent subdomains (e.g., `news.ycombinator.com` vs `ycombinator.com`).
-- **Auto-Sort Groups Alphabetically (`toggle-sort-alpha`)**: Real-time sorting engine enforcing alphabetical ordering across all open tab groups in the browser tab strip (`Ctrl+Shift+S` / `Cmd+Shift+S`).
-- **Visual Status Prefixes (`toggle-prefixes`)**: Emoji markers dynamically prepended to group titles to indicate inspection state:
-  - `🔒` (Lock): The group contains unvisited, unread tabs.
-  - `🔍` (Loupe): The group contains partially visited tabs.
-  - `🗝️` (Open Key): All tabs in the group have been opened and reviewed.
-  - `⚠️` (Warning): Duplicate group name collision detected with another window group.
-- **Auto-Collapse Idle Groups (`toggle-collapse-timer`)**: Automatically collapses groups when inactive to maintain a tidy tab strip.
-- **Master Pause Grouping (`feature_pauseGrouping`)**: Master freeze switch that temporarily suspends all automated grouping operations (both rule matches and heuristic clustering) during active research sessions where tabs should remain in arbitrary user arrangements.
-- **Single Tab Grouping (`featureSingleTabGrouping`)**: Allows custom rules to immediately create a tab group for a single matching tab, bypassing the multi-tab threshold requirement.
-- **Compact View (`toggle-compact-mode`)**: Minimizes tab header width in the browser tab strip by rendering only single-letter badges for group titles.
-- **Drag-and-Drop Priority**: Reordering rules in the `Rules.svelte` list instantly changes their evaluation precedence. Rules at the top evaluate first.
-- **Fuzzy Search**: Live filtering in the Rules Manager and Omnibar allowing instant location of rules by title or matching URL patterns.
-- **JSON Import / Export**:
-  - Mode `add`: Merges imported rules into the existing collection, discarding duplicates.
-  - Mode `overwrite`: Completely replaces the active rule collection with the imported payload after schema validation.
-- **Dynamic Rule Creation**: One-click creation of custom rules directly from Chrome bookmark folders or subgroup domain collections.
-- **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs or domains to existing custom rules, preventing rule inflation and redundant evaluations.
+Kidhibiti cha Sheria kinatoa seti pana ya vidhibiti vya tabia na mipangilio:
+- **Uteuzi wa Njia ya Uhifadhi**: Watumiaji wanaweza kuelekeza uhifadhi wa sheria kati ya `chrome.storage.sync` (kwa mipangilio inayolandanishwa kwenye vifaa vyote vilivyoingia kwenye wasifu wa Google, ikizingatia viwango vya Chrome sync vya jumla ya KB 100 na KB 8 kwa kila kipengee) na `chrome.storage.local` (kwa uwezo usio na kikomo wa ndani unaofaa kwa seti kubwa za sheria zilizo na mamia ya ruwaza).
+- **Swichi Kuu ya Uwekaji Makundi & Vizingiti**:
+  - `toggle-clustering`: Njia ya mkato ya kibodi kuu na swichi ya kiolesura inayowasha au kuzima uwekaji makundi wa kiotomatiki wa kikoa/kijikoa bila kuzima sheria maalum zilizoundwa na mtumiaji.
+  - `domainThreshold`: Kiwango cha chini cha vichupo vinavyohitajika kutoka kikoa kimoja ili kuanzisha kikundi cha vichupo kiotomatiki (chaguo-msingi: vichupo 2). Inaweza kusanidiwa kutoka 1 hadi 50.
+  - `subdomainThreshold`: Kiwango cha chini cha vichupo vya vijikoa kabla ya kuunda makundi madogo yaliyotengwa.
+  - Swichi ya kijikoa (`toggle-subdomain-grouping`): Hutofautisha vijikoa huru (k.m., `news.ycombinator.com` dhidi ya `ycombinator.com`).
+- **Kupanga Vikundi Kiotomatiki Kialfabeti (`toggle-sort-alpha`)**: Injini ya kupanga ya wakati halisi inayolazimisha mpangilio wa kialfabeti katika vikundi vyote vya vichupo vilivyo wazi kwenye upau wa vichupo wa kivinjari (`Ctrl+Shift+S` / `Cmd+Shift+S`).
+- **Viambishi Awali vya Hali ya Kuonekana (`toggle-prefixes`)**: Alama za emoji zinazoongezwa kwa nguvu mbele ya majina ya vikundi ili kuashiria hali ya ukaguzi:
+  - `🔒` (Kufuli): Kikundi kina vichupo ambavyo havijatembelewa au kusomwa.
+  - `🔍` (Kikuzi): Kikundi kina vichupo vilivyotembelewa kiasi.
+  - `🗝️` (Ufunguo Wazi): Vichupo vyote katika kikundi vimefunguliwa na kukaguliwa.
+  - `⚠️` (Onyo): Mgongano wa jina la kikundi lililorudiwa umegunduliwa na kikundi kingine cha dirisha.
+- **Kukunja Kiotomatiki Vikundi Visivyotumika (`toggle-collapse-timer`)**: Hukunja vikundi kiotomatiki vikiwa havifanyi kazi ili kudumisha upau nadhifu wa vichupo.
+- **Kusitisha Uwekaji Makundi Kikamilifu (`feature_pauseGrouping`)**: Swichi kuu ya kusimamisha kwa muda shughuli zote za uwekaji makundi wa kiotomatiki (ulinganishaji wa sheria na uwekaji makundi wa ubashiri) wakati wa vipindi vya utafiti ambapo vichupo vinapaswa kubaki katika mipangilio ya hiari ya mtumiaji.
+- **Uwekaji Kikundi wa Kichupo Kimoja (`featureSingleTabGrouping`)**: Huruhusu sheria maalum kuunda mara moja kikundi cha vichupo kwa kichupo kimoja kinacholingana, ikipita hitaji la kiwango cha vichupo vingi.
+- **Mwonekano Sambamba (`toggle-compact-mode`)**: Hupunguza upana wa kichwa cha kichupo kwenye upau wa vichupo wa kivinjari kwa kuonyesha beji za herufi moja tu kwa majina ya vikundi.
+- **Kipaumbele cha Kuburuta na Kudondosha**: Kupanga upya sheria katika orodha ya `Rules.svelte` hubadilisha mara moja upeo wa utangulizi wa tathmini yao. Sheria zilizo juu hutathminiwa kwanza.
+- **Utafutaji Huria (Fuzzy Search)**: Uchujaji wa papo hapo katika Kidhibiti cha Sheria na Omnibar unaoruhusu kupata sheria mara moja kwa kichwa au ruwaza za URL zinazolingana.
+- **Uingizaji / Uhamishaji wa JSON**:
+  - Hali ya `add`: Huunganisha sheria zilizoingizwa kwenye mkusanyiko uliopo, ikitupa nakala zilizorudiwa.
+  - Hali ya `overwrite`: Hubadilisha kabisa mkusanyiko wa sheria unaofanya kazi na data iliyoingizwa baada ya uthibitishaji wa muundo.
+- **Uundaji wa Sheria wa Nguvu**: Uundaji wa mbofyo mmoja wa sheria maalum moja kwa moja kutoka kwa folda za alamisho za Chrome au makusanyo ya vikoa vya vikundi vidogo.
+- **Uondoaji wa Nakala za Sheria (`feature_v100_dedup_add_to_rule`)**: Huondoa kiotomatiki ruwaza za URL zilizorudiwa wakati wa kuongeza URL au vikoa kwenye sheria maalum zilizopo, kuzuia kuongezeka kwa sheria kusiko kwa lazima na tathmini zinazojirudia.
 
 ### 2.5 Operations & Persistence (`mutateRulesAndSync`)
-- **Centralized Mutator**: All rule modifications route through `mutateRulesAndSync(mutateFn, sendResponse)` in `src/core/background/handlers/rules.js`. This guarantees storage synchronization, in-memory cache refreshment (`extensionSettings.customRules`), UI notification (`rulesUpdated`), and automatic tab regrouping (`groupTabs()`).
-- **Live Validation**: Real-time validation checks for name uniqueness, length (1-16 chars), character restrictions, and valid URL syntax before saving.
+- **Mbadilishaji Mkuu**: Marekebisho yote ya sheria hupitia `mutateRulesAndSync(mutateFn, sendResponse)` katika `src/core/background/handlers/rules.js`. Hii inahakikisha ulandanishaji wa hifadhi, uboreshaji wa kache ya kumbukumbu (`extensionSettings.customRules`), arifa ya kiolesura (`rulesUpdated`), na uwekaji upya wa vichupo katika vikundi kiotomatiki (`groupTabs()`).
+- **Uthibitishaji wa Moja kwa Moja**: Ukaguzi wa uthibitishaji wa wakati halisi wa upekee wa jina, urefu (herufi 1-16), vizuizi vya herufi, na sintaksia halali ya URL kabla ya kuhifadhi.
 
 ### 2.6 Invocation Modalities
-- **Rules Manager Page (`Rules.svelte`)**: Accessible in full-tab view or side panel (`?view=rules` / `pg`). Provides full drag-and-drop reordering, inline color picker, URL tag chips, and rule toggles.
-- **Omnibar Commands**:
-  - `rl:` — Search rules and open associated URLs.
-  - `cr: <name> [, url1, url2]` — Create a new rule directly from the command bar.
-  - `atcr:` — Add the active tab's domain or URL to an existing rule.
-  - `atr:` — Add selected open tabs or manual URLs to an existing rule.
-  - `ccr:` — Change the color of a custom rule.
-  - `dr:` — Delete rules or individual URLs from a rule.
-  - `er:` — Edit or rename an existing rule.
-- **Context Menus**:
-  - Right-click page -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Reglas" -> Toggle active state, open all rule URLs, or close matching tabs.
-- **Keyboard Shortcuts**:
-  - `Alt+R`: Open Rules Manager.
-  - `Alt+M`: Toggle activation of all rules simultaneously (`toggle-all-rules`).
+- **Ukurasa wa Kidhibiti cha Sheria (`Rules.svelte`)**: Unapatikana katika mwonekano kamili wa kichupo au paneli ya pembeni (`?view=rules` / `pg`). Hutoa upangaji upya kamili wa kuburuta na kudondosha, kiteuzi cha rangi cha ndani, lebo za URL, na swichi za sheria.
+- **Amri za Omnibar**:
+  - `rl:` — Tafuta sheria na ufungue URL zinazohusiana.
+  - `cr: <name> [, url1, url2]` — Unda sheria mpya moja kwa moja kutoka kwa upau wa amri.
+  - `atcr:` — Ongeza kikoa au URL ya kichupo kinachotumika kwenye sheria iliyopo.
+  - `atr:` — Ongeza vichupo vilivyochaguliwa vilivyo wazi au URL za mwongozo kwenye sheria iliyopo.
+  - `ccr:` — Badilisha rangi ya sheria maalum.
+  - `dr:` — Futa sheria au URL moja moja kutoka kwa sheria.
+  - `er:` — Hariri au upe jina jipya sheria iliyopo.
+- **Menyu za Muktadha**:
+  - Bofya kulia ukurasa -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Bofya kulia ukurasa -> "Añadir a Regla Existente" -> Chagua sheria -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Bofya kulia ukurasa -> "Reglas" -> Badilisha hali ya utendaji, fungua URL zote za sheria, au funga vichupo vinavyolingana.
+- **Njia za Mkato za Kibodi**:
+  - `Alt+R`: Fungua Kidhibiti cha Sheria.
+  - `Alt+M`: Badilisha uanzishaji wa sheria zote kwa wakati mmoja (`toggle-all-rules`).
 
 ---
 
 ## 3. Section 2: Group Listing & Operations (Listar Grupos)
 
-The Group Listing view provides an interactive workspace for inspecting, manipulating, and reordering browser tab groups and individual tabs.
+Mwonekano wa Orodha ya Vikundi hutoa nafasi shirikishi ya kazi kwa ajili ya kukagua, kubadilisha, na kupanga upya vikundi vya vichupo vya kivinjari na vichupo moja moja.
 
 ### 3.1 UI Architecture
-- **Component Stack**: Built with `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, and `TabActions.svelte`.
-- **Card Features**: Displays group title, color badge, tab count pill, collapse/expand accordion toggle, card pinning, and customizable action button groups.
-- **Tab Items**: Displays tab favicon with color fallback, title, audible sound badge, mute indicator, active state indicator, and per-tab actions (close, duplicate, pin, split, discard).
+- **Tabaka la Vipengele**: Limejengwa kwa `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, na `TabActions.svelte`.
+- **Vipengele vya Kadi**: Huonyesha kichwa cha kikundi, beji ya rangi, idadi ya vichupo, swichi ya kukunja/kupanua, kubandika kadi, na vikundi vya vitufe vya vitendo vinavyoweza kubinafsishwa.
+- **Vipengee vya Vichupo**: Huonyesha favicon ya kichupo yenye rangi mbadala, kichwa, beji ya sauti inayosikika, kiashiria cha bubu, kiashiria cha hali inayotumika, na vitendo vya kila kichupo (funga, nakili, bandika, gawanya, tupa).
 
 ### 3.2 Group Lifecycle & Behaviors
-- **Accordion Control**: Smooth expand and collapse states. Optional auto-accordion mode automatically collapses idle groups when a new group is expanded.
-- **Inactivity Auto-Collapse Idle Timer**:
-  - Automatically collapses idle tab groups to reduce visual clutter.
-  - Two distinct thresholds: Inactive groups collapse after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), while the active group collapses after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-- **Inline Renaming & Grace Period**:
-  - Users can rename groups directly in the browser tab strip or UI.
-  - `GROUP_NAMING_GRACE_MS` (5000ms) pauses automatic regrouping while a user edits, preventing title overwrites mid-typing.
-  - Zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) are stripped during evaluation.
-  - Renaming an automatically generated group converts it to a user-named group, updating the corresponding custom rule or marking it permanent.
-- **Visual Group Prefix Indicators**:
-  - Dynamically prepends status symbols: `🔒` (unvisited), `🔍` (partial), `🗝️` (all viewed), `⚠️` (collision).
-- **Drag-and-Drop Reordering**: Integrated with `sortable.js` for reordering tabs within groups, moving tabs between groups, or reordering group cards.
-- **Hidden Groups Feature**:
-  - Prefixes group title with `_hidden_` in the browser tab strip.
-  - Hides group cards from the main list view, transferring them to `HiddenGroupsBar.svelte`.
-  - Users can unhide or restore groups instantly with a single click.
+- **Udhibiti wa Kukunja (Accordion)**: Hali laini za kupanua na kukunja. Hali ya hiari ya kukunja kiotomatiki hukunja vikundi visivyotumika wakati kikundi kipya kinapanuliwa.
+- **Kipima Muda cha Kukunja Kiotomatiki Wakati Hakuna Shughuli**:
+  - Hukunja vikundi vya vichupo visivyotumika kiotomatiki ili kupunguza mrundikano wa kuonekana.
+  - Vizingiti viwili tofauti: Vikundi visivyotumika hukunjwa baada ya dakika 1 ya kutotumika (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), wakati kikundi kinachotumika hukunjwa baada ya dakika 15 za kutotumika (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Inaweza kusanidiwa kutoka dakika 0 hadi 1440.
+- **Kubadilisha Majina Moja kwa Moja & Muda wa Kusubiri**:
+  - Watumiaji wanaweza kubadilisha majina ya vikundi moja kwa moja kwenye upau wa vichupo vya kivinjari au kiolesura.
+  - `GROUP_NAMING_GRACE_MS` (5000ms) husimamisha uwekaji makundi upya wa kiotomatiki wakati mtumiaji anahariri, kuzuia kufuta jina katikati ya uandishi.
+  - Nafasi zisizo na upana (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) huondolewa wakati wa tathmini.
+  - Kubadilisha jina la kikundi kilichozalishwa kiotomatiki hukibadilisha kuwa kikundi kilichopewa jina na mtumiaji, kikisasisha sheria maalum inayolingana au kukifanya kiwe cha kudumu.
+- **Viashiria vya Viambishi Awali vya Vikundi**:
+  - Huongeza alama za hali kwa nguvu: `🔒` (haijatembelewa), `🔍` (kiasi), `🗝️` (vyote vimetazamwa), `⚠️` (mgongano).
+- **Upangaji Upya wa Kuburuta na Kudondosha**: Imeunganishwa na `sortable.js` kwa ajili ya kupanga upya vichupo ndani ya vikundi, kuhamisha vichupo kati ya vikundi, au kupanga upya kadi za vikundi.
+- **Kipengele cha Vikundi Vilivyofichwa**:
+  - Huweka kiambishi awali cha `_hidden_` kwenye kichwa cha kikundi katika upau wa vichupo vya kivinjari.
+  - Huficha kadi za vikundi kutoka kwa mwonekano kuu wa orodha, zikihamishiwa kwa `HiddenGroupsBar.svelte`.
+  - Watumiaji wanaweza kufichua au kurejesha vikundi mara moja kwa mbofyo mmoja.
 
 ### 3.3 Group Operations & Memory Management
-- **Ungroup**: Disbands the group, leaving tabs open in the window.
-- **Close Group**: Closes all tabs in the group and releases the group ID.
-- **Close Other Groups**: Closes all tab groups except the currently focused group.
-- **Regroup All Tabs (`Alt+Shift+R`)**: Executes a comprehensive re-evaluation pass across custom rules, system groups, and domain clusters.
-- **Group Screenshot Walk**: Sequentially cycles through and captures every tab in the group (`Cs` visible, `Cp` full page, `CP` full page parts).
+- **Ungroup**: Huvunja kikundi, kikiacha vichupo vikiwa wazi kwenye dirisha.
+- **Close Group**: Hufunga vichupo vyote katika kikundi na kutoa kitambulisho cha kikundi.
+- **Close Other Groups**: Hufunga vikundi vyote vya vichupo isipokuwa kikundi kinacholengwa kwa sasa.
+- **Regroup All Tabs (`Alt+Shift+R`)**: Hutekeleza ukaguzi upya wa kina katika sheria maalum, vikundi vya mfumo, na makundi ya vikoa.
+- **Group Screenshot Walk**: Huzunguka na kupiga picha ya skrini kwa mfuatano kila kichupo katika kikundi (`Cs` inayoonekana, `Cp` ukurasa kamili, `CP` sehemu za ukurasa kamili).
 
 ### 3.4 Group Backups & Restore Subsystem
-- **IndexedDB `backupsGroups` Store**:
-  - Backs up single tab groups or workspace-wide snapshots of all open groups into IndexedDB `Intelligent_Workspace` store `backupsGroups`.
-  - Captures complete group structures: group title, color, collapsed state, tab titles, URLs, favicons, pinned status, and relative tab positions.
-  - **Memory Conservation**: Backed-up tabs are cleanly closed to reclaim system RAM and reduce CPU overhead.
-  - **Restore Mechanisms**:
-    - Backups UI View in `ListGroup.svelte` with one-click group restoration.
-    - Keyboard shortcut `br` (restore) and `bg` (backup all).
-    - Omnibar command `bgr:` (search and restore backed-up groups) and `b:` (bookmark search).
-  - **JSON Export & Import**: Full JSON backup export and import for seamless migration between machines and long-term offline archiving.
+- **Hifadhi ya IndexedDB `backupsGroups`**:
+  - Huhifadhi nakala ya kikundi kimoja cha vichupo au picha kamili ya nafasi ya kazi ya vikundi vyote vilivyo wazi kwenye hifadhi ya IndexedDB `Intelligent_Workspace` ya `backupsGroups`.
+  - Hunasa miundo kamili ya vikundi: kichwa cha kikundi, rangi, hali ya kukunjwa, vichwa vya vichupo, URL, favicon, hali ya kubandikwa, na nafasi za vichupo.
+  - **Uhifadhi wa Kumbukumbu**: Vichupo vilivyohifadhiwa nakala hufungwa vizuri ili kurudisha RAM ya mfumo na kupunguza matumizi ya CPU.
+  - **Taratibu za Kurejesha**:
+    - Mwonekano wa Kiolesura cha Nakala katika `ListGroup.svelte` wenye urejeshaji wa kikundi kwa mbofyo mmoja.
+    - Njia ya mkato ya kibodi `br` (rejesha) na `bg` (hifadhi nakala ya yote).
+    - Amri ya Omnibar `bgr:` (tafuta na urejeshe vikundi vilivyohifadhiwa nakala) na `b:` (utafutaji wa alamisho).
+  - **Uhamishaji & Uingizaji wa JSON**: Uhamishaji na uingizaji kamili wa nakala za JSON kwa ajili ya uhamiaji rahisi kati ya mashine na uhifadhi wa muda mrefu nje ya mtandao.
 
 ### 3.5 Parked YouTube Player in Hidden Groups Bar
-- **Architecture (`HiddenGroupsBar.svelte`)**:
-  - When a user navigates away from an active YouTube video view or launches video content inside the side panel, the player is not closed or lost. It is automatically docked in `HiddenGroupsBar.svelte` as a parked YouTube indicator (`.youtube-indicator`).
-  - Managed reactively via the `hiddenYoutubeView` store in `src/ui/stores/appStore.svelte.js`.
-  - **One-Click Actions**:
-    - Clicking the parked indicator invokes `restoreYoutubeView()`, returning the player immediately to the active workspace view.
-    - Clicking the delete badge invokes `discardYoutubeView()`, cleanly terminating playback and reclaiming resources.
-  - Sits seamlessly alongside hidden tab groups at the top of the ListGroup view without cluttering active tab lists.
+- **Muundo (`HiddenGroupsBar.svelte`)**:
+  - Mtumiaji anapoondoka kwenye mwonekano wa video inayotumika ya YouTube au kuzindua maudhui ya video ndani ya paneli ya pembeni, kichezaji hakifungwi wala kupotea. Hupachikwa kiotomatiki katika `HiddenGroupsBar.svelte` kama kiashiria cha YouTube kilichosimamishwa (`.youtube-indicator`).
+  - Hudhibitiwa kwa mwitikio kupitia hifadhi ya `hiddenYoutubeView` katika `src/ui/stores/appStore.svelte.js`.
+  - **Vitendo vya Mbofyo Mmoja**:
+    - Kubofya kiashiria kilichosimamishwa huita `restoreYoutubeView()`, kurudisha kichezaji mara moja kwenye mwonekano unaotumika wa nafasi ya kazi.
+    - Kubofya beji ya kufuta huita `discardYoutubeView()`, kusitisha uchezaji kwa usafi na kurudisha rasilimali.
+  - Hukaa bila mshono kando ya vikundi vya vichupo vilivyofichwa juu ya mwonekano wa ListGroup bila kuvuruga orodha za vichupo vinavyotumika.
 
 ---
 
 ## 4. Section 3: Navigation & Tab Management (Navegación)
 
-Accelerated keyboard navigation and workspace controls allow seamless multi-tab control without mouse interaction.
+Urambazaji wa haraka wa kibodi na vidhibiti vya nafasi ya kazi huruhusu udhibiti wa vichupo vingi bila kutumia kipanya (mouse).
 
 ### 4.1 Fast Tab Jump Gesture
-- **Gesture Syntax**: `Alt + [groupPrefix] + [tabIndex] + Enter`
-- **Execution**:
-  - Hold `Alt` and type the group's name or prefix letters, followed by the desired 1-based tab index, then press `Enter`.
-  - Example: `Alt + git + 2 + Enter` jumps directly to the second tab in the "GitHub" group.
-  - Index `0` acts as a shortcut for the *last* tab in the group.
-  - Omitting the index jumps to the *first* tab in the group.
-  - Accents are automatically folded (`deaccent`) and matching normalizes diacritics.
+- **Sintaksia ya Ishara**: `Alt + [groupPrefix] + [tabIndex] + Enter`
+- **Utekelezaji**:
+  - Shikilia `Alt` na uandike jina la kikundi au herufi za kiambishi awali, ikifuatiwa na nambari ya faharasa ya kichupo kuanzia 1, kisha bonyeza `Enter`.
+  - Mfano: `Alt + git + 2 + Enter` huruka moja kwa moja hadi kichupo cha pili katika kikundi cha "GitHub".
+  - Faharasa `0` hufanya kazi kama njia ya mkato ya kichupo cha *mwisho* katika kikundi.
+  - Kuacha faharasa huruka hadi kichupo cha *kwanza* katika kikundi.
+  - Lafudhi huondolewa kiotomatiki (`deaccent`) na ulinganishaji husawazisha alama za matamshi.
 
 ### 4.2 Stepping, Swapping & Lifecycle Keys
-- `s`: Instantly swap to the previously active tab (`previousActiveTabId`).
-- `h` / `l`: Step to the previous / next tab (or scroll horizontally if the page allows).
-- `H` / `L`: Navigate back / forward in browser history.
-- `t`: Open a new blank tab.
-- `x`: Close the current active tab.
-- `yt`: Duplicate the current tab.
-- `r` / `R`: Reload page / Force reload bypassing cache.
-- `d` / `u`: Scroll to bottom / top of page.
-- `j` / `k`: Smooth scroll down / up (75px step).
-- `f`: Activate Vim link hints (letters appear over clickable elements to click).
-- `cf`: Activate Vim link hints to copy target URL to clipboard.
+- `s`: Badilishana mara moja hadi kichupo kilichokuwa kikitumika awali (`previousActiveTabId`).
+- `h` / `l`: Sogeza hatua moja hadi kichupo kilichopita / kinachofuata (au sogeza ukurasa mlalo ikiwa inaruhusiwa).
+- `H` / `L`: Nenda nyuma / mbele katika historia ya kivinjari.
+- `t`: Fungua kichupo kipya kitupu.
+- `x`: Funga kichupo kinachotumika sasa.
+- `yt`: Nakili kichupo cha sasa.
+- `r` / `R`: Pakia ukurasa upya / Lazimisha kupakia upya ukipita kache.
+- `d` / `u`: Sogeza hadi chini / juu ya ukurasa.
+- `j` / `k`: Sogeza chini / juu kwa ulaini (hatua ya 75px).
+- `f`: Washa vidokezo vya viungo vya Vim (herufi huonekana juu ya vipengele vinavyoweza kubofyeka ili kubofya).
+- `cf`: Washa vidokezo vya viungo vya Vim ili kunakili URL lengwa kwenye ubao wa kunakili (clipboard).
 
-### Kwa watumiaji wenye uzoefu mkubwa (For power users)
+### For power users
 
-Watumiaji wa hali ya juu wanaweza kuweka kivinjari kwenye hali ya skrini nzima na kuvinjari kabisa kwa kutumia kibodi, bila kutumia kipanya (mouse) kabisa.
+Watumiaji mahiri zaidi wanaweza kuweka kivinjari katika hali ya skrini nzima na kurambaza kikamilifu kwa kibodi, bila kutumia kipanya kabisa.
 
 #### Full-Screen Immersion & Mouse-Free Browsing
-- **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.
-- **In-Page Vim Link Navigation (`f` / `cf`)**:
-  - Press `f` to generate high-contrast two-character yellow link hints over every clickable element, button, input, and link in the DOM.
-  - Type the two letters matching your target to simulate a direct click without mouse interaction.
-  - Press `cf` to trigger hint badges that copy the target link's URL directly to your system clipboard.
-  - Press `vp` to open an in-page preview modal of the target link.
-  - Press `Esc` at any time to cancel link hints and return to normal scrolling.
-- **Instant Tab Jumping & Switching**:
-  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Execute the Fast Tab Jump gesture (e.g., `Alt + dev + 1 + Enter` jumps directly to the first tab in the "Dev" group; index `0` selects the last tab in the group).
-  - `s`: Instantly swap between the current tab and the previously active tab (`previousActiveTabId`).
-  - `h` / `l`: Step sequentially to the previous / next tab in the tab strip.
-  - `H` / `L`: Move backward / forward through browser navigation history.
-  - `t` / `x` / `yt`: Open a new tab (`t`), close current tab (`x`), or duplicate tab (`yt`).
-- **Floating Omnibar Command Subsystem (`o`)**:
-  - Press `o` on any page to summon the centered Omnibar overlay.
-  - Press `@` to display the interactive directory of all 41 command prefixes.
-  - Type `f: <query>` to execute deep full-text tab search across all open windows.
-  - Type `sp:` to route navigation directly into any Sidepanel view (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
-  - Type `qai: <query>` or `qaia: <task>` to query Gemini or instruct the autonomous browser agent without lifting hands from the keyboard.
-  - Type `ts:` to split open tabs into side-by-side split screen.
-- **In-Page Navigation & Focus**:
-  - `j` / `k`: Smooth scroll down / up (75px increment).
-  - `d` / `u`: Half-page scroll down / up.
-  - `i`: Jump cursor focus immediately into the primary text input field on the page.
-  - `ESC`: Unfocus inputs and return keyboard focus to navigation mode.
+- **Geuza Skrini Nzima**: Bonyeza `F11` (Windows/Linux) au `Command+Control+F` (macOS). Fremu ya kivinjari, upau wa anwani, upau wa vichupo, na paneli za mfumo wa uendeshaji hufichwa, ikitoa 100% ya skrini kwa maudhui.
+- **Urambazaji wa Viungo vya Vim Ndani ya Ukurasa (`f` / `cf`)**:
+  - Bonyeza `f` ili kuzalisha vidokezo vya viungo vya manjano vyenye utofautishaji wa juu vya herufi mbili juu ya kila kipengele kinachobofyeka, kitufe, sehemu ya kuingiza data, na kiungo katika DOM.
+  - Andika herufi mbili zinazolingana na lengo lako ili kuiga mbofyo wa moja kwa moja bila kutumia kipanya.
+  - Bonyeza `cf` ili kuanzisha beji za vidokezo zinazonakili URL ya kiungo lengwa moja kwa moja kwenye ubao wako wa kunakili wa mfumo.
+  - Bonyeza `vp` ili kufungua dirisha ibukizi la hakikisho la ndani ya ukurasa la kiungo lengwa.
+  - Bonyeza `Esc` wakati wowote ili kughairi vidokezo vya viungo na kurudi kwenye usogezaji wa kawaida.
+- **Kuruka na Kubadilisha Vichupo Mara Moja**:
+  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Tekeleza ishara ya Kuruka Haraka kwenye Kichupo (k.m., `Alt + dev + 1 + Enter` huruka moja kwa moja hadi kichupo cha kwanza katika kikundi cha "Dev"; faharasa `0` huchagua kichupo cha mwisho katika kikundi).
+  - `s`: Badilishana mara moja kati ya kichupo cha sasa na kichupo kilichokuwa kikitumika awali (`previousActiveTabId`).
+  - `h` / `l`: Sogeza kwa mfuatano hadi kichupo kilichopita / kinachofuata kwenye upau wa vichupo.
+  - `H` / `L`: Sogeza nyuma / mbele kupitia historia ya urambazaji ya kivinjari.
+  - `t` / `x` / `yt`: Fungua kichupo kipya (`t`), funga kichupo cha sasa (`x`), au nakili kichupo (`yt`).
+- **Mfumo Mdogo wa Amri wa Omnibar Unaoelea (`o`)**:
+  - Bonyeza `o` kwenye ukurasa wowote ili kuita safu ya Omnibar iliyo katikati.
+  - Bonyeza `@` ili kuonyesha saraka shirikishi ya viambishi awali vyote 41 vya amri.
+  - Andika `f: <query>` ili kutekeleza utafutaji wa kina wa maandishi kamili ya vichupo kwenye madirisha yote yaliyo wazi.
+  - Andika `sp:` ili kuelekeza urambazaji moja kwa moja kwenye mwonekano wowote wa Paneli ya Pembeni (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
+  - Andika `qai: <query>` au `qaia: <task>` ili kuuliza Gemini au kuelekeza ajenti huru wa kivinjari bila kuondoa mikono kwenye kibodi.
+  - Andika `ts:` ili kugawanya vichupo vilivyo wazi katika skrini iliyogawanywa ubavu kwa ubavu.
+- **Urambazaji wa Ndani ya Ukurasa & Umakini (Focus)**:
+  - `j` / `k`: Sogeza chini / juu kwa ulaini (nyongeza ya 75px).
+  - `d` / `u`: Sogeza nusu ukurasa chini / juu.
+  - `i`: Hamisha kielekezi cha umakini mara moja kwenye sehemu kuu ya kuingiza maandishi kwenye ukurasa.
+  - `ESC`: Ondoa umakini kwenye sehemu za kuingizia na urudishe umakini wa kibodi kwenye hali ya urambazaji.
 
 ### 4.3 Audio & Sound Management
-- Tabs playing audio display a speaker badge in the ListGroup UI.
-- `st`: Toggle mute on the current active tab.
-- `so`: Mute all audible tabs across the entire browser.
-- Context menu: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
+- Vichupo vinavyocheza sauti huonyesha beji ya spika kwenye kiolesura cha ListGroup.
+- `st`: Washa au zima sauti (mute) kwenye kichupo kinachotumika sasa.
+- `so`: Zima sauti kwenye vichupo vyote vinavyotoa sauti katika kivinjari kizima.
+- Menyu ya muktadha: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
 
 ### 4.4 Split Screen Workflows
-- **Trigger**: Vim hint `ts` or Omnibar prefix `ts:`.
-- **Behavior**: Uses `chrome.system.display` to calculate screen geometry. Splits two tabs side-by-side into adjacent windows, grouping them under a dedicated `Split` tab group.
-- **Restoration**: Closing the split window or toggling split screen restores original window dimensions and coordinates.
+- **Kianzishi**: Kidokezo cha Vim `ts` au kiambishi awali cha Omnibar `ts:`.
+- **Tabia**: Hutumia `chrome.system.display` kukokotoa vipimo vya kijiometri vya skrini. Hugawanya vichupo viwili ubavu kwa ubavu kwenye madirisha yaliyo karibu, ikiviweka chini ya kikundi maalum cha vichupo cha `Split`.
+- **Urejeshaji**: Kufunga dirisha lililogawanywa au kugeuza skrini iliyogawanywa hurejesha vipimo na viwianishi vya awali vya dirisha.
 
 ### 4.5 YouTube Looping Subsystem
-The YouTube looping subsystem provides precision media looping controls integrated directly into the YouTube player:
-- **Desktop Player Button (`#itg-yt-loop-button`)**: Injected into the standard YouTube player control bar (`.ytp-right-controls`), positioned to the left of the Cast / Remote button or PiP launcher. Features animated SVG looping glyphs, toggle highlight styling (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), and `aria-pressed` states.
-- **Shorts Player Button (`#itg-yt-shorts-loop-button`)**: Injected inside `#itg-yt-shorts-loop-wrapper` into the YouTube Shorts right-side control column (`ytd-shorts`), providing one-click looping for vertical video content.
-- **Loop Menu & PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Hovering or clicking the loop button opens the comprehensive loop settings menu:
-  - **A-B Looping**: Users can set custom start point (A) and end point (B) down to millisecond precision with interactive range sliders and manual time fields.
-  - **Cycle Mode & Sequence Repetitions**: Set repetition count for specific loops or toggle infinite loop mode (`itg-loop-seq-inf`).
-  - **Loop List & Multi-Segment Sequences**: Queue multiple A-B loop intervals that play consecutively according to configured repetitions.
-  - **Status & Duration Display**: Shows real-time playback position within current loop interval and total media duration (`00:00 / 00:00`).
-  - **Master Toggle (`youtubeLoopEnabled`)**: Persisted in `chrome.storage.sync` and `local`, allowing users to enable or disable the loop buttons across YouTube and YouTube Shorts via the Customize Hints settings page (`YoutubeLoopSection.svelte`).
+Mfumo mdogo wa kurudia maudhui wa YouTube hutoa vidhibiti sahihi vya kurudia vyombo vya habari vilivyojumuishwa moja kwa moja kwenye kichezaji cha YouTube:
+- **Kitufe cha Kichezaji cha Kompyuta (`#itg-yt-loop-button`)**: Huingizwa kwenye upau wa vidhibiti wa kichezaji cha kawaida cha YouTube (`.ytp-right-controls`), kikiwekwa upande wa kushoto wa kitufe cha Cast / Remote au kizindua cha PiP. Kinajumuisha alama za uhuishaji za SVG za kurudia, mtindo wa kuangazia swichi (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), na hali za `aria-pressed`.
+- **Kitufe cha Kichezaji cha Shorts (`#itg-yt-shorts-loop-button`)**: Huingizwa ndani ya `#itg-yt-shorts-loop-wrapper` kwenye safu wima ya vidhibiti ya upande wa kulia ya YouTube Shorts (`ytd-shorts`), ikitoa urudiaji wa mbofyo mmoja kwa maudhui ya video wima.
+- **Menyu ya Kurudia & Dirisha Ibukizi la PiP (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Kuelea au kubofya kitufe cha kurudia hufungua menyu kamili ya mipangilio ya kurudia:
+  - **Kurudia kwa A-B**: Watumiaji wanaweza kuweka sehemu maalum ya kuanzia (A) na sehemu ya kuishia (B) kwa usahihi wa milisekunde kwa kutumia vitelezi shirikishi na sehemu za kuingiza muda kwa mikono.
+  - **Hali ya Mzunguko & Marudio ya Mfuatano**: Weka idadi ya marudio kwa mizunguko maalum au uwashe hali ya kurudia bila kikomo (`itg-loop-seq-inf`).
+  - **Orodha ya Kurudia & Mfuatano wa Sehemu Nyingi**: Weka foleni ya vipindi vingi vya kurudia vya A-B vinavyocheza kwa mfuatano kulingana na marudio yaliyosanidiwa.
+  - **Onyesho la Hali & Muda**: Huonyesha nafasi ya uchezaji wa wakati halisi ndani ya kipindi cha sasa cha kurudia na jumla ya muda wa maudhui (`00:00 / 00:00`).
+  - **Swichi Kuu (`youtubeLoopEnabled`)**: Inadumishwa katika `chrome.storage.sync` na `local`, ikiruhusu watumiaji kuwasha au kuzima vitufe vya kurudia kwenye YouTube na YouTube Shorts kupitia ukurasa wa mipangilio wa Customize Hints (`YoutubeLoopSection.svelte`).
 
 ### 4.6 YouTube Shorts Preview Audio
-- **Audio Unmute Hook (`youtubePreviewAudioHook.js`)**:
-  - Runs in the `MAIN` execution world to access the `#inline-preview-player` property on `ytd-video-preview` elements.
-  - **Overcoming Forced Mute**: YouTube enforces a forced mute on Shorts previews by clearing audio controls and restoring `muted = true` via internal `volumechange` listeners.
-  - The extension hooks `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover. It drops YouTube's forced re-mute while allowing user unmuting, ensuring sound plays continuously without being interrupted across loop restarts until mouse leave.
+- **Kuingilia Kufungua Sauti (Audio Unmute Hook - `youtubePreviewAudioHook.js`)**:
+  - Huendeshwa katika ulimwengu wa utekelezaji wa `MAIN` ili kufikia sifa ya `#inline-preview-player` kwenye vipengele vya `ytd-video-preview`.
+  - **Kushinda Uzimaji Sauti wa Lazima**: YouTube inalazimisha uzimaji sauti kwenye hakikisho za Shorts kwa kufuta vidhibiti vya sauti na kurejesha `muted = true` kupitia wasikilizaji wa ndani wa `volumechange`.
+  - Kirefusho huingilia kielezi cha sifa cha `HTMLMediaElement.prototype.muted` kwenye kipengele lengwa cha `<video>` wakati kipanya kinapoelea juu yake. Huondoa urejeshaji wa lazima wa sauti iliyozimwa wa YouTube huku ikiruhusu mtumiaji kufungua sauti, kuhakikisha sauti inacheza mfululizo bila kukatizwa kwenye mizunguko ya kurudia hadi kipanya kiondoke.
 
 ### 4.7 Picture-in-Picture (PiP) Architecture
 - **Document Picture-in-Picture (`wp`)**:
-  - Leverages the modern `documentPictureInPicture` API to open an entire webpage or text snippet inside an always-on-top floating window.
-  - Automatically synchronizes video playback timestamps when transferring media.
-  - Features retry logic (`itgRetryIfPipFrameRefused`) and cleans up DNR iframe headers upon close.
+  - Inatumia API ya kisasa ya `documentPictureInPicture` kufungua ukurasa mzima wa wavuti au kijisehemu cha maandishi ndani ya dirisha linaloelea lililo juu ya madirisha yote daima.
+  - Hulandanisha alama za muda wa uchezaji wa video kiotomatiki wakati wa kuhamisha vyombo vya habari.
+  - Inajumuisha mantiki ya kujaribu tena (`itgRetryIfPipFrameRefused`) na kusafisha vichwa vya habari vya iframe vya DNR wakati wa kufunga.
 - **Video Picture-in-Picture (`wv`)**:
-  - Hooks `HTMLVideoElement.prototype.requestPictureInPicture` via `videoPipHook.js`.
-  - Redirects video players into custom PiP frames with loop controls and playback speed selectors.
+  - Huingilia `HTMLVideoElement.prototype.requestPictureInPicture` kupitia `videoPipHook.js`.
+  - Huelekeza vicheza video kwenye fremu maalum za PiP zenye vidhibiti vya kurudia na viteuzi vya kasi ya uchezaji.
 - **Auto-PiP**:
-  - `as`: Toggle Auto-PiP on scroll (launches video in PiP when scrolled out of viewport).
-  - `ah`: Toggle Auto-PiP on tab hide (launches video in PiP when switching to another tab).
+  - `as`: Geuza Auto-PiP wakati wa kusogeza ukurasa (huzindua video katika PiP inapopotea kwenye eneo la kuonekana).
+  - `ah`: Geuza Auto-PiP wakati wa kuficha kichupo (huzindua video katika PiP unapobadilisha kwenda kwenye kichupo kingine).
 
 ### 4.8 Page Reading Modes & Visual Overlays
-- **CSS Filter Themes**: Injects non-destructive styles into web pages:
-  - `mb` / `mB`: Black (Dark High-Contrast) — tab scope / global scope.
-  - `ms` / `mS`: Sepia (Warm Paper) — tab scope / global scope.
-  - `mp` / `mP`: Paper (Monochrome Grayscale) — tab scope / global scope.
-  - `ml` / `mL`: Light (Soft White) — tab scope / global scope.
-  - `me` / `mE`: Custom user-defined CSS filter — tab scope / global scope.
-  - `ESC`: Immediately removes active page filter.
-- **Reader Mode & TTS Read Aloud**:
-  - `fetchContentForReaderView`: Extracts clean article content, removing advertisements, sidebars, and navigation noise.
-  - Built-in Text-to-Speech (TTS) engine reading text aloud sentence by sentence.
-  - Keyboard navigation controls: `zp` (play/pause), `zn` (next sentence), `zb` (previous sentence), `zq` (close reader overlay).
+- **Mandhari ya Vichujio vya CSS**: Huingiza mitindo isiyo na madhara kwenye kurasa za wavuti:
+  - `mb` / `mB`: Nyeusi (Giza lenye Utofautishaji wa Juu) — upeo wa kichupo / upeo wa kimataifa.
+  - `ms` / `mS`: Sepia (Karatasi Yenye Joto) — upeo wa kichupo / upeo wa kimataifa.
+  - `mp` / `mP`: Karatasi (Kijivu cha Rangi Moja) — upeo wa kichupo / upeo wa kimataifa.
+  - `ml` / `mL`: Nyepesi (Nyeupe Laini) — upeo wa kichupo / upeo wa kimataifa.
+  - `me` / `mE`: Kichujio maalum cha CSS kilichobainishwa na mtumiaji — upeo wa kichupo / upeo wa kimataifa.
+  - `ESC`: Huondoa kichujio cha ukurasa kinachotumika mara moja.
+- **Hali ya Kusoma & Kusoma kwa Sauti (TTS Read Aloud)**:
+  - `fetchContentForReaderView`: Hutoa maudhui safi ya makala, ikiondoa matangazo, pau za pembeni, na kelele za urambazaji.
+  - Injini ya ndani ya Kubadilisha Maandishi kuwa Sauti (TTS) inayosoma maandishi kwa sauti sentensi kwa sentensi.
+  - Vidhibiti vya urambazaji wa kibodi: `zp` (cheza/sitisha), `zn` (sentensi inayofuata), `zb` (sentensi iliyopita), `zq` (funga safu ya usomaji).
 
 ### 4.9 Text Snippets Subsystem with Template Variables
-The Text Snippets subsystem (`SnippetManager` in `src/utils/hint/snippets.js` and `src/utils/snippet-panel.js`) accelerates typing by expanding text shortcuts in any input, textarea, or rich editor:
-- **Trigger Modalities**: Type shortcut followed by Space, or type `$$` to summon the interactive snippets search popup.
-- **Clipboard API Integration**: Supports formatted HTML and plain text insertion via the Clipboard API, ensuring 100% compatibility with complex editors like Google Docs, Notion, and Slack.
-- **Template Variables**: Dynamically resolves variables at the moment of expansion:
-  - `{{date}}` / `date`: Formatted locale date (`toLocaleDateString`).
-  - `{{isodate}}` / `isodate`: ISO 8601 date (`YYYY-MM-DD`).
-  - `{{longdate}}` / `longdate`: Long date with weekday, day, month, and year.
-  - `{{time}}` / `time`: 2-digit formatted time (`HH:MM`).
-  - `{{datetime}}` / `datetime`: Date and time combined.
-  - `{{weekday}}` / `weekday`: Full day name (e.g., Monday).
-  - `{{day}}` / `day`: Day of month (1-31).
-  - `{{month}}` / `month`: Full month name (e.g., October).
-  - `{{year}}` / `year`: Full 4-digit year.
-  - `{{tomorrow}}` / `tomorrow`: Next day's date (+1 day).
-  - `{{yesterday}}` / `yesterday`: Previous day's date (-1 day).
-  - `{{nextweek}}` / `nextweek`: Date 7 days ahead (+7 days).
-  - `{{timestamp}}` / `timestamp`: Epoch millisecond timestamp (`Date.now()`).
-  - `{{url}}` / `url`: Active webpage URL (`window.location.href`).
-  - `{{domain}}` / `domain`: Active domain hostname (`window.location.hostname`).
-  - `{{pagetitle}}` / `pagetitle`: Active document title (`document.title`).
-  - `{{uuid}}` / `uuid`: Cryptographically secure unique identifier (`crypto.randomUUID()`).
-  - `{{random}}` / `random`: Random integer between 1 and 1000.
-  - `{{clipboard}}` / `clipboard`: System clipboard buffer text.
+Mfumo mdogo wa Vijisehemu vya Maandishi (`SnippetManager` katika `src/utils/hint/snippets.js` na `src/utils/snippet-panel.js`) huharakisha uandishi kwa kupanua njia za mkato za maandishi katika sehemu yoyote ya kuingiza data, eneo la maandishi (textarea), au kihariri tajiri:
+- **Njia za Kuanzisha**: Andika njia ya mkato ikifuatiwa na Nafasi (Space), au andika `$$` ili kuita dirisha ibukizi shirikishi la utafutaji wa vijisehemu.
+- **Ujumuishaji wa API ya Ubao wa Kunakili**: Inasaidia uwekaji wa HTML iliyoumbizwa na maandishi wazi kupitia Clipboard API, ikihakikisha utangamano wa 100% na vihariri tata kama Google Docs, Notion, na Slack.
+- **Vigezo vya Violezo**: Hutatua vigezo kwa nguvu wakati wa upanuzi:
+  - `{{date}}` / `date`: Tarehe iliyoumbizwa ya eneo husika (`toLocaleDateString`).
+  - `{{isodate}}` / `isodate`: Tarehe ya ISO 8601 (`YYYY-MM-DD`).
+  - `{{longdate}}` / `longdate`: Tarehe ndefu yenye siku ya juma, siku, mwezi, na mwaka.
+  - `{{time}}` / `time`: Muda ulioumbizwa wa tarakimu 2 (`HH:MM`).
+  - `{{datetime}}` / `datetime`: Tarehe na muda vikiwa pamoja.
+  - `{{weekday}}` / `weekday`: Jina kamili la siku ya juma (k.m., Monday).
+  - `{{day}}` / `day`: Siku ya mwezi (1-31).
+  - `{{month}}` / `month`: Jina kamili la mwezi (k.m., October).
+  - `{{year}}` / `year`: Mwaka kamili wa tarakimu 4.
+  - `{{tomorrow}}` / `tomorrow`: Tarehe ya siku inayofuata (+siku 1).
+  - `{{yesterday}}` / `yesterday`: Tarehe ya siku iliyopita (-siku 1).
+  - `{{nextweek}}` / `nextweek`: Tarehe ya siku 7 zijazo (+siku 7).
+  - `{{timestamp}}` / `timestamp`: Alama ya muda ya milisekunde ya Epoch (`Date.now()`).
+  - `{{url}}` / `url`: URL ya ukurasa wa wavuti unaotumika (`window.location.href`).
+  - `{{domain}}` / `domain`: Jina la seva mwenyeji ya kikoa kinachotumika (`window.location.hostname`).
+  - `{{pagetitle}}` / `pagetitle`: Kichwa cha hati inayotumika (`document.title`).
+  - `{{uuid}}` / `uuid`: Kitambulisho cha kipekee kilicho salama kitakwimu (`crypto.randomUUID()`).
+  - `{{random}}` / `random`: Nambari kamili ya nasibu kati ya 1 na 1000.
+  - `{{clipboard}}` / `clipboard`: Maandishi ya bafa ya ubao wa kunakili wa mfumo.
 
 ### 4.10 Embedded Productivity Tools
-- **Allow Right Click Hook (`allowRightClickHook.js`)**:
-  - Injected into the `MAIN` execution world to neutralize hostile web scripts that disable right-click context menus, copy, cut, or text selection.
-  - Intercepts `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-  - Clears inline `oncontextmenu="return false"` handlers via a persistent `MutationObserver`.
-  - Verifies clipboard payloads to prevent breaking legitimate web editors (Google Docs, Telegram Web).
-- **Cookie Editor**: In-page modal inspecting, editing, creating, and deleting HTTP and HTTPS cookies for the active domain.
-- **QR Code Generator**: Generates SVG/Canvas QR codes for the active tab URL for rapid mobile handover.
-- **Clean PDF Print Export**: Routes target pages through `print.html` with headers, ads, and navigational noise stripped for clean document archiving.
+- **Uingiliaji wa Kuruhusu Kubofya Kulia (`allowRightClickHook.js`)**:
+  - Huingizwa katika ulimwengu wa utekelezaji wa `MAIN` ili kulemaza hati hasidi za wavuti zinazozima menyu za muktadha za kubofya kulia, kunakili, kukata, au uteuzi wa maandishi.
+  - Huingilia `preventDefault()` na `stopPropagation()` kwenye `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, na `mouseup`.
+  - Huondoa vidhibiti vya ndani vya `oncontextmenu="return false"` kupitia `MutationObserver` endelevu.
+  - Huthibitisha data ya ubao wa kunakili ili kuzuia kuvunja vihariri halali vya wavuti (Google Docs, Telegram Web).
+- **Kihariri cha Vidakuzi**: Dirisha la ndani ya ukurasa linalokagua, kuhariri, kuunda, na kufuta vidakuzi vya HTTP na HTTPS kwa kikoa kinachotumika.
+- **Kizalishaji cha Msimbo wa QR**: Huzalisha misimbo ya QR ya SVG/Canvas kwa URL ya kichupo kinachotumika kwa uhamishaji wa haraka kwenda kwenye simu.
+- **Uhamishaji Safi wa Kuchapisha PDF**: Huelekeza kurasa lengwa kupitia `print.html` huku vichwa vya habari, matangazo, na kelele za urambazaji zikiondolewa kwa ajili ya uhifadhi safi wa hati.
 
 ### 4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding
-- **Comprehensive 3-Tier Duplicate Removal**:
-  1. **Tab Deduplication (`removeDuplicateTabsCommand`)**: Scans open tabs across windows or focused groups, identifies duplicate URLs, exempts `Split` screen tabs, and closes redundant tabs while keeping the active or oldest tab. Displays a desktop summary notification.
-  2. **Bookmark Deduplication**: Deep scans Chrome bookmark trees, locates identical URL duplicates across folders, and provides batch consolidation to keep bookmarks clean.
-  3. **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs to existing custom grouping rules, preventing rule inflation.
-- **Intelligent Memory Discarding (`suspendInactiveTabsIntelligently`)**:
-  - Evaluated every 1 minute via alarm `itg-periodic-tasks`.
-  - Discards tabs inactive >= `discardingTimeMinutes` (default: 60 minutes).
-  - Built-in immunity protections: Never discards active tabs, audible tabs playing audio, pinned tabs, or already suspended tabs.
+- **Uondoaji Kabambe wa Nakala wa Ngazi 3**:
+  1. **Uondoaji wa Nakala za Vichupo (`removeDuplicateTabsCommand`)**: Hukagua vichupo vilivyo wazi katika madirisha yote au vikundi vinavyolengwa, hutambua URL zilizorudiwa, husamehe vichupo vya skrini ya `Split`, na hufunga vichupo vilivyozidi huku ikihifadhi kichupo kinachotumika au cha zamani zaidi. Huonyesha arifa ya muhtasari kwenye eneo-kazi.
+  2. **Uondoaji wa Nakala za Alamisho**: Hukagua kwa kina miti ya alamisho ya Chrome, hupata nakala zinazofanana za URL kwenye folda zote, na hutoa uunganishaji wa pamoja ili kuweka alamisho zikiwa safi.
+  3. **Uondoaji wa Nakala za Sheria (`feature_v100_dedup_add_to_rule`)**: Huondoa kiotomatiki ruwaza za URL zilizorudiwa wakati wa kuongeza URL kwenye sheria maalum zilizopo za vikundi, kuzuia kuongezeka kwa sheria kusiko na lazima.
+- **Utupaji Mahiri wa Kumbukumbu (`suspendInactiveTabsIntelligently`)**:
+  - Hutathminiwa kila dakika 1 kupitia kengele ya `itg-periodic-tasks`.
+  - Hutupa vichupo ambavyo havijatumika kwa muda wa >= `discardingTimeMinutes` (chaguo-msingi: dakika 60).
+  - Kinga za ndani zilizojengwa: Kamwe haitupi vichupo vinavyotumika, vichupo vinavyotoa sauti, vichupo vilivyobandikwa, au vichupo ambavyo tayari vimeshasimamishwa.
 
 ---
 
 ## 5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)
 
-The AI Assistant integrates large language models into the browser to provide contextual understanding, automated workflows, and direct browser automation.
+Msaidizi wa AI hujumuisha modeli kubwa za lugha kwenye kivinjari ili kutoa uelewa wa kimuktadha, michakato ya kiotomatiki ya kazi, na uendeshaji wa moja kwa moja wa kivinjari.
 
 ### 5.1 Dual Model Engine Architecture
 1. **Google Gemini Cloud API (`gemini-api.js`)**:
-   - Integrates with Google Generative Language REST endpoints (`v1beta/models/{model}:generateContent` and `:streamGenerateContent`).
-   - Supports Gemini 2.5 Flash, Gemini 2.5 Pro, and custom model endpoints.
-   - **Multi-Key Rotation**: Manages key pools in `geminiApiKeysList`. Storage obfuscation uses `enc_` prefixes.
-   - **Exponential Backoff**: Handles HTTP 429 quota exhaustion with automated backoff retry (1.5s -> 3s -> 6s).
-   - **Search Grounding**: Enables Google Search Grounding (`google_search: {}`). If HTTP 403 occurs due to quota restrictions on search tools, it automatically retries without grounding.
+   - Inaunganishwa na ncha za REST za Google Generative Language (`v1beta/models/{model}:generateContent` na `:streamGenerateContent`).
+   - Inasaidia Gemini 2.5 Flash, Gemini 2.5 Pro, na ncha za modeli maalum.
+   - **Mzunguko wa Funguo Nyingi**: Hudhibiti makundi ya funguo katika `geminiApiKeysList`. Ufichaji wa hifadhi unatumia viambishi awali vya `enc_`.
+   - **Kuchelewa kwa Kielelezo (Exponential Backoff)**: Hushughulikia kuisha kwa mgawo wa HTTP 429 kwa kujaribu tena kiotomatiki kwa kuongeza muda (1.5s -> 3s -> 6s).
+   - **Uthibitishaji wa Utafutaji (Search Grounding)**: Huwezesha Google Search Grounding (`google_search: {}`). Ikiwa hitilafu ya HTTP 403 itatokea kutokana na vizuizi vya mgawo kwenye zana za utafutaji, inajaribu tena kiotomatiki bila uthibitishaji wa utafutaji.
 2. **Chrome Built-in AI / Prompt API (`localAiService.js`)**:
-   - On-device Gemini Nano integration via `window.LanguageModel`.
-   - Supports zero-network local execution. Includes model availability checking and live download progress tracking.
+   - Ujumuishaji wa Gemini Nano kwenye kifaa kupitia `window.LanguageModel`.
+   - Inasaidia utekelezaji wa ndani bila mtandao. Inajumuisha ukaguzi wa upatikanaji wa modeli na ufuatiliaji wa moja kwa moja wa maendeleo ya upakuaji.
 
 ### 5.2 Autonomous Browser Agent (`agent-backend.js`)
-The autonomous agent provides full browser control through 40+ structured tools:
-- **Tab & Group Control**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
-- **Navigation & Search**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
-- **Knowledge & Bookmarks**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
-- **Rules & Appearance**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
+Ajenti huru hutoa udhibiti kamili wa kivinjari kupitia zana 40+ zilizoundwa vizuri:
+- **Udhibiti wa Vichupo & Vikundi**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
+- **Urambazaji & Utafutaji**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
+- **Maarifa & Alamisho**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
+- **Sheria & Mwonekano**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
 
 ### 5.3 Taint Tracking & Prompt Injection Defense
-To neutralize indirect prompt injection attacks from untrusted web pages, the agent backend implements strict taint tracking:
-- **Taint Marking**: Calling `getActiveTabContent` extracts text from a web page and marks the current execution run as tainted (`taintedAgentRuns.add(runId)`).
-- **Egress Guard**: Tainted runs are strictly prohibited from invoking egress tools (`AGENT_EGRESS_TOOLS`):
+Ili kugeuza mashambulizi ya njia isiyo ya moja kwa moja ya prompt injection kutoka kwa kurasa za wavuti zisizoaminika, mfumo wa nyuma wa ajenti unatekeleza ufuatiliaji mkali wa uchafuzi (taint tracking):
+- **Kuweka Alama ya Uchafuzi**: Kuita `getActiveTabContent` hutoa maandishi kutoka kwa ukurasa wa wavuti na kuweka alama kwenye mzunguko wa sasa wa utekelezaji kama uliochafuliwa (`taintedAgentRuns.add(runId)`).
+- **Mlinzi wa Kutolea Nje (Egress Guard)**: Mizunguko iliyochafuliwa inakatazwa kabisa kuita zana za kutoa data nje (`AGENT_EGRESS_TOOLS`):
   * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`.
-- **Refusal Mechanism**: Rather than throwing an unhandled exception, the engine returns a structured security explanation. The LLM then informs the user that external data cannot be exfiltrated without explicit user consent.
+- **Utaratibu wa Kukataa**: Badala ya kutupa hitilafu isiyoshughulikiwa, injini hurejesha maelezo ya usalama yaliyopangwa. Kisha LLM inamjulisha mtumiaji kwamba data ya nje haiwezi kutolewa bila idhini ya wazi ya mtumiaji.
 
 ### 5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)
-- **Background Execution Engine**:
-  - Automates scheduled AI prompt execution directly within the background service worker via `chrome.alarms` (`gemini-scheduled-*`).
-  - Supports up to 6 scheduled queries per day (`MAX_TIMES = 6`).
-  - **Schedules Modes**:
-    - Recurring Schedules: Executes repeatedly on selected days of the week (`selectedDays`).
-    - One-Time Schedules: Executes at a specific target date and time (`formDate`).
-  - **Prompt Limits**: Enforces a strict 1,000-character prompt limit (`MAX_QUERY_CHARS = 1000`) with real-time character counters.
-  - **Background Notifications**: Fires a desktop notification with a snippet preview when the background query finishes. Clicking the notification immediately opens the response thread inside the sidepanel chat.
+- **Injini ya Utekelezaji wa Mandharinyuma**:
+  - Huendesha kiotomatiki utekelezaji wa maagizo ya AI yaliyoratibiwa moja kwa moja ndani ya service worker ya mandharinyuma kupitia `chrome.alarms` (`gemini-scheduled-*`).
+  - Inasaidia hadi maswali 6 yaliyoratibiwa kwa siku (`MAX_TIMES = 6`).
+  - **Njia za Ratiba**:
+    - Ratiba Zinazojirudia: Hutekelezwa mara kwa mara katika siku zilizochaguliwa za juma (`selectedDays`).
+    - Ratiba za Mara Moja: Hutekelezwa kwa tarehe na saa maalum inayolengwa (`formDate`).
+  - **Vikomo vya Maagizo**: Inalazimisha kikomo kikali cha herufi 1,000 kwa agizo (`MAX_QUERY_CHARS = 1000`) kikiwa na vihesabu vya herufi vya wakati halisi.
+  - **Arifa za Mandharinyuma**: Hutoa arifa kwenye eneo-kazi ikiwa na hakikisho la kijisehemu wakati swali la mandharinyuma linapokamilika. Kubofya arifa hufungua mara moja mazungumzo ya majibu ndani ya gumzo la paneli ya pembeni.
 
 ### 5.5 Gemini Conversation Management & Export
-- **Persistent IndexedDB Storage (`geminiConversations`)**: Multi-turn chat sessions are stored in IndexedDB `Intelligent_Workspace` store `geminiConversations`.
-- **Full-Text History Search**: Instant search across all past conversations and individual messages via Omnibar commands `lai:` (browse conversations) and `laiq:` (search messages).
-- **Four Export Formats**:
-  1. **Styled HTML**: Formatted standalone HTML document with styled conversational bubbles, role badges, timestamps, and syntax-highlighted code blocks.
-  2. **Raw JSON**: Complete structured data dump including message arrays, token usage, model configuration, and search citations.
-  3. **Markdown**: Standard Markdown file formatted with headers, timestamps, and fenced code blocks (` ``` `).
-  4. **Plain Text**: Clean, unformatted conversational transcript suitable for email or notes.
-- **Grounding Metadata Tracking**: Tracks model ID, token usage statistics, execution timestamps, and source citations returned by Google Search Grounding.
+- **Uhifadhi Endelevu wa IndexedDB (`geminiConversations`)**: Vikao vya gumzo vya hatua nyingi huhifadhiwa katika hifadhi ya IndexedDB `Intelligent_Workspace` ya `geminiConversations`.
+- **Utafutaji wa Historia ya Maandishi Kamili**: Utafutaji wa papo hapo katika mazungumzo yote yaliyopita na ujumbe moja moja kupitia amri za Omnibar `lai:` (vinjari mazungumzo) na `laiq:` (tafuta ujumbe).
+- **Miundo Minne ya Uhamishaji**:
+  1. **HTML Yenye Mtindo**: Hati inayojitegemea ya HTML iliyoumbizwa yenye viputo vya mazungumzo vyenye mtindo, beji za majukumu, alama za muda, na vizuizi vya msimbo vilivyoangaziwa kisisintaksia.
+  2. **JSON Ghafi**: Data kamili iliyopangwa ikijumuisha safu za ujumbe, matumizi ya tokeni, usanidi wa modeli, na nukuu za utafutaji.
+  3. **Markdown**: Faili ya kawaida ya Markdown iliyoumbizwa ikiwa na vichwa, alama za muda, na vizuizi vya msimbo vilivyofungwa (` ``` `).
+  4. **Maandishi Wazi**: Nakala safi ya mazungumzo isiyo na umbizo inayofaa kwa barua pepe au madokezo.
+- **Ufuatiliaji wa Data ya Ziada ya Uthibitishaji**: Hufuatilia kitambulisho cha modeli, takwimu za matumizi ya tokeni, alama za muda wa utekelezaji, na nukuu za vyanzo zilizorejeshwa na Google Search Grounding.
 
 ### 5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)
-- **Multimodal Attachments**: Toggle `feature_geminiAttachFiles` enables direct image and document attachments in chat prompts:
-  - Image files (JPEG, PNG, WebP, HEIC/HEIF).
-  - PDF documents and research papers.
-  - Plain Text files and code files.
-  - CSV structured datasets.
-- **Voice Support**:
-  - Web Speech STT (Speech-to-Text) for dictating prompts hands-free.
-  - Web Speech TTS (Text-to-Speech) for reading responses aloud.
+- **Viambatisho vya Njia Nyingi**: Swichi ya `feature_geminiAttachFiles` huwezesha viambatisho vya moja kwa moja vya picha na hati katika maagizo ya gumzo:
+  - Faili za picha (JPEG, PNG, WebP, HEIC/HEIF).
+  - Hati za PDF na karatasi za utafiti.
+  - Faili za Maandishi Wazi na faili za msimbo.
+  - Seti za data zilizopangwa za CSV.
+- **Msaada wa Sauti**:
+  - Web Speech STT (Sauti-hadi-Maandishi) kwa ajili ya kutoa maagizo bila kutumia mikono.
+  - Web Speech TTS (Maandishi-hadi-Sauti) kwa ajili ya kusoma majibu kwa sauti.
 
 ### 5.7 Invocation Modalities
-- **Sidepanel Route**: `?view=gemini` or shortcut `pa`.
-- **In-Page Omnibar Prefixes**:
-  - `qai: <query>` — Ask direct question to configured Gemini model.
-  - `qaia: <prompt>` — Execute prompt via autonomous agent with tool execution.
-  - `lai:` — Browse past AI conversations.
-  - `laiq:` — Full-text search across all AI conversation messages.
-- **Omnibox AI Tab Search (`find <query>`)**:
-  - URL bar keyword `find` initiates hybrid search.
-  - Combines regex word-boundary scoring with Gemini semantic resolution to locate and focus open tabs based on natural language queries.
+- **Njia ya Paneli ya Pembeni**: `?view=gemini` au njia ya mkato `pa`.
+- **Viambishi Awali vya Omnibar vya Ndani ya Ukurasa**:
+  - `qai: <query>` — Uliza swali la moja kwa moja kwa modeli ya Gemini iliyosanidiwa.
+  - `qaia: <prompt>` — Tekeleza agizo kupitia ajenti huru pamoja na utekelezaji wa zana.
+  - `lai:` — Vinjari historia ya mazungumzo ya AI yaliyopita.
+  - `laiq:` — Utafutaji wa maandishi kamili kwenye ujumbe wote wa mazungumzo ya AI.
+- **Utafutaji wa Vichupo wa AI wa Omnibox (`find <query>`)**:
+  - Neno muhimu la upau wa URL `find` huanzisha utafutaji mseto.
+  - Huunganisha upimaji wa mipaka ya maneno ya regex na utatuzi wa kisemantiki wa Gemini ili kupata na kuangazia vichupo vilivyo wazi kulingana na maswali ya lugha asilia.
 
 ---
 
 ## 6. Section 5: Notes View & Knowledge Management (Ver Notas)
 
-A local-first, context-aware note-taking engine tied to browser tab groups and navigation contexts.
+Injini ya kuandika madokezo inayotanguliza uhifadhi wa ndani na inayozingatia muktadha, iliyounganishwa na vikundi vya vichupo vya kivinjari na miktadha ya urambazaji.
 
 ### 6.1 Storage Architecture (`notesStore`)
-Stored in IndexedDB database `Intelligent_Workspace` (v8) inside object store `notesStore`:
+Imehifadhiwa katika hifadhidata ya IndexedDB `Intelligent_Workspace` (v8) ndani ya hifadhi ya vipengee ya `notesStore`:
 ```typescript
 interface NoteRecord {
-  id: string;          // Unique note identifier.
-  title: string;       // Note title.
-  text: string;        // Rich text HTML, Markdown, or serialized task payload.
+  id: string;          // Kitambulisho cha kipekee cha dokezo.
+  title: string;       // Kichwa cha dokezo.
+  text: string;        // HTML ya maandishi tajiri, Markdown, au data ya kazi iliyopangwa.
   type: NoteType;      // 'text' | 'checklist' | 'kanban'
-  url?: string;        // Origin URL where note was created.
-  contextKey: string;  // Scoping key binding note to workspace hierarchy.
-  createdAt: number;   // Creation timestamp.
-  modifiedAt: number;  // Last edit timestamp.
-  isPersistent: boolean; // Pin flag protecting note from group deletion cleanup.
+  url?: string;        // URL ya asili ambapo dokezo liliundwa.
+  contextKey: string;  // Ufunguo wa upeo unaofunga dokezo kwenye muundo wa nafasi ya kazi.
+  createdAt: number;   // Alama ya muda ya kuundwa.
+  modifiedAt: number;  // Alama ya muda ya uhariri wa mwisho.
+  isPersistent: boolean; // Bendera ya kubandika inayolinda dokezo dhidi ya usafishaji wa ufutaji wa vikundi.
 }
 ```
 
 ### 6.2 Specialized Note Formats & Advanced Rendering
-1. **Text Note (`NoteTextEditor.svelte`)**:
-   - Rich text `contenteditable` surface.
-   - Embeds media directly: images, audio, video, and PDF documents.
-   - Built-in HTML sanitization and real-time word and character counters.
-   - **Mermaid Diagram Rendering**: Renders dynamic flowcharts, sequence diagrams, class diagrams, and state machines directly from Markdown fences (` ```mermaid `).
-   - **KaTeX Mathematical LaTeX**: Renders inline equations (`$...$`) and block equations (`$$...$$`) with high precision typography.
-2. **Checklist Note (`NoteChecklistEditor.svelte`)**:
-   - Interactive task list with individual completion checkboxes.
-   - Supports keyboard-driven item reordering and progress tracking.
-3. **Kanban Note (`NoteKanbanEditor.svelte`)**:
-   - 3-column workflow board: `To Do` -> `In Progress` -> `Done`.
-   - Cycling status chips for rapid task transitions.
-- **Dynamic Lossless Conversion**: Notes convert losslessly between Text, Checklist, and Kanban representations.
+1. **Dokezo la Maandishi (`NoteTextEditor.svelte`)**:
+   - Eneo la maandishi tajiri la `contenteditable`.
+   - Hupachika vyombo vya habari moja kwa moja: picha, sauti, video, na hati za PDF.
+   - Usafishaji wa HTML uliojengwa ndani na vihesabu vya maneno na herufi vya wakati halisi.
+   - **Utoaji wa Michoro ya Mermaid**: Hutoa chati mtiririko za nguvu, michoro ya mfuatano, michoro ya madarasa, na mashine za hali moja kwa moja kutoka kwa vizuizi vya Markdown (` ```mermaid `).
+   - **Hisabati ya KaTeX LaTeX**: Hutoa milinganyo ya ndani ya mstari (`$...$`) na milinganyo ya kizuizi (`$$...$$`) kwa uchapaji wa usahihi wa hali ya juu.
+2. **Dokezo la Orodha ya Ukaguzi (`NoteChecklistEditor.svelte`)**:
+   - Orodha shirikishi ya kazi yenye visanduku vya kuteua vya ukamilishaji kwa kila kipengee.
+   - Inasaidia upangaji upya wa vipengee unaoendeshwa na kibodi na ufuatiliaji wa maendeleo.
+3. **Dokezo la Kanban (`NoteKanbanEditor.svelte`)**:
+   - Ubao wa mtiririko wa kazi wa safu wima 3: `To Do` -> `In Progress` -> `Done`.
+   - Lebo za hali zinazozunguka kwa mabadiliko ya haraka ya kazi.
+- **Ubadilishaji wa Nguvu Usiopoteza Data**: Madokezo hubadilika bila kupoteza data kati ya uwakilishi wa Maandishi, Orodha ya Ukaguzi, na Kanban.
 
 ### 6.3 Scoping & Context Hierarchy
-Notes bind to browsing contexts via `contextKey`:
-- **Group Scope (`g_<groupId>` or `g_<groupKey>`)**: Attached to an entire tab group.
-- **Subgroup Scope (`s_<groupId>_<domain>`)**: Attached to a specific domain within a tab group.
-- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Notes created on tabs outside of tab groups.
-- **Pomodoro & General Scopes (`pomodoro`, `general`)**: Workspace-wide notes.
-- **Orphan Detection Engine**: When tab groups or domains are deleted, associated non-persistent notes are captured by the Orphan Detector. Notes remain accessible in the UI for reassignment or deletion.
+Madokezo hufungamana na miktadha ya kuvinjari kupitia `contextKey`:
+- **Upeo wa Kikundi (`g_<groupId>` au `g_<groupKey>`)**: Huunganishwa na kikundi kizima cha vichupo.
+- **Upeo wa Kijikundi (`s_<groupId>_<domain>`)**: Huunganishwa na kikoa maalum ndani ya kikundi cha vichupo.
+- **Upeo Usiopangwa (`g_ungrouped` / `s_ungrouped_<domain>`)**: Madokezo yaliyoundwa kwenye vichupo vilivyo nje ya vikundi vya vichupo.
+- **Upeo wa Pomodoro & Jumla (`pomodoro`, `general`)**: Madokezo ya nafasi nzima ya kazi.
+- **Injini ya Kugundua Yaliyoachwa Peke Yake (Orphan Detection Engine)**: Wakati vikundi vya vichupo au vikoa vinafutwa, madokezo yanayohusiana yasiyo ya kudumu hunaswa na Kigunduzi cha Yaliyoachwa. Madokezo hubaki yakipatikana kwenye kiolesura kwa ajili ya kupangiwa upya au kufutwa.
 
 ### 6.4 Invocation Modalities
-- **UI Launchers**: "View Notes" button on Group Cards and Subgroup Cards; "Quick Notes" button in popup header; Sidepanel route `?view=notes` (`pk`).
-- **Context Menu Trigger**: Select text on any web page -> Right-click -> "Crear Nota desde Selección" (`note-from-selection`). Automatically extracts the selected text and sets the nearest `h1`-`h3` heading as the title.
-- **Vim Hint**: `ao` creates a note from the current selection.
-- **Omnibar**: `lnt:` opens notes browser with instant full-text search.
-- **Audio Readout**: In-editor TTS button reads note content aloud using Web Speech API.
+- **Vizindua vya Kiolesura**: Kitufe cha "View Notes" kwenye Kadi za Vikundi na Kadi za Vijikundi; kitufe cha "Quick Notes" kwenye kichwa cha ibukizi; Njia ya Paneli ya Pembeni `?view=notes` (`pk`).
+- **Kianzishi cha Menyu ya Muktadha**: Chagua maandishi kwenye ukurasa wowote wa wavuti -> Bofya kulia -> "Crear Nota desde Selección" (`note-from-selection`). Hutoa kiotomatiki maandishi yaliyochaguliwa na kuweka kichwa cha habari cha karibu zaidi cha `h1`-`h3` kama jina la dokezo.
+- **Kidokezo cha Vim**: `ao` huunda dokezo kutoka kwa uteuzi wa sasa.
+- **Omnibar**: `lnt:` hufungua kivinjari cha madokezo chenye utafutaji wa papo hapo wa maandishi kamili.
+- **Usomaji wa Sauti**: Kitufe cha TTS cha ndani ya kihariri husoma maudhui ya dokezo kwa sauti kwa kutumia Web Speech API.
 
 ---
 
 ## 7. Section 6: Media & Gallery View (Ver Galería)
 
-A high-performance media capture, annotation, and optical character recognition (OCR) pipeline.
+Utekelezaji wa hali ya juu wa unyakuaji wa vyombo vya habari, ufafanuzi, na utambuzi wa maandishi kupitia macho (OCR).
 
 ### 7.1 Capture Modes & Engineering (All 7 Capture Types)
-The extension implements 7 specialized capture modalities covering single-tab, cross-tab, cropped, and palette operations:
-1. **`visible` (Visible Viewport Capture - `cs`)**:
-   - Captures the exact visible viewport of the active tab using `chrome.tabs.captureVisibleTab`.
-   - Automatically commits the capture to the IndexedDB `screenshots` store and copies the image bitmap directly to the system clipboard (`screenshotSavedAndCopied`).
-2. **`fullPage` (Seamless Full-Page Scrolling Canvas - `cp`)**:
-   - Executes programmatic page scrolling, calculating total document scroll height.
-   - Suppresses scrollbars and hides sticky/fixed navigation bars after the initial segment to eliminate visual stutter.
-   - Stitches bitmap slices onto an `OffscreenCanvas` up to 30,000px high (`captureFullPageDataUrl`), enforcing Chromium-compliant 600ms delays between frame captures.
-3. **`fullPageParts` (Sequential Sliced Segments - `cpp` / `cP`)**:
-   - Slices tall documents into sequential, individual viewport-height image parts (`captureFullPageParts`), generating up to 60 numbered image chunks for pagination.
-4. **`area` (Interactive Rectangular Drag Crop - `ca`)**:
-   - Injects `area-selector.js`, overlaying a crosshair canvas with real-time bounding box dimensions.
-   - Draggable selection handles, dimension tooltip, confirmation trigger, `Esc` key cancellation, and multi-tab crop queueing (`handleCaptureAreaFromShortcut`).
-5. **`groupTabs` (Batch Active Group Tab Walk - `Cs`, `Cp`, `CP`)**:
-   - Sequentially iterates through every tab within the active tab group (`handleCaptureGroupFromShortcut`).
-   - Supports batch capture in visible, full-page, or segmented parts mode, compiling them into a unified collection.
-6. **`omnibarPickedTabs` (Custom Multi-Tab Queue Capture)**:
-   - Initiated via Omnibar commands `cs:`, `cp:`, `cpp:`, or `ca:` (`handleCaptureTabs`).
-   - Executes sequential captures across all user-filtered tabs, providing real-time progress indicators.
-7. **`colorPickerCapture` (Background Screen Eyedropper Fallback)**:
-   - Takes a background screen capture to power the precision hex eyedropper magnifier tool on operating systems lacking native `window.EyeDropper` support (e.g., Linux).
+Kirefusho hiki kinatekeleza njia 7 maalum za unyakuaji zinazojumuisha shughuli za kichupo kimoja, vichupo vingi, kukata sehemu, na zana za rangi:
+1. **`visible` (Unyakuaji wa Eneo Linaloonekana - `cs`)**:
+   - Hunasa eneo kamili linaloonekana la kichupo kinachotumika kwa kutumia `chrome.tabs.captureVisibleTab`.
+   - Huhifadhi kiotomatiki picha iliyonaswa kwenye hifadhi ya IndexedDB ya `screenshots` na kunakili bitmap ya picha moja kwa moja kwenye ubao wa kunakili wa mfumo (`screenshotSavedAndCopied`).
+2. **`fullPage` (Turubai ya Kusogeza ya Ukurasa Kamili Isiyo na Mshono - `cp`)**:
+   - Hutekeleza usogezaji wa ukurasa wa kiprogramu, ikikokotoa urefu kamili wa usogezaji wa hati.
+   - Huzuia pau za kusogeza na kuficha pau za urambazaji zilizogandishwa baada ya sehemu ya kwanza ili kuondoa mtetemo wa kuonekana.
+   - Huunganisha vipande vya bitmap kwenye `OffscreenCanvas` hadi urefu wa 30,000px (`captureFullPageDataUrl`), ikilazimisha ucheleweshaji unaotii Chromium wa 600ms kati ya unyakuaji wa fremu.
+3. **`fullPageParts` (Sehemu Zilizokatwa kwa Mfuatano - `cpp` / `cP`)**:
+   - Hukata hati ndefu katika sehemu za kibinafsi zenye urefu wa eneo la kuonekana kwa mfuatano (`captureFullPageParts`), ikizalisha hadi vipande 60 vya picha vyenye nambari kwa ajili ya kurasa.
+4. **`area` (Ukataji Shirikishi wa Kuburuta Pembenne - `ca`)**:
+   - Huingiza `area-selector.js`, ikiweka turubai yenye alama ya msalaba pamoja na vipimo vya sanduku kwa wakati halisi.
+   - Vishikio vya uteuzi vinavyoburutika, kidokezo cha zana cha vipimo, kianzishi cha uthibitisho, kughairi kwa kitufe cha `Esc`, na upangaji wa foleni ya ukataji wa vichupo vingi (`handleCaptureAreaFromShortcut`).
+5. **`groupTabs` (Mzunguko wa Kundi la Vichupo Vinavyotumika - `Cs`, `Cp`, `CP`)**:
+   - Huzunguka kwa mfuatano kupitia kila kichupo ndani ya kikundi cha vichupo kinachotumika (`handleCaptureGroupFromShortcut`).
+   - Inasaidia unyakuaji wa pamoja katika hali ya eneo linaloonekana, ukurasa kamili, au sehemu zilizokatwa, ikizikusanya kuwa mkusanyiko mmoja.
+6. **`omnibarPickedTabs` (Unyakuaji wa Foleni ya Vichupo Vingi Maalum)**:
+   - Huanzishwa kupitia amri za Omnibar `cs:`, `cp:`, `cpp:`, au `ca:` (`handleCaptureTabs`).
+   - Hutekeleza unyakuaji wa mfuatano katika vichupo vyote vilivyochujwa na mtumiaji, ikitoa viashiria vya maendeleo vya wakati halisi.
+7. **`colorPickerCapture` (Kiteuzi Mbadala cha Rangi ya Skrini ya Mandharinyuma)**:
+   - Huchukua picha ya skrini ya mandharinyuma ili kuendesha zana ya ukuzaji ya kiteuzi cha rangi cha hex kwenye mifumo ya uendeshaji inayokosa usaidizi wa asili wa `window.EyeDropper` (k.m., Linux).
 
 ### 7.2 Gallery UI & Persistence
-- **Interface**: Responsive masonry/grid layout with lightbox zoom, pan, and rotate tools.
-- **Persistence (`screenshots` Store)**: Saved in IndexedDB `Intelligent_Workspace`. Unpinned captures are automatically purged during maintenance; clicking the pin icon (`isPersistent = true`) preserves captures indefinitely.
+- **Kiolesura**: Mpangilio msikivu wa ujenzi/gridi wenye zana za kukuza za kisanduku cha mwanga (lightbox), kusogeza, na kuzungusha.
+- **Udumishaji (Hifadhi ya `screenshots`)**: Imehifadhiwa katika IndexedDB `Intelligent_Workspace`. Picha zilizopigwa ambazo hazijabandikwa husafishwa kiotomatiki wakati wa matengenezo; kubofya aikoni ya pini (`isPersistent = true`) huhifadhi picha hizo bila kikomo.
 
 ### 7.3 Export, In-Browser OCR & External Markup
-- **Export Formats (`captureDownloadFormats`)**:
-  - High-efficiency formats: PNG, WebP, AVIF.
-  - Multi-page compiled PDF document export via `pdf.js`.
-- **On-Device WASM OCR**:
-  - In-browser Tesseract.js WebWorker utilizing preloaded Spanish and English (`spa+eng`) language models.
-  - Extracts text directly to clipboard without sending image data over the network.
-- **Direct Send Integration**:
-  - One-click transfer of extracted OCR text or image attachments into Notes (`notesStore`) or Gemini AI prompts (`feature_geminiAttachFiles`).
-- **Excalidraw Markup**: One-click export sends captured images directly into `https://excalidraw.com/` for freehand drawing, arrows, and vector annotations.
+- **Miundo ya Uhamishaji (`captureDownloadFormats`)**:
+  - Miundo yenye ufanisi wa hali ya juu: PNG, WebP, AVIF.
+  - Uhamishaji wa hati ya PDF ya kurasa nyingi kupitia `pdf.js`.
+- **WASM OCR ya Kwenye Kifaa**:
+  - Tesseract.js WebWorker ya ndani ya kivinjari inayotumia modeli za lugha za Kihispania na Kiingereza zilizopakiwa awali (`spa+eng`).
+  - Hutoa maandishi moja kwa moja kwenye ubao wa kunakili bila kutuma data ya picha kwenye mtandao.
+- **Ujumuishaji wa Kutuma Moja kwa Moja**:
+  - Uhamishaji wa mbofyo mmoja wa maandishi ya OCR yaliyotolewa au viambatisho vya picha kwenda kwenye Madokezo (`notesStore`) au maagizo ya Gemini AI (`feature_geminiAttachFiles`).
+  - **Alama za Excalidraw**: Uhamishaji wa mbofyo mmoja hutuma picha zilizonaswa moja kwa moja kwenye `https://excalidraw.com/` kwa ajili ya kuchora kwa mkono, mishale, na ufafanuzi wa vekta.
 
 ### 7.4 Invocation Modalities
-- **UI**: Group Card camera button, Popup quick action, Sidepanel gallery route `?view=gallery` (`ps`).
-- **Vim Hints**: `cs` (visible), `cp` (full page), `cP` (parts), `ca` (area crop), `Cs` (group visible), `Cp` (group full page), `CP` (group parts).
-- **Omnibar Prefixes**: `cs:`, `cp:`, `cpp:`, `ca:`, and `limg:` (browse gallery).
+- **Kiolesura**: Kitufe cha kamera cha Kadi ya Kikundi, kitendo cha haraka cha Ibukizi, njia ya matunzio ya Paneli ya Pembeni `?view=gallery` (`ps`).
+- **Vidokezo vya Vim**: `cs` (inayoonekana), `cp` (ukurasa kamili), `cP` (sehemu), `ca` (eneo lililokatwa), `Cs` (kikundi kinachoonekana), `Cp` (kikundi ukurasa kamili), `CP` (kikundi sehemu).
+- **Viambishi Awali vya Omnibar**: `cs:`, `cp:`, `cpp:`, `ca:`, na `limg:` (vinjari matunzio).
 
 ---
 
 ## 8. Section 7: Pomodoro & Timing Suite (Pomodoro)
 
-A focus and timing suite engineered for absolute accuracy across browser sleep cycles.
+Kifurushi cha umakini na upimaji muda kilichoundwa kwa ajili ya usahihi kamili katika mizunguko ya usingizi wa kivinjari.
 
 ### 8.1 Timing Engine & Background Architecture
-- **Zero-Drift Timestamp Math**: State is persisted in `chrome.storage.local` with absolute Unix timestamps (`startTime`, `pausedAt`). Service worker terminations, browser restarts, and operating system sleep states cause zero clock drift.
-- **Alarm Dispatcher**:
-  - High-resolution countdown ticker driven by `chrome.alarms` (`pomodoroTick` 1s interval).
-  - Background maintenance and long-term interval sweeps managed by `itg-periodic-tasks` (1 min interval).
-- **Offscreen Audio Chimes (`offscreen.html`)**: Audio chimes are generated via a dedicated Chrome Offscreen document created with reason `AUDIO_PLAYBACK`. Automatically closes 3.5 seconds after sound completion to conserve memory.
+- **Hesabu ya Alama ya Muda Isiyo na Mkengeuko (Zero-Drift)**: Hali inadumishwa katika `chrome.storage.local` ikiwa na alama kamili za muda za Unix (`startTime`, `pausedAt`). Kufungwa kwa service worker, kuwasha upya kivinjari, na hali ya usingizi wa mfumo wa uendeshaji hakusababishi mkengeuko wowote wa saa.
+- **Mtumaji wa Kengele**:
+  - Kipima muda cha mshale wa azimio la juu kinachoendeshwa na `chrome.alarms` (muda wa sekunde 1 wa `pomodoroTick`).
+  - Matengenezo ya mandharinyuma na ukaguzi wa vipindi vya muda mrefu vinavyosimamiwa na `itg-periodic-tasks` (muda wa dakika 1).
+- **Milio ya Sauti ya Nje ya Skrini (`offscreen.html`)**: Milio ya sauti huzalishwa kupitia hati maalum ya Chrome Offscreen iliyoundwa kwa sababu ya `AUDIO_PLAYBACK`. Hufungwa kiotomatiki sekunde 3.5 baada ya sauti kukamilika ili kuhifadhi kumbukumbu.
 
 ### 8.2 Exhaustive 4 Timing Modes
 1. **Pomodoro (`pomodoro`)**:
-   - Work duration: 1 to 180 minutes (default: 25 min).
-   - Short break: 1 to 120 minutes (default: 5 min).
-   - Long break: 1 to 180 minutes (default: 15 min).
-   - Cycles before long break: 1 to 12 cycles (default: 4).
-   - Target cycle goal: 1 to 99 cycles (default: 8).
-   - Configurable autostart work, autostart breaks, and notification alerts.
-2. **Stopwatch (`cronometro`)**: Progressive timer with lap recording and pause-as-stop capability.
-3. **Countdown (`temporizador`)**: Custom countdown timer specifying hours, minutes, and seconds.
-4. **Target Time Alarm (`tiempo`)**: Calendar date picker and clock selector setting an alarm for an exact future timestamp.
+   - Muda wa kazi: Dakika 1 hadi 180 (chaguo-msingi: dakika 25).
+   - Mapumziko mafupi: Dakika 1 hadi 120 (chaguo-msingi: dakika 5).
+   - Mapumziko marefu: Dakika 1 hadi 180 (chaguo-msingi: dakika 15).
+   - Mizunguko kabla ya mapumziko marefu: Mizunguko 1 hadi 12 (chaguo-msingi: 4).
+   - Lengo la mizunguko: Mizunguko 1 hadi 99 (chaguo-msingi: 8).
+   - Kuanza kazi kiotomatiki, kuanza mapumziko kiotomatiki, na arifa zinazoweza kusanidiwa.
+2. **Kipima Saa / Stopwatch (`cronometro`)**: Kipima muda kinachoendelea mbele chenye urekodi wa mizunguko na uwezo wa kusitisha-kama-kusimama.
+3. **Kipima Muda cha Kurudi Nyuma (`temporizador`)**: Kipima muda maalum cha kuhesabu kurudi nyuma kinachobainisha masaa, dakika, na sekunde.
+4. **Kengele ya Muda Lengwa (`tiempo`)**: Kiteuzi cha tarehe ya kalenda na kichagua saa kinachoweka kengele kwa alama maalum ya muda ya siku zijazo.
 
 ### 8.3 In-Page Floating Timer Widget
-- Draggable, minimal overlay displaying real-time countdown, pause/resume, and skip buttons directly on web pages.
-- Allows monitoring focus sessions without switching back to the extension panel or popup.
+- Safu ndogo inayoburutika inayoonyesha hesabu ya kurudi nyuma ya wakati halisi, vitufe vya kusitisha/kuendelea, na kuruka moja kwa moja kwenye kurasa za wavuti.
+- Huruhusu ufuatiliaji wa vipindi vya umakini bila kubadili kurudi kwenye paneli ya kirefusho au ibukizi.
 
 ### 8.4 Group Auto-Collapse Idle Timer
-- Works in tandem with focus routines to automatically collapse inactive groups after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) and the active group after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
+- Inafanya kazi sambamba na taratibu za umakini ili kukunja kiotomatiki vikundi visivyotumika baada ya dakika 1 ya kutotumika (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) na kikundi kinachotumika baada ya dakika 15 za kutotumika (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Inaweza kusanidiwa kutoka dakika 0 hadi 1440.
 
 ### 8.5 Project Tagging & Metadata
-Each session supports categorization metadata:
-- Project Name (up to 18 characters)
-- Project Tag (e.g., `#research`, `#dev`)
-- Project Folder (e.g., `/client/project`)
+Kila kipindi kinasaidia data ya ziada ya uainishaji:
+- Jina la Mradi (hadi herufi 18)
+- Lebo ya Mradi (k.m., `#research`, `#dev`)
+- Folda ya Mradi (k.m., `/client/project`)
 
 ### 8.6 Analytics Engine & 19 KPI Cards
-The full dashboard (`dashboard.html` or Sidepanel `dashboard.html?context=sidepanel`) computes 19 key performance indicators from deduplicated sessions (`dedupeSessions` by `sessionStarted`):
-1. `focus`: Total focus time.
-2. `sessions`: Total completed sessions.
-3. `cycles`: Total completed work cycles.
-4. `efficiency`: Average efficiency percentage (`Total Focus / Total Time * 100`).
-5. `activeDays`: Number of unique active days.
-6. `break`: Total break duration.
-7. `interruptions`: Total count of manual pauses/interruptions.
-8. `interruptionTime`: Cumulative duration spent in paused state.
-9. `bestSession`: Longest single uninterrupted focus session.
-10. `avgFocus`: Average focus duration per completed cycle.
-11. `totalTime`: Cumulative time spent in work and breaks.
-12. `workRest`: Ratio of work duration to rest duration (`1 : X`).
-13. `distractionRate`: Interruptions per focus hour.
-14. `bestDay`: Most productive day of the week.
-15. `goldenHour`: Peak focus hour interval of the day (e.g., `10:00 - 11:00`).
-16. `projects`: Number of distinct projects tracked.
-17. `avgIntDuration`: Average duration of each interruption.
-18. `topProject`: Project with the highest accumulated focus time.
-19. `focusIntensity`: Average focus hours per active day.
+Dashibodi kamili (`dashboard.html` au Paneli ya Pembeni `dashboard.html?context=sidepanel`) hukokotoa viashiria 19 muhimu vya utendaji kutoka kwa vipindi vilivyoondolewa nakala (`dedupeSessions` kulingana na `sessionStarted`):
+1. `focus`: Jumla ya muda wa umakini.
+2. `sessions`: Jumla ya vipindi vilivyokamilika.
+3. `cycles`: Jumla ya mizunguko ya kazi iliyokamilika.
+4. `efficiency`: Wastani wa asilimia ya ufanisi (`Total Focus / Total Time * 100`).
+5. `activeDays`: Idadi ya siku za kipekee zilizotumika.
+6. `break`: Jumla ya muda wa mapumziko.
+7. `interruptions`: Jumla ya idadi ya usitishaji wa mikono/ukatizaji.
+8. `interruptionTime`: Muda wa jumla uliotumika katika hali ya kusitishwa.
+9. `bestSession`: Kipindi kirefu zaidi cha umakini kisichokatizwa.
+10. `avgFocus`: Wastani wa muda wa umakini kwa kila mzunguko uliokamilika.
+11. `totalTime`: Jumla ya muda uliotumika kazini na mapumzikoni.
+12. `workRest`: Uwiano wa muda wa kazi kwa muda wa kupumzika (`1 : X`).
+13. `distractionRate`: Ukatizaji kwa kila saa ya umakini.
+14. `bestDay`: Siku yenye tija zaidi katika juma.
+15. `goldenHour`: Kipindi cha saa ya kilele cha umakini cha siku (k.m., `10:00 - 11:00`).
+16. `projects`: Idadi ya miradi tofauti iliyofuatiliwa.
+17. `avgIntDuration`: Wastani wa muda wa kila ukatizaji.
+18. `topProject`: Mradi wenye muda mwingi zaidi wa umakini uliokusanywa.
+19. `focusIntensity`: Wastani wa masaa ya umakini kwa kila siku inayotumika.
 
-Additional visual analytics include a Day Streak Heatmap calendar, an hourly focus distribution bar chart, a Project variety breakdown, and full JSON data import/export.
+Uchanganuzi wa ziada wa kuona unajumuisha kalenda ya Day Streak Heatmap, chati ya upau ya usambazaji wa umakini wa kila saa, mchanganuo wa aina za Mradi, na uingizaji/uhamishaji kamili wa data ya JSON.
 
 ---
 
 ## 9. Section 8: Activity & History Panel (Panel de Actividad)
 
-A Declarative Net Request (DNR) tracking, analytics, and web governance engine.
+Injini ya ufuatiliaji, uchanganuzi, na usimamizi wa wavuti ya Declarative Net Request (DNR).
 
 ### 9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)
-Managed under `ITG_WEB_ACTIVITY`:
-- `wa:day:YYYY-MM-DD`: Domain counters per day (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
-- `wa:days`: Master index array of recorded date keys.
-- `wa:recent`: Ring buffer storing the latest 400 visit timeline entries.
-- `wa:openSegment`: Active timed segment in `chrome.storage.session`, capped at `WA_MAX_SEGMENT_SECONDS = 900s` (15 minutes) to prevent distorting stats if the machine sleeps without firing idle events.
-- **Idle Detection**: Uses `chrome.idle` (default: 300s / 5m). Audio playback preserves active tracking even when windows are unfocused if `countAudible = true`.
-- **Retention**: Automatically prunes day records older than `retentionDays` (default: 180 days).
+Inasimamiwa chini ya `ITG_WEB_ACTIVITY`:
+- `wa:day:YYYY-MM-DD`: Vihesabu vya kikoa kwa siku (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
+- `wa:days`: Safu kuu ya faharasa ya funguo za tarehe zilizorekodiwa.
+- `wa:recent`: Bafa ya mduara inayohifadhi maingizo 400 ya hivi karibuni ya ratiba ya matukio ya kutembelea.
+- `wa:openSegment`: Sehemu inayotumika iliyopimwa muda katika `chrome.storage.session`, ikiwekewa ukomo wa `WA_MAX_SEGMENT_SECONDS = 900s` (dakika 15) ili kuzuia upotoshaji wa takwimu ikiwa mashine italala bila kuanzisha matukio ya kutofanya kazi (idle).
+- **Ugunduzi wa Kutofanya Kazi**: Hutumia `chrome.idle` (chaguo-msingi: 300s / 5m). Uchezaji wa sauti huhifadhi ufuatiliaji unaotumika hata wakati madirisha hayajaangaziwa ikiwa `countAudible = true`.
+- **Ubakizaji**: Huondoa kiotomatiki rekodi za siku zilizopitiliza `retentionDays` (chaguo-msingi: siku 180).
 
 ### 9.2 Declarative Net Request (DNR) Site Blocker
-- **Dynamic Rule Allocation**: Allocates dynamic rules in the ID range `9000` to `9999`.
-- **Redirect Target**: Blocked requests redirect to `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
-- **Open Tab Sweep**: When a site limit expires, the background worker immediately sweeps and redirects existing open tabs matching the domain.
-- **Overnight Schedule Spanning**: Schedules crossing midnight (e.g., `22:00` to `02:00`) are automatically evaluated across day boundaries.
-- **Grace / Snooze Period (+5 min)**: The block screen allows temporary 5-minute snooze passes, tracked in `wa:snoozeUses`.
+- **Ugawaji wa Sheria wa Nguvu**: Hugawa sheria za nguvu katika anuwai ya vitambulisho ya `9000` hadi `9999`.
+- **Lengo la Uelekezaji Upya**: Maombi yaliyozuiwa huelekezwa kwenye `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
+- **Ukaguzi wa Vichupo Vilivyo Wazi**: Kikomo cha tovuti kinapoisha, mfanyakazi wa mandharinyuma hukagua mara moja na kuelekeza upya vichupo vilivyo wazi vinavyolingana na kikoa.
+- **Ratiba Zinazovuka Usiku**: Ratiba zinazovuka usiku wa manane (k.m., `22:00` hadi `02:00`) hutathminiwa kiotomatiki katika mipaka ya siku.
+- **Kipindi cha Kusubiri / Kuahirisha (+dakika 5)**: Skrini ya kuzuia inaruhusu pasi za muda za kuahirisha za dakika 5, zinazofuatiliwa katika `wa:snoozeUses`.
 
 ### 9.3 Asymmetric Security Lock (`blockLock.js`)
-Site limits can be protected with an asymmetric password lock:
-- **Hash Storage**: Stores random 16-byte salt and SHA-256 hex digest (`wa:settings.blockPassword`).
-- **Asymmetric Rule Policy**: The password is **never requested** when creating new limits or making rules stricter (e.g., reducing time allowances or adding schedule restrictions).
-- **Guarded Actions**: The password is only requested when **loosening rules** (deleting a limit, increasing time allowances, or disabling schedules) or when invoking snooze after exceeding the daily free threshold (`snoozePasswordAfter`).
+Mipaka ya tovuti inaweza kulindwa kwa kufuli ya nenosiri isiyo linganifu:
+- **Uhifadhi wa Hash**: Huhifadhi chumvi (salt) ya nasibu ya baiti 16 na muhtasari wa heksi wa SHA-256 (`wa:settings.blockPassword`).
+- **Sera ya Sheria Isiyo Linganifu**: Nenosiri **haliombwi kamwe** wakati wa kuunda mipaka mipya au kufanya sheria kuwa ngumu zaidi (k.m., kupunguza posho za muda au kuongeza vizuizi vya ratiba).
+- **Vitendo Vinavyolindwa**: Nenosiri huombwa tu wakati wa **kulegeza sheria** (kufuta kikomo, kuongeza posho za muda, au kuzima ratiba) au wakati wa kuomba kuahirisha baada ya kuzidi kiwango cha bure cha kila siku (`snoozePasswordAfter`).
 
 ### 9.4 Categorization & Visual Analytics
-- **16 Built-in Categories**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
-- **Custom Categories**: Supports user-defined categories prefixed with `custom:`.
-- **Focus Ratio**: Contrasts Productive categories (`dev`, `work`, `education`, `reading`, `finance`, `mail`) against Distracting categories (`social`, `video`, `games`, `shopping`, `entertainment`).
-- **Visuals**: Chart.js hourly activity distributions, category donut breakdown, and domain ranking lists.
+- **Kategoria 16 Zilizojengwa Ndani**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
+- **Kategoria Maalum**: Inasaidia kategoria zilizobainishwa na mtumiaji zenye kiambishi awali cha `custom:`.
+- **Uwiano wa Umakini**: Huweka kinyume kategoria Zenye Tija (`dev`, `work`, `education`, `reading`, `finance`, `mail`) dhidi ya kategoria Zinazovuruga (`social`, `video`, `games`, `shopping`, `entertainment`).
+- **Mionekano**: Usambazaji wa shughuli za kila saa wa Chart.js, mchanganuo wa donati ya kategoria, na orodha za viwango vya vikoa.
 
 ### 9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)
-- **Dedicated Route**: Accessed in side panel via `switchMainView('downloads')` (`?view=downloads`).
-- **Direct Chrome API Integration**: Hooks `chrome.downloads` to track, manage, and inspect all browser downloads in real time.
-- **Real-Time Fuzzy Search**: Instant search by file name, file path, or download source URL.
-- **Status Filter Chips**: Rapidly filter downloads by state: `All`, `In Progress`, `Complete`, `Paused`, and `Interrupted`.
-- **Calendar Date Range Filtering**: Narrow down downloads by specific dates or time intervals.
-- **Batch Group Downloader**: Extracts all download links from open tabs in the active group and initiates synchronized batch downloads with progress tracking.
-- **File Management**: Direct one-click file opening (`chrome.downloads.open`) and folder reveal (`chrome.downloads.show`).
+- **Njia Maalum**: Inapatikana katika paneli ya pembeni kupitia `switchMainView('downloads')` (`?view=downloads`).
+- **Ujumuishaji wa Moja kwa Moja wa API ya Chrome**: Huunganishwa na `chrome.downloads` kufuatilia, kudhibiti, na kukagua vipakuliwa vyote vya kivinjari kwa wakati halisi.
+- **Utafutaji Huria wa Wakati Halisi**: Utafutaji wa papo hapo kwa jina la faili, njia ya faili, au URL ya chanzo cha upakuaji.
+- **Lebo za Kichujio cha Hali**: Chuja vipakuliwa haraka kulingana na hali: `All`, `In Progress`, `Complete`, `Paused`, na `Interrupted`.
+- **Uchujaji wa Masafa ya Tarehe ya Kalenda**: Punguza vipakuliwa kwa tarehe maalum au vipindi vya muda.
+- **Kipakuzi cha Pamoja cha Kikundi**: Hutoa viungo vyote vya upakuaji kutoka kwa vichupo vilivyo wazi katika kikundi kinachotumika na kuanzisha vipakuliwa vya pamoja vilivyolandanishwa vyenye ufuatiliaji wa maendeleo.
+- **Usimamizi wa Faili**: Kufungua faili moja kwa moja kwa mbofyo mmoja (`chrome.downloads.open`) na kufichua folda (`chrome.downloads.show`).
 
 ### 9.6 Recently Closed Tabs & Browsing History Subsystem
-- **Recently Closed Tabs View**:
-  - Integrated directly with `chrome.sessions.getRecentlyClosed`.
-  - Real-time search with automatic diacritic and accent folding (`deaccent`).
-  - Single tab restoration and full window session restoration with a single click or Omnibar command `c:`.
-- **Browsing History View**:
-  - Deep search with 10-second TTL in-memory caching to eliminate redundant `chrome.history.search` query churn.
-  - Search filterable by domain, keyword, and calendar date ranges.
-  - One-click tab activation if already open, or fresh tab creation, accessible via Omnibar `h:`.
+- **Mwonekano wa Vichupo Vilivyofungwa Hivi Karibuni**:
+  - Imeunganishwa moja kwa moja na `chrome.sessions.getRecentlyClosed`.
+  - Utafutaji wa wakati halisi wenye uondoaji wa kiotomatiki wa alama za matamshi na lafudhi (`deaccent`).
+  - Urejeshaji wa kichupo kimoja na urejeshaji kamili wa kikao cha dirisha kwa mbofyo mmoja au amri ya Omnibar `c:`.
+- **Mwonekano wa Historia ya Kuvinjari**:
+  - Utafutaji wa kina wenye kache ya kumbukumbu ya TTL ya sekunde 10 ili kuondoa msongamano wa maombi yanayojirudia ya `chrome.history.search`.
+  - Utafutaji unaoweza kuchujwa kwa kikoa, neno kuu, na masafa ya tarehe ya kalenda.
+  - Uamilisho wa mbofyo mmoja wa kichupo ikiwa tayari kiko wazi, au uundaji wa kichupo kipya, kinachopatikana kupitia Omnibar `h:`.
 
 ### 9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)
-- **Automated Theme Scheduling**:
-  - Managed via `ThemeScheduleModal.svelte` inside the Themes side panel view (`?view=themes` / `pt`).
-  - Supports automatic theme switching based on time of day (`HH:MM`) and active days of the week (`[0..6]`).
-  - Maximum of 7 global theme schedules (`MAX_GLOBAL_SCHEDULES = 7`).
-  - **Auto-Revert**: Automatically returns to default daytime or workplace themes at designated completion hours.
-  - **Desktop Alerts**: Issues desktop notifications when automatic theme switches occur (`chrome.notifications`).
-  - **Dual Persistence**: Persisted in `chrome.storage.sync` (roaming preferences) and `chrome.storage.local` under `savedThemes` and `themeSchedules`.
+- **Upangaji wa Mandhari Kiotomatiki**:
+  - Inasimamiwa kupitia `ThemeScheduleModal.svelte` ndani ya mwonekano wa paneli ya pembeni ya Mandhari (`?view=themes` / `pt`).
+  - Inasaidia ubadilishaji wa mandhari kiotomatiki kulingana na wakati wa siku (`HH:MM`) na siku zinazotumika za juma (`[0..6]`).
+  - Upeo wa ratiba 7 za mandhari za kimataifa (`MAX_GLOBAL_SCHEDULES = 7`).
+  - **Kurejesha Kiotomatiki**: Hurejea kiotomatiki kwenye mandhari chaguomsingi ya mchana au ya mahali pa kazi katika masaa yaliyoteuliwa ya kukamilika.
+  - **Arifa za Eneo-kazi**: Hutoa arifa za eneo-kazi wakati mabadiliko ya kiotomatiki ya mandhari yanapotokea (`chrome.notifications`).
+  - **Udumishaji Pacha**: Inadumishwa katika `chrome.storage.sync` (mapendeleo ya kuhamishika) na `chrome.storage.local` chini ya `savedThemes` na `themeSchedules`.
 
 ### 9.8 Compact Sidepanel View
-- **Sidepanel Route (`?view=activity` / `pw`)**: 350px column optimized for real-time monitoring, featuring period selector chips (`Today`, `7d`, `30d`, `All`) and domain limit progress bars.
+- **Njia ya Paneli ya Pembeni (`?view=activity` / `pw`)**: Safu wima ya 350px iliyoboreshwa kwa ufuatiliaji wa wakati halisi, ikijumuisha lebo za kiteuzi cha vipindi (`Today`, `7d`, `30d`, `All`) na pau za maendeleo ya mipaka ya kikoa.
 
 ---
 
 ## 10. Multi-Modal Invocation Matrix
 
 ### 10.1 Popup UI Interface
-- **Rules Tab**: Quick rule toggles, active status indicators, and rule URL launcher.
-- **Groups Tab**: Compact accordion list with tab switching and group cleanup.
-- **AI Launcher**: Direct chat input box routing queries to the side panel.
-- **Quick Actions Toolbar**: One-click buttons for Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, and Sidepanel expansion.
+- **Kichupo cha Sheria**: Swichi za haraka za sheria, viashiria vya hali inayotumika, na kizindua cha URL za sheria.
+- **Kichupo cha Vikundi**: Orodha sambamba ya accordion yenye ubadilishaji wa vichupo na usafishaji wa vikundi.
+- **Kizindua cha AI**: Sanduku la kuingiza gumzo la moja kwa moja linaloelekeza maswali kwenye paneli ya pembeni.
+- **Upau Zana wa Vitendo vya Haraka**: Vitufe vya mbofyo mmoja vya Picha ya Eneo, Unyakuaji wa Ukurasa Kamili, Madokezo ya Haraka, Kuanza/Kusitisha Pomodoro, na Upanuzi wa Paneli ya Pembeni.
 
 ### 10.2 Sidepanel Navigation Routes (`?view=...`)
-- `?view=rules` — Comprehensive Rules Manager and URL pattern editor (`pg`).
-- `?view=listgroup` — Full Group and Tab workspace with drag-and-drop reordering (`pl`).
-- `?view=notes` — Notes workspace (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
-- `?view=gallery` — Screenshot gallery, OCR, and Excalidraw tools (`ps`).
-- `?view=gemini` — Multimodal AI Assistant and Autonomous Agent interface (`pa`).
-- `?view=activity` — Web Activity tracker, limits, and category metrics (`pw`).
-- `?view=themes` — Theme editor and automated scheduling palette (`pt`).
-- `?view=hints` — Vim shortcuts, Omnibar, and YouTube loop settings (`pn`).
-- `?view=downloads` — Downloads Manager and batch link downloader (`switchMainView('downloads')`).
+- `?view=rules` — Kidhibiti Kina cha Sheria na kihariri cha ruwaza za URL (`pg`).
+- `?view=listgroup` — Nafasi kamili ya kazi ya Kikundi na Kichupo yenye upangaji upya wa kuburuta na kudondosha (`pl`).
+- `?view=notes` — Nafasi ya kazi ya madokezo (Maandishi, Orodha ya Ukaguzi, Kanban, Mermaid, KaTeX) (`pk`).
+- `?view=gallery` — Matunzio ya picha za skrini, OCR, na zana za Excalidraw (`ps`).
+- `?view=gemini` — Kiolesura cha Msaidizi wa AI wa Njia Nyingi na Ajenti Huru (`pa`).
+- `?view=activity` — Mfuatiliaji wa Shughuli za Wavuti, mipaka, na vipimo vya kategoria (`pw`).
+- `?view=themes` — Kihariri cha mandhari na ubao wa ratiba ya kiotomatiki (`pt`).
+- `?view=hints` — Njia za mkato za Vim, Omnibar, na mipangilio ya kurudia ya YouTube (`pn`).
+- `?view=downloads` — Kidhibiti cha Vipakuliwa na kipakuzi cha pamoja cha viungo (`switchMainView('downloads')`).
 
 ### 10.3 Manifest Keyboard Shortcuts (24 Commands)
-1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Toggle collapse of active group.
-2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Toggle collapse of all groups.
-3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Toggle alphabetical group sorting.
-4. `open-popup` (`Alt+Shift+P`): Open popup or focus side panel.
-5. `toggle-collapse-timer`: Toggle group auto-collapse timer.
-6. `toggle-all-rules`: Master toggle for all custom rules (`Alt+M`).
-7. `toggle-expand-all`: Expand all groups in the workspace.
-8. `rules-manager`: Open Rules Manager in a dedicated tab (`Alt+R`).
-9. `toggle-prefixes`: Toggle visual group prefix indicators (`🔒`, `🔍`, `🗝️`, `⚠️`).
-10. `toggle-domain-grouping`: Toggle automatic domain clustering.
-11. `toggle-subdomain-grouping`: Toggle automatic subdomain clustering.
-12. `toggle-compact-mode`: Toggle compact single-letter group titles.
-13. `toggle-chrome-grouping`: Toggle special Chrome internal pages group.
-14. `toggle-files-grouping`: Toggle special local `file://` pages group.
-15. `toggle-extensions-grouping`: Toggle special `chrome-extension://` group.
-16. `toggle-misc-grouping`: Toggle unclustered Miscellaneous group.
-17. `toggle-ip-address-grouping`: Toggle IP address / localhost group.
-18. `toggle-clustering`: Master toggle for all automated clustering.
-19. `regroup-all-tabs`: Trigger comprehensive tab regrouping pass (`Alt+Shift+R`).
-20. `toggle-hints`: Toggle in-page Vim hints overlay engine.
-21. `open-side-panel`: Open extension side panel.
-22. `open-theme-selector`: Open theme customization panel.
-23. `remove-duplicate-tabs`: Clean duplicate tabs across the window.
-24. `open-list-group-sidepanel-command`: Open List Group view in side panel.
+1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Geuza kukunja kwa kikundi kinachotumika.
+2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Geuza kukunja kwa vikundi vyote.
+3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Geuza upangaji wa vikundi kialfabeti.
+4. `open-popup` (`Alt+Shift+P`): Fungua ibukizi au angazia paneli ya pembeni.
+5. `toggle-collapse-timer`: Geuza kipima muda cha kukunja vikundi kiotomatiki.
+6. `toggle-all-rules`: Swichi kuu ya sheria zote maalum (`Alt+M`).
+7. `toggle-expand-all`: Panua vikundi vyote katika nafasi ya kazi.
+8. `rules-manager`: Fungua Kidhibiti cha Sheria katika kichupo maalum (`Alt+R`).
+9. `toggle-prefixes`: Geuza viashiria vya viambishi awali vya kuona vya vikundi (`🔒`, `🔍`, `🗝️`, `⚠️`).
+10. `toggle-domain-grouping`: Geuza uwekaji makundi wa kiotomatiki wa kikoa.
+11. `toggle-subdomain-grouping`: Geuza uwekaji makundi wa kiotomatiki wa kijikoa.
+12. `toggle-compact-mode`: Geuza majina ya vikundi ya herufi moja sambamba.
+13. `toggle-chrome-grouping`: Geuza kikundi maalum cha kurasa za ndani za Chrome.
+14. `toggle-files-grouping`: Geuza kikundi maalum cha kurasa za faili za ndani za `file://`.
+15. `toggle-extensions-grouping`: Geuza kikundi maalum cha `chrome-extension://`.
+16. `toggle-misc-grouping`: Geuza kikundi cha Mengineyo (Misc) ambacho hakijawekwa kwenye makundi.
+17. `toggle-ip-address-grouping`: Geuza kikundi cha anwani ya IP / localhost.
+18. `toggle-clustering`: Swichi kuu ya uwekaji makundi yote ya kiotomatiki.
+19. `regroup-all-tabs`: Anzisha ukaguzi kamili wa kupanga vichupo upya (`Alt+Shift+R`).
+20. `toggle-hints`: Geuza injini ya safu ya vidokezo vya Vim vya ndani ya ukurasa.
+21. `open-side-panel`: Fungua paneli ya pembeni ya kirefusho.
+22. `open-theme-selector`: Fungua paneli ya ubinafsishaji wa mandhari.
+23. `remove-duplicate-tabs`: Safisha vichupo vilivyorudiwa katika dirisha zima.
+24. `open-list-group-sidepanel-command`: Fungua mwonekano wa List Group katika paneli ya pembeni.
 
 ### 10.4 In-Page Vim Hint Keys (40+ Combinations)
-- **Scrolling & Movement**:
-  - `j` / `k`: Scroll down / up (75px step).
-  - `d` / `u`: Scroll to bottom / top of page.
-  - `h` / `l`: Scroll left / right (or switch to previous / next tab if page cannot scroll).
-  - `H` / `L`: Navigate back / forward in browser history.
-  - `esc`: Blur active input, unfocus elements.
-- **Tab & Window Management**:
-  - `t`: Open new tab.
-  - `x`: Close current tab.
-  - `yt`: Duplicate current tab.
-  - `s`: Swap to previous active tab.
-  - `ts`: Toggle side-by-side Split Screen window.
-  - `we`: Open active tab in standalone popup window.
-  - `wp`: Open active tab in Document Picture-in-Picture.
-  - `wv`: Open active video in custom Video Picture-in-Picture.
-  - `dg`: Close/delete current tab group.
-- **Link Hints & Interaction**:
-  - `f`: Activate Vim link hints (click element).
-  - `cf`: Activate Vim link hints to copy link URL.
-  - `i`: Focus first text input on page.
-  - `c`: Copy current URL to clipboard.
-  - `y`: Append current selection to clipboard buffer.
-  - `vs`: View page source (`view-source:`).
-  - `vp`: Toggle link preview modal.
-  - `as` / `ah`: Toggle Auto-PiP on scroll / on tab hide.
-  - `ar`: Toggle Text-to-Speech Read Aloud.
-  - `ao`: Create note from selection.
-  - `at`: Translate page.
-- **Sidepanel Direct Access**:
-  - `ph`: Open Main side panel view.
-  - `pt`: Open Themes side panel.
-  - `pl`: Open List Group side panel.
-  - `pk`: Open Notes side panel.
-  - `ps`: Open Screenshot Gallery side panel.
-  - `pa`: Open AI Assistant side panel.
-  - `pw`: Open Web Activity side panel.
-  - `pg`: Open Rules side panel.
-  - `pn`: Open Customize Hints side panel.
-- **Media Capture**:
-  - `cs`: Capture visible viewport.
-  - `cp`: Capture full page (stitched).
-  - `cP`: Capture full page in sequential parts.
-  - `ca`: Capture cropped area.
-  - `Cs`: Capture all tabs in group (visible).
-  - `Cp`: Capture all tabs in group (full page).
-  - `CP`: Capture all tabs in group (parts).
-- **Audio & Reading Modes**:
-  - `st`: Toggle mute on current tab.
-  - `so`: Mute all audible tabs.
-  - `mb` / `mB`: Black page mode (tab / global).
-  - `ms` / `mS`: Sepia page mode (tab / global).
-  - `mp` / `mP`: Paper page mode (tab / global).
-  - `ml` / `mL`: Light page mode (tab / global).
-  - `me` / `mE`: Custom CSS filter mode (tab / global).
-- **Text-to-Speech (Read Aloud) Reader Navigation**:
-  - `zp`: Play / Pause speech synthesis reader overlay.
-  - `zn`: Next sentence in Read Aloud session.
-  - `zb`: Previous sentence in Read Aloud session.
-  - `zq`: Close / Terminate Read Aloud speech overlay.
-- **Group Backups & Rules**:
-  - `bg`: Backup all groups to IndexedDB.
-  - `br`: Restore all groups from IndexedDB.
-  - `cr`: Create custom rule from current page.
-  - `ae`: Add current page to existing rule.
-- **Quick URL Launchers**:
+- **Kusogeza & Mwendo**:
+  - `j` / `k`: Sogeza chini / juu (hatua ya 75px).
+  - `d` / `u`: Sogeza hadi chini / juu ya ukurasa.
+  - `h` / `l`: Sogeza kushoto / kulia (au badilisha kwenda kwenye kichupo kilichopita / kinachofuata ikiwa ukurasa hauwezi kusogea).
+  - `H` / `L`: Nenda nyuma / mbele katika historia ya kivinjari.
+  - `esc`: Ondoa umakini kwenye ingizo linalotumika, ondoa uteuzi wa vipengele.
+- **Usimamizi wa Vichupo & Madirisha**:
+  - `t`: Fungua kichupo kipya.
+  - `x`: Funga kichupo cha sasa.
+  - `yt`: Nakili kichupo cha sasa.
+  - `s`: Badilishana na kichupo kilichokuwa kikitumika awali.
+  - `ts`: Geuza dirisha la Skrini Iliyogawanywa (Split Screen) ubavu kwa ubavu.
+  - `we`: Fungua kichupo kinachotumika katika dirisha la ibukizi linalojitegemea.
+  - `wp`: Fungua kichupo kinachotumika katika Document Picture-in-Picture.
+  - `wv`: Fungua video inayotumika katika Video Picture-in-Picture maalum.
+  - `dg`: Funga/futa kikundi cha sasa cha vichupo.
+- **Vidokezo vya Viungo & Mwingiliano**:
+  - `f`: Washa vidokezo vya viungo vya Vim (bofya kipengele).
+  - `cf`: Washa vidokezo vya viungo vya Vim ili kunakili URL ya kiungo.
+  - `i`: Weka umakini kwenye sehemu ya kwanza ya kuingiza maandishi kwenye ukurasa.
+  - `c`: Nakili URL ya sasa kwenye ubao wa kunakili.
+  - `y`: Ongeza uteuzi wa sasa kwenye bafa ya ubao wa kunakili.
+  - `vs`: Tazama chanzo cha ukurasa (`view-source:`).
+  - `vp`: Geuza dirisha ibukizi la hakikisho la kiungo.
+  - `as` / `ah`: Geuza Auto-PiP wakati wa kusogeza / wakati wa kuficha kichupo.
+  - `ar`: Geuza Usomaji kwa Sauti (Text-to-Speech Read Aloud).
+  - `ao`: Unda dokezo kutoka kwa uteuzi.
+  - `at`: Tafsiri ukurasa.
+- **Ufikiaji wa Moja kwa Moja wa Paneli ya Pembeni**:
+  - `ph`: Fungua mwonekano Mkuu wa paneli ya pembeni.
+  - `pt`: Fungua paneli ya pembeni ya Mandhari.
+  - `pl`: Fungua paneli ya pembeni ya List Group.
+  - `pk`: Fungua paneli ya pembeni ya Madokezo.
+  - `ps`: Fungua paneli ya pembeni ya Matunzio ya Picha za Skrini.
+  - `pa`: Fungua paneli ya pembeni ya Msaidizi wa AI.
+  - `pw`: Fungua paneli ya pembeni ya Shughuli za Wavuti.
+  - `pg`: Fungua paneli ya pembeni ya Sheria.
+  - `pn`: Fungua paneli ya pembeni ya Customize Hints.
+- **Unyakuaji wa Vyombo vya Habari**:
+  - `cs`: Nasa eneo linaloonekana.
+  - `cp`: Nasa ukurasa kamili (uliounganishwa).
+  - `cP`: Nasa ukurasa kamili katika sehemu za mfuatano.
+  - `ca`: Nasa eneo lililokatwa.
+  - `Cs`: Nasa vichupo vyote katika kikundi (vinavyoonekana).
+  - `Cp`: Nasa vichupo vyote katika kikundi (ukurasa kamili).
+  - `CP`: Nasa vichupo vyote katika kikundi (sehemu).
+- **Sauti & Njia za Kusoma**:
+  - `st`: Geuza bubu/sauti kwenye kichupo cha sasa.
+  - `so`: Zima sauti kwenye vichupo vyote vinavyotoa sauti.
+  - `mb` / `mB`: Hali ya ukurasa mweusi (kichupo / kimataifa).
+  - `ms` / `mS`: Hali ya ukurasa wa sepia (kichupo / kimataifa).
+  - `mp` / `mP`: Hali ya ukurasa wa karatasi (kichupo / kimataifa).
+  - `ml` / `mL`: Hali ya ukurasa mwepesi (kichupo / kimataifa).
+  - `me` / `mE`: Hali maalum ya kichujio cha CSS (kichupo / kimataifa).
+- **Urambazaji wa Kisomaji cha Maandishi-hadi-Sauti (Kusoma kwa Sauti)**:
+  - `zp`: Cheza / Sitisha safu ya kisomaji cha usanisi wa usemi.
+  - `zn`: Sentensi inayofuata katika kipindi cha Kusoma kwa Sauti.
+  - `zb`: Sentensi iliyopita katika kipindi cha Kusoma kwa Sauti.
+  - `zq`: Funga / Sitisha safu ya usemi ya Kusoma kwa Sauti.
+- **Nakala za Vikundi & Sheria**:
+  - `bg`: Hifadhi nakala ya vikundi vyote kwenye IndexedDB.
+  - `br`: Rejesha vikundi vyote kutoka IndexedDB.
+  - `cr`: Unda sheria maalum kutoka kwa ukurasa wa sasa.
+  - `ae`: Ongeza ukurasa wa sasa kwenye sheria iliyopo.
+- **Vizindua Haraka vya URL**:
   - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini.
 
 ### 10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)
-Type `o` on any page to open the floating Omnibar. Type `@` to view all available commands:
-1. `we:` — Open selected tab as standalone popup window.
-2. `wp:` — Open selected tab as Document Picture-in-Picture.
-3. `wv:` — Open selected tab as Video Picture-in-Picture.
-4. `sp:` — Open URL, search, or tab in the side panel.
-5. `ar:` — Pick a tab and read its text aloud via TTS.
-6. `b:` — Full-text search browser bookmarks.
-7. `h:` — Search browsing history.
-8. `c:` — Browse and reopen recently closed tabs.
-9. `dg:` — Search and delete or switch tab groups.
-10. `dt:` — Search and close multiple tabs.
-11. `ts:` — Select tabs and launch in side-by-side Split Screen.
-12. `cs:` — Capture visible area of chosen tabs.
-13. `cp:` — Capture full page of chosen tabs.
-14. `cpp:` — Capture full page in sequential parts.
-15. `ca:` — Capture custom cropped area on chosen tabs.
-16. `bg:` — Backup tab groups immediately to IndexedDB.
-17. `bgr:` — Search and restore backed-up groups and tabs.
-18. `f:` — Deep full-text search across all open tabs.
-19. `qai:` — Ask a query directly to configured AI model.
-20. `qaia:` — Instruct the Autonomous AI Agent to execute actions.
-21. `lai:` — Browse past AI conversation history.
-22. `laiq:` — Search within AI messages.
-23. `limg:` — Browse captured screenshots and gallery images.
-24. `lnt:` — Search and view saved notes.
-25. `atcr:` — Add active tab URL to an existing custom rule.
-26. `atr:` — Add open tabs or manual URLs to an existing rule.
-27. `rl:` — Search rules and launch associated URLs.
-28. `cr:` — Create a new rule (`cr: name` or `cr: name, url1, url2`).
-29. `ccr:` — Change the color of a custom rule.
-30. `ccg:` — Change the color of an active tab group.
-31. `dr:` — Delete rules or individual URLs from rules.
-32. `er:` — Rename or edit an existing rule.
-33. `st:` — Open Omnibar interactive tutorial.
-34. `g:` — Search Google (`g: <query>`).
-35. `y:` — Search YouTube (`y: <query>`).
-36. `d:` — Search DuckDuckGo (`d: <query>`).
-37. `w:` — Search Wikipedia (`w: <query>`).
-38. `gm:` — Search Google Maps (`gm: <query>`).
-39. `x:` — Search X / Twitter (`x: <query>`).
-40. `am:` — Search Amazon (`am: <query>`).
-41. `ams:` — Search Amazon Spain (`ams: <query>`).
+Andika `o` kwenye ukurasa wowote ili kufungua Omnibar inayoelea. Andika `@` ili kutazama amri zote zinazopatikana:
+1. `we:` — Fungua kichupo kilichochaguliwa kama dirisha la ibukizi linalojitegemea.
+2. `wp:` — Fungua kichupo kilichochaguliwa kama Document Picture-in-Picture.
+3. `wv:` — Fungua kichupo kilichochaguliwa kama Video Picture-in-Picture.
+4. `sp:` — Fungua URL, utafutaji, au kichupo kwenye paneli ya pembeni.
+5. `ar:` — Chagua kichupo na usome maandishi yake kwa sauti kupitia TTS.
+6. `b:` — Utafutaji wa maandishi kamili wa alamisho za kivinjari.
+7. `h:` — Tafuta historia ya kuvinjari.
+8. `c:` — Vinjari na ufungue upya vichupo vilivyofungwa hivi karibuni.
+9. `dg:` — Tafuta na ufute au ubadilishe vikundi vya vichupo.
+10. `dt:` — Tafuta na ufunge vichupo vingi.
+11. `ts:` — Chagua vichupo na uzindue katika Skrini Iliyogawanywa (Split Screen) ubavu kwa ubavu.
+12. `cs:` — Nasa eneo linaloonekana la vichupo vilivyochaguliwa.
+13. `cp:` — Nasa ukurasa kamili wa vichupo vilivyochaguliwa.
+14. `cpp:` — Nasa ukurasa kamili katika sehemu za mfuatano.
+15. `ca:` — Nasa eneo maalum lililokatwa kwenye vichupo vilivyochaguliwa.
+16. `bg:` — Hifadhi nakala ya vikundi vya vichupo mara moja kwenye IndexedDB.
+17. `bgr:` — Tafuta na urejeshe vikundi na vichupo vilivyohifadhiwa nakala.
+18. `f:` — Utafutaji wa kina wa maandishi kamili katika vichupo vyote vilivyo wazi.
+19. `qai:` — Uliza swali moja kwa moja kwa modeli ya AI iliyosanidiwa.
+20. `qaia:` — Elekeza Ajenti Huru wa AI kutekeleza vitendo.
+21. `lai:` — Vinjari historia ya mazungumzo ya AI yaliyopita.
+22. `laiq:` — Tafuta ndani ya jumbe za AI.
+23. `limg:` — Vinjari picha za skrini zilizonaswa na picha za matunzio.
+24. `lnt:` — Tafuta na utazame madokezo yaliyohifadhiwa.
+25. `atcr:` — Ongeza URL ya kichupo kinachotumika kwenye sheria maalum iliyopo.
+26. `atr:` — Ongeza vichupo vilivyo wazi au URL za mwongozo kwenye sheria iliyopo.
+27. `rl:` — Tafuta sheria na uzindue URL zinazohusiana.
+28. `cr:` — Unda sheria mpya (`cr: name` au `cr: name, url1, url2`).
+29. `ccr:` — Badilisha rangi ya sheria maalum.
+30. `ccg:` — Badilisha rangi ya kikundi cha vichupo kinachotumika.
+31. `dr:` — Futa sheria au URL moja moja kutoka kwa sheria.
+32. `er:` — Badilisha jina au hariri sheria iliyopo.
+33. `st:` — Fungua mafunzo shirikishi ya Omnibar.
+34. `g:` — Tafuta kwenye Google (`g: <query>`).
+35. `y:` — Tafuta kwenye YouTube (`y: <query>`).
+36. `d:` — Tafuta kwenye DuckDuckGo (`d: <query>`).
+37. `w:` — Tafuta kwenye Wikipedia (`w: <query>`).
+38. `gm:` — Tafuta kwenye Google Maps (`gm: <query>`).
+39. `x:` — Tafuta kwenye X / Twitter (`x: <query>`).
+40. `am:` — Tafuta kwenye Amazon (`am: <query>`).
+41. `ams:` — Tafuta kwenye Amazon Spain (`ams: <query>`).
 
 ### 10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)
-The context menu provides a complete hierarchical tree organized into 5 functional command groups:
-1. **Group 1: Rules & URL Submenu**:
-   - Master rules checkbox toggle ("Activar/Desactivar Todas las Reglas").
-   - Per-rule toggles enabling or disabling individual custom rules on the fly.
-   - "Abrir Todas las URLs": Opens all target URLs registered in the selected rule.
-   - Individual URL submenus with dynamic open tab counts `[N]`: Displays currently open tab count matching the URL, provides one-click navigation to the URL, and offers "Cerrar Pestañas para esta URL" to terminate all matching tabs.
-   - Quick Rule Creation: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-   - Add to Existing Rule: "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-2. **Group 2: Tab Cleanup & Audio Controls**:
-   - "Eliminar Pestañas Duplicadas [N]": Shows count of detected redundant tabs and closes them across windows.
-   - "Eliminar Pestañas por Dominio": Dynamic submenu listing all domains with open tab counts `[N]`, allowing surgical tab closure by domain.
-   - "Cerrar Todos Excepto el Grupo Activo": Retains active focused group and closes all other groups.
-   - "Reagrupar Todas las Pestañas": Triggers full background regrouping pass across all open tabs.
-   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Global audio mute and unmute controls.
-3. **Group 3: Reading, Selection & Notes**:
-   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader with overlay controls.
-   - "Leer Selección en Voz Alta": Reads highlighted DOM selection aloud using speech synthesis.
-   - "Crear Nota desde Selección": Extracts text selection, automatically derives note title from the nearest heading (`h1`-`h3`), and stores it in `notesStore`.
-4. **Group 4: Open Extension, PiP & Panels**:
-   - "Abrir como PiP" / "Abrir como Ventana Emergente": Launch target page, highlighted selection, or target image into floating Picture-in-Picture or standalone popup window.
-   - "Abrir Extensión": Opens extension popup or expands side panel.
-   - "Gestionar Reglas": Opens full Rules Manager in a dedicated browser tab.
-   - Direct Sidepanel Launchers: One-click routing to List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), and Customize Hints (`?view=hints`).
-5. **Group 5: Settings & Clustering Options**:
-   - **Gestión de Grupos**: Alternar Grupo Actual (toggle active group collapse), Alternar Todos los Grupos (toggle all groups collapse).
+Menyu ya muktadha inatoa muundo kamili wa kihierarkia uliopangwa katika vikundi 5 vya amri za kiutendaji:
+1. **Kikundi cha 1: Menyu Ndogo ya Sheria & URL**:
+   - Sanduku la kuangalia la swichi kuu ya sheria ("Activar/Desactivar Todas las Reglas").
+   - Swichi za kila sheria zinazowasha au kuzima sheria maalum moja moja papo hapo.
+   - "Abrir Todas las URLs": Hufungua URL zote lengwa zilizosajiliwa katika sheria iliyochaguliwa.
+   - Menyu ndogo za URL moja moja zenye hesabu za nguvu za vichupo vilivyo wazi `[N]`: Huonyesha idadi ya vichupo vilivyo wazi kwa sasa vinavyolingana na URL, hutoa urambazaji wa mbofyo mmoja kwenda kwenye URL, na hutoa "Cerrar Pestañas para esta URL" ili kufunga vichupo vyote vinavyolingana.
+   - Uundaji wa Haraka wa Sheria: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+   - Ongeza kwenye Sheria Iliyopo: "Añadir a Regla Existente" -> Chagua sheria -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+2. **Kikundi cha 2: Usafishaji wa Vichupo & Vidhibiti vya Sauti**:
+   - "Eliminar Pestañas Duplicadas [N]": Huonyesha idadi ya vichupo vilivyozidi vilivyogunduliwa na kuvifunga kwenye madirisha yote.
+   - "Eliminar Pestañas por Dominio": Menyu ndogo ya nguvu inayoorodhesha vikoa vyote vyenye idadi ya vichupo vilivyo wazi `[N]`, ikiruhusu kufunga vichupo kwa usahihi kulingana na kikoa.
+   - "Cerrar Todos Excepto el Grupo Activo": Huhifadhi kikundi kinachotumika kinachoangaziwa na kufunga vikundi vingine vyote.
+   - "Reagrupar Todas las Pestañas": Huanzisha ukaguzi kamili wa mandharinyuma wa kupanga upya vichupo vyote vilivyo wazi.
+   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Vidhibiti vya kimataifa vya kuzima na kuwasha sauti.
+3. **Kikundi cha 3: Usomaji, Uteuzi & Madokezo**:
+   - "Leer Página en Voz Alta" (TTS): Kisomaji cha ukurasa mzima cha maandishi-hadi-sauti chenye vidhibiti vya safu ya juu.
+   - "Leer Selección en Voz Alta": Husoma uteuzi ulioangaziwa wa DOM kwa sauti kwa kutumia usanisi wa usemi.
+   - "Crear Nota desde Selección": Hutoa uteuzi wa maandishi, hupata kiotomatiki kichwa cha dokezo kutoka kwa kichwa cha habari cha karibu (`h1`-`h3`), na kukihifadhi katika `notesStore`.
+4. **Kikundi cha 4: Fungua Kirefusho, PiP & Paneli**:
+   - "Abrir como PiP" / "Abrir como Ventana Emergente": Zindua ukurasa lengwa, uteuzi ulioangaziwa, au picha lengwa kwenye Picture-in-Picture inayoelea au dirisha la ibukizi linalojitegemea.
+   - "Abrir Extensión": Hufungua ibukizi ya kirefusho au hupanua paneli ya pembeni.
+   - "Gestionar Reglas": Hufungua Kidhibiti kamili cha Sheria katika kichupo maalum cha kivinjari.
+   - Vizindua vya Moja kwa Moja vya Paneli ya Pembeni: Uelekezaji wa mbofyo mmoja kwenda kwenye Orodha ya Vikundi (`?view=listgroup`), Mandhari (`?view=themes`), Msaidizi wa AI (`?view=gemini`), na Customize Hints (`?view=hints`).
+5. **Kikundi cha 5: Mipangilio & Chaguzi za Uwekaji Makundi**:
+   - **Gestión de Grupos**: Alternar Grupo Actual (geuza kukunja kwa kikundi kinachotumika), Alternar Todos los Grupos (geuza kukunja kwa vikundi vyote).
    - **Opciones de Agrupación**:
-     - Agrupación Inteligente (toggle automated heuristic clustering).
-     - Modo Compacto (toggle single-letter group title mode).
-     - Dominio / Subdominio (toggle domain and subdomain grouping).
+     - Agrupación Inteligente (geuza uwekaji makundi wa kiotomatiki wa ubashiri).
+     - Modo Compacto (geuza hali ya jina la kikundi la herufi moja).
+     - Dominio / Subdominio (geuza uwekaji makundi wa kikoa na kijikoa).
      - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost.
    - **Opciones Generales**:
-     - Ordenar Alfabéticamente (enforce alphabetical sorting across tab strip).
+     - Ordenar Alfabéticamente (lazimisha upangaji wa kialfabeti kwenye upau wa vichupo).
      - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`).
-     - Temporizador de Auto-Colapso (toggle idle group collapse timer).
-     - Prefijos Visuales (toggle `🔒`, `🔍`, `🗝️`, `⚠️` state markers).
-     - Vista Previa de Enlaces (toggle in-page link preview modal).
+     - Temporizador de Auto-Colapso (geuza kipima muda cha kukunja vikundi visivyotumika).
+     - Prefijos Visuales (geuza alama za hali za `🔒`, `🔍`, `🗝️`, `⚠️`).
+     - Vista Previa de Enlaces (geuza dirisha ibukizi la hakikisho la viungo la ndani ya ukurasa).
 
 ---
 
 ## 11. Storage Schemas & Data Persistence
 
-The extension uses a multi-tier storage model across IndexedDB and Chrome Storage APIs:
+Kirefusho hiki kinatumia muundo wa uhifadhi wa ngazi nyingi katika IndexedDB na API za Chrome Storage:
 
 ### 11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)
-1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Secondary index: `'createdAt'`. Holds binary screenshots, canvas data URLs, persistent flags, dimensions, and segment total indices.
-2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 secondary indexes (retrieved/managed by ID). Stores multi-turn chat threads, message roles, token metrics, and search grounding metadata.
-3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 secondary indexes (filtered in memory by contextKey). Stores rich text, checklist arrays, Kanban board cards, Mermaid specifications, and KaTeX formulas.
-4. `backupsGroups`: keyPath: `'group.id'`. 0 secondary indexes (stores backup group objects keyed by nested `'group.id'`). Stores compressed group structures, colors, titles, and closed tab records.
-5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Secondary indexes: `'projectName'` (keyPath `'projectName'`) and `'savedAt'` (keyPath `'savedAt'`) (no `date` index). Holds focus analytics, cycle metrics, and interruption logs.
+1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Faharasa ya pili: `'createdAt'`. Huhifadhi picha za skrini za mfumo wa jozi (binary), URL za data ya turubai, bendera za kudumu, vipimo, na faharasa za jumla za sehemu.
+2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. Faharasa 0 za upili (hurejeshwa/kusimamiwa kwa kitambulisho). Huhifadhi mazungumzo ya hatua nyingi ya gumzo, majukumu ya ujumbe, vipimo vya tokeni, na data ya ziada ya uthibitishaji wa utafutaji.
+3. `notesStore`: keyPath: `'id'`, autoIncrement: false. Faharasa 0 za upili (huchujwa kwenye kumbukumbu kwa contextKey). Huhifadhi maandishi tajiri, safu za orodha ya ukaguzi, kadi za ubao wa Kanban, vipimo vya Mermaid, na fomula za KaTeX.
+4. `backupsGroups`: keyPath: `'group.id'`. Faharasa 0 za upili (huhifadhi vipengee vya vikundi vya nakala vikiwa na ufunguo wa `'group.id'` iliyowekwa ndani). Huhifadhi miundo ya vikundi iliyobanwa, rangi, vichwa, na rekodi za vichupo vilivyofungwa.
+5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Faharasa za upili: `'projectName'` (keyPath `'projectName'`) na `'savedAt'` (keyPath `'savedAt'`) (hakuna faharasa ya `date`). Huhifadhi uchanganuzi wa umakini, vipimo vya mizunguko, na kumbukumbu za ukatizaji.
 
 ### 11.2 Chrome Storage Dual-Routing (`StorageService`)
-- Dynamically routes reads and writes between `chrome.storage.sync` (for portable settings across user devices) and `chrome.storage.local` (for heavy preferences).
-- Key models:
-  - `customRules`: Array of rule definitions (`[{ name, color, active, urls }]`).
-  - `clusterConfig`: Auto-clustering parameters (thresholds, compact mode, special categories).
-  - `userPrefixes`: Emoji prefix assignments (`{ lock, openKey, loupe, checked, warning }`).
-  - `activeTheme`, `savedThemes`, & `themeSchedules`: 9-palette color configurations and scheduled rotation rules configured via `ThemeScheduleModal.svelte`.
-  - `pomodoroState`: Real-time session timestamps, paused duration, and cycle goals.
-  - `wa:settings` & `wa:limits`: Web activity tracking preferences, site limits, and schedule windows.
-  - `youtubeLoopEnabled`: Boolean flag controlling YouTube and Shorts loop buttons.
+- Huelekeza usomaji na uandishi kwa nguvu kati ya `chrome.storage.sync` (kwa mipangilio inayobebeka kwenye vifaa vya mtumiaji) na `chrome.storage.local` (kwa mapendeleo mazito).
+- Modeli muhimu:
+  - `customRules`: Safu ya ufafanuzi wa sheria (`[{ name, color, active, urls }]`).
+  - `clusterConfig`: Vigezo vya uwekaji makundi kiotomatiki (vizingiti, hali sambamba, kategoria maalum).
+  - `userPrefixes`: Migao ya viambishi awali vya emoji (`{ lock, openKey, loupe, checked, warning }`).
+  - `activeTheme`, `savedThemes`, & `themeSchedules`: Mipangilio ya rangi ya vibao 9 na sheria za mzunguko zilizoratibiwa zilizosanidiwa kupitia `ThemeScheduleModal.svelte`.
+  - `pomodoroState`: Alama za muda za kipindi cha wakati halisi, muda uliosimamishwa, na malengo ya mizunguko.
+  - `wa:settings` & `wa:limits`: Mapendeleo ya ufuatiliaji wa shughuli za wavuti, mipaka ya tovuti, na madirisha ya ratiba.
+  - `youtubeLoopEnabled`: Bendera ya boolean inayodhibiti vitufe vya kurudia vya YouTube na Shorts.
 
 ### 11.3 Chrome Storage Session (`chrome.storage.session`)
-Used for ultra-fast, ephemeral runtime coordination:
-- `tabsEverActive`: Set of tab IDs activated during the current browser session.
-- `groupExpandedEver`: Record of groups expanded during the current session.
-- `groupInfoMap`: Real-time registry mapping group IDs to dynamic titles and clustering types.
-- `splitScreenState`: Cached window bounds for restoring original screen dimensions.
-- `contextMenusSignature`: Hash signature preventing redundant context menu rebuild churn during rapid tab switches.
-- `wa:openSegment`: Current active website time segment.
-- `hiddenYoutubeView`: Reference to parked YouTube player view docked in `HiddenGroupsBar.svelte`.
+Inatumika kwa uratibu wa kasi ya juu sana na wa muda mfupi wa wakati wa utekelezaji:
+- `tabsEverActive`: Seti ya vitambulisho vya vichupo vilivyowashwa wakati wa kikao cha sasa cha kivinjari.
+- `groupExpandedEver`: Rekodi ya vikundi vilivyopanuliwa wakati wa kikao cha sasa.
+- `groupInfoMap`: Usajili wa wakati halisi unaoweka ramani ya vitambulisho vya vikundi kwa majina ya nguvu na aina za uwekaji makundi.
+- `splitScreenState`: Mipaka ya dirisha iliyohifadhiwa kwenye kache kwa ajili ya kurejesha vipimo vya awali vya skrini.
+- `contextMenusSignature`: Sahihi ya hash inayozuia msongamano wa uundaji upya usiohitajika wa menyu ya muktadha wakati wa mabadiliko ya haraka ya vichupo.
+- `wa:openSegment`: Sehemu ya sasa inayotumika ya muda wa tovuti.
+- `hiddenYoutubeView`: Marejeleo ya mwonekano wa kicheza YouTube kilichosimamishwa kilichopachikwa katika `HiddenGroupsBar.svelte`.
 
 ---
 
 ## 12. Defensive Engineering & Edge Case Handling
 
-1. **Declarative Net Request Header Unblocking (`dnr.js`)**:
-   - Modifies response headers via dynamic DNR rules to strip `X-Frame-Options` and restrictive `Content-Security-Policy` headers, allowing external sites to render in the Side Panel and Picture-in-Picture iframes.
-   - **WhatsApp Web Safety**: Explicitly preserves `Cross-Origin-Opener-Policy` (COOP) and `Cross-Origin-Embedder-Policy` (COEP) on `web.whatsapp.com` to prevent breaking its WebAssembly Signal cryptographic implementation.
-2. **Right-Click & Selection Unblocker (`allowRightClickHook.js`)**:
-   - Defeats hostile websites blocking copy, paste, context menu, and text selection.
-   - Runs in `MAIN` world to intercept `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-   - Strips inline `oncontextmenu="return false"` handlers via `MutationObserver`.
-   - Protects legitimate web applications (e.g., Telegram Web, Google Docs) by verifying clipboard contents before re-injecting cancelled paste events.
-3. **YouTube Hover Preview Audio Forced-Mute Override (`youtubePreviewAudioHook.js`)**:
-   - Runs in `MAIN` world on `ytd-video-preview #inline-preview-player`.
-   - Overrides `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover.
-   - Eliminates YouTube's internal `volumechange` forced-mute race condition, maintaining unmuted audio across loop restarts while hovering.
-4. **YouTube Shorts Feed Sequence Navigation Hook (`youtubeShortsFeedHook.js`)**:
-   - Runs in `MAIN` world on `ytd-shorts`.
-   - Intercepts `shortsProcessedSequence` property, which is invisible from the extension's isolated world, and dispatches native `yt-navigate` events on `ytd-app` without reloading the page or losing floating window state.
-5. **Infinite-Scroll Canvas Protection**:
-   - Caps full-page screenshot walks at 60 segments (`MAX_FULL_PAGE_SEGMENTS`) and 30,000px maximum canvas height (`MAX_FULL_PAGE_CANVAS_PX`), avoiding out-of-memory browser tab crashes.
-6. **Linux Screen Color Picker Eyedropper Fallback**:
-   - When running on Linux environments lacking the Chromium `window.EyeDropper` API, the extension injects `screen-color-picker.js`, rendering a 9x magnified pixel lens with RGB/HEX/HSL calculation.
-7. **Startup Session Settling Delay**:
-   - Delays group pruning for 20 seconds (`groupsHaveSettledAfterStartup()`) upon browser launch to allow session tabs and window states to settle before evaluating group assignments.
+1. **Ufunguaji wa Vichwa vya Habari vya Declarative Net Request (`dnr.js`)**:
+   - Hurekebisha vichwa vya habari vya majibu kupitia sheria za nguvu za DNR ili kuondoa `X-Frame-Options` na vichwa vya habari vizuizi vya `Content-Security-Policy`, ikiruhusu tovuti za nje kuonekana kwenye Paneli ya Pembeni na iframes za Picture-in-Picture.
+   - **Usalama wa WhatsApp Web**: Huhifadhi waziwazi `Cross-Origin-Opener-Policy` (COOP) na `Cross-Origin-Embedder-Policy` (COEP) kwenye `web.whatsapp.com` ili kuzuia kuvunja utekelezaji wake wa kriptografia wa WebAssembly Signal.
+2. **Kifungua cha Kubofya Kulia & Uteuzi (`allowRightClickHook.js`)**:
+   - Hushinda tovuti hasidi zinazozuia kunakili, kubandika, menyu ya muktadha, na uteuzi wa maandishi.
+   - Huendeshwa katika ulimwengu wa `MAIN` ili kuingilia `preventDefault()` na `stopPropagation()` kwenye `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, na `mouseup`.
+   - Huondoa vidhibiti vya ndani vya `oncontextmenu="return false"` kupitia `MutationObserver`.
+   - Hulinda programu halali za wavuti (k.m., Telegram Web, Google Docs) kwa kuthibitisha maudhui ya ubao wa kunakili kabla ya kuingiza upya matukio yaliyoghairiwa ya kubandika.
+3. **Ubatilishaji wa Uzimaji Sauti wa Lazima kwenye Hakikisho la Kuelea la YouTube (`youtubePreviewAudioHook.js`)**:
+   - Huendeshwa katika ulimwengu wa `MAIN` kwenye `ytd-video-preview #inline-preview-player`.
+   - Hubatilisha kielezi cha sifa cha `HTMLMediaElement.prototype.muted` kwenye kipengele lengwa cha `<video>` wakati kipanya kinapoelea.
+   - Huondoa hali ya ushindani wa ndani wa YouTube wa `volumechange` unaolazimisha sauti kuzimwa, ikidumisha sauti iliyofunguliwa katika mizunguko ya kurudia wakati kipanya kimeelea.
+4. **Kuingilia Urambazaji wa Mfuatano wa Milisho ya YouTube Shorts (`youtubeShortsFeedHook.js`)**:
+   - Huendeshwa katika ulimwengu wa `MAIN` kwenye `ytd-shorts`.
+   - Huingilia sifa ya `shortsProcessedSequence`, ambayo haionekani kutoka kwa ulimwengu uliotengwa wa kirefusho, na kutuma matukio ya asili ya `yt-navigate` kwenye `ytd-app` bila kupakia upya ukurasa au kupoteza hali ya dirisha linaloelea.
+5. **Ulinzi wa Turubai ya Usogezaji Usio na Kikomo**:
+   - Huwekea ukomo mizunguko ya picha za skrini za ukurasa kamili katika sehemu 60 (`MAX_FULL_PAGE_SEGMENTS`) na urefu wa juu wa turubai wa 30,000px (`MAX_FULL_PAGE_CANVAS_PX`), kuzuia kukatika kwa vichupo vya kivinjari kutokana na kuishiwa na kumbukumbu (out-of-memory).
+6. **Kiteuzi Mbadala cha Rangi ya Skrini cha Linux**:
+   - Wakati inapoendeshwa kwenye mazingira ya Linux yanayokosa API ya Chromium ya `window.EyeDropper`, kirefusho huingiza `screen-color-picker.js`, ikitoa lenzi ya pikseli iliyokuzwa mara 9 yenye hesabu za RGB/HEX/HSL.
+7. **Ucheleweshaji wa Utulivu wa Kikao Wakati wa Kuanza**:
+   - Huchelewesha usafishaji wa vikundi kwa sekunde 20 (`groupsHaveSettledAfterStartup()`) kivinjari kinapozinduliwa ili kuruhusu vichupo vya kikao na hali za madirisha kutulia kabla ya kutathmini migao ya vikundi.

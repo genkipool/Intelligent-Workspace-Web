@@ -1,14 +1,14 @@
 # Intelligent Workspace
 
-> Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+> Intelligent Workspace एक उन्नत Manifest V3 ब्राउज़र एक्सटेंशन और उत्पादक वर्कस्पेस परिवेश है, जिसे Svelte, Vite और CRXJS के साथ बनाया गया है। यह इंटेलिजेंट टैब संगठन, स्वचालित एवं नियम-आधारित समूहीकरण (clustering), स्वायत्त AI एजेंट निष्पादन (Google Gemini Cloud API और Chrome Built-in Prompt API का समर्थन करते हुए), इन-पेज Vim-शैली लिंक नेविगेशन, एक 41-उपसर्ग Omnibar कमांड सिस्टम, बहु-प्रारूप नोट-टेकिंग (रिच टेक्स्ट, चेकलिस्ट, Kanban, Mermaid आरेख, KaTeX सूत्र), उच्च-सटीकता मीडिया कैप्चर और इन-ब्राउज़र WASM OCR, शून्य-विचलन अलार्म व ऑफस्क्रीन ऑडियो प्लेबैक के साथ Pomodoro टाइमिंग, और Declarative Net Request (DNR) वेब गतिविधि मीटरिंग, डोमेन सीमाएं और साइट ब्लॉकिंग को समन्वित करता है।
 
 ---
 
-## Multilingual Editions / Global Directory
+## बहुभाषी संस्करण / वैश्विक निर्देशिका (Multilingual Editions / Global Directory)
 
-This technical specification is available in the top 25 languages worldwide:
+यह तकनीकी विनिर्देश दुनिया भर की शीर्ष 25 भाषाओं में उपलब्ध है:
 
-| Language | Native Name | ISO Code | Specification Link |
+| भाषा | मूल नाम | ISO कोड | विनिर्देश लिंक |
 | :--- | :--- | :--- | :--- |
 | **English** (Master) | English | `en` | [llms.txt](/llms.txt) |
 | **Mandarin Chinese** | 简体中文 | `zh` | [llms-zh.txt](/llms-zh.txt) |
@@ -38,956 +38,956 @@ This technical specification is available in the top 25 languages worldwide:
 
 ---
 
-## Navigation & Quick Reference Index
+## नेविगेशन और त्वरित संदर्भ अनुक्रमणिका (Navigation & Quick Reference Index)
 
-- [1. Architectural Foundation & Runtime Lifecycle](#1-architectural-foundation--runtime-lifecycle)
-- [2. Section 1: Rules Management (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
-  - [2.1 Data Schema (`CustomRule`)](#21-data-schema-customrule)
-  - [2.2 Precedence Architecture](#22-precedence-architecture)
-  - [2.3 URL Normalization & Matching Semantics](#23-url-normalization--matching-semantics)
-  - [2.4 Rules Management Settings Breakdown](#24-rules-management-settings-breakdown)
-  - [2.5 Operations & Persistence (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
-  - [2.6 Invocation Modalities](#26-invocation-modalities)
-- [3. Section 2: Group Listing & Operations (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
-  - [3.1 UI Architecture](#31-ui-architecture)
-  - [3.2 Group Lifecycle & Behaviors](#32-group-lifecycle--behaviors)
-  - [3.3 Group Operations & Memory Management](#33-group-operations--memory-management)
-  - [3.4 Group Backups & Restore Subsystem](#34-group-backups--restore-subsystem)
-  - [3.5 Parked YouTube Player in Hidden Groups Bar](#35-parked-youtube-player-in-hidden-groups-bar)
-- [4. Section 3: Navigation & Tab Management (Navegación)](#4-section-3-navigation--tab-management-navegación)
-  - [4.1 Fast Tab Jump Gesture](#41-fast-tab-jump-gesture)
-  - [4.2 Stepping, Swapping & Lifecycle Keys](#42-stepping-swapping--lifecycle-keys)
-  - [For power users](#for-power-users)
-  - [4.3 Audio & Sound Management](#43-audio--sound-management)
-  - [4.4 Split Screen Workflows](#44-split-screen-workflows)
-  - [4.5 YouTube Looping Subsystem](#45-youtube-looping-subsystem)
-  - [4.6 YouTube Shorts Preview Audio](#46-youtube-shorts-preview-audio)
-  - [4.7 Picture-in-Picture (PiP) Architecture](#47-picture-in-picture-pip-architecture)
-  - [4.8 Page Reading Modes & Visual Overlays](#48-page-reading-modes--visual-overlays)
-  - [4.9 Text Snippets Subsystem with Template Variables](#49-text-snippets-subsystem-with-template-variables)
-  - [4.10 Embedded Productivity Tools](#410-embedded-productivity-tools)
-  - [4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
-- [5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
-  - [5.1 Dual Model Engine Architecture](#51-dual-model-engine-architecture)
-  - [5.2 Autonomous Browser Agent (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
-  - [5.3 Taint Tracking & Prompt Injection Defense](#53-taint-tracking--prompt-injection-defense)
-  - [5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
-  - [5.5 Gemini Conversation Management & Export](#55-gemini-conversation-management--export)
-  - [5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
-  - [5.7 Invocation Modalities](#57-invocation-modalities)
-- [6. Section 5: Notes View & Knowledge Management (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
-  - [6.1 Storage Architecture (`notesStore`)](#61-storage-architecture-notesstore)
-  - [6.2 Specialized Note Formats & Advanced Rendering](#62-specialized-note-formats--advanced-rendering)
-  - [6.3 Scoping & Context Hierarchy](#63-scoping--context-hierarchy)
-  - [6.4 Invocation Modalities](#64-invocation-modalities)
-- [7. Section 6: Media & Gallery View (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
-  - [7.1 Capture Modes & Engineering (All 7 Capture Types)](#71-capture-modes--engineering-all-7-capture-types)
-  - [7.2 Gallery UI & Persistence](#72-gallery-ui--persistence)
-  - [7.3 Export, In-Browser OCR & External Markup](#73-export-in-browser-ocr--external-markup)
-  - [7.4 Invocation Modalities](#74-invocation-modalities)
-- [8. Section 7: Pomodoro & Timing Suite (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
-  - [8.1 Timing Engine & Background Architecture](#81-timing-engine--background-architecture)
-  - [8.2 Exhaustive 4 Timing Modes](#82-exhaustive-4-timing-modes)
-  - [8.3 In-Page Floating Timer Widget](#83-in-page-floating-timer-widget)
-  - [8.4 Group Auto-Collapse Idle Timer](#84-group-auto-collapse-idle-timer)
-  - [8.5 Project Tagging & Metadata](#85-project-tagging--metadata)
-  - [8.6 Analytics Engine & 19 KPI Cards](#86-analytics-engine--19-kpi-cards)
-- [9. Section 8: Activity & History Panel (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
-  - [9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
-  - [9.2 Declarative Net Request (DNR) Site Blocker](#92-declarative-net-request-dnr-site-blocker)
-  - [9.3 Asymmetric Security Lock (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
-  - [9.4 Categorization & Visual Analytics](#94-categorization--visual-analytics)
-  - [9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
-  - [9.6 Recently Closed Tabs & Browsing History Subsystem](#96-recently-closed-tabs--browsing-history-subsystem)
-  - [9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
-  - [9.8 Compact Sidepanel View](#98-compact-sidepanel-view)
-- [10. Multi-Modal Invocation Matrix](#10-multi-modal-invocation-matrix)
-  - [10.1 Popup UI Interface](#101-popup-ui-interface)
-  - [10.2 Sidepanel Navigation Routes (`?view=...`)](#102-sidepanel-navigation-routes-view)
-  - [10.3 Manifest Keyboard Shortcuts (24 Commands)](#103-manifest-keyboard-shortcuts-24-commands)
-  - [10.4 In-Page Vim Hint Keys (40+ Combinations)](#104-in-page-vim-hint-keys-40-combinations)
-  - [10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
-  - [10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
-- [11. Storage Schemas & Data Persistence](#11-storage-schemas--data-persistence)
-  - [11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
-  - [11.2 Chrome Storage Dual-Routing (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
-  - [11.3 Chrome Storage Session (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
-- [12. Defensive Engineering & Edge Case Handling](#12-defensive-engineering--edge-case-handling)
-
----
-
-## 1. Architectural Foundation & Runtime Lifecycle
-
-The extension runs under Google Chrome's Manifest V3 architecture, decoupling persistent processes across a background Service Worker, sandboxed UI panels, offscreen audio documents, and in-page content script overlays:
-
-1. **Manifest Configuration (`manifest.json`)**:
-   - **Permissions (21 items)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, and `idle`.
-   - **Host Permissions**: `["<all_urls>"]`.
-   - **Service Worker**: `src/core/background.js` using synchronous `importScripts` modular loading.
-   - **Toolbar Action**: Deliberately omits `default_popup`. Runtime enforces `chrome.action.setPopup({ popup: '' })`, ensuring `chrome.action.onClicked` fires synchronously and opens `chrome.sidePanel` to the user's pinned view without popup initialization latency.
-   - **Omnibox Keyword**: Registered keyword `"find"`.
-   - **Commands**: 24 system-level keyboard shortcuts registered under `commands`.
-   - **Content Security Policy**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
-
-2. **Inter-Process Communication Security**:
-   - `src/core/background/messaging.js` filters messages from content scripts against an explicit whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Unprivileged web frames cannot invoke internal storage writers, arbitrary Chrome APIs, or rule mutators.
-
-3. **Dual Execution Worlds**:
-   - Content scripts operate across both `ISOLATED` (extension scope) and `MAIN` (page execution scope) worlds. Scripts like `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, and `youtubeShortsFeedHook.js` run in `MAIN` to intercept prototype methods, override property descriptors, and handle custom events directly.
+- [1. आर्किटेक्चरल नींव और रनटाइम जीवनचक्र](#1-architectural-foundation--runtime-lifecycle)
+- [2. अनुभाग 1: नियम प्रबंधन (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
+  - [2.1 डेटा स्कीमा (`CustomRule`)](#21-data-schema-customrule)
+  - [2.2 प्राथमिकता आर्किटेक्चर](#22-precedence-architecture)
+  - [2.3 URL सामान्यीकरण और मिलान सिमेंटिक्स](#23-url-normalization--matching-semantics)
+  - [2.4 नियम प्रबंधन सेटिंग्स विवरण](#24-rules-management-settings-breakdown)
+  - [2.5 संचालन और दृढ़ता (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
+  - [2.6 इनवोकेशन के तरीके](#26-invocation-modalities)
+- [3. अनुभाग 2: समूह सूची और संचालन (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
+  - [3.1 UI आर्किटेक्चर](#31-ui-architecture)
+  - [3.2 समूह जीवनचक्र और व्यवहार](#32-group-lifecycle--behaviors)
+  - [3.3 समूह संचालन और मेमोरी प्रबंधन](#33-group-operations--memory-management)
+  - [3.4 समूह बैकअप और पुनर्स्थापना उपप्रणाली](#34-group-backups--restore-subsystem)
+  - [3.5 छिपे हुए समूहों की पट्टी में पार्क किया गया YouTube प्लेयर](#35-parked-youtube-player-in-hidden-groups-bar)
+- [4. अनुभाग 3: नेविगेशन और टैब प्रबंधन (Navegación)](#4-section-3-navigation--tab-management-navegación)
+  - [4.1 त्वरित टैब जंप जेस्चर](#41-fast-tab-jump-gesture)
+  - [4.2 स्टेपिंग, स्वैपिंग और जीवनचक्र कुंजियाँ](#42-stepping-swapping--lifecycle-keys)
+  - [उन्नत उपयोगकर्ताओं के लिए](#for-power-users)
+  - [4.3 ऑडियो और ध्वनि प्रबंधन](#43-audio--sound-management)
+  - [4.4 स्प्लिट स्क्रीन वर्कफ़्लो](#44-split-screen-workflows)
+  - [4.5 YouTube लूपिंग उपप्रणाली](#45-youtube-looping-subsystem)
+  - [4.6 YouTube Shorts पूर्वावलोकन ऑडियो](#46-youtube-shorts-preview-audio)
+  - [4.7 पिक्चर-इन-पिक्चर (PiP) आर्किटेक्चर](#47-picture-in-picture-pip-architecture)
+  - [4.8 पृष्ठ पठन मोड और विज़ुअल ओवरले](#48-page-reading-modes--visual-overlays)
+  - [4.9 टेम्पलेट वेरिएबल्स के साथ टेक्स्ट स्निपेट उपप्रणाली](#49-text-snippets-subsystem-with-template-variables)
+  - [4.10 अंतर्निहित उत्पादकता उपकरण](#410-embedded-productivity-tools)
+  - [4.11 व्यापक 3-स्तरीय डुप्लिकेट निष्कासन और बुद्धिमान डिस्कार्डिंग](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
+- [5. अनुभाग 4: AI सहायक और स्वायत्त एजेंट (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
+  - [5.1 डुअल मॉडल इंजन आर्किटेक्चर](#51-dual-model-engine-architecture)
+  - [5.2 स्वायत्त ब्राउज़र एजेंट (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
+  - [5.3 टेन्ट ट्रैकिंग और प्रॉम्प्ट इंजेक्शन सुरक्षा](#53-taint-tracking--prompt-injection-defense)
+  - [5.4 निर्धारित Gemini क्वेरी उपप्रणाली (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
+  - [5.5 Gemini वार्तालाप प्रबंधन और निर्यात](#55-gemini-conversation-management--export)
+  - [5.6 मल्टीमॉडल इनपुट और फ़ाइल अनुलग्नक (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
+  - [5.7 इनवोकेशन के तरीके](#57-invocation-modalities)
+- [6. अनुभाग 5: नोट्स दृश्य और ज्ञान प्रबंधन (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
+  - [6.1 स्टोरेज आर्किटेक्चर (`notesStore`)](#61-storage-architecture-notesstore)
+  - [6.2 विशिष्ट नोट प्रारूप और उन्नत रेंडरिंग](#62-specialized-note-formats--advanced-rendering)
+  - [6.3 स्कोपिंग और संदर्भ पदानुक्रम](#63-scoping--context-hierarchy)
+  - [6.4 इनवोकेशन के तरीके](#64-invocation-modalities)
+- [7. अनुभाग 6: मीडिया और गैलरी दृश्य (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
+  - [7.1 कैप्चर मोड और इंजीनियरिंग (सभी 7 कैप्चर प्रकार)](#71-capture-modes--engineering-all-7-capture-types)
+  - [7.2 गैलरी UI और दृढ़ता](#72-gallery-ui--persistence)
+  - [7.3 निर्यात, इन-ब्राउज़र OCR और बाहरी मार्कअप](#73-export-in-browser-ocr--external-markup)
+  - [7.4 इनवोकेशन के तरीके](#74-invocation-modalities)
+- [8. अनुभाग 7: पोमोडोरो और टाइमिंग सुइट (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
+  - [8.1 टाइमिंग इंजन और बैकग्राउंड आर्किटेक्चर](#81-timing-engine--background-architecture)
+  - [8.2 संपूर्ण 4 टाइमिंग मोड](#82-exhaustive-4-timing-modes)
+  - [8.3 इन-पेज फ़्लोटिंग टाइमर विजेट](#83-in-page-floating-timer-widget)
+  - [8.4 समूह ऑटो-संकोचन निष्क्रिय टाइमर](#84-group-auto-collapse-idle-timer)
+  - [8.5 प्रोजेक्ट टैगिंग और मेटाडेटा](#85-project-tagging--metadata)
+  - [8.6 एनालिटिक्स इंजन और 19 KPI कार्ड](#86-analytics-engine--19-kpi-cards)
+- [9. अनुभाग 8: गतिविधि और इतिहास पैनल (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
+  - [9.1 डेटा इंजन और स्टोरेज टोपोलॉजी (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
+  - [9.2 Declarative Net Request (DNR) साइट ब्लॉकर](#92-declarative-net-request-dnr-site-blocker)
+  - [9.3 असममित सुरक्षा लॉक (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
+  - [9.4 वर्गीकरण और विज़ुअल एनालिटिक्स](#94-categorization--visual-analytics)
+  - [9.5 डाउनलोड प्रबंधक उपप्रणाली (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
+  - [9.6 हाल ही में बंद किए गए टैब और ब्राउज़िंग इतिहास उपप्रणाली](#96-recently-closed-tabs--browsing-history-subsystem)
+  - [9.7 थीम शेड्यूलिंग उपप्रणाली (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
+  - [9.8 कॉम्पैक्ट साइडपैनल दृश्य](#98-compact-sidepanel-view)
+- [10. मल्टी-मॉडल इनवोकेशन मैट्रिक्स](#10-multi-modal-invocation-matrix)
+  - [10.1 पॉपअप UI इंटरफ़ेस](#101-popup-ui-interface)
+  - [10.2 साइडपैनल नेविगेशन रूट्स (`?view=...`)](#102-sidepanel-navigation-routes-view)
+  - [10.3 मेनिफेस्ट कीबोर्ड शॉर्टकट (24 कमांड)](#103-manifest-keyboard-shortcuts-24-commands)
+  - [10.4 इन-पेज Vim हिंट कुंजियाँ (40+ संयोजन)](#104-in-page-vim-hint-keys-40-combinations)
+  - [10.5 इन-पेज Omnibar उपप्रणाली उपसर्ग (41 उपसर्ग)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
+  - [10.6 संदर्भ मेनू ट्री पदानुक्रम (सभी 5 समूह और 30+ क्रियाएं)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
+- [11. स्टोरेज स्कीमा और डेटा दृढ़ता](#11-storage-schemas--data-persistence)
+  - [11.1 IndexedDB डेटाबेस: `Intelligent_Workspace` (स्कीमा संस्करण 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
+  - [11.2 क्रोम स्टोरेज डुअल-राउटिंग (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
+  - [11.3 क्रोम स्टोरेज सत्र (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
+- [12. रक्षात्मक इंजीनियरिंग और एज केस हैंडलिंग](#12-defensive-engineering--edge-case-handling)
 
 ---
 
-## 2. Section 1: Rules Management (Gestionar Reglas)
+## 1. आर्किटेक्चरल नींव और रनटाइम जीवनचक्र (Architectural Foundation & Runtime Lifecycle)
 
-The Rules Management subsystem automates tab grouping based on strict deterministic criteria defined by the user.
+यह एक्सटेंशन Google Chrome के Manifest V3 आर्किटेक्चर के तहत संचालित होता है, जो पृष्ठभूमि सर्विस वर्कर (Service Worker), सैंडबॉक्स्ड UI पैनलों, ऑफस्क्रीन ऑडियो दस्तावेज़ों और इन-पेज कंटेंट स्क्रिप्ट ओवरले में स्थायी प्रक्रियाओं को अलग (decouple) करता है:
 
-### 2.1 Data Schema (`CustomRule`)
-Each custom rule adheres to the following interface:
+1. **मेनिफेस्ट कॉन्फ़िगरेशन (`manifest.json`)**:
+   - **अनुमतियाँ (21 मदें)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, और `idle`।
+   - **होस्ट अनुमतियाँ**: `["<all_urls>"]`।
+   - **सर्विस वर्कर**: तुल्यकालिक (synchronous) `importScripts` मॉड्यूलर लोडिंग का उपयोग करते हुए `src/core/background.js`।
+   - **टूलबार एक्शन**: जानबूझकर `default_popup` को छोड़ देता है। रनटाइम `chrome.action.setPopup({ popup: '' })` लागू करता है, यह सुनिश्चित करते हुए कि `chrome.action.onClicked` तुल्यकालिक रूप से सक्रिय होता है और पॉपअप आरंभीकरण विलंबता के बिना उपयोगकर्ता के पिन किए गए दृश्य के लिए `chrome.sidePanel` खोलता है।
+   - **ओम्निबॉक्स कीवर्ड**: पंजीकृत कीवर्ड `"find"`।
+   - **कमांड्स**: `commands` के तहत पंजीकृत 24 सिस्टम-स्तरीय कीबोर्ड शॉर्टकट।
+   - **सामग्री सुरक्षा नीति (CSP)**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`।
+
+2. **इंटर-प्रोसेस संचार सुरक्षा**:
+   - `src/core/background/messaging.js` कंटेंट स्क्रिप्ट के संदेशों को एक स्पष्ट श्वेतसूची (`ALLOWED_CONTENT_SCRIPT_ACTIONS`) के विरुद्ध फ़िल्टर करता है। अप्रतिबंधित वेब फ़्रेम आंतरिक स्टोरेज राइटर्स, मनमाने Chrome APIs, या नियम म्यूटेटर्स को निष्पादित नहीं कर सकते हैं।
+
+3. **दोहरी निष्पादन दुनिया (Dual Execution Worlds)**:
+   - कंटेंट स्क्रिप्ट `ISOLATED` (एक्सटेंशन स्कोप) और `MAIN` (पेज निष्पादन स्कोप) दोनों दुनिया में काम करती हैं। `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, और `youtubeShortsFeedHook.js` जैसी स्क्रिप्ट्स प्रोटोटाइप विधियों को इंटरसेप्ट करने, प्रॉपर्टी डिस्क्रिप्टर्स को ओवरराइड करने और कस्टम इवेंट्स को सीधे संभालने के लिए `MAIN` में चलती हैं।
+
+---
+
+## 2. अनुभाग 1: नियम प्रबंधन (Gestionar Reglas)
+
+नियम प्रबंधन उपप्रणाली उपयोगकर्ता द्वारा परिभाषित सख्त नियतात्मक (deterministic) मानदंडों के आधार पर टैब समूहीकरण को स्वचालित करती है।
+
+### 2.1 डेटा स्कीमा (`CustomRule`)
+प्रत्येक कस्टम नियम निम्नलिखित इंटरफ़ेस का पालन करता है:
 ```typescript
 interface CustomRule {
-  name: string;        // 1 to 16 characters. Must contain no whitespace characters.
-  color: RuleColor;    // One of 9 colors: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
-  urls: string[];      // Array of valid URLs, domains, or hostnames.
-  active: boolean;     // Master toggle enabling or disabling rule evaluation.
-  isStarred?: boolean; // Optional flag marking rule as a favorite for prioritized UI ordering.
+  name: string;        // 1 से 16 वर्ण। कोई भी व्हाइटस्पेस वर्ण नहीं होना चाहिए।
+  color: RuleColor;    // 9 रंगों में से एक: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
+  urls: string[];      // मान्य URLs, डोमेन या होस्टनाम की सरणी।
+  active: boolean;     // नियम मूल्यांकन को सक्षम या अक्षम करने वाला मास्टर टॉगल।
+  isStarred?: boolean; // प्राथमिकता वाले UI क्रम के लिए नियम को पसंदीदा के रूप में चिह्नित करने वाला वैकल्पिक फ़्लैग।
 }
 ```
 
-### 2.2 Precedence Architecture
-When tabs are processed by `groupTabs()` in `src/core/background/groupManager.js`, tabs are evaluated against grouping layers in strict hierarchical order:
-1. **Custom Rules (`applyCustomRules`)**: Matches active custom rules in order of appearance or user priority. Once grouped, tab IDs are registered in `groupedTabIds` and excluded from subsequent layers.
-2. **Special System Groups**: System URLs are intercepted and clustered into dedicated colored groups:
-   - `chrome://` and internal browser pages
-   - `file:///` local disk files
-   - `chrome-extension://` extension pages
-   - IP Addresses & Localhost (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 hosts)
-3. **Domain Clustering**: Tabs sharing the same root domain are grouped if the tab count meets or exceeds `domainThreshold` (default: 2 tabs).
-4. **Subdomain Clustering**: If enabled, tabs within domains are grouped by specific subdomains (e.g., `docs.github.com` vs `gist.github.com`).
-5. **Miscellaneous ("Misc") Group**: Residual unclustered tabs that do not meet grouping thresholds are placed into the `Misc` group (placement configurable: `start`, `end`, or alphabetical `alpha`).
+### 2.2 प्राथमिकता आर्किटेक्चर (Precedence Architecture)
+जब टैब को `src/core/background/groupManager.js` में `groupTabs()` द्वारा संसाधित किया जाता है, तो टैब का मूल्यांकन सख्त पदानुक्रमित क्रम में समूहीकरण परतों के विरुद्ध किया जाता है:
+1. **कस्टम नियम (`applyCustomRules`)**: उपस्थिति के क्रम या उपयोगकर्ता प्राथमिकता के अनुसार सक्रिय कस्टम नियमों से मिलान करता है। एक बार समूहीकृत होने के बाद, टैब आईडी को `groupedTabIds` में पंजीकृत किया जाता है और बाद की परतों से बाहर रखा जाता है।
+2. **विशेष सिस्टम समूह**: सिस्टम URLs को इंटरसेप्ट किया जाता है और समर्पित रंगीन समूहों में समूहीकृत किया जाता है:
+   - `chrome://` और आंतरिक ब्राउज़र पृष्ठ
+   - `file:///` स्थानीय डिस्क फ़ाइलें
+   - `chrome-extension://` एक्सटेंशन पृष्ठ
+   - आईपी पते और लोकलहोस्ट (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 होस्ट)
+3. **डोमेन समूहीकरण (Domain Clustering)**: यदि टैब की संख्या `domainThreshold` (डिफ़ॉल्ट: 2 टैब) से मिलती है या अधिक होती है, तो समान रूट डोमेन साझा करने वाले टैब समूहीकृत किए जाते हैं।
+4. **उपडोमेन समूहीकरण (Subdomain Clustering)**: यदि सक्षम किया गया है, तो डोमेन के अंतर्गत टैब विशिष्ट उपडोमेन द्वारा समूहीकृत किए जाते हैं (उदा., `docs.github.com` बनाम `gist.github.com`)।
+5. **विविध ("Misc") समूह**: अवशिष्ट गैर-समूहीकृत टैब जो समूहीकरण सीमा को पूरा नहीं करते हैं, उन्हें `Misc` समूह में रखा जाता है (प्लेसमेंट कॉन्फ़िगर करने योग्य: `start`, `end`, या वर्णानुक्रम में `alpha`)।
 
-### 2.3 URL Normalization & Matching Semantics
-The matching engine (`matchesRule(tabUrl, ruleUrl)` in `src/core/background/utils.js`) applies rigorous normalization:
-- **Scheme Agnostic**: HTTP and HTTPS protocols are treated as interchangeable (`http://example.com` matches `https://example.com`). Non-web protocols (`file://`, `chrome://`) require exact scheme matches.
-- **Host Normalization**: Leading `www.` prefixes are stripped (`www.github.com` normalizes to `github.com`). Hostnames are lowercased and support internationalized domain names (IDNs) via punycode.
-- **Port Sensitivity**: If a rule specifies a port (e.g., `localhost:3000`), the tab must match that exact port.
-- **Path Matching**: Trailing slashes are stripped. If a rule specifies a path (e.g., `example.com/docs`), it matches tabs with that exact path OR subpaths (`example.com/docs/api`), but does not match sibling paths (`example.com/blog`).
-- **Query & Hash Matching**: If a rule explicitly contains a query string (`?page=1`) or hash (`#section`), the tab must match those parameters verbatim.
-- **Numeric Dword Protection (`ruleValidation.js`)**: The validator strictly rejects bare numeric inputs (e.g., `3242342424`) that WHATWG URL parsers treat as valid IPv4 integer DWORDs, preventing accidental grouping distortions.
+### 2.3 URL सामान्यीकरण और मिलान सिमेंटिक्स (URL Normalization & Matching Semantics)
+मिलान इंजन (`src/core/background/utils.js` में `matchesRule(tabUrl, ruleUrl)`) कठोर सामान्यीकरण लागू करता है:
+- **स्कीम अज्ञेयवादी (Scheme Agnostic)**: HTTP और HTTPS प्रोटोकॉल को विनिमेय माना जाता है (`http://example.com` का मिलान `https://example.com` से होता है)। गैर-वेब प्रोटोकॉल (`file://`, `chrome://`) के लिए सटीक स्कीम मिलान की आवश्यकता होती है।
+- **होस्ट सामान्यीकरण**: अग्रणी `www.` उपसर्ग हटा दिए जाते हैं (`www.github.com` सामान्यीकृत होकर `github.com` बन जाता है)। होस्टनाम लोअरकेस किए जाते हैं और punycode के माध्यम से अंतरराष्ट्रीयकृत डोमेन नामों (IDNs) का समर्थन करते हैं।
+- **पोर्ट संवेदनशीलता**: यदि कोई नियम एक पोर्ट निर्दिष्ट करता है (उदा., `localhost:3000`), तो टैब को उसी सटीक पोर्ट से मेल खाना चाहिए।
+- **पाथ मिलान**: अनुगामी स्लैश हटा दिए जाते हैं। यदि कोई नियम एक पाथ निर्दिष्ट करता है (उदा., `example.com/docs`), तो यह उस सटीक पाथ या सब-पाथ (`example.com/docs/api`) वाले टैब से मेल खाता है, लेकिन सिबलिंग पाथ (`example.com/blog`) से मेल नहीं खाता है।
+- **क्वेरी और हैश मिलान**: यदि किसी नियम में स्पष्ट रूप से एक क्वेरी स्ट्रिंग (`?page=1`) या हैश (`#section`) शामिल है, तो टैब को उन मापदंडों से शब्दशः मेल खाना चाहिए।
+- **संख्यात्मक Dword सुरक्षा (`ruleValidation.js`)**: सत्यापनकर्ता पूरी तरह से संख्यात्मक इनपुट (उदा., `3242342424`) को सख्ती से अस्वीकार करता है जिसे WHATWG URL पार्सर मान्य IPv4 पूर्णांक DWORD मानते हैं, जिससे आकस्मिक समूहीकरण विकृतियों को रोका जा सकता है।
 
-### 2.4 Rules Management Settings Breakdown
-The Rules Manager provides an exhaustive suite of behavioral controls and settings:
-- **Storage Routing Selection**: Users can route rule storage between `chrome.storage.sync` (for synchronized settings across all devices signed into the Google profile, subject to Chrome sync quotas of 100 KB total and 8 KB per item) and `chrome.storage.local` (for unlimited local capacity suitable for large rule sets containing hundreds of patterns).
-- **Clustering Master Toggle & Thresholds**:
-  - `toggle-clustering`: Master keyboard shortcut and UI toggle enabling or disabling automated domain/subdomain clustering without disabling user-created custom rules.
-  - `domainThreshold`: Minimum tab count required from the same domain to trigger an automatic tab group (default: 2 tabs). Configurable from 1 to 50.
-  - `subdomainThreshold`: Minimum tab count for subdomains before creating separated subgroup clusters.
-  - Subdomain toggle (`toggle-subdomain-grouping`): Distinguishes independent subdomains (e.g., `news.ycombinator.com` vs `ycombinator.com`).
-- **Auto-Sort Groups Alphabetically (`toggle-sort-alpha`)**: Real-time sorting engine enforcing alphabetical ordering across all open tab groups in the browser tab strip (`Ctrl+Shift+S` / `Cmd+Shift+S`).
-- **Visual Status Prefixes (`toggle-prefixes`)**: Emoji markers dynamically prepended to group titles to indicate inspection state:
-  - `🔒` (Lock): The group contains unvisited, unread tabs.
-  - `🔍` (Loupe): The group contains partially visited tabs.
-  - `🗝️` (Open Key): All tabs in the group have been opened and reviewed.
-  - `⚠️` (Warning): Duplicate group name collision detected with another window group.
-- **Auto-Collapse Idle Groups (`toggle-collapse-timer`)**: Automatically collapses groups when inactive to maintain a tidy tab strip.
-- **Master Pause Grouping (`feature_pauseGrouping`)**: Master freeze switch that temporarily suspends all automated grouping operations (both rule matches and heuristic clustering) during active research sessions where tabs should remain in arbitrary user arrangements.
-- **Single Tab Grouping (`featureSingleTabGrouping`)**: Allows custom rules to immediately create a tab group for a single matching tab, bypassing the multi-tab threshold requirement.
-- **Compact View (`toggle-compact-mode`)**: Minimizes tab header width in the browser tab strip by rendering only single-letter badges for group titles.
-- **Drag-and-Drop Priority**: Reordering rules in the `Rules.svelte` list instantly changes their evaluation precedence. Rules at the top evaluate first.
-- **Fuzzy Search**: Live filtering in the Rules Manager and Omnibar allowing instant location of rules by title or matching URL patterns.
-- **JSON Import / Export**:
-  - Mode `add`: Merges imported rules into the existing collection, discarding duplicates.
-  - Mode `overwrite`: Completely replaces the active rule collection with the imported payload after schema validation.
-- **Dynamic Rule Creation**: One-click creation of custom rules directly from Chrome bookmark folders or subgroup domain collections.
-- **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs or domains to existing custom rules, preventing rule inflation and redundant evaluations.
+### 2.4 नियम प्रबंधन सेटिंग्स विवरण
+नियम प्रबंधक व्यवहार नियंत्रण और सेटिंग्स का एक संपूर्ण सूट प्रदान करता है:
+- **स्टोरेज रूटिंग चयन**: उपयोगकर्ता `chrome.storage.sync` (Google प्रोफ़ाइल में साइन इन किए गए सभी उपकरणों पर सिंक्रनाइज़ सेटिंग्स के लिए, जो क्रोम सिंक कोटा 100 KB कुल और 8 KB प्रति आइटम के अधीन है) और `chrome.storage.local` (सैकड़ों पैटर्न वाले बड़े नियम सेटों के लिए उपयुक्त असीमित स्थानीय क्षमता के लिए) के बीच नियम भंडारण को रूट कर सकते हैं।
+- **क्लस्टरिंग मास्टर टॉगल और थ्रेशोल्ड**:
+  - `toggle-clustering`: उपयोगकर्ता द्वारा बनाए गए कस्टम नियमों को अक्षम किए बिना स्वचालित डोमेन/उपडोमेन क्लस्टरिंग को सक्षम या अक्षम करने वाला मास्टर कीबोर्ड शॉर्टकट और UI टॉगल।
+  - `domainThreshold`: स्वचालित टैब समूह को ट्रिगर करने के लिए समान डोमेन से आवश्यक न्यूनतम टैब गणना (डिफ़ॉल्ट: 2 टैब)। 1 से 50 तक कॉन्फ़िगर करने योग्य।
+  - `subdomainThreshold`: अलग उपसमूह क्लस्टर बनाने से पहले उपडोमेन के लिए न्यूनतम टैब गणना।
+  - उपडोमेन टॉगल (`toggle-subdomain-grouping`): स्वतंत्र उपडोमेन में अंतर करता है (उदा., `news.ycombinator.com` बनाम `ycombinator.com`)।
+- **समूहों को वर्णानुक्रम में स्वतः-क्रमबद्ध करना (`toggle-sort-alpha`)**: ब्राउज़र टैब स्ट्रिप (`Ctrl+Shift+S` / `Cmd+Shift+S`) में सभी खुले टैब समूहों में वर्णानुक्रम लागू करने वाला रीयल-टाइम सॉर्टिंग इंजन।
+- **विज़ुअल स्थिति उपसर्ग (`toggle-prefixes`)**: निरीक्षण स्थिति को इंगित करने के लिए समूह शीर्षकों के पहले गतिशील रूप से जोड़े गए इमोजी मार्कर:
+  - `🔒` (लॉक): समूह में अनदेखे, न पढ़े गए टैब शामिल हैं।
+  - `🔍` (लूप): समूह में आंशिक रूप से देखे गए टैब शामिल हैं।
+  - `🗝️` (ओपन की): समूह के सभी टैब खोले और समीक्षित किए जा चुके हैं।
+  - `⚠️` (चेतावनी): किसी अन्य विंडो समूह के साथ डुप्लिकेट समूह नाम टकराव का पता चला।
+- **निष्क्रिय समूहों को स्वतः-संकोचित करना (`toggle-collapse-timer`)**: व्यवस्थित टैब स्ट्रिप बनाए रखने के लिए निष्क्रिय होने पर समूहों को स्वचालित रूप से संक्षिप्त करता है।
+- **मास्टर पॉज़ ग्रुपिंग (`feature_pauseGrouping`)**: मास्टर फ़्रीज़ स्विच जो सक्रिय शोध सत्रों के दौरान सभी स्वचालित समूहीकरण कार्यों (नियम मिलान और अनुमानी क्लस्टरिंग दोनों) को अस्थायी रूप से निलंबित कर देता है, जहाँ टैब को उपयोगकर्ता की मनमानी व्यवस्था में रहना चाहिए।
+- **एकल टैब समूहीकरण (`featureSingleTabGrouping`)**: कस्टम नियमों को बहु-टैब सीमा आवश्यकता को दरकिनार करते हुए, एकल मिलान वाले टैब के लिए तुरंत एक टैब समूह बनाने की अनुमति देता है।
+- **कॉम्पैक्ट दृश्य (`toggle-compact-mode`)**: समूह शीर्षकों के लिए केवल एकल-अक्षर बैज प्रस्तुत करके ब्राउज़र टैब स्ट्रिप में टैब हेडर की चौड़ाई को न्यूनतम करता है।
+- **ड्रैग-एंड-ड्रॉप प्राथमिकता**: `Rules.svelte` सूची में नियमों को पुनर्व्यवस्थित करने से उनके मूल्यांकन की प्राथमिकता तुरंत बदल जाती है। शीर्ष पर मौजूद नियमों का मूल्यांकन पहले होता है।
+- **फ़ज़ी खोज**: नियम प्रबंधक और Omnibar में लाइव फ़िल्टरिंग, जो शीर्षक या मिलान URL पैटर्न द्वारा नियमों को तुरंत खोजने की अनुमति देती है।
+- **JSON आयात / निर्यात**:
+  - मोड `add`: डुप्लिकेट को हटाते हुए, आयातित नियमों को मौजूदा संग्रह में मर्ज करता है।
+  - मोड `overwrite`: स्कीमा सत्यापन के बाद आयातित पेलोड के साथ सक्रिय नियम संग्रह को पूरी तरह से बदल देता है।
+- **गतिशील नियम निर्माण**: क्रोम बुकमार्क फ़ोल्डरों या उपसमूह डोमेन संग्रहों से सीधे कस्टम नियमों का एक-क्लिक निर्माण।
+- **नियम डिडुप्लीकेशन (`feature_v100_dedup_add_to_rule`)**: मौजूदा कस्टम नियमों में URL या डोमेन जोड़ते समय डुप्लिकेट URL पैटर्न को स्वचालित रूप से हटा देता है, जिससे नियमों की अनावश्यक वृद्धि और निरर्थक मूल्यांकनों को रोका जा सकता है।
 
-### 2.5 Operations & Persistence (`mutateRulesAndSync`)
-- **Centralized Mutator**: All rule modifications route through `mutateRulesAndSync(mutateFn, sendResponse)` in `src/core/background/handlers/rules.js`. This guarantees storage synchronization, in-memory cache refreshment (`extensionSettings.customRules`), UI notification (`rulesUpdated`), and automatic tab regrouping (`groupTabs()`).
-- **Live Validation**: Real-time validation checks for name uniqueness, length (1-16 chars), character restrictions, and valid URL syntax before saving.
+### 2.5 संचालन और दृढ़ता (`mutateRulesAndSync`)
+- **केंद्रीकृत म्यूटेटर**: सभी नियम संशोधन `src/core/background/handlers/rules.js` में `mutateRulesAndSync(mutateFn, sendResponse)` के माध्यम से रूट होते हैं। यह स्टोरेज सिंक्रनाइज़ेशन, इन-मेमोरी कैश रिफ्रेशमेंट (`extensionSettings.customRules`), UI अधिसूचना (`rulesUpdated`), और स्वचालित टैब पुनर्समूहीकरण (`groupTabs()`) की गारंटी देता है।
+- **लाइव सत्यापन**: सहेजने से पहले नाम की विशिष्टता, लंबाई (1-16 वर्ण), वर्ण प्रतिबंध और मान्य URL सिंटैक्स के लिए रीयल-टाइम सत्यापन जांच।
 
-### 2.6 Invocation Modalities
-- **Rules Manager Page (`Rules.svelte`)**: Accessible in full-tab view or side panel (`?view=rules` / `pg`). Provides full drag-and-drop reordering, inline color picker, URL tag chips, and rule toggles.
-- **Omnibar Commands**:
-  - `rl:` — Search rules and open associated URLs.
-  - `cr: <name> [, url1, url2]` — Create a new rule directly from the command bar.
-  - `atcr:` — Add the active tab's domain or URL to an existing rule.
-  - `atr:` — Add selected open tabs or manual URLs to an existing rule.
-  - `ccr:` — Change the color of a custom rule.
-  - `dr:` — Delete rules or individual URLs from a rule.
-  - `er:` — Edit or rename an existing rule.
-- **Context Menus**:
-  - Right-click page -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Reglas" -> Toggle active state, open all rule URLs, or close matching tabs.
-- **Keyboard Shortcuts**:
-  - `Alt+R`: Open Rules Manager.
-  - `Alt+M`: Toggle activation of all rules simultaneously (`toggle-all-rules`).
-
----
-
-## 3. Section 2: Group Listing & Operations (Listar Grupos)
-
-The Group Listing view provides an interactive workspace for inspecting, manipulating, and reordering browser tab groups and individual tabs.
-
-### 3.1 UI Architecture
-- **Component Stack**: Built with `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, and `TabActions.svelte`.
-- **Card Features**: Displays group title, color badge, tab count pill, collapse/expand accordion toggle, card pinning, and customizable action button groups.
-- **Tab Items**: Displays tab favicon with color fallback, title, audible sound badge, mute indicator, active state indicator, and per-tab actions (close, duplicate, pin, split, discard).
-
-### 3.2 Group Lifecycle & Behaviors
-- **Accordion Control**: Smooth expand and collapse states. Optional auto-accordion mode automatically collapses idle groups when a new group is expanded.
-- **Inactivity Auto-Collapse Idle Timer**:
-  - Automatically collapses idle tab groups to reduce visual clutter.
-  - Two distinct thresholds: Inactive groups collapse after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), while the active group collapses after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-- **Inline Renaming & Grace Period**:
-  - Users can rename groups directly in the browser tab strip or UI.
-  - `GROUP_NAMING_GRACE_MS` (5000ms) pauses automatic regrouping while a user edits, preventing title overwrites mid-typing.
-  - Zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) are stripped during evaluation.
-  - Renaming an automatically generated group converts it to a user-named group, updating the corresponding custom rule or marking it permanent.
-- **Visual Group Prefix Indicators**:
-  - Dynamically prepends status symbols: `🔒` (unvisited), `🔍` (partial), `🗝️` (all viewed), `⚠️` (collision).
-- **Drag-and-Drop Reordering**: Integrated with `sortable.js` for reordering tabs within groups, moving tabs between groups, or reordering group cards.
-- **Hidden Groups Feature**:
-  - Prefixes group title with `_hidden_` in the browser tab strip.
-  - Hides group cards from the main list view, transferring them to `HiddenGroupsBar.svelte`.
-  - Users can unhide or restore groups instantly with a single click.
-
-### 3.3 Group Operations & Memory Management
-- **Ungroup**: Disbands the group, leaving tabs open in the window.
-- **Close Group**: Closes all tabs in the group and releases the group ID.
-- **Close Other Groups**: Closes all tab groups except the currently focused group.
-- **Regroup All Tabs (`Alt+Shift+R`)**: Executes a comprehensive re-evaluation pass across custom rules, system groups, and domain clusters.
-- **Group Screenshot Walk**: Sequentially cycles through and captures every tab in the group (`Cs` visible, `Cp` full page, `CP` full page parts).
-
-### 3.4 Group Backups & Restore Subsystem
-- **IndexedDB `backupsGroups` Store**:
-  - Backs up single tab groups or workspace-wide snapshots of all open groups into IndexedDB `Intelligent_Workspace` store `backupsGroups`.
-  - Captures complete group structures: group title, color, collapsed state, tab titles, URLs, favicons, pinned status, and relative tab positions.
-  - **Memory Conservation**: Backed-up tabs are cleanly closed to reclaim system RAM and reduce CPU overhead.
-  - **Restore Mechanisms**:
-    - Backups UI View in `ListGroup.svelte` with one-click group restoration.
-    - Keyboard shortcut `br` (restore) and `bg` (backup all).
-    - Omnibar command `bgr:` (search and restore backed-up groups) and `b:` (bookmark search).
-  - **JSON Export & Import**: Full JSON backup export and import for seamless migration between machines and long-term offline archiving.
-
-### 3.5 Parked YouTube Player in Hidden Groups Bar
-- **Architecture (`HiddenGroupsBar.svelte`)**:
-  - When a user navigates away from an active YouTube video view or launches video content inside the side panel, the player is not closed or lost. It is automatically docked in `HiddenGroupsBar.svelte` as a parked YouTube indicator (`.youtube-indicator`).
-  - Managed reactively via the `hiddenYoutubeView` store in `src/ui/stores/appStore.svelte.js`.
-  - **One-Click Actions**:
-    - Clicking the parked indicator invokes `restoreYoutubeView()`, returning the player immediately to the active workspace view.
-    - Clicking the delete badge invokes `discardYoutubeView()`, cleanly terminating playback and reclaiming resources.
-  - Sits seamlessly alongside hidden tab groups at the top of the ListGroup view without cluttering active tab lists.
+### 2.6 इनवोकेशन के तरीके (Invocation Modalities)
+- **नियम प्रबंधक पृष्ठ (`Rules.svelte`)**: पूर्ण-टैब दृश्य या साइड पैनल (`?view=rules` / `pg`) में सुलभ। पूर्ण ड्रैग-एंड-ड्रॉप पुनर्व्यवस्था, इनलाइन रंग चयनकर्ता, URL टैग चिप्स और नियम टॉगल प्रदान करता है।
+- **Omnibar कमांड**:
+  - `rl:` — नियम खोजें और संबंधित URLs खोलें।
+  - `cr: <name> [, url1, url2]` — कमांड बार से सीधे एक नया नियम बनाएं।
+  - `atcr:` — किसी मौजूदा नियम में सक्रिय टैब का डोमेन या URL जोड़ें।
+  - `atr:` — किसी मौजूदा नियम में चयनित खुले टैब या मैन्युअल URLs जोड़ें।
+  - `ccr:` — कस्टम नियम का रंग बदलें।
+  - `dr:` — नियम या किसी नियम से व्यक्तिगत URLs हटाएं।
+  - `er:` — किसी मौजूदा नियम को संपादित करें या उसका नाम बदलें।
+- **संदर्भ मेनू (Context Menus)**:
+  - पृष्ठ पर राइट-क्लिक करें -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa"।
+  - पृष्ठ पर राइट-क्लिक करें -> "Añadir a Regla Existente" -> नियम चुनें -> "Añadir Raíz del Sitio" / "Añadir URL Completa"।
+  - पृष्ठ पर राइट-क्लिक करें -> "Reglas" -> सक्रिय स्थिति टॉगल करें, सभी नियम URLs खोलें, या मिलान वाले टैब बंद करें।
+- **कीबोर्ड शॉर्टकट**:
+  - `Alt+R`: नियम प्रबंधक खोलें।
+  - `Alt+M`: सभी नियमों की सक्रियता को एक साथ टॉगल करें (`toggle-all-rules`)।
 
 ---
 
-## 4. Section 3: Navigation & Tab Management (Navegación)
+## 3. अनुभाग 2: समूह सूची और संचालन (Listar Grupos)
 
-Accelerated keyboard navigation and workspace controls allow seamless multi-tab control without mouse interaction.
+समूह सूची दृश्य ब्राउज़र टैब समूहों और अलग-अलग टैब का निरीक्षण करने, उनमें हेरफेर करने और उन्हें पुनर्व्यवस्थित करने के लिए एक इंटरैक्टिव वर्कस्पेस प्रदान करता है।
 
-### 4.1 Fast Tab Jump Gesture
-- **Gesture Syntax**: `Alt + [groupPrefix] + [tabIndex] + Enter`
-- **Execution**:
-  - Hold `Alt` and type the group's name or prefix letters, followed by the desired 1-based tab index, then press `Enter`.
-  - Example: `Alt + git + 2 + Enter` jumps directly to the second tab in the "GitHub" group.
-  - Index `0` acts as a shortcut for the *last* tab in the group.
-  - Omitting the index jumps to the *first* tab in the group.
-  - Accents are automatically folded (`deaccent`) and matching normalizes diacritics.
+### 3.1 UI आर्किटेक्चर
+- **घटक स्टैक**: `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, और `TabActions.svelte` के साथ निर्मित।
+- **कार्ड सुविधाएँ**: समूह शीर्षक, रंग बैज, टैब गणना पिल, संक्षिप्त/विस्तारित एकॉर्डियन टॉगल, कार्ड पिनिंग, और अनुकूलन योग्य क्रिया बटन समूह प्रदर्शित करता है।
+- **टैब आइटम**: रंग फ़ॉलबैक के साथ टैब फ़ेविकॉन, शीर्षक, श्रव्य ध्वनि बैज, म्यूट संकेतक, सक्रिय स्थिति संकेतक, और प्रति-टैब क्रियाएं (बंद करें, डुप्लिकेट करें, पिन करें, विभाजित करें, डिस्कार्ड करें) प्रदर्शित करता है।
 
-### 4.2 Stepping, Swapping & Lifecycle Keys
-- `s`: Instantly swap to the previously active tab (`previousActiveTabId`).
-- `h` / `l`: Step to the previous / next tab (or scroll horizontally if the page allows).
-- `H` / `L`: Navigate back / forward in browser history.
-- `t`: Open a new blank tab.
-- `x`: Close the current active tab.
-- `yt`: Duplicate the current tab.
-- `r` / `R`: Reload page / Force reload bypassing cache.
-- `d` / `u`: Scroll to bottom / top of page.
-- `j` / `k`: Smooth scroll down / up (75px step).
-- `f`: Activate Vim link hints (letters appear over clickable elements to click).
-- `cf`: Activate Vim link hints to copy target URL to clipboard.
+### 3.2 समूह जीवनचक्र और व्यवहार
+- **एकॉर्डियन नियंत्रण**: सहज विस्तार और संकोचन स्थितियां। वैकल्पिक ऑटो-एकॉर्डियन मोड एक नया समूह विस्तारित होने पर निष्क्रिय समूहों को स्वचालित रूप से संक्षिप्त कर देता है।
+- **निष्क्रियता ऑटो-संकोचन टाइमर**:
+  - विज़ुअल अव्यवस्था को कम करने के लिए निष्क्रिय टैब समूहों को स्वचालित रूप से संक्षिप्त करता है।
+  - दो अलग-अलग सीमाएं: निष्क्रिय समूह 1 मिनट की निष्क्रियता (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) के बाद संक्षिप्त हो जाते हैं, जबकि सक्रिय समूह 15 मिनट की निष्क्रियता (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`) के बाद संक्षिप्त होता है। 0 से 1440 मिनट तक कॉन्फ़िगर करने योग्य।
+- **इनलाइन नामकरण और रियायत अवधि (Grace Period)**:
+  - उपयोगकर्ता सीधे ब्राउज़र टैब स्ट्रिप या UI में समूहों का नाम बदल सकते हैं।
+  - `GROUP_NAMING_GRACE_MS` (5000ms) उपयोगकर्ता द्वारा संपादन के दौरान स्वचालित पुनर्समूहीकरण को रोक देता है, जिससे टाइपिंग के बीच शीर्षक अधिलेखन (overwrite) को रोका जा सकता है।
+  - मूल्यांकन के दौरान शून्य-चौड़ाई वाले रिक्त स्थान (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) हटा दिए जाते हैं।
+  - स्वचालित रूप से उत्पन्न समूह का नाम बदलने से वह उपयोगकर्ता-नामित समूह में परिवर्तित हो जाता है, जिससे संबंधित कस्टम नियम अपडेट हो जाता है या वह स्थायी रूप से चिह्नित हो जाता है।
+- **विज़ुअल समूह उपसर्ग संकेतक**:
+  - स्थिति प्रतीकों को गतिशील रूप से जोड़ता है: `🔒` (अनदेखा), `🔍` (आंशिक), `🗝️` (सभी देखे गए), `⚠️` (टकराव)।
+- **ड्रैग-एंड-ड्रॉप पुनर्व्यवस्था**: समूहों के भीतर टैब को पुनर्व्यवस्थित करने, समूहों के बीच टैब को स्थानांतरित करने, या समूह कार्डों को पुनर्व्यवस्थित करने के लिए `sortable.js` के साथ एकीकृत।
+- **छिपे हुए समूह सुविधा (Hidden Groups Feature)**:
+  - ब्राउज़र टैब स्ट्रिप में समूह शीर्षक के पहले `_hidden_` जोड़ता है।
+  - मुख्य सूची दृश्य से समूह कार्ड छिपाता है, उन्हें `HiddenGroupsBar.svelte` में स्थानांतरित करता है।
+  - उपयोगकर्ता एकल क्लिक से समूहों को तुरंत अनहाइड या पुनर्स्थापित कर सकते हैं।
+
+### 3.3 समूह संचालन और मेमोरी प्रबंधन
+- **अनग्रुप (Ungroup)**: समूह को समाप्त करता है, टैब को विंडो में खुला छोड़ देता है।
+- **समूह बंद करें (Close Group)**: समूह के सभी टैब बंद करता है और समूह आईडी जारी करता है।
+- **अन्य समूह बंद करें (Close Other Groups)**: वर्तमान में केंद्रित समूह को छोड़कर अन्य सभी टैब समूह बंद करता है।
+- **सभी टैब पुनर्समूहीकृत करें (`Alt+Shift+R`)**: कस्टम नियमों, सिस्टम समूहों और डोमेन क्लस्टरों में एक व्यापक पुनर्मूल्यांकन पास निष्पादित करता है।
+- **समूह स्क्रीनशॉट वॉक**: क्रमिक रूप से समूह के प्रत्येक टैब को सक्रिय करता है और कैप्चर करता है (`Cs` दृश्यमान, `Cp` पूर्ण पृष्ठ, `CP` पूर्ण पृष्ठ भाग)।
+
+### 3.4 समूह बैकअप और पुनर्स्थापना उपप्रणाली
+- **IndexedDB `backupsGroups` स्टोर**:
+  - एकल टैब समूहों या सभी खुले समूहों के वर्कस्पेस-व्यापी स्नैपशॉट का IndexedDB `Intelligent_Workspace` स्टोर `backupsGroups` में बैकअप लेता है।
+  - पूर्ण समूह संरचनाओं को कैप्चर करता है: समूह शीर्षक, रंग, संकुचित स्थिति, टैब शीर्षक, URLs, फ़ेविकॉन, पिन की गई स्थिति, और सापेक्ष टैब स्थितियां।
+  - **मेमोरी संरक्षण**: सिस्टम रैम को पुनः प्राप्त करने और सीपीयू ओवरहेड को कम करने के लिए बैकअप किए गए टैब को सुचारू रूप से बंद कर दिया जाता है।
+  - **पुनर्स्थापना तंत्र**:
+    - एक-क्लिक समूह पुनर्स्थापना के साथ `ListGroup.svelte` में बैकअप UI दृश्य।
+    - कीबोर्ड शॉर्टकट `br` (पुनर्स्थापना) और `bg` (सभी का बैकअप लें)।
+    - Omnibar कमांड `bgr:` (बैकअप किए गए समूहों को खोजें और पुनर्स्थापित करें) और `b:` (बुकमार्क खोज)।
+  - **JSON निर्यात और आयात**: मशीनों के बीच निर्बाध प्रवासन और दीर्घकालिक ऑफ़लाइन संग्रह के लिए पूर्ण JSON बैकअप निर्यात और आयात।
+
+### 3.5 छिपे हुए समूहों की पट्टी में पार्क किया गया YouTube प्लेयर
+- **आर्किटेक्चर (`HiddenGroupsBar.svelte`)**:
+  - जब कोई उपयोगकर्ता किसी सक्रिय YouTube वीडियो दृश्य से दूर नेविगेट करता है या साइड पैनल के अंदर वीडियो सामग्री लॉन्च करता है, तो प्लेयर बंद या खोता नहीं है। यह स्वचालित रूप से `HiddenGroupsBar.svelte` में पार्क किए गए YouTube संकेतक (`.youtube-indicator`) के रूप में डॉक हो जाता है।
+  - `src/ui/stores/appStore.svelte.js` में `hiddenYoutubeView` स्टोर के माध्यम से प्रतिक्रियाशील रूप से प्रबंधित।
+  - **एक-क्लिक क्रियाएं**:
+    - पार्क किए गए संकेतक पर क्लिक करने से `restoreYoutubeView()` निष्पादित होता है, जिससे प्लेयर तुरंत सक्रिय वर्कस्पेस दृश्य में वापस आ जाता है।
+    - डिलीट बैज पर क्लिक करने से `discardYoutubeView()` निष्पादित होता है, जिससे प्लेबैक ठीक से समाप्त हो जाता है और संसाधन पुनः प्राप्त हो जाते हैं।
+  - सक्रिय टैब सूचियों को अव्यवस्थित किए बिना ListGroup दृश्य के शीर्ष पर छिपे हुए टैब समूहों के साथ सहजता से बैठता है।
+
+---
+
+## 4. अनुभाग 3: नेविगेशन और टैब प्रबंधन (Navegación)
+
+त्वरित कीबोर्ड नेविगेशन और वर्कस्पेस नियंत्रण बिना माउस इंटरैक्शन के निर्बाध मल्टी-टैब नियंत्रण की अनुमति देते हैं।
+
+### 4.1 त्वरित टैब जंप जेस्चर (Fast Tab Jump Gesture)
+- **जेस्चर सिंटैक्स**: `Alt + [groupPrefix] + [tabIndex] + Enter`
+- **निष्पादन**:
+  - `Alt` दबाए रखें और समूह का नाम या उपसर्ग अक्षर टाइप करें, इसके बाद वांछित 1-आधारित टैब इंडेक्स टाइप करें, फिर `Enter` दबाएं।
+  - उदाहरण: `Alt + git + 2 + Enter` सीधे "GitHub" समूह के दूसरे टैब पर ले जाता है।
+  - इंडेक्स `0` समूह के *अंतिम* टैब के लिए शॉर्टकट के रूप में कार्य करता है।
+  - इंडेक्स को छोड़ने पर समूह के *पहले* टैब पर जाया जाता है।
+  - एक्सेंट स्वचालित रूप से हटा दिए जाते हैं (`deaccent`) और मिलान विशेषक चिह्नों को सामान्यीकृत करता है।
+
+### 4.2 स्टेपिंग, स्वैपिंग और जीवनचक्र कुंजियाँ
+- `s`: तुरंत पहले सक्रिय टैब (`previousActiveTabId`) पर स्वैप करें।
+- `h` / `l`: पिछले / अगले टैब पर जाएं (या यदि पृष्ठ अनुमति देता है तो क्षैतिज रूप से स्क्रॉल करें)।
+- `H` / `L`: ब्राउज़र इतिहास में पीछे / आगे नेविगेट करें।
+- `t`: एक नया रिक्त टैब खोलें।
+- `x`: वर्तमान सक्रिय टैब बंद करें।
+- `yt`: वर्तमान टैब को डुप्लिकेट करें।
+- `r` / `R`: पृष्ठ को पुनः लोड करें / कैश को बायपास करके फ़ोर्स रीलोड करें।
+- `d` / `u`: पृष्ठ के नीचे / ऊपर स्क्रॉल करें।
+- `j` / `k`: सहजता से नीचे / ऊपर स्क्रॉल करें (75px चरण)।
+- `f`: Vim लिंक संकेत सक्रिय करें (क्लिक करने योग्य तत्वों के ऊपर क्लिक करने के लिए अक्षर दिखाई देते हैं)।
+- `cf`: क्लिपबोर्ड पर लक्ष्य URL कॉपी करने के लिए Vim लिंक संकेत सक्रिय करें।
 
 ### उन्नत उपयोगकर्ताओं के लिए (For power users)
 
-अधिक उन्नत उपयोगकर्ता ब्राउज़र को फ़ुल-स्क्रीन मोड में रख सकते हैं और माउस का बिल्कुल भी उपयोग किए बिना पूरी तरह से कीबोर्ड से नेविगेट कर सकते हैं।
+अधिक उन्नत उपयोगकर्ता ब्राउज़र को फ़ुल-स्क्रीन मोड में रख सकते हैं और माउस का बिल्कुल भी उपयोग किए बिना, पूरी तरह से कीबोर्ड से नेविगेट कर सकते हैं।
 
-#### Full-Screen Immersion & Mouse-Free Browsing
-- **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.
-- **In-Page Vim Link Navigation (`f` / `cf`)**:
-  - Press `f` to generate high-contrast two-character yellow link hints over every clickable element, button, input, and link in the DOM.
-  - Type the two letters matching your target to simulate a direct click without mouse interaction.
-  - Press `cf` to trigger hint badges that copy the target link's URL directly to your system clipboard.
-  - Press `vp` to open an in-page preview modal of the target link.
-  - Press `Esc` at any time to cancel link hints and return to normal scrolling.
-- **Instant Tab Jumping & Switching**:
-  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Execute the Fast Tab Jump gesture (e.g., `Alt + dev + 1 + Enter` jumps directly to the first tab in the "Dev" group; index `0` selects the last tab in the group).
-  - `s`: Instantly swap between the current tab and the previously active tab (`previousActiveTabId`).
-  - `h` / `l`: Step sequentially to the previous / next tab in the tab strip.
-  - `H` / `L`: Move backward / forward through browser navigation history.
-  - `t` / `x` / `yt`: Open a new tab (`t`), close current tab (`x`), or duplicate tab (`yt`).
-- **Floating Omnibar Command Subsystem (`o`)**:
-  - Press `o` on any page to summon the centered Omnibar overlay.
-  - Press `@` to display the interactive directory of all 41 command prefixes.
-  - Type `f: <query>` to execute deep full-text tab search across all open windows.
-  - Type `sp:` to route navigation directly into any Sidepanel view (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
-  - Type `qai: <query>` or `qaia: <task>` to query Gemini or instruct the autonomous browser agent without lifting hands from the keyboard.
-  - Type `ts:` to split open tabs into side-by-side split screen.
-- **In-Page Navigation & Focus**:
-  - `j` / `k`: Smooth scroll down / up (75px increment).
-  - `d` / `u`: Half-page scroll down / up.
-  - `i`: Jump cursor focus immediately into the primary text input field on the page.
-  - `ESC`: Unfocus inputs and return keyboard focus to navigation mode.
+#### फ़ुल-स्क्रीन इमर्शन और माउस-मुक्त ब्राउज़िंग
+- **फ़ुल-स्क्रीन टॉगल करें**: `F11` (Windows/Linux) या `Command+Control+F` (macOS) दबाएं। ब्राउज़र क्रोम, एड्रेस बार, टैब स्ट्रिप और ऑपरेटिंग सिस्टम पैनल छिप जाते हैं, जिससे डिस्प्ले का 100% हिस्सा सामग्री को समर्पित हो जाता है।
+- **इन-पेज Vim लिंक नेविगेशन (`f` / `cf`)**:
+  - DOM में प्रत्येक क्लिक करने योग्य तत्व, बटन, इनपुट और लिंक पर उच्च-कंट्रास्ट दो-अक्षर वाले पीले लिंक संकेत उत्पन्न करने के लिए `f` दबाएं।
+  - माउस इंटरैक्शन के बिना सीधे क्लिक का अनुकरण करने के लिए अपने लक्ष्य से मेल खाने वाले दो अक्षर टाइप करें।
+  - लक्ष्य लिंक के URL को सीधे अपने सिस्टम क्लिपबोर्ड पर कॉपी करने वाले हिंट बैज को ट्रिगर करने के लिए `cf` दबाएं।
+  - लक्ष्य लिंक का इन-पेज पूर्वावलोकन मॉडल खोलने के लिए `vp` दबाएं।
+  - लिंक संकेतों को रद्द करने और सामान्य स्क्रॉलिंग पर लौटने के लिए किसी भी समय `Esc` दबाएं।
+- **त्वरित टैब जंपिंग और स्विचिंग**:
+  - `Alt + [groupPrefix] + [tabIndex] + Enter`: त्वरित टैब जंप जेस्चर निष्पादित करें (उदा., `Alt + dev + 1 + Enter` सीधे "Dev" समूह के पहले टैब पर ले जाता है; इंडेक्स `0` समूह के अंतिम टैब का चयन करता है)।
+  - `s`: वर्तमान टैब और पहले सक्रिय टैब (`previousActiveTabId`) के बीच तुरंत स्वैप करें।
+  - `h` / `l`: टैब स्ट्रिप में पिछले / अगले टैब पर क्रमिक रूप से जाएं।
+  - `H` / `L`: ब्राउज़र नेविगेशन इतिहास के माध्यम से पीछे / आगे जाएं।
+  - `t` / `x` / `yt`: नया टैब खोलें (`t`), वर्तमान टैब बंद करें (`x`), या टैब डुप्लिकेट करें (`yt`)।
+- **फ़्लोटिंग Omnibar कमांड उपप्रणाली (`o`)**:
+  - केंद्रित Omnibar ओवरले को खोलने के लिए किसी भी पृष्ठ पर `o` दबाएं।
+  - सभी 41 कमांड उपसर्गों की इंटरैक्टिव निर्देशिका प्रदर्शित करने के लिए `@` दबाएं।
+  - सभी खुली विंडो में गहरा फ़ुल-टेक्स्ट टैब खोज निष्पादित करने के लिए `f: <query>` टाइप करें।
+  - किसी भी साइडपैनल दृश्य (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`) में सीधे नेविगेट करने के लिए `sp:` टाइप करें।
+  - कीबोर्ड से हाथ हटाए बिना Gemini से प्रश्न पूछने या स्वायत्त ब्राउज़र एजेंट को निर्देश देने के लिए `qai: <query>` या `qaia: <task>` टाइप करें।
+  - खुले टैब को अगल-बगल स्प्लिट स्क्रीन में विभाजित करने के लिए `ts:` टाइप करें।
+- **इन-पेज नेविगेशन और फ़ोकस**:
+  - `j` / `k`: सहजता से नीचे / ऊपर स्क्रॉल करें (75px वृद्धि)।
+  - `d` / `u`: आधा पृष्ठ नीचे / ऊपर स्क्रॉल करें।
+  - `i`: पृष्ठ पर प्राथमिक टेक्स्ट इनपुट फ़ील्ड में कर्सर फ़ोकस तुरंत ले जाएं।
+  - `ESC`: इनपुट से फ़ोकस हटाएं और कीबोर्ड फ़ोकस को नेविगेशन मोड में लौटाएं।
 
-### 4.3 Audio & Sound Management
-- Tabs playing audio display a speaker badge in the ListGroup UI.
-- `st`: Toggle mute on the current active tab.
-- `so`: Mute all audible tabs across the entire browser.
-- Context menu: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
+### 4.3 ऑडियो और ध्वनि प्रबंधन
+- ऑडियो चलाने वाले टैब ListGroup UI में एक स्पीकर बैज प्रदर्शित करते हैं।
+- `st`: वर्तमान सक्रिय टैब पर म्यूट टॉगल करें।
+- `so`: पूरे ब्राउज़र में सभी श्रव्य टैब को म्यूट करें।
+- संदर्भ मेनू: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas"।
 
-### 4.4 Split Screen Workflows
-- **Trigger**: Vim hint `ts` or Omnibar prefix `ts:`.
-- **Behavior**: Uses `chrome.system.display` to calculate screen geometry. Splits two tabs side-by-side into adjacent windows, grouping them under a dedicated `Split` tab group.
-- **Restoration**: Closing the split window or toggling split screen restores original window dimensions and coordinates.
+### 4.4 स्प्लिट स्क्रीन वर्कफ़्लो
+- **ट्रिगर**: Vim संकेत `ts` या Omnibar उपसर्ग `ts:`।
+- **व्यवहार**: स्क्रीन ज्यामिति की गणना करने के लिए `chrome.system.display` का उपयोग करता है। दो टैब को अगल-बगल आसन्न विंडो में विभाजित करता है, उन्हें एक समर्पित `Split` टैब समूह के तहत समूहीकृत करता है।
+- **पुनर्स्थापना**: विभाजित विंडो को बंद करने या स्प्लिट स्क्रीन टॉगल करने से मूल विंडो आयाम और निर्देशांक पुनर्स्थापित हो जाते हैं।
 
-### 4.5 YouTube Looping Subsystem
-The YouTube looping subsystem provides precision media looping controls integrated directly into the YouTube player:
-- **Desktop Player Button (`#itg-yt-loop-button`)**: Injected into the standard YouTube player control bar (`.ytp-right-controls`), positioned to the left of the Cast / Remote button or PiP launcher. Features animated SVG looping glyphs, toggle highlight styling (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), and `aria-pressed` states.
-- **Shorts Player Button (`#itg-yt-shorts-loop-button`)**: Injected inside `#itg-yt-shorts-loop-wrapper` into the YouTube Shorts right-side control column (`ytd-shorts`), providing one-click looping for vertical video content.
-- **Loop Menu & PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Hovering or clicking the loop button opens the comprehensive loop settings menu:
-  - **A-B Looping**: Users can set custom start point (A) and end point (B) down to millisecond precision with interactive range sliders and manual time fields.
-  - **Cycle Mode & Sequence Repetitions**: Set repetition count for specific loops or toggle infinite loop mode (`itg-loop-seq-inf`).
-  - **Loop List & Multi-Segment Sequences**: Queue multiple A-B loop intervals that play consecutively according to configured repetitions.
-  - **Status & Duration Display**: Shows real-time playback position within current loop interval and total media duration (`00:00 / 00:00`).
-  - **Master Toggle (`youtubeLoopEnabled`)**: Persisted in `chrome.storage.sync` and `local`, allowing users to enable or disable the loop buttons across YouTube and YouTube Shorts via the Customize Hints settings page (`YoutubeLoopSection.svelte`).
+### 4.5 YouTube लूपिंग उपप्रणाली
+YouTube लूपिंग उपप्रणाली YouTube प्लेयर में सीधे एकीकृत सटीक मीडिया लूपिंग नियंत्रण प्रदान करती है:
+- **डेस्कटॉप प्लेयर बटन (`#itg-yt-loop-button`)**: मानक YouTube प्लेयर कंट्रोल बार (`.ytp-right-controls`) में इंजेक्ट किया गया, जो Cast / Remote बटन या PiP लॉन्चर के बाईं ओर स्थित है। इसमें एनिमेटेड SVG लूपिंग ग्लिफ़, टॉगल हाइलाइट स्टाइलिंग (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), और `aria-pressed` स्थितियां शामिल हैं।
+- **Shorts प्लेयर बटन (`#itg-yt-shorts-loop-button`)**: वर्टिकल वीडियो सामग्री के लिए एक-क्लिक लूपिंग प्रदान करते हुए, YouTube Shorts राइट-साइड कंट्रोल कॉलम (`ytd-shorts`) में `#itg-yt-shorts-loop-wrapper` के अंदर इंजेक्ट किया गया।
+- **लूप मेनू और PiP पॉपअप (`#itg-yt-loop-menu` और `#itg-pip-loop-popup`)**: लूप बटन पर होवर करने या क्लिक करने से व्यापक लूप सेटिंग्स मेनू खुलता है:
+  - **A-B लूपिंग**: उपयोगकर्ता इंटरैक्टिव रेंज स्लाइडर्स और मैन्युअल टाइम फ़ील्ड के साथ मिलीसेकंड सटीकता तक कस्टम प्रारंभ बिंदु (A) और समाप्ति बिंदु (B) सेट कर सकते हैं।
+  - **साइकिल मोड और अनुक्रम दोहराव**: विशिष्ट लूप के लिए दोहराव गणना सेट करें या अनंत लूप मोड (`itg-loop-seq-inf`) टॉगल करें।
+  - **लूप सूची और बहु-खंड अनुक्रम**: एकाधिक A-B लूप अंतराल कतारबद्ध करें जो कॉन्फ़िगर किए गए दोहराव के अनुसार लगातार चलते हैं।
+  - **स्थिति और अवधि प्रदर्शन**: वर्तमान लूप अंतराल और कुल मीडिया अवधि (`00:00 / 00:00`) के भीतर रीयल-टाइम प्लेबैक स्थिति दिखाता है।
+  - **मास्टर टॉगल (`youtubeLoopEnabled`)**: `chrome.storage.sync` और `local` में बना रहता है, जिससे उपयोगकर्ता Customize Hints सेटिंग्स पृष्ठ (`YoutubeLoopSection.svelte`) के माध्यम से YouTube और YouTube Shorts में लूप बटन को सक्षम या अक्षम कर सकते हैं।
 
-### 4.6 YouTube Shorts Preview Audio
-- **Audio Unmute Hook (`youtubePreviewAudioHook.js`)**:
-  - Runs in the `MAIN` execution world to access the `#inline-preview-player` property on `ytd-video-preview` elements.
-  - **Overcoming Forced Mute**: YouTube enforces a forced mute on Shorts previews by clearing audio controls and restoring `muted = true` via internal `volumechange` listeners.
-  - The extension hooks `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover. It drops YouTube's forced re-mute while allowing user unmuting, ensuring sound plays continuously without being interrupted across loop restarts until mouse leave.
+### 4.6 YouTube Shorts पूर्वावलोकन ऑडियो
+- **ऑडियो अनम्यूट हुक (`youtubePreviewAudioHook.js`)**:
+  - `ytd-video-preview` तत्वों पर `#inline-preview-player` संपत्ति तक पहुंचने के लिए `MAIN` निष्पादन दुनिया में चलता है।
+  - **जबरन म्यूट पर काबू पाना**: YouTube ऑडियो नियंत्रण साफ़ करके और आंतरिक `volumechange` श्रोताओं के माध्यम से `muted = true` को पुनर्स्थापित करके Shorts पूर्वावलोकन पर जबरन म्यूट लागू करता है।
+  - एक्सटेंशन होवर करने पर लक्ष्य `<video>` तत्व पर `HTMLMediaElement.prototype.muted` प्रॉपर्टी डिस्क्रिप्टर को हुक करता है। यह उपयोगकर्ता के अनम्यूट करने की अनुमति देते हुए YouTube के जबरन री-म्यूट को छोड़ देता है, यह सुनिश्चित करते हुए कि माउस हटने तक लूप पुनरारंभ होने पर ध्वनि बिना किसी रुकावट के लगातार बजती रहे।
 
-### 4.7 Picture-in-Picture (PiP) Architecture
-- **Document Picture-in-Picture (`wp`)**:
-  - Leverages the modern `documentPictureInPicture` API to open an entire webpage or text snippet inside an always-on-top floating window.
-  - Automatically synchronizes video playback timestamps when transferring media.
-  - Features retry logic (`itgRetryIfPipFrameRefused`) and cleans up DNR iframe headers upon close.
-- **Video Picture-in-Picture (`wv`)**:
-  - Hooks `HTMLVideoElement.prototype.requestPictureInPicture` via `videoPipHook.js`.
-  - Redirects video players into custom PiP frames with loop controls and playback speed selectors.
-- **Auto-PiP**:
-  - `as`: Toggle Auto-PiP on scroll (launches video in PiP when scrolled out of viewport).
-  - `ah`: Toggle Auto-PiP on tab hide (launches video in PiP when switching to another tab).
+### 4.7 पिक्चर-इन-पिक्चर (PiP) आर्किटेक्चर
+- **डॉक्यूमेंट पिक्चर-इन-पिक्चर (`wp`)**:
+  - हमेशा शीर्ष पर रहने वाली फ़्लोटिंग विंडो के अंदर एक संपूर्ण वेबपेज या टेक्स्ट स्निपेट खोलने के लिए आधुनिक `documentPictureInPicture` API का लाभ उठाता है।
+  - मीडिया स्थानांतरित करते समय स्वचालित रूप से वीडियो प्लेबैक टाइमस्टैम्प को सिंक्रनाइज़ करता है।
+  - इसमें पुनः प्रयास तर्क (`itgRetryIfPipFrameRefused`) शामिल है और बंद होने पर DNR iframe हेडर को साफ़ करता है।
+- **वीडियो पिक्चर-इन-पिक्चर (`wv`)**:
+  - `videoPipHook.js` के माध्यम से `HTMLVideoElement.prototype.requestPictureInPicture` को हुक करता है।
+  - वीडियो प्लेयर को लूप नियंत्रण और प्लेबैक गति चयनकर्ताओं के साथ कस्टम PiP फ़्रेम में रीडायरेक्ट करता है।
+- **ऑटो-PiP**:
+  - `as`: स्क्रॉल पर ऑटो-PiP टॉगल करें (व्यूपोर्ट से बाहर स्क्रॉल करने पर वीडियो को PiP में लॉन्च करता है)।
+  - `ah`: टैब छिपाने पर ऑटो-PiP टॉगल करें (किसी अन्य टैब पर स्विच करने पर वीडियो को PiP में लॉन्च करता है)।
 
-### 4.8 Page Reading Modes & Visual Overlays
-- **CSS Filter Themes**: Injects non-destructive styles into web pages:
-  - `mb` / `mB`: Black (Dark High-Contrast) — tab scope / global scope.
-  - `ms` / `mS`: Sepia (Warm Paper) — tab scope / global scope.
-  - `mp` / `mP`: Paper (Monochrome Grayscale) — tab scope / global scope.
-  - `ml` / `mL`: Light (Soft White) — tab scope / global scope.
-  - `me` / `mE`: Custom user-defined CSS filter — tab scope / global scope.
-  - `ESC`: Immediately removes active page filter.
-- **Reader Mode & TTS Read Aloud**:
-  - `fetchContentForReaderView`: Extracts clean article content, removing advertisements, sidebars, and navigation noise.
-  - Built-in Text-to-Speech (TTS) engine reading text aloud sentence by sentence.
-  - Keyboard navigation controls: `zp` (play/pause), `zn` (next sentence), `zb` (previous sentence), `zq` (close reader overlay).
+### 4.8 पृष्ठ पठन मोड और विज़ुअल ओवरले
+- **CSS फ़िल्टर थीम**: वेब पेजों में गैर-विनाशकारी शैलियों को इंजेक्ट करता है:
+  - `mb` / `mB`: काला (डार्क हाई-कंट्रास्ट) — टैब स्कोप / ग्लोबल स्कोप।
+  - `ms` / `mS`: सेपिया (वार्म पेपर) — टैब स्कोप / ग्लोबल स्कोप।
+  - `mp` / `mP`: पेपर (मोनोक्रोम ग्रेस्केल) — टैब स्कोप / ग्लोबल स्कोप।
+  - `ml` / `mL`: हल्का (सॉफ्ट व्हाइट) — टैब स्कोप / ग्लोबल स्कोप।
+  - `me` / `mE`: कस्टम उपयोगकर्ता-परिभाषित CSS फ़िल्टर — टैब स्कोप / ग्लोबल स्कोप।
+  - `ESC`: सक्रिय पृष्ठ फ़िल्टर को तुरंत हटा देता है।
+- **रीडर मोड और TTS रीड अलाउड**:
+  - `fetchContentForReaderView`: विज्ञापनों, साइडबार और नेविगेशन शोर को हटाते हुए स्वच्छ लेख सामग्री निकालता है।
+  - अंतर्निहित टेक्स्ट-टू-स्पीच (TTS) इंजन वाक्य दर वाक्य पाठ को जोर से पढ़ता है।
+  - कीबोर्ड नेविगेशन नियंत्रण: `zp` (चलाएं/रोकें), `zn` (अगला वाक्य), `zb` (पिछला वाक्य), `zq` (रीडर ओवरले बंद करें)।
 
-### 4.9 Text Snippets Subsystem with Template Variables
-The Text Snippets subsystem (`SnippetManager` in `src/utils/hint/snippets.js` and `src/utils/snippet-panel.js`) accelerates typing by expanding text shortcuts in any input, textarea, or rich editor:
-- **Trigger Modalities**: Type shortcut followed by Space, or type `$$` to summon the interactive snippets search popup.
-- **Clipboard API Integration**: Supports formatted HTML and plain text insertion via the Clipboard API, ensuring 100% compatibility with complex editors like Google Docs, Notion, and Slack.
-- **Template Variables**: Dynamically resolves variables at the moment of expansion:
-  - `{{date}}` / `date`: Formatted locale date (`toLocaleDateString`).
-  - `{{isodate}}` / `isodate`: ISO 8601 date (`YYYY-MM-DD`).
-  - `{{longdate}}` / `longdate`: Long date with weekday, day, month, and year.
-  - `{{time}}` / `time`: 2-digit formatted time (`HH:MM`).
-  - `{{datetime}}` / `datetime`: Date and time combined.
-  - `{{weekday}}` / `weekday`: Full day name (e.g., Monday).
-  - `{{day}}` / `day`: Day of month (1-31).
-  - `{{month}}` / `month`: Full month name (e.g., October).
-  - `{{year}}` / `year`: Full 4-digit year.
-  - `{{tomorrow}}` / `tomorrow`: Next day's date (+1 day).
-  - `{{yesterday}}` / `yesterday`: Previous day's date (-1 day).
-  - `{{nextweek}}` / `nextweek`: Date 7 days ahead (+7 days).
-  - `{{timestamp}}` / `timestamp`: Epoch millisecond timestamp (`Date.now()`).
-  - `{{url}}` / `url`: Active webpage URL (`window.location.href`).
-  - `{{domain}}` / `domain`: Active domain hostname (`window.location.hostname`).
-  - `{{pagetitle}}` / `pagetitle`: Active document title (`document.title`).
-  - `{{uuid}}` / `uuid`: Cryptographically secure unique identifier (`crypto.randomUUID()`).
-  - `{{random}}` / `random`: Random integer between 1 and 1000.
-  - `{{clipboard}}` / `clipboard`: System clipboard buffer text.
+### 4.9 टेम्पलेट वेरिएबल्स के साथ टेक्स्ट स्निपेट उपप्रणाली
+टेक्स्ट स्निपेट उपप्रणाली (`src/utils/hint/snippets.js` और `src/utils/snippet-panel.js` में `SnippetManager`) किसी भी इनपुट, टेक्स्टएरिया या रिच एडिटर में टेक्स्ट शॉर्टकट का विस्तार करके टाइपिंग को गति देती है:
+- **ट्रिगर मोड**: शॉर्टकट के बाद Space टाइप करें, या इंटरैक्टिव स्निपेट खोज पॉपअप खोलने के लिए `$$` टाइप करें।
+- **क्लिपबोर्ड API एकीकरण**: Clipboard API के माध्यम से स्वरूपित HTML और सादे पाठ प्रविष्टि का समर्थन करता है, जिससे Google Docs, Notion और Slack जैसे जटिल संपादकों के साथ 100% संगतता सुनिश्चित होती है।
+- **टेम्पलेट वेरिएबल्स**: विस्तार के समय गतिशील रूप से वेरिएबल्स का समाधान करता है:
+  - `{{date}}` / `date`: स्वरूपित स्थानीय तिथि (`toLocaleDateString`)।
+  - `{{isodate}}` / `isodate`: ISO 8601 तिथि (`YYYY-MM-DD`)।
+  - `{{longdate}}` / `longdate`: कार्यदिवस, दिन, माह और वर्ष के साथ विस्तृत तिथि।
+  - `{{time}}` / `time`: 2-अंकीय स्वरूपित समय (`HH:MM`)।
+  - `{{datetime}}` / `datetime`: तिथि और समय संयुक्त।
+  - `{{weekday}}` / `weekday`: पूरा दिन का नाम (उदा., Monday)।
+  - `{{day}}` / `day`: महीने का दिन (1-31)।
+  - `{{month}}` / `month`: पूरे महीने का नाम (उदा., October)।
+  - `{{year}}` / `year`: पूर्ण 4-अंकीय वर्ष।
+  - `{{tomorrow}}` / `tomorrow`: अगले दिन की तारीख (+1 दिन)।
+  - `{{yesterday}}` / `yesterday`: पिछले दिन की तारीख (-1 दिन)।
+  - `{{nextweek}}` / `nextweek`: 7 दिन आगे की तारीख (+7 दिन)।
+  - `{{timestamp}}` / `timestamp`: युग मिलीसेकंड टाइमस्टैम्प (`Date.now()`)।
+  - `{{url}}` / `url`: सक्रिय वेबपेज URL (`window.location.href`)।
+  - `{{domain}}` / `domain`: सक्रिय डोमेन होस्टनाम (`window.location.hostname`)।
+  - `{{pagetitle}}` / `pagetitle`: सक्रिय दस्तावेज़ शीर्षक (`document.title`)।
+  - `{{uuid}}` / `uuid`: क्रिप्टोग्राफ़िक रूप से सुरक्षित अद्वितीय पहचानकर्ता (`crypto.randomUUID()`)।
+  - `{{random}}` / `random`: 1 और 1000 के बीच यादृच्छिक पूर्णांक।
+  - `{{clipboard}}` / `clipboard`: सिस्टम क्लिपबोर्ड बफर टेक्स्ट।
 
-### 4.10 Embedded Productivity Tools
-- **Allow Right Click Hook (`allowRightClickHook.js`)**:
-  - Injected into the `MAIN` execution world to neutralize hostile web scripts that disable right-click context menus, copy, cut, or text selection.
-  - Intercepts `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-  - Clears inline `oncontextmenu="return false"` handlers via a persistent `MutationObserver`.
-  - Verifies clipboard payloads to prevent breaking legitimate web editors (Google Docs, Telegram Web).
-- **Cookie Editor**: In-page modal inspecting, editing, creating, and deleting HTTP and HTTPS cookies for the active domain.
-- **QR Code Generator**: Generates SVG/Canvas QR codes for the active tab URL for rapid mobile handover.
-- **Clean PDF Print Export**: Routes target pages through `print.html` with headers, ads, and navigational noise stripped for clean document archiving.
+### 4.10 अंतर्निहित उत्पादकता उपकरण
+- **राइट क्लिक की अनुमति दें हुक (`allowRightClickHook.js`)**:
+  - राइट-क्लिक संदर्भ मेनू, कॉपी, कट या टेक्स्ट चयन को अक्षम करने वाली शत्रुतापूर्ण वेब स्क्रिप्ट को बेअसर करने के लिए `MAIN` निष्पादन दुनिया में इंजेक्ट किया गया।
+  - `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, और `mouseup` पर `preventDefault()` और `stopPropagation()` को इंटरसेप्ट करता है।
+  - एक स्थायी `MutationObserver` के माध्यम से इनलाइन `oncontextmenu="return false"` हैंडलर को हटाता है।
+  - वैध वेब संपादकों (Google Docs, Telegram Web) को टूटने से बचाने के लिए क्लिपबोर्ड पेलोड की पुष्टि करता है।
+- **कुकी संपादक (Cookie Editor)**: सक्रिय डोमेन के लिए HTTP और HTTPS कुकीज़ का निरीक्षण, संपादन, निर्माण और विलोपन करने वाला इन-पेज मॉडल।
+- **QR कोड जनरेटर**: त्वरित मोबाइल हैंडओवर के लिए सक्रिय टैब URL के लिए SVG/Canvas QR कोड उत्पन्न करता है।
+- **स्वच्छ PDF प्रिंट निर्यात**: स्वच्छ दस्तावेज़ संग्रह के लिए शीर्षलेखों, विज्ञापनों और नेविगेशनल शोर को हटाकर लक्ष्य पृष्ठों को `print.html` के माध्यम से रूट करता है।
 
-### 4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding
-- **Comprehensive 3-Tier Duplicate Removal**:
-  1. **Tab Deduplication (`removeDuplicateTabsCommand`)**: Scans open tabs across windows or focused groups, identifies duplicate URLs, exempts `Split` screen tabs, and closes redundant tabs while keeping the active or oldest tab. Displays a desktop summary notification.
-  2. **Bookmark Deduplication**: Deep scans Chrome bookmark trees, locates identical URL duplicates across folders, and provides batch consolidation to keep bookmarks clean.
-  3. **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs to existing custom grouping rules, preventing rule inflation.
-- **Intelligent Memory Discarding (`suspendInactiveTabsIntelligently`)**:
-  - Evaluated every 1 minute via alarm `itg-periodic-tasks`.
-  - Discards tabs inactive >= `discardingTimeMinutes` (default: 60 minutes).
-  - Built-in immunity protections: Never discards active tabs, audible tabs playing audio, pinned tabs, or already suspended tabs.
+### 4.11 व्यापक 3-स्तरीय डुप्लिकेट निष्कासन और बुद्धिमान डिस्कार्डिंग
+- **व्यापक 3-स्तरीय डुप्लिकेट निष्कासन**:
+  1. **टैब डिडुप्लीकेशन (`removeDuplicateTabsCommand`)**: विंडो या केंद्रित समूहों में खुले टैब को स्कैन करता है, डुप्लिकेट URLs की पहचान करता है, `Split` स्क्रीन टैब को छूट देता है, और सक्रिय या सबसे पुराने टैब को रखते हुए अनावश्यक टैब को बंद करता है। एक डेस्कटॉप सारांश अधिसूचना प्रदर्शित करता है।
+  2. **बुकमार्क डिडुप्लीकेशन**: क्रोम बुकमार्क ट्री को गहराई से स्कैन करता है, फ़ोल्डरों में समान URL डुप्लिकेट का पता लगाता है, और बुकमार्क को साफ रखने के लिए बैच समेकन प्रदान करता है।
+  3. **नियम डिडुप्लीकेशन (`feature_v100_dedup_add_to_rule`)**: मौजूदा कस्टम समूहीकरण नियमों में URL जोड़ते समय डुप्लिकेट URL पैटर्न को स्वचालित रूप से हटा देता है, जिससे नियमों की अनावश्यक वृद्धि को रोका जा सकता है।
+- **बुद्धिमान मेमोरी डिस्कार्डिंग (`suspendInactiveTabsIntelligently`)**:
+  - अलार्म `itg-periodic-tasks` के माध्यम से प्रत्येक 1 मिनट में मूल्यांकन किया जाता है।
+  - `>= discardTimeMinutes` (डिफ़ॉल्ट: 60 मिनट) निष्क्रिय टैब को छोड़ देता है।
+  - अंतर्निहित सुरक्षा उपाय: सक्रिय टैब, ऑडियो चलाने वाले श्रव्य टैब, पिन किए गए टैब या पहले से निलंबित टैब को कभी नहीं छोड़ता है।
 
 ---
 
-## 5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)
+## 5. अनुभाग 4: AI सहायक और स्वायत्त एजेंट (Asistente AI)
 
-The AI Assistant integrates large language models into the browser to provide contextual understanding, automated workflows, and direct browser automation.
+AI सहायक प्रासंगिक समझ, स्वचालित वर्कफ़्लो और सीधे ब्राउज़र स्वचालन प्रदान करने के लिए बड़े भाषा मॉडल को ब्राउज़र में एकीकृत करता है।
 
-### 5.1 Dual Model Engine Architecture
+### 5.1 डुअल मॉडल इंजन आर्किटेक्चर
 1. **Google Gemini Cloud API (`gemini-api.js`)**:
-   - Integrates with Google Generative Language REST endpoints (`v1beta/models/{model}:generateContent` and `:streamGenerateContent`).
-   - Supports Gemini 2.5 Flash, Gemini 2.5 Pro, and custom model endpoints.
-   - **Multi-Key Rotation**: Manages key pools in `geminiApiKeysList`. Storage obfuscation uses `enc_` prefixes.
-   - **Exponential Backoff**: Handles HTTP 429 quota exhaustion with automated backoff retry (1.5s -> 3s -> 6s).
-   - **Search Grounding**: Enables Google Search Grounding (`google_search: {}`). If HTTP 403 occurs due to quota restrictions on search tools, it automatically retries without grounding.
-2. **Chrome Built-in AI / Prompt API (`localAiService.js`)**:
-   - On-device Gemini Nano integration via `window.LanguageModel`.
-   - Supports zero-network local execution. Includes model availability checking and live download progress tracking.
+   - Google Generative Language REST एंडपॉइंट्स (`v1beta/models/{model}:generateContent` और `:streamGenerateContent`) के साथ एकीकृत होता है।
+   - Gemini 2.5 Flash, Gemini 2.5 Pro, और कस्टम मॉडल एंडपॉइंट्स का समर्थन करता है।
+   - **मल्टी-की रोटेशन**: `geminiApiKeysList` में की-पूल का प्रबंधन करता है। स्टोरेज अस्पष्टता `enc_` उपसर्गों का उपयोग करती है।
+   - **घातीय बैकऑफ़ (Exponential Backoff)**: स्वचालित बैकऑफ़ पुनः प्रयास (1.5s -> 3s -> 6s) के साथ HTTP 429 कोटा थकावट को संभालता है।
+   - **सर्च ग्राउंडिंग**: Google Search Grounding (`google_search: {}`) को सक्षम करता है। यदि खोज उपकरणों पर कोटा प्रतिबंधों के कारण HTTP 403 होता है, तो यह ग्राउंडिंग के बिना स्वचालित रूप से पुनः प्रयास करता है।
+2. **Chrome बिल्ट-इन AI / Prompt API (`localAiService.js`)**:
+   - `window.LanguageModel` के माध्यम से ऑन-डिवाइस Gemini Nano एकीकरण।
+   - शून्य-नेटवर्क स्थानीय निष्पादन का समर्थन करता है। मॉडल उपलब्धता जांच और लाइव डाउनलोड प्रगति ट्रैकिंग शामिल है।
 
-### 5.2 Autonomous Browser Agent (`agent-backend.js`)
-The autonomous agent provides full browser control through 40+ structured tools:
-- **Tab & Group Control**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
-- **Navigation & Search**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
-- **Knowledge & Bookmarks**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
-- **Rules & Appearance**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
+### 5.2 स्वायत्त ब्राउज़र एजेंट (`agent-backend.js`)
+स्वायत्त एजेंट 40+ संरचित उपकरणों के माध्यम से पूर्ण ब्राउज़र नियंत्रण प्रदान करता है:
+- **टैब और समूह नियंत्रण**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`।
+- **नेविगेशन और खोज**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`।
+- **ज्ञान और बुकमार्क**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`।
+- **नियम और प्रकटन**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`।
 
-### 5.3 Taint Tracking & Prompt Injection Defense
-To neutralize indirect prompt injection attacks from untrusted web pages, the agent backend implements strict taint tracking:
-- **Taint Marking**: Calling `getActiveTabContent` extracts text from a web page and marks the current execution run as tainted (`taintedAgentRuns.add(runId)`).
-- **Egress Guard**: Tainted runs are strictly prohibited from invoking egress tools (`AGENT_EGRESS_TOOLS`):
-  * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`.
-- **Refusal Mechanism**: Rather than throwing an unhandled exception, the engine returns a structured security explanation. The LLM then informs the user that external data cannot be exfiltrated without explicit user consent.
+### 5.3 टेन्ट ट्रैकिंग और प्रॉम्प्ट इंजेक्शन सुरक्षा (Taint Tracking & Prompt Injection Defense)
+अविश्वसनीय वेब पेजों से अप्रत्यक्ष प्रॉम्प्ट इंजेक्शन हमलों को बेअसर करने के लिए, एजेंट बैकएंड सख्त टेन्ट ट्रैकिंग लागू करता है:
+- **टेन्ट अंकन**: `getActiveTabContent` को कॉल करने से वेब पेज से टेक्स्ट निकलता है और वर्तमान निष्पादन रन को दूषित (`taintedAgentRuns.add(runId)`) के रूप में चिह्नित किया जाता है।
+- **इग्रेस गार्ड (Egress Guard)**: दूषित रनों को इग्रेस टूल्स (`AGENT_EGRESS_TOOLS`) को निष्पादित करने से सख्ती से प्रतिबंधित किया जाता है:
+  * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`।
+- **इनकार तंत्र**: एक अनियंत्रित अपवाद फेंकने के बजाय, इंजन एक संरचित सुरक्षा स्पष्टीकरण लौटाता है। फिर LLM उपयोगकर्ता को सूचित करता है कि स्पष्ट उपयोगकर्ता सहमति के बिना बाहरी डेटा को बाहर नहीं निकाला जा सकता है।
 
-### 5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)
-- **Background Execution Engine**:
-  - Automates scheduled AI prompt execution directly within the background service worker via `chrome.alarms` (`gemini-scheduled-*`).
-  - Supports up to 6 scheduled queries per day (`MAX_TIMES = 6`).
-  - **Schedules Modes**:
-    - Recurring Schedules: Executes repeatedly on selected days of the week (`selectedDays`).
-    - One-Time Schedules: Executes at a specific target date and time (`formDate`).
-  - **Prompt Limits**: Enforces a strict 1,000-character prompt limit (`MAX_QUERY_CHARS = 1000`) with real-time character counters.
-  - **Background Notifications**: Fires a desktop notification with a snippet preview when the background query finishes. Clicking the notification immediately opens the response thread inside the sidepanel chat.
+### 5.4 निर्धारित Gemini क्वेरी उपप्रणाली (`GeminiScheduleModal.svelte`)
+- **पृष्ठभूमि निष्पादन इंजन**:
+  - `chrome.alarms` (`gemini-scheduled-*`) के माध्यम से पृष्ठभूमि सर्विस वर्कर के भीतर सीधे निर्धारित AI प्रॉम्प्ट निष्पादन को स्वचालित करता है।
+  - प्रति दिन 6 निर्धारित प्रश्नों तक का समर्थन करता है (`MAX_TIMES = 6`)।
+  - **शेड्यूल मोड**:
+    - आवर्ती शेड्यूल: सप्ताह के चयनित दिनों (`selectedDays`) पर बार-बार निष्पादित होता है।
+    - एक बार का शेड्यूल: एक विशिष्ट लक्ष्य तिथि और समय (`formDate`) पर निष्पादित होता है।
+  - **प्रॉम्प्ट सीमाएं**: रीयल-टाइम वर्ण काउंटरों के साथ एक सख्त 1,000-वर्ण प्रॉम्प्ट सीमा (`MAX_QUERY_CHARS = 1000`) लागू करता है।
+  - **पृष्ठभूमि सूचनाएं**: पृष्ठभूमि क्वेरी समाप्त होने पर स्निपेट पूर्वावलोकन के साथ एक डेस्कटॉप अधिसूचना सक्रिय करता है। अधिसूचना पर क्लिक करने से साइडपैनल चैट के अंदर प्रतिक्रिया थ्रेड तुरंत खुल जाता है।
 
-### 5.5 Gemini Conversation Management & Export
-- **Persistent IndexedDB Storage (`geminiConversations`)**: Multi-turn chat sessions are stored in IndexedDB `Intelligent_Workspace` store `geminiConversations`.
-- **Full-Text History Search**: Instant search across all past conversations and individual messages via Omnibar commands `lai:` (browse conversations) and `laiq:` (search messages).
-- **Four Export Formats**:
-  1. **Styled HTML**: Formatted standalone HTML document with styled conversational bubbles, role badges, timestamps, and syntax-highlighted code blocks.
-  2. **Raw JSON**: Complete structured data dump including message arrays, token usage, model configuration, and search citations.
-  3. **Markdown**: Standard Markdown file formatted with headers, timestamps, and fenced code blocks (` ``` `).
-  4. **Plain Text**: Clean, unformatted conversational transcript suitable for email or notes.
-- **Grounding Metadata Tracking**: Tracks model ID, token usage statistics, execution timestamps, and source citations returned by Google Search Grounding.
+### 5.5 Gemini वार्तालाप प्रबंधन और निर्यात
+- **स्थायी IndexedDB संग्रहण (`geminiConversations`)**: बहु-मोड़ चैट सत्र IndexedDB `Intelligent_Workspace` स्टोर `geminiConversations` में संग्रहीत किए जाते हैं।
+- **फ़ुल-टेक्स्ट इतिहास खोज**: Omnibar कमांड `lai:` (वार्तालाप ब्राउज़ करें) और `laiq:` (संदेश खोजें) के माध्यम से सभी पिछले वार्तालापों और व्यक्तिगत संदेशों में त्वरित खोज।
+- **चार निर्यात प्रारूप**:
+  1. **स्टाइल किया गया HTML**: स्टाइल किए गए संवादात्मक बुलबुले, भूमिका बैज, टाइमस्टैम्प और सिंटैक्स-हाइलाइट किए गए कोड ब्लॉक के साथ स्वरूपित स्टैंडअलोन HTML दस्तावेज़।
+  2. **रॉ JSON**: संदेश सरणियों, टोकन उपयोग, मॉडल कॉन्फ़िगरेशन और खोज उद्धरणों सहित पूर्ण संरचित डेटा डंप।
+  3. **Markdown**: शीर्षलेखों, टाइमस्टैम्प और फ़ेंस्ड कोड ब्लॉक (` ``` `) के साथ स्वरूपित मानक Markdown फ़ाइल।
+  4. **सादा पाठ**: ईमेल या नोट्स के लिए उपयुक्त स्वच्छ, अनफ़ॉर्मेट संवादात्मक प्रतिलेख।
+- **ग्राउंडिंग मेटाडेटा ट्रैकिंग**: मॉडल आईडी, टोकन उपयोग आंकड़े, निष्पादन टाइमस्टैम्प और Google Search Grounding द्वारा लौटाए गए स्रोत उद्धरणों को ट्रैक करता है।
 
-### 5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)
-- **Multimodal Attachments**: Toggle `feature_geminiAttachFiles` enables direct image and document attachments in chat prompts:
-  - Image files (JPEG, PNG, WebP, HEIC/HEIF).
-  - PDF documents and research papers.
-  - Plain Text files and code files.
-  - CSV structured datasets.
-- **Voice Support**:
-  - Web Speech STT (Speech-to-Text) for dictating prompts hands-free.
-  - Web Speech TTS (Text-to-Speech) for reading responses aloud.
+### 5.6 मल्टीमॉडल इनपुट और फ़ाइल अनुलग्नक (`feature_geminiAttachFiles`)
+- **मल्टीमॉडल अटैचमेंट**: टॉगल `feature_geminiAttachFiles` चैट प्रॉम्प्ट में सीधे छवि और दस्तावेज़ अटैचमेंट को सक्षम करता है:
+  - छवि फ़ाइलें (JPEG, PNG, WebP, HEIC/HEIF)।
+  - PDF दस्तावेज़ और शोध पत्र।
+  - सादे पाठ फ़ाइलें और कोड फ़ाइलें।
+  - CSV संरचित डेटासेट।
+- **आवाज़ समर्थन**:
+  - हैंड्स-फ़्री प्रॉम्प्ट डिक्टेट करने के लिए Web Speech STT (स्पीच-टू-टेक्स्ट)।
+  - प्रतिक्रियाओं को जोर से पढ़ने के लिए Web Speech TTS (टेक्स्ट-टू-स्पीच)।
 
-### 5.7 Invocation Modalities
-- **Sidepanel Route**: `?view=gemini` or shortcut `pa`.
-- **In-Page Omnibar Prefixes**:
-  - `qai: <query>` — Ask direct question to configured Gemini model.
-  - `qaia: <prompt>` — Execute prompt via autonomous agent with tool execution.
-  - `lai:` — Browse past AI conversations.
-  - `laiq:` — Full-text search across all AI conversation messages.
-- **Omnibox AI Tab Search (`find <query>`)**:
-  - URL bar keyword `find` initiates hybrid search.
-  - Combines regex word-boundary scoring with Gemini semantic resolution to locate and focus open tabs based on natural language queries.
+### 5.7 इनवोकेशन के तरीके
+- **साइडपैनल रूट**: `?view=gemini` या शॉर्टकट `pa`।
+- **इन-पेज Omnibar उपसर्ग**:
+  - `qai: <query>` — कॉन्फ़िगर किए गए Gemini मॉडल से सीधा प्रश्न पूछें।
+  - `qaia: <prompt>` — टूल निष्पादन के साथ स्वायत्त एजेंट के माध्यम से प्रॉम्प्ट निष्पादित करें।
+  - `lai:` — पिछले AI वार्तालापों को ब्राउज़ करें।
+  - `laiq:` — सभी AI वार्तालाप संदेशों में फ़ुल-टेक्स्ट खोज।
+- **ओम्निबॉक्स AI टैब खोज (`find <query>`)**:
+  - URL बार कीवर्ड `find` हाइब्रिड खोज शुरू करता है।
+  - प्राकृतिक भाषा प्रश्नों के आधार पर खुले टैब का पता लगाने और उन पर ध्यान केंद्रित करने के लिए Gemini सिमेंटिक रिज़ॉल्यूशन के साथ regex वर्ड-बाउंड्री स्कोरिंग को जोड़ता है।
 
 ---
 
-## 6. Section 5: Notes View & Knowledge Management (Ver Notas)
+## 6. अनुभाग 5: नोट्स दृश्य और ज्ञान प्रबंधन (Ver Notas)
 
-A local-first, context-aware note-taking engine tied to browser tab groups and navigation contexts.
+ब्राउज़र टैब समूहों और नेविगेशन संदर्भों से जुड़ा एक स्थानीय-पहला, संदर्भ-जागरूक नोट-टेकिंग इंजन।
 
-### 6.1 Storage Architecture (`notesStore`)
-Stored in IndexedDB database `Intelligent_Workspace` (v8) inside object store `notesStore`:
+### 6.1 स्टोरेज आर्किटेक्चर (`notesStore`)
+IndexedDB डेटाबेस `Intelligent_Workspace` (v8) के अंदर ऑब्जेक्ट स्टोर `notesStore` में संग्रहीत:
 ```typescript
 interface NoteRecord {
-  id: string;          // Unique note identifier.
-  title: string;       // Note title.
-  text: string;        // Rich text HTML, Markdown, or serialized task payload.
+  id: string;          // अद्वितीय नोट पहचानकर्ता।
+  title: string;       // नोट शीर्षक।
+  text: string;        // रिच टेक्स्ट HTML, Markdown, या क्रमबद्ध कार्य पेलोड।
   type: NoteType;      // 'text' | 'checklist' | 'kanban'
-  url?: string;        // Origin URL where note was created.
-  contextKey: string;  // Scoping key binding note to workspace hierarchy.
-  createdAt: number;   // Creation timestamp.
-  modifiedAt: number;  // Last edit timestamp.
-  isPersistent: boolean; // Pin flag protecting note from group deletion cleanup.
+  url?: string;        // मूल URL जहाँ नोट बनाया गया था।
+  contextKey: string;  // वर्कस्पेस पदानुक्रम से नोट को बांधने वाली स्कोपिंग कुंजी।
+  createdAt: number;   // निर्माण टाइमस्टैम्प।
+  modifiedAt: number;  // अंतिम संपादन टाइमस्टैम्प।
+  isPersistent: boolean; // समूह विलोपन क्लीनअप से नोट की रक्षा करने वाला पिन फ़्लैग।
 }
 ```
 
-### 6.2 Specialized Note Formats & Advanced Rendering
-1. **Text Note (`NoteTextEditor.svelte`)**:
-   - Rich text `contenteditable` surface.
-   - Embeds media directly: images, audio, video, and PDF documents.
-   - Built-in HTML sanitization and real-time word and character counters.
-   - **Mermaid Diagram Rendering**: Renders dynamic flowcharts, sequence diagrams, class diagrams, and state machines directly from Markdown fences (` ```mermaid `).
-   - **KaTeX Mathematical LaTeX**: Renders inline equations (`$...$`) and block equations (`$$...$$`) with high precision typography.
-2. **Checklist Note (`NoteChecklistEditor.svelte`)**:
-   - Interactive task list with individual completion checkboxes.
-   - Supports keyboard-driven item reordering and progress tracking.
-3. **Kanban Note (`NoteKanbanEditor.svelte`)**:
-   - 3-column workflow board: `To Do` -> `In Progress` -> `Done`.
-   - Cycling status chips for rapid task transitions.
-- **Dynamic Lossless Conversion**: Notes convert losslessly between Text, Checklist, and Kanban representations.
+### 6.2 विशिष्ट नोट प्रारूप और उन्नत रेंडरिंग
+1. **टेक्स्ट नोट (`NoteTextEditor.svelte`)**:
+   - रिच टेक्स्ट `contenteditable` सतह।
+   - सीधे मीडिया एम्बेड करता है: चित्र, ऑडियो, वीडियो और PDF दस्तावेज़।
+   - अंतर्निहित HTML सैनिटाइजेशन और रीयल-टाइम शब्द और वर्ण काउंटर।
+   - **Mermaid आरेख रेंडरिंग**: Markdown फ़ेंस (` ```mermaid `) से सीधे गतिशील फ़्लोचार्ट, अनुक्रम आरेख, वर्ग आरेख और स्टेट मशीन रेंडर करता है।
+   - **KaTeX गणितीय LaTeX**: उच्च परिशुद्धता टाइपोग्राफी के साथ इनलाइन समीकरण (`$...$`) और ब्लॉक समीकरण (`$$...$$`) रेंडर करता है।
+2. **चेकलिस्ट नोट (`NoteChecklistEditor.svelte`)**:
+   - व्यक्तिगत पूर्णता चेकबॉक्स के साथ इंटरैक्टिव कार्य सूची।
+   - कीबोर्ड-संचालित आइटम पुनर्व्यवस्था और प्रगति ट्रैकिंग का समर्थन करता है।
+3. **Kanban नोट (`NoteKanbanEditor.svelte`)**:
+   - 3-कॉलम वर्कफ़्लो बोर्ड: `To Do` -> `In Progress` -> `Done`।
+   - तेजी से कार्य संक्रमण के लिए साइकिलिंग स्थिति चिप्स।
+- **गतिशील दोषरहित रूपांतरण**: नोट्स टेक्स्ट, चेकलिस्ट और Kanban अभ्यावेदन के बीच बिना किसी नुकसान के रूपांतरित होते हैं।
 
-### 6.3 Scoping & Context Hierarchy
-Notes bind to browsing contexts via `contextKey`:
-- **Group Scope (`g_<groupId>` or `g_<groupKey>`)**: Attached to an entire tab group.
-- **Subgroup Scope (`s_<groupId>_<domain>`)**: Attached to a specific domain within a tab group.
-- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Notes created on tabs outside of tab groups.
-- **Pomodoro & General Scopes (`pomodoro`, `general`)**: Workspace-wide notes.
-- **Orphan Detection Engine**: When tab groups or domains are deleted, associated non-persistent notes are captured by the Orphan Detector. Notes remain accessible in the UI for reassignment or deletion.
+### 6.3 स्कोपिंग और संदर्भ पदानुक्रम
+नोट्स `contextKey` के माध्यम से ब्राउज़िंग संदर्भों से बंधते हैं:
+- **समूह स्कोप (`g_<groupId>` या `g_<groupKey>`)**: संपूर्ण टैब समूह से जुड़ा हुआ।
+- **उपसमूह स्कोप (`s_<groupId>_<domain>`)**: टैब समूह के भीतर एक विशिष्ट डोमेन से जुड़ा हुआ।
+- **असमूहीकृत स्कोप (`g_ungrouped` / `s_ungrouped_<domain>`)**: टैब समूहों के बाहर टैब पर बनाए गए नोट्स।
+- **पोमोडोरो और सामान्य स्कोप (`pomodoro`, `general`)**: कार्यक्षेत्र-व्यापी नोट्स।
+- **अनाथ पहचान इंजन (Orphan Detection Engine)**: जब टैब समूह या डोमेन हटा दिए जाते हैं, तो संबंधित गैर-स्थायी नोट्स अनाथ डिटेक्टर द्वारा पकड़ लिए जाते हैं। पुनर्मूल्यांकन या विलोपन के लिए नोट्स UI में सुलभ रहते हैं।
 
-### 6.4 Invocation Modalities
-- **UI Launchers**: "View Notes" button on Group Cards and Subgroup Cards; "Quick Notes" button in popup header; Sidepanel route `?view=notes` (`pk`).
-- **Context Menu Trigger**: Select text on any web page -> Right-click -> "Crear Nota desde Selección" (`note-from-selection`). Automatically extracts the selected text and sets the nearest `h1`-`h3` heading as the title.
-- **Vim Hint**: `ao` creates a note from the current selection.
-- **Omnibar**: `lnt:` opens notes browser with instant full-text search.
-- **Audio Readout**: In-editor TTS button reads note content aloud using Web Speech API.
-
----
-
-## 7. Section 6: Media & Gallery View (Ver Galería)
-
-A high-performance media capture, annotation, and optical character recognition (OCR) pipeline.
-
-### 7.1 Capture Modes & Engineering (All 7 Capture Types)
-The extension implements 7 specialized capture modalities covering single-tab, cross-tab, cropped, and palette operations:
-1. **`visible` (Visible Viewport Capture - `cs`)**:
-   - Captures the exact visible viewport of the active tab using `chrome.tabs.captureVisibleTab`.
-   - Automatically commits the capture to the IndexedDB `screenshots` store and copies the image bitmap directly to the system clipboard (`screenshotSavedAndCopied`).
-2. **`fullPage` (Seamless Full-Page Scrolling Canvas - `cp`)**:
-   - Executes programmatic page scrolling, calculating total document scroll height.
-   - Suppresses scrollbars and hides sticky/fixed navigation bars after the initial segment to eliminate visual stutter.
-   - Stitches bitmap slices onto an `OffscreenCanvas` up to 30,000px high (`captureFullPageDataUrl`), enforcing Chromium-compliant 600ms delays between frame captures.
-3. **`fullPageParts` (Sequential Sliced Segments - `cpp` / `cP`)**:
-   - Slices tall documents into sequential, individual viewport-height image parts (`captureFullPageParts`), generating up to 60 numbered image chunks for pagination.
-4. **`area` (Interactive Rectangular Drag Crop - `ca`)**:
-   - Injects `area-selector.js`, overlaying a crosshair canvas with real-time bounding box dimensions.
-   - Draggable selection handles, dimension tooltip, confirmation trigger, `Esc` key cancellation, and multi-tab crop queueing (`handleCaptureAreaFromShortcut`).
-5. **`groupTabs` (Batch Active Group Tab Walk - `Cs`, `Cp`, `CP`)**:
-   - Sequentially iterates through every tab within the active tab group (`handleCaptureGroupFromShortcut`).
-   - Supports batch capture in visible, full-page, or segmented parts mode, compiling them into a unified collection.
-6. **`omnibarPickedTabs` (Custom Multi-Tab Queue Capture)**:
-   - Initiated via Omnibar commands `cs:`, `cp:`, `cpp:`, or `ca:` (`handleCaptureTabs`).
-   - Executes sequential captures across all user-filtered tabs, providing real-time progress indicators.
-7. **`colorPickerCapture` (Background Screen Eyedropper Fallback)**:
-   - Takes a background screen capture to power the precision hex eyedropper magnifier tool on operating systems lacking native `window.EyeDropper` support (e.g., Linux).
-
-### 7.2 Gallery UI & Persistence
-- **Interface**: Responsive masonry/grid layout with lightbox zoom, pan, and rotate tools.
-- **Persistence (`screenshots` Store)**: Saved in IndexedDB `Intelligent_Workspace`. Unpinned captures are automatically purged during maintenance; clicking the pin icon (`isPersistent = true`) preserves captures indefinitely.
-
-### 7.3 Export, In-Browser OCR & External Markup
-- **Export Formats (`captureDownloadFormats`)**:
-  - High-efficiency formats: PNG, WebP, AVIF.
-  - Multi-page compiled PDF document export via `pdf.js`.
-- **On-Device WASM OCR**:
-  - In-browser Tesseract.js WebWorker utilizing preloaded Spanish and English (`spa+eng`) language models.
-  - Extracts text directly to clipboard without sending image data over the network.
-- **Direct Send Integration**:
-  - One-click transfer of extracted OCR text or image attachments into Notes (`notesStore`) or Gemini AI prompts (`feature_geminiAttachFiles`).
-- **Excalidraw Markup**: One-click export sends captured images directly into `https://excalidraw.com/` for freehand drawing, arrows, and vector annotations.
-
-### 7.4 Invocation Modalities
-- **UI**: Group Card camera button, Popup quick action, Sidepanel gallery route `?view=gallery` (`ps`).
-- **Vim Hints**: `cs` (visible), `cp` (full page), `cP` (parts), `ca` (area crop), `Cs` (group visible), `Cp` (group full page), `CP` (group parts).
-- **Omnibar Prefixes**: `cs:`, `cp:`, `cpp:`, `ca:`, and `limg:` (browse gallery).
+### 6.4 इनवोकेशन के तरीके
+- **UI लॉन्चर**: ग्रुप कार्ड और सबग्रुप कार्ड पर "View Notes" बटन; पॉपअप हेडर में "Quick Notes" बटन; साइडपैनल रूट `?view=notes` (`pk`)।
+- **संदर्भ मेनू ट्रिगर**: किसी भी वेब पेज पर टेक्स्ट चुनें -> राइट-क्लिक करें -> "Crear Nota desde Selección" (`note-from-selection`)। चयनित पाठ को स्वचालित रूप से निकालता है और निकटतम `h1`-`h3` शीर्षक को शीर्षक के रूप में सेट करता है।
+- **Vim हिंट**: `ao` वर्तमान चयन से एक नोट बनाता है।
+- **Omnibar**: `lnt:` त्वरित फ़ुल-टेक्स्ट खोज के साथ नोट्स ब्राउज़र खोलता है।
+- **ऑडियो रीडआउट**: इन-एडिटर TTS बटन Web Speech API का उपयोग करके नोट की सामग्री को जोर से पढ़ता है।
 
 ---
 
-## 8. Section 7: Pomodoro & Timing Suite (Pomodoro)
+## 7. अनुभाग 6: मीडिया और गैलरी दृश्य (Ver Galería)
 
-A focus and timing suite engineered for absolute accuracy across browser sleep cycles.
+एक उच्च-प्रदर्शन मीडिया कैप्चर, एनोटेशन और ऑप्टिकल कैरेक्टर रिकग्निशन (OCR) पाइपलाइन।
 
-### 8.1 Timing Engine & Background Architecture
-- **Zero-Drift Timestamp Math**: State is persisted in `chrome.storage.local` with absolute Unix timestamps (`startTime`, `pausedAt`). Service worker terminations, browser restarts, and operating system sleep states cause zero clock drift.
-- **Alarm Dispatcher**:
-  - High-resolution countdown ticker driven by `chrome.alarms` (`pomodoroTick` 1s interval).
-  - Background maintenance and long-term interval sweeps managed by `itg-periodic-tasks` (1 min interval).
-- **Offscreen Audio Chimes (`offscreen.html`)**: Audio chimes are generated via a dedicated Chrome Offscreen document created with reason `AUDIO_PLAYBACK`. Automatically closes 3.5 seconds after sound completion to conserve memory.
+### 7.1 कैप्चर मोड और इंजीनियरिंग (सभी 7 कैप्चर प्रकार)
+एक्सटेंशन सिंगल-टैब, क्रॉस-टैब, क्रॉप्ड और पैलेट संचालन को कवर करने वाले 7 विशिष्ट कैप्चर तौर-तरीकों को लागू करता है:
+1. **`visible` (दृश्यमान व्यूपोर्ट कैप्चर - `cs`)**:
+   - `chrome.tabs.captureVisibleTab` का उपयोग करके सक्रिय टैब के सटीक दृश्यमान व्यूपोर्ट को कैप्चर करता है।
+   - स्वचालित रूप से IndexedDB `screenshots` स्टोर में कैप्चर को कमिट करता है और छवि बिटमैप को सीधे सिस्टम क्लिपबोर्ड पर कॉपी करता है (`screenshotSavedAndCopied`)।
+2. **`fullPage` (निर्बाध पूर्ण-पृष्ठ स्क्रॉलिंग कैनवास - `cp`)**:
+   - कुल दस्तावेज़ स्क्रॉल ऊंचाई की गणना करते हुए, प्रोग्रामेटिक पेज स्क्रॉलिंग निष्पादित करता है।
+   - विज़ुअल स्टटर को खत्म करने के लिए प्रारंभिक खंड के बाद स्क्रॉलबार को दबाता है और चिपचिपे/निश्चित नेविगेशन बार को छुपाता है।
+   - फ्रेम कैप्चर के बीच क्रोमियम-अनुपालन 600ms देरी को लागू करते हुए, 30,000px ऊंचाई तक के `OffscreenCanvas` पर बिटमैप स्लाइस को जोड़ता है (`captureFullPageDataUrl`)।
+3. **`fullPageParts` (क्रमिक कटे हुए खंड - `cpp` / `cP`)**:
+   - लंबे दस्तावेज़ों को क्रमिक, व्यक्तिगत व्यूपोर्ट-ऊंचाई वाले छवि भागों (`captureFullPageParts`) में विभाजित करता है, जो पेजिनेशन के लिए 60 क्रमांकित छवि विखंडों तक उत्पन्न करता है।
+4. **`area` (इंटरएक्टिव आयताकार ड्रैग क्रॉप - `ca`)**:
+   - रीयल-टाइम बाउंडिंग बॉक्स आयामों के साथ क्रॉसहेयर कैनवास को ओवरले करते हुए `area-selector.js` को इंजेक्ट करता है।
+   - ड्रैग करने योग्य चयन हैंडल, आयाम टूलटिप, पुष्टिकरण ट्रिगर, `Esc` कुंजी रद्दीकरण, और मल्टी-टैब क्रॉप कतारबद्धता (`handleCaptureAreaFromShortcut`)।
+5. **`groupTabs` (बैच सक्रिय समूह टैब वॉक - `Cs`, `Cp`, `CP`)**:
+   - सक्रिय टैब समूह के भीतर प्रत्येक टैब के माध्यम से क्रमिक रूप से पुनरावृत्ति करता है (`handleCaptureGroupFromShortcut`)।
+   - दृश्यमान, पूर्ण-पृष्ठ, या खंडित भागों के मोड में बैच कैप्चर का समर्थन करता है, उन्हें एक एकीकृत संग्रह में संकलित करता है।
+6. **`omnibarPickedTabs` (कस्टम मल्टी-टैब कतार कैप्चर)**:
+   - Omnibar कमांड `cs:`, `cp:`, `cpp:`, या `ca:` (`handleCaptureTabs`) के माध्यम से शुरू किया गया।
+   - रीयल-टाइम प्रगति संकेतक प्रदान करते हुए, सभी उपयोगकर्ता-फ़िल्टर किए गए टैब में क्रमिक कैप्चर निष्पादित करता है।
+7. **`colorPickerCapture` (बैकग्राउंड स्क्रीन आईड्रॉपर फ़ॉलबैक)**:
+   - नेटिव `window.EyeDropper` समर्थन की कमी वाले ऑपरेटिंग सिस्टम (उदा., Linux) पर सटीक हेक्स आईड्रॉपर मैग्निफायर टूल को पावर देने के लिए एक बैकग्राउंड स्क्रीन कैप्चर लेता है।
 
-### 8.2 Exhaustive 4 Timing Modes
-1. **Pomodoro (`pomodoro`)**:
-   - Work duration: 1 to 180 minutes (default: 25 min).
-   - Short break: 1 to 120 minutes (default: 5 min).
-   - Long break: 1 to 180 minutes (default: 15 min).
-   - Cycles before long break: 1 to 12 cycles (default: 4).
-   - Target cycle goal: 1 to 99 cycles (default: 8).
-   - Configurable autostart work, autostart breaks, and notification alerts.
-2. **Stopwatch (`cronometro`)**: Progressive timer with lap recording and pause-as-stop capability.
-3. **Countdown (`temporizador`)**: Custom countdown timer specifying hours, minutes, and seconds.
-4. **Target Time Alarm (`tiempo`)**: Calendar date picker and clock selector setting an alarm for an exact future timestamp.
+### 7.2 गैलरी UI और दृढ़ता
+- **इंटरफ़ेस**: लाइटबॉक्स ज़ूम, पैन और रोटेट टूल के साथ उत्तरदायी मेसनरी/ग्रिड लेआउट।
+- **दृढ़ता (`screenshots` स्टोर)**: IndexedDB `Intelligent_Workspace` में सहेजा गया। रखरखाव के दौरान अनपिन किए गए कैप्चर स्वचालित रूप से शुद्ध हो जाते हैं; पिन आइकन पर क्लिक करने से (`isPersistent = true`) कैप्चर अनिश्चित काल तक सुरक्षित रहते हैं।
 
-### 8.3 In-Page Floating Timer Widget
-- Draggable, minimal overlay displaying real-time countdown, pause/resume, and skip buttons directly on web pages.
-- Allows monitoring focus sessions without switching back to the extension panel or popup.
+### 7.3 निर्यात, इन-ब्राउज़र OCR और बाहरी मार्कअप
+- **निर्यात प्रारूप (`captureDownloadFormats`)**:
+  - उच्च दक्षता वाले प्रारूप: PNG, WebP, AVIF।
+  - `pdf.js` के माध्यम से बहु-पृष्ठ संकलित PDF दस्तावेज़ निर्यात।
+- **ऑन-डिवाइस WASM OCR**:
+  - पहले से लोड किए गए स्पैनिश और अंग्रेजी (`spa+eng`) भाषा मॉडल का उपयोग करने वाला इन-ब्राउज़र Tesseract.js WebWorker।
+  - नेटवर्क पर छवि डेटा भेजे बिना सीधे क्लिपबोर्ड पर टेक्स्ट निकालता है।
+- **प्रत्यक्ष भेजें एकीकरण (Direct Send Integration)**:
+  - निकाले गए OCR टेक्स्ट या छवि अनुलग्नकों का नोट्स (`notesStore`) या Gemini AI प्रॉम्प्ट्स (`feature_geminiAttachFiles`) में एक-क्लिक स्थानांतरण।
+- **Excalidraw मार्कअप**: एक-क्लिक निर्यात कैप्चर की गई छवियों को फ़्रीहैंड ड्राइंग, तीरों और वेक्टर एनोटेशन के लिए सीधे `https://excalidraw.com/` पर भेजता है।
 
-### 8.4 Group Auto-Collapse Idle Timer
-- Works in tandem with focus routines to automatically collapse inactive groups after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) and the active group after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-
-### 8.5 Project Tagging & Metadata
-Each session supports categorization metadata:
-- Project Name (up to 18 characters)
-- Project Tag (e.g., `#research`, `#dev`)
-- Project Folder (e.g., `/client/project`)
-
-### 8.6 Analytics Engine & 19 KPI Cards
-The full dashboard (`dashboard.html` or Sidepanel `dashboard.html?context=sidepanel`) computes 19 key performance indicators from deduplicated sessions (`dedupeSessions` by `sessionStarted`):
-1. `focus`: Total focus time.
-2. `sessions`: Total completed sessions.
-3. `cycles`: Total completed work cycles.
-4. `efficiency`: Average efficiency percentage (`Total Focus / Total Time * 100`).
-5. `activeDays`: Number of unique active days.
-6. `break`: Total break duration.
-7. `interruptions`: Total count of manual pauses/interruptions.
-8. `interruptionTime`: Cumulative duration spent in paused state.
-9. `bestSession`: Longest single uninterrupted focus session.
-10. `avgFocus`: Average focus duration per completed cycle.
-11. `totalTime`: Cumulative time spent in work and breaks.
-12. `workRest`: Ratio of work duration to rest duration (`1 : X`).
-13. `distractionRate`: Interruptions per focus hour.
-14. `bestDay`: Most productive day of the week.
-15. `goldenHour`: Peak focus hour interval of the day (e.g., `10:00 - 11:00`).
-16. `projects`: Number of distinct projects tracked.
-17. `avgIntDuration`: Average duration of each interruption.
-18. `topProject`: Project with the highest accumulated focus time.
-19. `focusIntensity`: Average focus hours per active day.
-
-Additional visual analytics include a Day Streak Heatmap calendar, an hourly focus distribution bar chart, a Project variety breakdown, and full JSON data import/export.
+### 7.4 इनवोकेशन के तरीके
+- **UI**: ग्रुप कार्ड कैमरा बटन, पॉपअप त्वरित कार्रवाई, साइडपैनल गैलरी रूट `?view=gallery` (`ps`)।
+- **Vim हिंट्स**: `cs` (दृश्यमान), `cp` (पूर्ण पृष्ठ), `cP` (भाग), `ca` (क्षेत्र क्रॉप), `Cs` (समूह दृश्यमान), `Cp` (समूह पूर्ण पृष्ठ), `CP` (समूह भाग)।
+- **Omnibar उपसर्ग**: `cs:`, `cp:`, `cpp:`, `ca:`, और `limg:` (गैलरी ब्राउज़ करें)।
 
 ---
 
-## 9. Section 8: Activity & History Panel (Panel de Actividad)
+## 8. अनुभाग 7: पोमोडोरो और टाइमिंग सुइट (Pomodoro)
 
-A Declarative Net Request (DNR) tracking, analytics, and web governance engine.
+ब्राउज़र स्लीप साइकिल में पूर्ण सटीकता के लिए इंजीनियर किया गया एक फ़ोकस और टाइमिंग सुइट।
 
-### 9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)
-Managed under `ITG_WEB_ACTIVITY`:
-- `wa:day:YYYY-MM-DD`: Domain counters per day (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
-- `wa:days`: Master index array of recorded date keys.
-- `wa:recent`: Ring buffer storing the latest 400 visit timeline entries.
-- `wa:openSegment`: Active timed segment in `chrome.storage.session`, capped at `WA_MAX_SEGMENT_SECONDS = 900s` (15 minutes) to prevent distorting stats if the machine sleeps without firing idle events.
-- **Idle Detection**: Uses `chrome.idle` (default: 300s / 5m). Audio playback preserves active tracking even when windows are unfocused if `countAudible = true`.
-- **Retention**: Automatically prunes day records older than `retentionDays` (default: 180 days).
+### 8.1 टाइमिंग इंजन और बैकग्राउंड आर्किटेक्चर
+- **शून्य-विचलन टाइमस्टैम्प गणित (Zero-Drift Timestamp Math)**: स्थिति को पूर्ण यूनिक्स टाइमस्टैम्प (`startTime`, `pausedAt`) के साथ `chrome.storage.local` में बनाए रखा जाता है। सर्विस वर्कर समाप्ति, ब्राउज़र पुनरारंभ और ऑपरेटिंग सिस्टम की स्लीप स्थिति से घड़ी में शून्य विचलन होता है।
+- **अलार्म डिस्पैचर**:
+  - `chrome.alarms` (`pomodoroTick` 1s अंतराल) द्वारा संचालित उच्च-रिज़ॉल्यूशन उलटी गिनती टिकर।
+  - पृष्ठभूमि रखरखाव और दीर्घकालिक अंतराल स्वीप `itg-periodic-tasks` (1 मिनट अंतराल) द्वारा प्रबंधित।
+- **ऑफस्क्रीन ऑडियो चाइम्स (`offscreen.html`)**: ऑडियो चाइम्स `AUDIO_PLAYBACK` कारण के साथ बनाए गए एक समर्पित Chrome Offscreen दस्तावेज़ के माध्यम से उत्पन्न होते हैं। मेमोरी बचाने के लिए ध्वनि पूरी होने के 3.5 सेकंड बाद स्वचालित रूप से बंद हो जाता है।
 
-### 9.2 Declarative Net Request (DNR) Site Blocker
-- **Dynamic Rule Allocation**: Allocates dynamic rules in the ID range `9000` to `9999`.
-- **Redirect Target**: Blocked requests redirect to `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
-- **Open Tab Sweep**: When a site limit expires, the background worker immediately sweeps and redirects existing open tabs matching the domain.
-- **Overnight Schedule Spanning**: Schedules crossing midnight (e.g., `22:00` to `02:00`) are automatically evaluated across day boundaries.
-- **Grace / Snooze Period (+5 min)**: The block screen allows temporary 5-minute snooze passes, tracked in `wa:snoozeUses`.
+### 8.2 संपूर्ण 4 टाइमिंग मोड
+1. **पोमोडोरो (`pomodoro`)**:
+   - कार्य अवधि: 1 से 180 मिनट (डिफ़ॉल्ट: 25 मिनट)।
+   - छोटा ब्रेक: 1 से 120 मिनट (डिफ़ॉल्ट: 5 मिनट)।
+   - लंबा ब्रेक: 1 से 180 मिनट (डिफ़ॉल्ट: 15 मिनट)।
+   - लंबे ब्रेक से पहले चक्र: 1 से 12 चक्र (डिफ़ॉल्ट: 4)।
+   - लक्ष्य चक्र लक्ष्य: 1 से 99 चक्र (डिफ़ॉल्ट: 8)।
+   - कॉन्फ़िगर करने योग्य ऑटोस्टार्ट कार्य, ऑटोस्टार्ट ब्रेक, और अधिसूचना अलर्ट।
+2. **स्टॉपवॉच (`cronometro`)**: लैप रिकॉर्डिंग और पॉज़-एज़-स्टॉप क्षमता वाला प्रगतिशील टाइमर।
+3. **उलटी गिनती (`temporizador`)**: घंटे, मिनट और सेकंड निर्दिष्ट करने वाला कस्टम उलटी गिनती टाइमर।
+4. **लक्ष्य समय अलार्म (`tiempo`)**: कैलेंडर दिनांक चयनकर्ता और घड़ी चयनकर्ता जो भविष्य के सटीक टाइमस्टैम्प के लिए अलार्म सेट करते हैं।
 
-### 9.3 Asymmetric Security Lock (`blockLock.js`)
-Site limits can be protected with an asymmetric password lock:
-- **Hash Storage**: Stores random 16-byte salt and SHA-256 hex digest (`wa:settings.blockPassword`).
-- **Asymmetric Rule Policy**: The password is **never requested** when creating new limits or making rules stricter (e.g., reducing time allowances or adding schedule restrictions).
-- **Guarded Actions**: The password is only requested when **loosening rules** (deleting a limit, increasing time allowances, or disabling schedules) or when invoking snooze after exceeding the daily free threshold (`snoozePasswordAfter`).
+### 8.3 इन-पेज फ़्लोटिंग टाइमर विजेट
+- वेब पेजों पर सीधे रीयल-टाइम उलटी गिनती, ठहराव/फिर से शुरू करने और छोड़ने के बटन प्रदर्शित करने वाला ड्रैग करने योग्य, न्यूनतम ओवरले।
+- एक्सटेंशन पैनल या पॉपअप पर वापस स्विच किए बिना फ़ोकस सत्रों की निगरानी करने की अनुमति देता है।
 
-### 9.4 Categorization & Visual Analytics
-- **16 Built-in Categories**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
-- **Custom Categories**: Supports user-defined categories prefixed with `custom:`.
-- **Focus Ratio**: Contrasts Productive categories (`dev`, `work`, `education`, `reading`, `finance`, `mail`) against Distracting categories (`social`, `video`, `games`, `shopping`, `entertainment`).
-- **Visuals**: Chart.js hourly activity distributions, category donut breakdown, and domain ranking lists.
+### 8.4 समूह ऑटो-संकोचन निष्क्रिय टाइमर
+- 1 मिनट की निष्क्रियता (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) के बाद निष्क्रिय समूहों को और 15 मिनट की निष्क्रियता (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`) के बाद सक्रिय समूह को स्वचालित रूप से संक्षिप्त करने के लिए फ़ोकस रूटीन के साथ मिलकर काम करता है। 0 से 1440 मिनट तक कॉन्फ़िगर करने योग्य।
 
-### 9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)
-- **Dedicated Route**: Accessed in side panel via `switchMainView('downloads')` (`?view=downloads`).
-- **Direct Chrome API Integration**: Hooks `chrome.downloads` to track, manage, and inspect all browser downloads in real time.
-- **Real-Time Fuzzy Search**: Instant search by file name, file path, or download source URL.
-- **Status Filter Chips**: Rapidly filter downloads by state: `All`, `In Progress`, `Complete`, `Paused`, and `Interrupted`.
-- **Calendar Date Range Filtering**: Narrow down downloads by specific dates or time intervals.
-- **Batch Group Downloader**: Extracts all download links from open tabs in the active group and initiates synchronized batch downloads with progress tracking.
-- **File Management**: Direct one-click file opening (`chrome.downloads.open`) and folder reveal (`chrome.downloads.show`).
+### 8.5 प्रोजेक्ट टैगिंग और मेटाडेटा
+प्रत्येक सत्र वर्गीकरण मेटाडेटा का समर्थन करता है:
+- प्रोजेक्ट का नाम (18 वर्णों तक)
+- प्रोजेक्ट टैग (उदा., `#research`, `#dev`)
+- प्रोजेक्ट फ़ोल्डर (उदा., `/client/project`)
 
-### 9.6 Recently Closed Tabs & Browsing History Subsystem
-- **Recently Closed Tabs View**:
-  - Integrated directly with `chrome.sessions.getRecentlyClosed`.
-  - Real-time search with automatic diacritic and accent folding (`deaccent`).
-  - Single tab restoration and full window session restoration with a single click or Omnibar command `c:`.
-- **Browsing History View**:
-  - Deep search with 10-second TTL in-memory caching to eliminate redundant `chrome.history.search` query churn.
-  - Search filterable by domain, keyword, and calendar date ranges.
-  - One-click tab activation if already open, or fresh tab creation, accessible via Omnibar `h:`.
+### 8.6 एनालिटिक्स इंजन और 19 KPI कार्ड
+पूर्ण डैशबोर्ड (`dashboard.html` या साइडपैनल `dashboard.html?context=sidepanel`) डिडुप्लिकेट किए गए सत्रों (`sessionStarted` द्वारा `dedupeSessions`) से 19 प्रमुख प्रदर्शन संकेतकों की गणना करता है:
+1. `focus`: कुल फ़ोकस समय।
+2. `sessions`: कुल पूर्ण सत्र।
+3. `cycles`: कुल पूर्ण कार्य चक्र।
+4. `efficiency`: औसत दक्षता प्रतिशत (`Total Focus / Total Time * 100`)।
+5. `activeDays`: अद्वितीय सक्रिय दिनों की संख्या।
+6. `break`: कुल ब्रेक अवधि।
+7. `interruptions`: मैन्युअल ठहराव/रुकावटों की कुल संख्या।
+8. `interruptionTime`: रुकी हुई स्थिति में बिताई गई संचयी अवधि।
+9. `bestSession`: सबसे लंबा एकल निर्बाध फ़ोकस सत्र।
+10. `avgFocus`: प्रति पूर्ण चक्र औसत फ़ोकस अवधि।
+11. `totalTime`: काम और ब्रेक में बिताया गया संचयी समय।
+12. `workRest`: आराम की अवधि से कार्य अवधि का अनुपात (`1 : X`)।
+13. `distractionRate`: प्रति फ़ोकस घंटे रुकावटें।
+14. `bestDay`: सप्ताह का सबसे अधिक उत्पादक दिन।
+15. `goldenHour`: दिन का चरम फ़ोकस घंटा अंतराल (उदा., `10:00 - 11:00`)।
+16. `projects`: ट्रैक की गई अलग-अलग परियोजनाओं की संख्या।
+17. `avgIntDuration`: प्रत्येक रुकावट की औसत अवधि।
+18. `topProject`: उच्चतम संचित फ़ोकस समय वाला प्रोजेक्ट।
+19. `focusIntensity`: प्रति सक्रिय दिन औसत फ़ोकस घंटे।
 
-### 9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)
-- **Automated Theme Scheduling**:
-  - Managed via `ThemeScheduleModal.svelte` inside the Themes side panel view (`?view=themes` / `pt`).
-  - Supports automatic theme switching based on time of day (`HH:MM`) and active days of the week (`[0..6]`).
-  - Maximum of 7 global theme schedules (`MAX_GLOBAL_SCHEDULES = 7`).
-  - **Auto-Revert**: Automatically returns to default daytime or workplace themes at designated completion hours.
-  - **Desktop Alerts**: Issues desktop notifications when automatic theme switches occur (`chrome.notifications`).
-  - **Dual Persistence**: Persisted in `chrome.storage.sync` (roaming preferences) and `chrome.storage.local` under `savedThemes` and `themeSchedules`.
-
-### 9.8 Compact Sidepanel View
-- **Sidepanel Route (`?view=activity` / `pw`)**: 350px column optimized for real-time monitoring, featuring period selector chips (`Today`, `7d`, `30d`, `All`) and domain limit progress bars.
+अतिरिक्त विज़ुअल एनालिटिक्स में डे स्ट्रीक हीटमैप कैलेंडर, प्रति घंटा फ़ोकस वितरण बार चार्ट, प्रोजेक्ट विविधता विवरण और पूर्ण JSON डेटा आयात/निर्यात शामिल हैं।
 
 ---
 
-## 10. Multi-Modal Invocation Matrix
+## 9. अनुभाग 8: गतिविधि और इतिहास पैनल (Panel de Actividad)
 
-### 10.1 Popup UI Interface
-- **Rules Tab**: Quick rule toggles, active status indicators, and rule URL launcher.
-- **Groups Tab**: Compact accordion list with tab switching and group cleanup.
-- **AI Launcher**: Direct chat input box routing queries to the side panel.
-- **Quick Actions Toolbar**: One-click buttons for Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, and Sidepanel expansion.
+एक Declarative Net Request (DNR) ट्रैकिंग, एनालिटिक्स और वेब गवर्नेंस इंजन।
 
-### 10.2 Sidepanel Navigation Routes (`?view=...`)
-- `?view=rules` — Comprehensive Rules Manager and URL pattern editor (`pg`).
-- `?view=listgroup` — Full Group and Tab workspace with drag-and-drop reordering (`pl`).
-- `?view=notes` — Notes workspace (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
-- `?view=gallery` — Screenshot gallery, OCR, and Excalidraw tools (`ps`).
-- `?view=gemini` — Multimodal AI Assistant and Autonomous Agent interface (`pa`).
-- `?view=activity` — Web Activity tracker, limits, and category metrics (`pw`).
-- `?view=themes` — Theme editor and automated scheduling palette (`pt`).
-- `?view=hints` — Vim shortcuts, Omnibar, and YouTube loop settings (`pn`).
-- `?view=downloads` — Downloads Manager and batch link downloader (`switchMainView('downloads')`).
+### 9.1 डेटा इंजन और स्टोरेज टोपोलॉजी (`ITG_WEB_ACTIVITY`)
+`ITG_WEB_ACTIVITY` के तहत प्रबंधित:
+- `wa:day:YYYY-MM-DD`: प्रति दिन डोमेन काउंटर (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`)।
+- `wa:days`: रिकॉर्ड की गई तारीख की कुंजियों की मास्टर इंडेक्स सरणी।
+- `wa:recent`: नवीनतम 400 विज़िट टाइमलाइन प्रविष्टियों को संग्रहीत करने वाला रिंग बफर।
+- `wa:openSegment`: `chrome.storage.session` में सक्रिय समयबद्ध खंड, जिसे `WA_MAX_SEGMENT_SECONDS = 900s` (15 मिनट) पर सीमित किया गया है ताकि यदि मशीन बिना निष्क्रिय घटनाओं के सो जाती है तो आँकड़ों को विकृत होने से बचाया जा सके।
+- **निष्क्रियता का पता लगाना (Idle Detection)**: `chrome.idle` (डिफ़ॉल्ट: 300s / 5m) का उपयोग करता है। यदि `countAudible = true` है, तो ऑडियो प्लेबैक सक्रिय ट्रैकिंग को सुरक्षित रखता है भले ही विंडो अनफ़ोकस्ड हों।
+- **प्रतिधारण (Retention)**: `retentionDays` (डिफ़ॉल्ट: 180 दिन) से पुराने दिन के रिकॉर्ड को स्वचालित रूप से हटा देता है।
 
-### 10.3 Manifest Keyboard Shortcuts (24 Commands)
-1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Toggle collapse of active group.
-2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Toggle collapse of all groups.
-3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Toggle alphabetical group sorting.
-4. `open-popup` (`Alt+Shift+P`): Open popup or focus side panel.
-5. `toggle-collapse-timer`: Toggle group auto-collapse timer.
-6. `toggle-all-rules`: Master toggle for all custom rules (`Alt+M`).
-7. `toggle-expand-all`: Expand all groups in the workspace.
-8. `rules-manager`: Open Rules Manager in a dedicated tab (`Alt+R`).
-9. `toggle-prefixes`: Toggle visual group prefix indicators (`🔒`, `🔍`, `🗝️`, `⚠️`).
-10. `toggle-domain-grouping`: Toggle automatic domain clustering.
-11. `toggle-subdomain-grouping`: Toggle automatic subdomain clustering.
-12. `toggle-compact-mode`: Toggle compact single-letter group titles.
-13. `toggle-chrome-grouping`: Toggle special Chrome internal pages group.
-14. `toggle-files-grouping`: Toggle special local `file://` pages group.
-15. `toggle-extensions-grouping`: Toggle special `chrome-extension://` group.
-16. `toggle-misc-grouping`: Toggle unclustered Miscellaneous group.
-17. `toggle-ip-address-grouping`: Toggle IP address / localhost group.
-18. `toggle-clustering`: Master toggle for all automated clustering.
-19. `regroup-all-tabs`: Trigger comprehensive tab regrouping pass (`Alt+Shift+R`).
-20. `toggle-hints`: Toggle in-page Vim hints overlay engine.
-21. `open-side-panel`: Open extension side panel.
-22. `open-theme-selector`: Open theme customization panel.
-23. `remove-duplicate-tabs`: Clean duplicate tabs across the window.
-24. `open-list-group-sidepanel-command`: Open List Group view in side panel.
+### 9.2 Declarative Net Request (DNR) साइट ब्लॉकर
+- **गतिशील नियम आवंटन**: आईडी श्रेणी `9000` से `9999` में गतिशील नियम आवंटित करता है।
+- **रीडायरेक्ट लक्ष्य**: अवरुद्ध अनुरोध `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1` पर रीडायरेक्ट होते हैं।
+- **खुला टैब स्वीप**: जब कोई साइट सीमा समाप्त हो जाती है, तो पृष्ठभूमि कार्यकर्ता तुरंत डोमेन से मेल खाने वाले मौजूदा खुले टैब को साफ़ और रीडायरेक्ट करता है।
+- **रात भर का शेड्यूल विस्तार**: आधी रात को पार करने वाले शेड्यूल (उदा., `22:00` से `02:00`) का मूल्यांकन स्वचालित रूप से दिन की सीमाओं के पार किया जाता है।
+- **रियायत / स्नूज़ अवधि (+5 मिनट)**: ब्लॉक स्क्रीन अस्थायी 5-मिनट स्नूज़ पास की अनुमति देती है, जिसे `wa:snoozeUses` में ट्रैक किया जाता है।
 
-### 10.4 In-Page Vim Hint Keys (40+ Combinations)
-- **Scrolling & Movement**:
-  - `j` / `k`: Scroll down / up (75px step).
-  - `d` / `u`: Scroll to bottom / top of page.
-  - `h` / `l`: Scroll left / right (or switch to previous / next tab if page cannot scroll).
-  - `H` / `L`: Navigate back / forward in browser history.
-  - `esc`: Blur active input, unfocus elements.
-- **Tab & Window Management**:
-  - `t`: Open new tab.
-  - `x`: Close current tab.
-  - `yt`: Duplicate current tab.
-  - `s`: Swap to previous active tab.
-  - `ts`: Toggle side-by-side Split Screen window.
-  - `we`: Open active tab in standalone popup window.
-  - `wp`: Open active tab in Document Picture-in-Picture.
-  - `wv`: Open active video in custom Video Picture-in-Picture.
-  - `dg`: Close/delete current tab group.
-- **Link Hints & Interaction**:
-  - `f`: Activate Vim link hints (click element).
-  - `cf`: Activate Vim link hints to copy link URL.
-  - `i`: Focus first text input on page.
-  - `c`: Copy current URL to clipboard.
-  - `y`: Append current selection to clipboard buffer.
-  - `vs`: View page source (`view-source:`).
-  - `vp`: Toggle link preview modal.
-  - `as` / `ah`: Toggle Auto-PiP on scroll / on tab hide.
-  - `ar`: Toggle Text-to-Speech Read Aloud.
-  - `ao`: Create note from selection.
-  - `at`: Translate page.
-- **Sidepanel Direct Access**:
-  - `ph`: Open Main side panel view.
-  - `pt`: Open Themes side panel.
-  - `pl`: Open List Group side panel.
-  - `pk`: Open Notes side panel.
-  - `ps`: Open Screenshot Gallery side panel.
-  - `pa`: Open AI Assistant side panel.
-  - `pw`: Open Web Activity side panel.
-  - `pg`: Open Rules side panel.
-  - `pn`: Open Customize Hints side panel.
-- **Media Capture**:
-  - `cs`: Capture visible viewport.
-  - `cp`: Capture full page (stitched).
-  - `cP`: Capture full page in sequential parts.
-  - `ca`: Capture cropped area.
-  - `Cs`: Capture all tabs in group (visible).
-  - `Cp`: Capture all tabs in group (full page).
-  - `CP`: Capture all tabs in group (parts).
-- **Audio & Reading Modes**:
-  - `st`: Toggle mute on current tab.
-  - `so`: Mute all audible tabs.
-  - `mb` / `mB`: Black page mode (tab / global).
-  - `ms` / `mS`: Sepia page mode (tab / global).
-  - `mp` / `mP`: Paper page mode (tab / global).
-  - `ml` / `mL`: Light page mode (tab / global).
-  - `me` / `mE`: Custom CSS filter mode (tab / global).
-- **Text-to-Speech (Read Aloud) Reader Navigation**:
-  - `zp`: Play / Pause speech synthesis reader overlay.
-  - `zn`: Next sentence in Read Aloud session.
-  - `zb`: Previous sentence in Read Aloud session.
-  - `zq`: Close / Terminate Read Aloud speech overlay.
-- **Group Backups & Rules**:
-  - `bg`: Backup all groups to IndexedDB.
-  - `br`: Restore all groups from IndexedDB.
-  - `cr`: Create custom rule from current page.
-  - `ae`: Add current page to existing rule.
-- **Quick URL Launchers**:
-  - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini.
+### 9.3 असममित सुरक्षा लॉक (`blockLock.js`)
+साइट सीमाओं को असममित पासवर्ड लॉक से सुरक्षित किया जा सकता है:
+- **हैश स्टोरेज**: यादृच्छिक 16-बाइट साल्ट और SHA-256 हेक्स डाइजेस्ट (`wa:settings.blockPassword`) संग्रहीत करता है।
+- **असममित नियम नीति**: नई सीमाएं बनाते समय या नियमों को सख्त बनाते समय (उदा., समय भत्ते को कम करना या शेड्यूल प्रतिबंध जोड़ना) पासवर्ड **कभी नहीं मांगा जाता** है।
+- **सुरक्षित क्रियाएं**: पासवर्ड केवल **नियमों को ढीला करते समय** (सीमा हटाना, समय भत्ता बढ़ाना, या शेड्यूल अक्षम करना) या दैनिक मुफ्त सीमा पार करने के बाद स्नूज़ लागू करते समय मांगा जाता है (`snoozePasswordAfter`)।
 
-### 10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)
-Type `o` on any page to open the floating Omnibar. Type `@` to view all available commands:
-1. `we:` — Open selected tab as standalone popup window.
-2. `wp:` — Open selected tab as Document Picture-in-Picture.
-3. `wv:` — Open selected tab as Video Picture-in-Picture.
-4. `sp:` — Open URL, search, or tab in the side panel.
-5. `ar:` — Pick a tab and read its text aloud via TTS.
-6. `b:` — Full-text search browser bookmarks.
-7. `h:` — Search browsing history.
-8. `c:` — Browse and reopen recently closed tabs.
-9. `dg:` — Search and delete or switch tab groups.
-10. `dt:` — Search and close multiple tabs.
-11. `ts:` — Select tabs and launch in side-by-side Split Screen.
-12. `cs:` — Capture visible area of chosen tabs.
-13. `cp:` — Capture full page of chosen tabs.
-14. `cpp:` — Capture full page in sequential parts.
-15. `ca:` — Capture custom cropped area on chosen tabs.
-16. `bg:` — Backup tab groups immediately to IndexedDB.
-17. `bgr:` — Search and restore backed-up groups and tabs.
-18. `f:` — Deep full-text search across all open tabs.
-19. `qai:` — Ask a query directly to configured AI model.
-20. `qaia:` — Instruct the Autonomous AI Agent to execute actions.
-21. `lai:` — Browse past AI conversation history.
-22. `laiq:` — Search within AI messages.
-23. `limg:` — Browse captured screenshots and gallery images.
-24. `lnt:` — Search and view saved notes.
-25. `atcr:` — Add active tab URL to an existing custom rule.
-26. `atr:` — Add open tabs or manual URLs to an existing rule.
-27. `rl:` — Search rules and launch associated URLs.
-28. `cr:` — Create a new rule (`cr: name` or `cr: name, url1, url2`).
-29. `ccr:` — Change the color of a custom rule.
-30. `ccg:` — Change the color of an active tab group.
-31. `dr:` — Delete rules or individual URLs from rules.
-32. `er:` — Rename or edit an existing rule.
-33. `st:` — Open Omnibar interactive tutorial.
-34. `g:` — Search Google (`g: <query>`).
-35. `y:` — Search YouTube (`y: <query>`).
-36. `d:` — Search DuckDuckGo (`d: <query>`).
-37. `w:` — Search Wikipedia (`w: <query>`).
-38. `gm:` — Search Google Maps (`gm: <query>`).
-39. `x:` — Search X / Twitter (`x: <query>`).
-40. `am:` — Search Amazon (`am: <query>`).
-41. `ams:` — Search Amazon Spain (`ams: <query>`).
+### 9.4 वर्गीकरण और विज़ुअल एनालिटिक्स
+- **16 अंतर्निहित श्रेणियां**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`।
+- **कस्टम श्रेणियां**: `custom:` उपसर्ग वाली उपयोगकर्ता-परिभाषित श्रेणियों का समर्थन करता है।
+- **फ़ोकस अनुपात**: उत्पादक श्रेणियों (`dev`, `work`, `education`, `reading`, `finance`, `mail`) की तुलना विचलित करने वाली श्रेणियों (`social`, `video`, `games`, `shopping`, `entertainment`) से करता है।
+- **विज़ुअल्स**: Chart.js प्रति घंटा गतिविधि वितरण, श्रेणी डोनट ब्रेकडाउन, और डोमेन रैंकिंग सूचियां।
 
-### 10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)
-The context menu provides a complete hierarchical tree organized into 5 functional command groups:
-1. **Group 1: Rules & URL Submenu**:
-   - Master rules checkbox toggle ("Activar/Desactivar Todas las Reglas").
-   - Per-rule toggles enabling or disabling individual custom rules on the fly.
-   - "Abrir Todas las URLs": Opens all target URLs registered in the selected rule.
-   - Individual URL submenus with dynamic open tab counts `[N]`: Displays currently open tab count matching the URL, provides one-click navigation to the URL, and offers "Cerrar Pestañas para esta URL" to terminate all matching tabs.
-   - Quick Rule Creation: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-   - Add to Existing Rule: "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-2. **Group 2: Tab Cleanup & Audio Controls**:
-   - "Eliminar Pestañas Duplicadas [N]": Shows count of detected redundant tabs and closes them across windows.
-   - "Eliminar Pestañas por Dominio": Dynamic submenu listing all domains with open tab counts `[N]`, allowing surgical tab closure by domain.
-   - "Cerrar Todos Excepto el Grupo Activo": Retains active focused group and closes all other groups.
-   - "Reagrupar Todas las Pestañas": Triggers full background regrouping pass across all open tabs.
-   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Global audio mute and unmute controls.
-3. **Group 3: Reading, Selection & Notes**:
-   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader with overlay controls.
-   - "Leer Selección en Voz Alta": Reads highlighted DOM selection aloud using speech synthesis.
-   - "Crear Nota desde Selección": Extracts text selection, automatically derives note title from the nearest heading (`h1`-`h3`), and stores it in `notesStore`.
-4. **Group 4: Open Extension, PiP & Panels**:
-   - "Abrir como PiP" / "Abrir como Ventana Emergente": Launch target page, highlighted selection, or target image into floating Picture-in-Picture or standalone popup window.
-   - "Abrir Extensión": Opens extension popup or expands side panel.
-   - "Gestionar Reglas": Opens full Rules Manager in a dedicated browser tab.
-   - Direct Sidepanel Launchers: One-click routing to List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), and Customize Hints (`?view=hints`).
-5. **Group 5: Settings & Clustering Options**:
-   - **Gestión de Grupos**: Alternar Grupo Actual (toggle active group collapse), Alternar Todos los Grupos (toggle all groups collapse).
+### 9.5 डाउनलोड प्रबंधक उपप्रणाली (`switchMainView('downloads')`)
+- **समर्पित रूट**: साइड पैनल में `switchMainView('downloads')` (`?view=downloads`) के माध्यम से एक्सेस किया गया।
+- **प्रत्यक्ष Chrome API एकीकरण**: रीयल-टाइम में सभी ब्राउज़र डाउनलोड को ट्रैक, प्रबंधित और निरीक्षण करने के लिए `chrome.downloads` को हुक करता है।
+- **रीयल-टाइम फ़ज़ी खोज**: फ़ाइल नाम, फ़ाइल पथ, या डाउनलोड स्रोत URL द्वारा त्वरित खोज।
+- **स्थिति फ़िल्टर चिप्स**: स्थिति के अनुसार डाउनलोड को तेजी से फ़िल्टर करें: `All`, `In Progress`, `Complete`, `Paused`, और `Interrupted`।
+- **कैलेंडर दिनांक सीमा फ़िल्टरिंग**: विशिष्ट तिथियों या समय अंतरालों द्वारा डाउनलोड को संकीर्ण करें।
+- **बैच समूह डाउनलोडर**: सक्रिय समूह में खुले टैब से सभी डाउनलोड लिंक निकालता है और प्रगति ट्रैकिंग के साथ सिंक्रनाइज़ बैच डाउनलोड शुरू करता है।
+- **फ़ाइल प्रबंधन**: सीधे एक-क्लिक फ़ाइल खोलना (`chrome.downloads.open`) और फ़ोल्डर प्रकट करना (`chrome.downloads.show`)।
+
+### 9.6 हाल ही में बंद किए गए टैब और ब्राउज़िंग इतिहास उपप्रणाली
+- **हाल ही में बंद किए गए टैब दृश्य**:
+  - `chrome.sessions.getRecentlyClosed` के साथ सीधे एकीकृत।
+  - स्वचालित विशेषक और एक्सेंट फ़ोल्डिंग (`deaccent`) के साथ रीयल-टाइम खोज।
+  - एकल क्लिक या Omnibar कमांड `c:` के साथ एकल टैब पुनर्स्थापना और पूर्ण विंडो सत्र पुनर्स्थापना।
+- **ब्राउज़िंग इतिहास दृश्य**:
+  - अनावश्यक `chrome.history.search` क्वेरी मंथन को खत्म करने के लिए 10-सेकंड TTL इन-मेमोरी कैशिंग के साथ गहरी खोज।
+  - डोमेन, कीवर्ड और कैलेंडर दिनांक सीमाओं द्वारा फ़िल्टर करने योग्य खोज।
+  - यदि पहले से खुला है तो एक-क्लिक टैब सक्रियण, या नया टैब निर्माण, जो Omnibar `h:` के माध्यम से सुलभ है।
+
+### 9.7 थीम शेड्यूलिंग उपप्रणाली (`ThemeScheduleModal.svelte`)
+- **स्वचालित थीम शेड्यूलिंग**:
+  - थीम्स साइड पैनल दृश्य (`?view=themes` / `pt`) के अंदर `ThemeScheduleModal.svelte` के माध्यम से प्रबंधित।
+  - दिन के समय (`HH:MM`) और सप्ताह के सक्रिय दिनों (`[0..6]`) के आधार पर स्वचालित थीम स्विचिंग का समर्थन करता है।
+  - अधिकतम 7 वैश्विक थीम शेड्यूल (`MAX_GLOBAL_SCHEDULES = 7`)।
+  - **ऑटो-रिवर्ट**: निर्दिष्ट पूर्णता घंटों पर स्वचालित रूप से डिफ़ॉल्ट दिन के समय या कार्यस्थल थीम पर वापस आ जाता है।
+  - **डेस्कटॉप अलर्ट**: स्वचालित थीम स्विच होने पर डेस्कटॉप सूचनाएं जारी करता है (`chrome.notifications`)।
+  - **दोहरी दृढ़ता**: `savedThemes` और `themeSchedules` के तहत `chrome.storage.sync` (रोमिंग प्राथमिकताएं) और `chrome.storage.local` में बना रहता है।
+
+### 9.8 कॉम्पैक्ट साइडपैनल दृश्य
+- **साइडपैनल रूट (`?view=activity` / `pw`)**: रीयल-टाइम निगरानी के लिए अनुकूलित 350px कॉलम, जिसमें अवधि चयनकर्ता चिप्स (`Today`, `7d`, `30d`, `All`) और डोमेन सीमा प्रगति बार शामिल हैं।
+
+---
+
+## 10. मल्टी-मॉडल इनवोकेशन मैट्रिक्स (Multi-Modal Invocation Matrix)
+
+### 10.1 पॉपअप UI इंटरफ़ेस
+- **Rules टैब**: त्वरित नियम टॉगल, सक्रिय स्थिति संकेतक, और नियम URL लॉन्चर।
+- **Groups टैब**: टैब स्विचिंग और समूह क्लीनअप के साथ कॉम्पैक्ट एकॉर्डियन सूची।
+- **AI लॉन्चर**: साइड पैनल पर प्रश्नों को रूट करने वाला सीधा चैट इनपुट बॉक्स।
+- **त्वरित क्रिया टूलबार**: क्षेत्र स्क्रीनशॉट, पूर्ण-पृष्ठ कैप्चर, त्वरित नोट्स, पोमोडोरो प्रारंभ/रोकें, और साइडपैनल विस्तार के लिए एक-क्लिक बटन।
+
+### 10.2 साइडपैनल नेविगेशन रूट्स (`?view=...`)
+- `?view=rules` — व्यापक नियम प्रबंधक और URL पैटर्न संपादक (`pg`)।
+- `?view=listgroup` — ड्रैग-एंड-ड्रॉप पुनर्व्यवस्था के साथ पूर्ण समूह और टैब वर्कस्पेस (`pl`)।
+- `?view=notes` — नोट्स वर्कस्पेस (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`)।
+- `?view=gallery` — स्क्रीनशॉट गैलरी, OCR, और Excalidraw टूल्स (`ps`)।
+- `?view=gemini` — मल्टीमॉडल AI सहायक और स्वायत्त एजेंट इंटरफ़ेस (`pa`)।
+- `?view=activity` — वेब गतिविधि ट्रैकर, सीमाएं, और श्रेणी मेट्रिक्स (`pw`)।
+- `?view=themes` — थीम संपादक और स्वचालित शेड्यूलिंग पैलेट (`pt`)।
+- `?view=hints` — Vim शॉर्टकट, Omnibar, और YouTube लूप सेटिंग्स (`pn`)।
+- `?view=downloads` — डाउनलोड प्रबंधक और बैच लिंक डाउनलोडर (`switchMainView('downloads')`)।
+
+### 10.3 मेनिफेस्ट कीबोर्ड शॉर्टकट (24 कमांड)
+1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): सक्रिय समूह के संकोचन को टॉगल करें।
+2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): सभी समूहों के संकोचन को टॉगल करें।
+3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): वर्णमाला समूह छँटाई को टॉगल करें।
+4. `open-popup` (`Alt+Shift+P`): पॉपअप खोलें या साइड पैनल पर फ़ोकस करें।
+5. `toggle-collapse-timer`: समूह ऑटो-संकोचन टाइमर को टॉगल करें।
+6. `toggle-all-rules`: सभी कस्टम नियमों के लिए मास्टर टॉगल (`Alt+M`)।
+7. `toggle-expand-all`: वर्कस्पेस में सभी समूहों का विस्तार करें।
+8. `rules-manager`: एक समर्पित टैब में नियम प्रबंधक खोलें (`Alt+R`)।
+9. `toggle-prefixes`: विज़ुअल समूह उपसर्ग संकेतकों को टॉगल करें (`🔒`, `🔍`, `🗝️`, `⚠️`)।
+10. `toggle-domain-grouping`: स्वचालित डोमेन समूहीकरण को टॉगल करें।
+11. `toggle-subdomain-grouping`: स्वचालित उपडोमेन समूहीकरण को टॉगल करें।
+12. `toggle-compact-mode`: कॉम्पैक्ट एकल-अक्षर समूह शीर्षकों को टॉगल करें।
+13. `toggle-chrome-grouping`: विशेष क्रोम आंतरिक पृष्ठ समूह को टॉगल करें।
+14. `toggle-files-grouping`: विशेष स्थानीय `file://` पृष्ठ समूह को टॉगल करें।
+15. `toggle-extensions-grouping`: विशेष `chrome-extension://` समूह को टॉगल करें।
+16. `toggle-misc-grouping`: गैर-समूहीकृत विविध समूह को टॉगल करें।
+17. `toggle-ip-address-grouping`: आईपी पता / लोकलहोस्ट समूह को टॉगल करें।
+18. `toggle-clustering`: सभी स्वचालित क्लस्टरिंग के लिए मास्टर टॉगल।
+19. `regroup-all-tabs`: व्यापक टैब पुनर्समूहीकरण पास ट्रिगर करें (`Alt+Shift+R`)।
+20. `toggle-hints`: इन-पेज Vim संकेत ओवरले इंजन को टॉगल करें।
+21. `open-side-panel`: एक्सटेंशन साइड पैनल खोलें।
+22. `open-theme-selector`: थीम अनुकूलन पैनल खोलें।
+23. `remove-duplicate-tabs`: पूरी विंडो में डुप्लिकेट टैब साफ़ करें।
+24. `open-list-group-sidepanel-command`: साइड पैनल में List Group दृश्य खोलें।
+
+### 10.4 इन-पेज Vim हिंट कुंजियाँ (40+ संयोजन)
+- **स्क्रॉलिंग और संचलन**:
+  - `j` / `k`: नीचे / ऊपर स्क्रॉल करें (75px चरण)।
+  - `d` / `u`: पृष्ठ के नीचे / ऊपर स्क्रॉल करें।
+  - `h` / `l`: बाएँ / दाएँ स्क्रॉल करें (या यदि पृष्ठ स्क्रॉल नहीं कर सकता है तो पिछले / अगले टैब पर स्विच करें)।
+  - `H` / `L`: ब्राउज़र इतिहास में पीछे / आगे नेविगेट करें।
+  - `esc`: सक्रिय इनपुट को ब्लर करें, तत्वों से फ़ोकस हटाएं।
+- **टैब और विंडो प्रबंधन**:
+  - `t`: नया टैब खोलें।
+  - `x`: वर्तमान टैब बंद करें।
+  - `yt`: वर्तमान टैब को डुप्लिकेट करें।
+  - `s`: पिछले सक्रिय टैब पर स्वैप करें।
+  - `ts`: अगल-बगल स्प्लिट स्क्रीन विंडो टॉगल करें।
+  - `we`: सक्रिय टैब को स्टैंडअलोन पॉपअप विंडो में खोलें।
+  - `wp`: सक्रिय टैब को Document Picture-in-Picture में खोलें।
+  - `wv`: सक्रिय वीडियो को कस्टम Video Picture-in-Picture में खोलें।
+  - `dg`: वर्तमान टैब समूह को बंद करें/हटाएं।
+- **लिंक संकेत और इंटरैक्शन**:
+  - `f`: Vim लिंक संकेत सक्रिय करें (तत्व पर क्लिक करें)।
+  - `cf`: लिंक URL कॉपी करने के लिए Vim लिंक संकेत सक्रिय करें।
+  - `i`: पृष्ठ पर पहले टेक्स्ट इनपुट पर फ़ोकस करें।
+  - `c`: वर्तमान URL को क्लिपबोर्ड पर कॉपी करें।
+  - `y`: वर्तमान चयन को क्लिपबोर्ड बफर में जोड़ें।
+  - `vs`: पृष्ठ स्रोत देखें (`view-source:`)।
+  - `vp`: लिंक पूर्वावलोकन मॉडल टॉगल करें।
+  - `as` / `ah`: स्क्रॉल पर / टैब छिपाने पर ऑटो-PiP टॉगल करें।
+  - `ar`: टेक्स्ट-टू-स्पीच रीड अलाउड टॉगल करें।
+  - `ao`: चयन से नोट बनाएं।
+  - `at`: पृष्ठ का अनुवाद करें।
+- **साइडपैनल सीधा प्रवेश**:
+  - `ph`: मुख्य साइड पैनल दृश्य खोलें।
+  - `pt`: थीम्स साइड पैनल खोलें।
+  - `pl`: List Group साइड पैनल खोलें।
+  - `pk`: नोट्स साइड पैनल खोलें।
+  - `ps`: स्क्रीनशॉट गैलरी साइड पैनल खोलें।
+  - `pa`: AI सहायक साइड पैनल खोलें।
+  - `pw`: वेब गतिविधि साइड पैनल खोलें।
+  - `pg`: नियम साइड पैनल खोलें।
+  - `pn`: Customize Hints साइड पैनल खोलें।
+- **मीडिया कैप्चर**:
+  - `cs`: दृश्यमान व्यूपोर्ट कैप्चर करें।
+  - `cp`: पूर्ण पृष्ठ कैप्चर करें (सिलाई करके)।
+  - `cP`: क्रमिक भागों में पूर्ण पृष्ठ कैप्चर करें।
+  - `ca`: क्रॉप किया गया क्षेत्र कैप्चर करें।
+  - `Cs`: समूह के सभी टैब कैप्चर करें (दृश्यमान)।
+  - `Cp`: समूह के सभी टैब कैप्चर करें (पूर्ण पृष्ठ)।
+  - `CP`: समूह के सभी टैब कैप्चर करें (भाग)।
+- **ऑडियो और पठन मोड**:
+  - `st`: वर्तमान टैब पर म्यूट टॉगल करें।
+  - `so`: सभी श्रव्य टैब म्यूट करें।
+  - `mb` / `mB`: ब्लैक पेज मोड (टैब / ग्लोबल)।
+  - `ms` / `mS`: सेपिया पेज मोड (टैब / ग्लोबल)।
+  - `mp` / `mP`: पेपर पेज मोड (टैब / ग्लोबल)।
+  - `ml` / `mL`: लाइट पेज मोड (टैब / ग्लोबल)।
+  - `me` / `mE`: कस्टम CSS फ़िल्टर मोड (टैब / ग्लोबल)।
+- **टेक्स्ट-टू-स्पीच (रीड अलाउड) रीडर नेविगेशन**:
+  - `zp`: वाक् संश्लेषण रीडर ओवरले चलाएं / रोकें।
+  - `zn`: रीड अलाउड सत्र में अगला वाक्य।
+  - `zb`: रीड अलाउड सत्र में पिछला वाक्य।
+  - `zq`: रीड अलाउड वाक् ओवरले बंद करें / समाप्त करें।
+- **समूह बैकअप और नियम**:
+  - `bg`: IndexedDB में सभी समूहों का बैकअप लें।
+  - `br`: IndexedDB से सभी समूहों को पुनर्स्थापित करें।
+  - `cr`: वर्तमान पृष्ठ से कस्टम नियम बनाएं।
+  - `ae`: वर्तमान पृष्ठ को मौजूदा नियम में जोड़ें।
+- **त्वरित URL लॉन्चर**:
+  - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini।
+
+### 10.5 इन-पेज Omnibar उपप्रणाली उपसर्ग (41 उपसर्ग)
+फ़्लोटिंग Omnibar खोलने के लिए किसी भी पृष्ठ पर `o` टाइप करें। सभी उपलब्ध कमांड देखने के लिए `@` टाइप करें:
+1. `we:` — चयनित टैब को स्टैंडअलोन पॉपअप विंडो के रूप में खोलें।
+2. `wp:` — चयनित टैब को Document Picture-in-Picture के रूप में खोलें।
+3. `wv:` — चयनित टैब को Video Picture-in-Picture के रूप में खोलें।
+4. `sp:` — साइड पैनल में URL, खोज या टैब खोलें।
+5. `ar:` — एक टैब चुनें और TTS के माध्यम से उसका टेक्स्ट जोर से पढ़ें।
+6. `b:` — ब्राउज़र बुकमार्क में फ़ुल-टेक्स्ट खोज।
+7. `h:` — ब्राउज़िंग इतिहास खोजें।
+8. `c:` — हाल ही में बंद किए गए टैब ब्राउज़ करें और फिर से खोलें।
+9. `dg:` — टैब समूहों को खोजें और हटाएं या स्विच करें।
+10. `dt:` — एकाधिक टैब खोजें और बंद करें।
+11. `ts:` — टैब चुनें और अगल-बगल स्प्लिट स्क्रीन में लॉन्च करें।
+12. `cs:` — चुने हुए टैब का दृश्यमान क्षेत्र कैप्चर करें।
+13. `cp:` — चुने हुए टैब का पूर्ण पृष्ठ कैप्चर करें।
+14. `cpp:` — क्रमिक भागों में पूर्ण पृष्ठ कैप्चर करें।
+15. `ca:` — चुने हुए टैब पर कस्टम क्रॉप किया गया क्षेत्र कैप्चर करें।
+16. `bg:` — IndexedDB में तुरंत टैब समूहों का बैकअप लें।
+17. `bgr:` — बैकअप किए गए समूहों और टैब को खोजें और पुनर्स्थापित करें।
+18. `f:` — सभी खुले टैब में गहरी फ़ुल-टेक्स्ट खोज।
+19. `qai:` — कॉन्फ़िगर किए गए AI मॉडल से सीधे प्रश्न पूछें।
+20. `qaia:` — क्रियाओं को निष्पादित करने के लिए स्वायत्त AI एजेंट को निर्देश दें।
+21. `lai:` — पिछले AI वार्तालाप इतिहास को ब्राउज़ करें।
+22. `laiq:` — AI संदेशों के भीतर खोजें।
+23. `limg:` — कैप्चर किए गए स्क्रीनशॉट और गैलरी छवियों को ब्राउज़ करें।
+24. `lnt:` — सहेजे गए नोट्स खोजें और देखें।
+25. `atcr:` — सक्रिय टैब URL को किसी मौजूदा कस्टम नियम में जोड़ें।
+26. `atr:` — खुले टैब या मैन्युअल URLs को किसी मौजूदा नियम में जोड़ें।
+27. `rl:` — नियम खोजें और संबंधित URLs लॉन्च करें।
+28. `cr:` — एक नया नियम बनाएं (`cr: name` या `cr: name, url1, url2`)।
+29. `ccr:` — कस्टम नियम का रंग बदलें।
+30. `ccg:` — सक्रिय टैब समूह का रंग बदलें।
+31. `dr:` — नियम या नियमों से व्यक्तिगत URLs हटाएं।
+32. `er:` — किसी मौजूदा नियम का नाम बदलें या संपादित करें।
+33. `st:` — Omnibar इंटरैक्टिव ट्यूटोरियल खोलें।
+34. `g:` — Google खोजें (`g: <query>`)।
+35. `y:` — YouTube खोजें (`y: <query>`)।
+36. `d:` — DuckDuckGo खोजें (`d: <query>`)।
+37. `w:` — विकिपीडिया खोजें (`w: <query>`)।
+38. `gm:` — Google Maps खोजें (`gm: <query>`)।
+39. `x:` — X / Twitter खोजें (`x: <query>`)।
+40. `am:` — Amazon खोजें (`am: <query>`)।
+41. `ams:` — Amazon Spain खोजें (`ams: <query>`)।
+
+### 10.6 संदर्भ मेनू ट्री पदानुक्रम (सभी 5 समूह और 30+ क्रियाएं)
+संदर्भ मेनू 5 कार्यात्मक कमांड समूहों में व्यवस्थित एक पूर्ण पदानुक्रमित ट्री प्रदान करता है:
+1. **समूह 1: नियम और URL सबमेनू**:
+   - मास्टर नियम चेकबॉक्स टॉगल ("Activar/Desactivar Todas las Reglas")।
+   - व्यक्तिगत कस्टम नियमों को तुरंत सक्षम या अक्षम करने वाले प्रति-नियम टॉगल।
+   - "Abrir Todas las URLs": चयनित नियम में पंजीकृत सभी लक्ष्य URLs खोलता है।
+   - गतिशील खुले टैब गणना `[N]` के साथ व्यक्तिगत URL सबमेनू: वर्तमान में खुले टैब की संख्या प्रदर्शित करता है जो URL से मेल खाती है, URL पर एक-क्लिक नेविगेशन प्रदान करता है, और सभी मिलान वाले टैब को समाप्त करने के लिए "Cerrar Pestañas para esta URL" प्रदान करता है।
+   - त्वरित नियम निर्माण: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa"।
+   - मौजूदा नियम में जोड़ें: "Añadir a Regla Existente" -> नियम चुनें -> "Añadir Raíz del Sitio" / "Añadir URL Completa"।
+2. **समूह 2: टैब क्लीनअप और ऑडियो नियंत्रण**:
+   - "Eliminar Pestañas Duplicadas [N]": पाए गए अनावश्यक टैब की संख्या दिखाता है और उन्हें सभी विंडो में बंद करता है।
+   - "Eliminar Pestañas por Dominio": खुले टैब गणना `[N]` के साथ सभी डोमेन को सूचीबद्ध करने वाला गतिशील सबमेनू, जो डोमेन द्वारा सटीक टैब बंद करने की अनुमति देता है।
+   - "Cerrar Todos Excepto el Grupo Activo": सक्रिय केंद्रित समूह को रखता है और अन्य सभी समूहों को बंद करता है।
+   - "Reagrupar Todas las Pestañas": सभी खुले टैब में पूर्ण पृष्ठभूमि पुनर्समूहीकरण पास को ट्रिगर करता है।
+   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": वैश्विक ऑडियो म्यूट और अनम्यूट नियंत्रण।
+3. **समूह 3: पठन, चयन और नोट्स**:
+   - "Leer Página en Voz Alta" (TTS): ओवरले नियंत्रणों के साथ पूर्ण-पृष्ठ टेक्स्ट-टू-स्पीच रीडर।
+   - "Leer Selección en Voz Alta": वाक् संश्लेषण का उपयोग करके हाइलाइट किए गए DOM चयन को जोर से पढ़ता है।
+   - "Crear Nota desde Selección": टेक्स्ट चयन निकालता है, निकटतम शीर्षक (`h1`-`h3`) से स्वचालित रूप से नोट शीर्षक प्राप्त करता है, और इसे `notesStore` में संग्रहीत करता है।
+4. **समूह 4: खुला एक्सटेंशन, PiP और पैनल**:
+   - "Abrir como PiP" / "Abrir como Ventana Emergente": लक्ष्य पृष्ठ, हाइलाइट किए गए चयन, या लक्ष्य छवि को फ़्लोटिंग Picture-in-Picture या स्टैंडअलोन पॉपअप विंडो में लॉन्च करें।
+   - "Abrir Extensión": एक्सटेंशन पॉपअप खोलता है या साइड पैनल का विस्तार करता है।
+   - "Gestionar Reglas": एक समर्पित ब्राउज़र टैब में पूर्ण नियम प्रबंधक खोलता है।
+   - डायरेक्ट साइडपैनल लॉन्चर: List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), और Customize Hints (`?view=hints`) के लिए एक-क्लिक रूटिंग।
+5. **समूह 5: सेटिंग्स और क्लस्टरिंग विकल्प**:
+   - **Gestión de Grupos**: Alternar Grupo Actual (सक्रिय समूह संकोचन टॉगल करें), Alternar Todos los Grupos (सभी समूह संकोचन टॉगल करें)।
    - **Opciones de Agrupación**:
-     - Agrupación Inteligente (toggle automated heuristic clustering).
-     - Modo Compacto (toggle single-letter group title mode).
-     - Dominio / Subdominio (toggle domain and subdomain grouping).
-     - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost.
+     - Agrupación Inteligente (स्वचालित अनुमानी क्लस्टरिंग टॉगल करें)।
+     - Modo Compacto (एकल-अक्षर समूह शीर्षक मोड टॉगल करें)।
+     - Dominio / Subdominio (डोमेन और उपडोमेन समूहीकरण टॉगल करें)।
+     - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost।
    - **Opciones Generales**:
-     - Ordenar Alfabéticamente (enforce alphabetical sorting across tab strip).
-     - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`).
-     - Temporizador de Auto-Colapso (toggle idle group collapse timer).
-     - Prefijos Visuales (toggle `🔒`, `🔍`, `🗝️`, `⚠️` state markers).
-     - Vista Previa de Enlaces (toggle in-page link preview modal).
+     - Ordenar Alfabéticamente (टैब स्ट्रिप में वर्णानुक्रम लागू करें)।
+     - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`)।
+     - Temporizador de Auto-Colapso (निष्क्रिय समूह संकोचन टाइमर टॉगल करें)।
+     - Prefijos Visuales (`🔒`, `🔍`, `🗝️`, `⚠️` स्थिति मार्कर टॉगल करें)।
+     - Vista Previa de Enlaces (इन-पेज लिंक पूर्वावलोकन मॉडल टॉगल करें)।
 
 ---
 
-## 11. Storage Schemas & Data Persistence
+## 11. स्टोरेज स्कीमा और डेटा दृढ़ता (Storage Schemas & Data Persistence)
 
-The extension uses a multi-tier storage model across IndexedDB and Chrome Storage APIs:
+एक्सटेंशन IndexedDB और Chrome Storage APIs में एक बहु-स्तरीय स्टोरेज मॉडल का उपयोग करता है:
 
-### 11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)
-1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Secondary index: `'createdAt'`. Holds binary screenshots, canvas data URLs, persistent flags, dimensions, and segment total indices.
-2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 secondary indexes (retrieved/managed by ID). Stores multi-turn chat threads, message roles, token metrics, and search grounding metadata.
-3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 secondary indexes (filtered in memory by contextKey). Stores rich text, checklist arrays, Kanban board cards, Mermaid specifications, and KaTeX formulas.
-4. `backupsGroups`: keyPath: `'group.id'`. 0 secondary indexes (stores backup group objects keyed by nested `'group.id'`). Stores compressed group structures, colors, titles, and closed tab records.
-5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Secondary indexes: `'projectName'` (keyPath `'projectName'`) and `'savedAt'` (keyPath `'savedAt'`) (no `date` index). Holds focus analytics, cycle metrics, and interruption logs.
+### 11.1 IndexedDB डेटाबेस: `Intelligent_Workspace` (स्कीमा संस्करण 8)
+1. `screenshots`: keyPath: `'id'`, autoIncrement: true। द्वितीयक इंडेक्स: `'createdAt'`। बाइनरी स्क्रीनशॉट, कैनवास डेटा URLs, स्थायी फ़्लैग, आयाम और खंड कुल सूचकांक रखता है।
+2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true। 0 द्वितीयक इंडेक्स (आईडी द्वारा पुनर्प्राप्त/प्रबंधित)। बहु-मोड़ चैट थ्रेड्स, संदेश भूमिकाएं, टोकन मेट्रिक्स और खोज ग्राउंडिंग मेटाडेटा संग्रहीत करता है।
+3. `notesStore`: keyPath: `'id'`, autoIncrement: false। 0 द्वितीयक इंडेक्स (contextKey द्वारा मेमोरी में फ़िल्टर किया गया)। रिच टेक्स्ट, चेकलिस्ट सरणियाँ, Kanban बोर्ड कार्ड, Mermaid विनिर्देश और KaTeX सूत्र संग्रहीत करता है।
+4. `backupsGroups`: keyPath: `'group.id'`। 0 द्वितीयक इंडेक्स (नेस्टेड `'group.id'` द्वारा कीड किए गए बैकअप समूह ऑब्जेक्ट संग्रहीत करता है)। संपीड़ित समूह संरचनाएं, रंग, शीर्षक और बंद टैब रिकॉर्ड संग्रहीत करता है।
+5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true। द्वितीयक इंडेक्स: `'projectName'` (keyPath `'projectName'`) और `'savedAt'` (keyPath `'savedAt'`) (कोई `date` इंडेक्स नहीं)। फ़ोकस एनालिटिक्स, चक्र मेट्रिक्स और रुकावट लॉग रखता है।
 
-### 11.2 Chrome Storage Dual-Routing (`StorageService`)
-- Dynamically routes reads and writes between `chrome.storage.sync` (for portable settings across user devices) and `chrome.storage.local` (for heavy preferences).
-- Key models:
-  - `customRules`: Array of rule definitions (`[{ name, color, active, urls }]`).
-  - `clusterConfig`: Auto-clustering parameters (thresholds, compact mode, special categories).
-  - `userPrefixes`: Emoji prefix assignments (`{ lock, openKey, loupe, checked, warning }`).
-  - `activeTheme`, `savedThemes`, & `themeSchedules`: 9-palette color configurations and scheduled rotation rules configured via `ThemeScheduleModal.svelte`.
-  - `pomodoroState`: Real-time session timestamps, paused duration, and cycle goals.
-  - `wa:settings` & `wa:limits`: Web activity tracking preferences, site limits, and schedule windows.
-  - `youtubeLoopEnabled`: Boolean flag controlling YouTube and Shorts loop buttons.
+### 11.2 क्रोम स्टोरेज डुअल-राउटिंग (`StorageService`)
+- गतिशील रूप से `chrome.storage.sync` (उपयोगकर्ता उपकरणों में पोर्टेबल सेटिंग्स के लिए) और `chrome.storage.local` (भारी प्राथमिकताओं के लिए) के बीच पढ़ने और लिखने को रूट करता है।
+- मुख्य मॉडल:
+  - `customRules`: नियम परिभाषाओं की सरणी (`[{ name, color, active, urls }]`)।
+  - `clusterConfig`: ऑटो-क्लस्टरिंग पैरामीटर (सीमाएं, कॉम्पैक्ट मोड, विशेष श्रेणियां)।
+  - `userPrefixes`: इमोजी उपसर्ग असाइनमेंट (`{ lock, openKey, loupe, checked, warning }`)।
+  - `activeTheme`, `savedThemes`, और `themeSchedules`: `ThemeScheduleModal.svelte` के माध्यम से कॉन्फ़िगर किए गए 9-पैलेट रंग कॉन्फ़िगरेशन और निर्धारित रोटेशन नियम।
+  - `pomodoroState`: रीयल-टाइम सत्र टाइमस्टैम्प, रुकी हुई अवधि, और चक्र लक्ष्य।
+  - `wa:settings` और `wa:limits`: वेब गतिविधि ट्रैकिंग प्राथमिकताएं, साइट सीमाएं, और शेड्यूल विंडो।
+  - `youtubeLoopEnabled`: YouTube और Shorts लूप बटन को नियंत्रित करने वाला बूलियन फ़्लैग।
 
-### 11.3 Chrome Storage Session (`chrome.storage.session`)
-Used for ultra-fast, ephemeral runtime coordination:
-- `tabsEverActive`: Set of tab IDs activated during the current browser session.
-- `groupExpandedEver`: Record of groups expanded during the current session.
-- `groupInfoMap`: Real-time registry mapping group IDs to dynamic titles and clustering types.
-- `splitScreenState`: Cached window bounds for restoring original screen dimensions.
-- `contextMenusSignature`: Hash signature preventing redundant context menu rebuild churn during rapid tab switches.
-- `wa:openSegment`: Current active website time segment.
-- `hiddenYoutubeView`: Reference to parked YouTube player view docked in `HiddenGroupsBar.svelte`.
+### 11.3 क्रोम स्टोरेज सत्र (`chrome.storage.session`)
+अल्ट्रा-फास्ट, अल्पकालिक रनटाइम समन्वय के लिए उपयोग किया जाता है:
+- `tabsEverActive`: वर्तमान ब्राउज़र सत्र के दौरान सक्रिय टैब आईडी का सेट।
+- `groupExpandedEver`: वर्तमान सत्र के दौरान विस्तारित समूहों का रिकॉर्ड।
+- `groupInfoMap`: गतिशील शीर्षकों और क्लस्टरिंग प्रकारों के लिए समूह आईडी को मैप करने वाली रीयल-टाइम रजिस्ट्री।
+- `splitScreenState`: मूल स्क्रीन आयामों को पुनर्स्थापित करने के लिए कैश्ड विंडो सीमाएं।
+- `contextMenusSignature`: तेज़ टैब स्विच के दौरान अनावश्यक संदर्भ मेनू पुनर्निर्माण मंथन को रोकने वाला हैश हस्ताक्षर।
+- `wa:openSegment`: वर्तमान सक्रिय वेबसाइट समय खंड।
+- `hiddenYoutubeView`: `HiddenGroupsBar.svelte` में डॉक किए गए पार्क किए गए YouTube प्लेयर दृश्य का संदर्भ।
 
 ---
 
-## 12. Defensive Engineering & Edge Case Handling
+## 12. रक्षात्मक इंजीनियरिंग और एज केस हैंडलिंग (Defensive Engineering & Edge Case Handling)
 
-1. **Declarative Net Request Header Unblocking (`dnr.js`)**:
-   - Modifies response headers via dynamic DNR rules to strip `X-Frame-Options` and restrictive `Content-Security-Policy` headers, allowing external sites to render in the Side Panel and Picture-in-Picture iframes.
-   - **WhatsApp Web Safety**: Explicitly preserves `Cross-Origin-Opener-Policy` (COOP) and `Cross-Origin-Embedder-Policy` (COEP) on `web.whatsapp.com` to prevent breaking its WebAssembly Signal cryptographic implementation.
-2. **Right-Click & Selection Unblocker (`allowRightClickHook.js`)**:
-   - Defeats hostile websites blocking copy, paste, context menu, and text selection.
-   - Runs in `MAIN` world to intercept `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-   - Strips inline `oncontextmenu="return false"` handlers via `MutationObserver`.
-   - Protects legitimate web applications (e.g., Telegram Web, Google Docs) by verifying clipboard contents before re-injecting cancelled paste events.
-3. **YouTube Hover Preview Audio Forced-Mute Override (`youtubePreviewAudioHook.js`)**:
-   - Runs in `MAIN` world on `ytd-video-preview #inline-preview-player`.
-   - Overrides `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover.
-   - Eliminates YouTube's internal `volumechange` forced-mute race condition, maintaining unmuted audio across loop restarts while hovering.
-4. **YouTube Shorts Feed Sequence Navigation Hook (`youtubeShortsFeedHook.js`)**:
-   - Runs in `MAIN` world on `ytd-shorts`.
-   - Intercepts `shortsProcessedSequence` property, which is invisible from the extension's isolated world, and dispatches native `yt-navigate` events on `ytd-app` without reloading the page or losing floating window state.
-5. **Infinite-Scroll Canvas Protection**:
-   - Caps full-page screenshot walks at 60 segments (`MAX_FULL_PAGE_SEGMENTS`) and 30,000px maximum canvas height (`MAX_FULL_PAGE_CANVAS_PX`), avoiding out-of-memory browser tab crashes.
-6. **Linux Screen Color Picker Eyedropper Fallback**:
-   - When running on Linux environments lacking the Chromium `window.EyeDropper` API, the extension injects `screen-color-picker.js`, rendering a 9x magnified pixel lens with RGB/HEX/HSL calculation.
-7. **Startup Session Settling Delay**:
-   - Delays group pruning for 20 seconds (`groupsHaveSettledAfterStartup()`) upon browser launch to allow session tabs and window states to settle before evaluating group assignments.
+1. **Declarative Net Request हेडर अनब्लॉकिंग (`dnr.js`)**:
+   - `X-Frame-Options` और प्रतिबंधात्मक `Content-Security-Policy` हेडर को हटाने के लिए गतिशील DNR नियमों के माध्यम से प्रतिक्रिया हेडर को संशोधित करता है, जिससे बाहरी साइटों को साइड पैनल और Picture-in-Picture iframe में प्रस्तुत करने की अनुमति मिलती है।
+   - **WhatsApp Web सुरक्षा**: इसके WebAssembly Signal क्रिप्टोग्राफ़िक कार्यान्वयन को टूटने से बचाने के लिए `web.whatsapp.com` पर `Cross-Origin-Opener-Policy` (COOP) और `Cross-Origin-Embedder-Policy` (COEP) को स्पष्ट रूप से सुरक्षित रखता है।
+2. **राइट-क्लिक और चयन अनब्लॉकर (`allowRightClickHook.js`)**:
+   - कॉपी, पेस्ट, संदर्भ मेनू और टेक्स्ट चयन को अवरुद्ध करने वाली शत्रुतापूर्ण वेबसाइटों को निष्प्रभावी करता है।
+   - `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, और `mouseup` पर `preventDefault()` और `stopPropagation()` को इंटरसेप्ट करने के लिए `MAIN` दुनिया में चलता है।
+   - `MutationObserver` के माध्यम से इनलाइन `oncontextmenu="return false"` हैंडलर को हटाता है।
+   - रद्द किए गए पेस्ट इवेंट्स को फिर से इंजेक्ट करने से पहले क्लिपबोर्ड सामग्री की पुष्टि करके वैध वेब अनुप्रयोगों (उदा., Telegram Web, Google Docs) की सुरक्षा करता है।
+3. **YouTube होवर पूर्वावलोकन ऑडियो फ़ोर्स्ड-म्यूट ओवरराइड (`youtubePreviewAudioHook.js`)**:
+   - `ytd-video-preview #inline-preview-player` पर `MAIN` दुनिया में चलता है।
+   - होवर करने पर लक्ष्य `<video>` तत्व पर `HTMLMediaElement.prototype.muted` प्रॉपर्टी डिस्क्रिप्टर को ओवरराइड करता है।
+   - YouTube की आंतरिक `volumechange` जबरन-म्यूट रेस स्थिति को समाप्त करता है, होवर करते समय लूप पुनरारंभ होने पर अनम्यूट ऑडियो बनाए रखता है।
+4. **YouTube Shorts फ़ीड अनुक्रम नेविगेशन हुक (`youtubeShortsFeedHook.js`)**:
+   - `ytd-shorts` पर `MAIN` दुनिया में चलता है।
+   - `shortsProcessedSequence` प्रॉपर्टी को इंटरसेप्ट करता है, जो एक्सटेंशन की अलग दुनिया से अदृश्य है, और पेज को रीलोड किए बिना या फ़्लोटिंग विंडो स्थिति खोए बिना `ytd-app` पर नेटिव `yt-navigate` इवेंट्स भेजता है।
+5. **अनंत-स्क्रॉल कैनवास सुरक्षा (Infinite-Scroll Canvas Protection)**:
+   - आउट-ऑफ़-मेमोरी ब्राउज़र टैब क्रैश से बचते हुए, पूर्ण-पृष्ठ स्क्रीनशॉट वॉक को 60 खंडों (`MAX_FULL_PAGE_SEGMENTS`) और 30,000px अधिकतम कैनवास ऊंचाई (`MAX_FULL_PAGE_CANVAS_PX`) पर सीमित करता है।
+6. **Linux स्क्रीन रंग चयनकर्ता आईड्रॉपर फ़ॉलबैक**:
+   - Chromium `window.EyeDropper` API की कमी वाले Linux परिवेशों पर चलते समय, एक्सटेंशन `screen-color-picker.js` इंजेक्ट करता है, जो RGB/HEX/HSL गणना के साथ 9x आवर्धित पिक्सेल लेंस प्रस्तुत करता है।
+7. **स्टार्टअप सत्र स्थिरीकरण विलंब**:
+   - समूह असाइनमेंट का मूल्यांकन करने से पहले सत्र टैब और विंडो स्थितियों को स्थिर होने की अनुमति देने के लिए ब्राउज़र लॉन्च होने पर समूह प्रूनिंग को 20 सेकंड (`groupsHaveSettledAfterStartup()`) के लिए विलंबित करता है।

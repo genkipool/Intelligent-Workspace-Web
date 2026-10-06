@@ -1,6 +1,8 @@
 # Intelligent Workspace
 
 > Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+>
+> 📄 **Complete Unabridged Specification**: For the full, single-file unabridged technical reference according to the llms.txt standard, see [llms-full.txt](/llms-full.txt).
 
 ---
 
@@ -10,7 +12,8 @@ This technical specification is available in the top 25 languages worldwide:
 
 | Language | Native Name | ISO Code | Specification Link |
 | :--- | :--- | :--- | :--- |
-| **English** (Master) | English | `en` | [llms.txt](/llms.txt) |
+| **English** (Master Index) | English | `en` | [llms.txt](/llms.txt) |
+| **English** (Full Specification) | English | `en` | [llms-full.txt](/llms-full.txt) |
 | **Mandarin Chinese** | 简体中文 | `zh` | [llms-zh.txt](/llms-zh.txt) |
 | **Hindi** | हिन्दी | `hi` | [llms-hi.txt](/llms-hi.txt) |
 | **Spanish** | Español | `es` | [llms-es.txt](/llms-es.txt) |

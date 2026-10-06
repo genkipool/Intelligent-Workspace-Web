@@ -1,14 +1,14 @@
 # Intelligent Workspace
 
-> Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+> Intelligent Workspace adalah ekstensi peramban Manifest V3 tingkat lanjut dan lingkungan ruang kerja produktif yang dibangun dengan Svelte, Vite, dan CRXJS. Ekstensi ini mengorkestrasi pengorganisasian tab cerdas, pengelompokan otomatis dan berbasis aturan, eksekusi agen AI otonom (mendukung Google Gemini Cloud API dan Chrome Built-in Prompt API), navigasi tautan ala Vim di dalam halaman, sistem perintah Omnibar dengan 41 prefiks, pencatatan multi-format (rich text, daftar periksa, Kanban, diagram Mermaid, rumus KaTeX), perekaman media fidelitas tinggi dan WASM OCR dalam peramban, pewaktuan Pomodoro dengan alarm bebas pergeseran (zero-drift) dan pemutaran audio offscreen, serta pengukuran aktivitas web Declarative Net Request (DNR), batas domain, dan pemblokiran situs.
 
 ---
 
-## Multilingual Editions / Global Directory
+## Edisi Multibahasa / Direktori Global
 
-This technical specification is available in the top 25 languages worldwide:
+Spesifikasi teknis ini tersedia dalam 25 bahasa utama di seluruh dunia:
 
-| Language | Native Name | ISO Code | Specification Link |
+| Bahasa | Nama Asli | Kode ISO | Tautan Spesifikasi |
 | :--- | :--- | :--- | :--- |
 | **English** (Master) | English | `en` | [llms.txt](/llms.txt) |
 | **Mandarin Chinese** | 简体中文 | `zh` | [llms-zh.txt](/llms-zh.txt) |
@@ -24,7 +24,7 @@ This technical specification is available in the top 25 languages worldwide:
 | **German** | Deutsch | `de` | [llms-de.txt](/llms-de.txt) |
 | **Japanese** | 日本語 | `ja` | [llms-ja.txt](/llms-ja.txt) |
 | **Marathi** | मराठी | `mr` | [llms-mr.txt](/llms-mr.txt) |
-| **Telugu** | తెలుగు | `te` | [llms-te.txt](/llms-te.txt) |
+| **Telugu** | Telugu | `te` | [llms-te.txt](/llms-te.txt) |
 | **Turkish** | Türkçe | `tr` | [llms-tr.txt](/llms-tr.txt) |
 | **Tamil** | தமிழ் | `ta` | [llms-ta.txt](/llms-ta.txt) |
 | **Vietnamese** | Tiếng Việt | `vi` | [llms-vi.txt](/llms-vi.txt) |
@@ -38,956 +38,956 @@ This technical specification is available in the top 25 languages worldwide:
 
 ---
 
-## Navigation & Quick Reference Index
+## Indeks Navigasi & Referensi Cepat
 
-- [1. Architectural Foundation & Runtime Lifecycle](#1-architectural-foundation--runtime-lifecycle)
-- [2. Section 1: Rules Management (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
-  - [2.1 Data Schema (`CustomRule`)](#21-data-schema-customrule)
-  - [2.2 Precedence Architecture](#22-precedence-architecture)
-  - [2.3 URL Normalization & Matching Semantics](#23-url-normalization--matching-semantics)
-  - [2.4 Rules Management Settings Breakdown](#24-rules-management-settings-breakdown)
-  - [2.5 Operations & Persistence (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
-  - [2.6 Invocation Modalities](#26-invocation-modalities)
-- [3. Section 2: Group Listing & Operations (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
-  - [3.1 UI Architecture](#31-ui-architecture)
-  - [3.2 Group Lifecycle & Behaviors](#32-group-lifecycle--behaviors)
-  - [3.3 Group Operations & Memory Management](#33-group-operations--memory-management)
-  - [3.4 Group Backups & Restore Subsystem](#34-group-backups--restore-subsystem)
-  - [3.5 Parked YouTube Player in Hidden Groups Bar](#35-parked-youtube-player-in-hidden-groups-bar)
-- [4. Section 3: Navigation & Tab Management (Navegación)](#4-section-3-navigation--tab-management-navegación)
-  - [4.1 Fast Tab Jump Gesture](#41-fast-tab-jump-gesture)
-  - [4.2 Stepping, Swapping & Lifecycle Keys](#42-stepping-swapping--lifecycle-keys)
-  - [For power users](#for-power-users)
-  - [4.3 Audio & Sound Management](#43-audio--sound-management)
-  - [4.4 Split Screen Workflows](#44-split-screen-workflows)
-  - [4.5 YouTube Looping Subsystem](#45-youtube-looping-subsystem)
-  - [4.6 YouTube Shorts Preview Audio](#46-youtube-shorts-preview-audio)
-  - [4.7 Picture-in-Picture (PiP) Architecture](#47-picture-in-picture-pip-architecture)
-  - [4.8 Page Reading Modes & Visual Overlays](#48-page-reading-modes--visual-overlays)
-  - [4.9 Text Snippets Subsystem with Template Variables](#49-text-snippets-subsystem-with-template-variables)
-  - [4.10 Embedded Productivity Tools](#410-embedded-productivity-tools)
-  - [4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
-- [5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
-  - [5.1 Dual Model Engine Architecture](#51-dual-model-engine-architecture)
-  - [5.2 Autonomous Browser Agent (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
-  - [5.3 Taint Tracking & Prompt Injection Defense](#53-taint-tracking--prompt-injection-defense)
-  - [5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
-  - [5.5 Gemini Conversation Management & Export](#55-gemini-conversation-management--export)
-  - [5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
-  - [5.7 Invocation Modalities](#57-invocation-modalities)
-- [6. Section 5: Notes View & Knowledge Management (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
-  - [6.1 Storage Architecture (`notesStore`)](#61-storage-architecture-notesstore)
-  - [6.2 Specialized Note Formats & Advanced Rendering](#62-specialized-note-formats--advanced-rendering)
-  - [6.3 Scoping & Context Hierarchy](#63-scoping--context-hierarchy)
-  - [6.4 Invocation Modalities](#64-invocation-modalities)
-- [7. Section 6: Media & Gallery View (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
-  - [7.1 Capture Modes & Engineering (All 7 Capture Types)](#71-capture-modes--engineering-all-7-capture-types)
-  - [7.2 Gallery UI & Persistence](#72-gallery-ui--persistence)
-  - [7.3 Export, In-Browser OCR & External Markup](#73-export-in-browser-ocr--external-markup)
-  - [7.4 Invocation Modalities](#74-invocation-modalities)
-- [8. Section 7: Pomodoro & Timing Suite (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
-  - [8.1 Timing Engine & Background Architecture](#81-timing-engine--background-architecture)
-  - [8.2 Exhaustive 4 Timing Modes](#82-exhaustive-4-timing-modes)
-  - [8.3 In-Page Floating Timer Widget](#83-in-page-floating-timer-widget)
-  - [8.4 Group Auto-Collapse Idle Timer](#84-group-auto-collapse-idle-timer)
-  - [8.5 Project Tagging & Metadata](#85-project-tagging--metadata)
-  - [8.6 Analytics Engine & 19 KPI Cards](#86-analytics-engine--19-kpi-cards)
-- [9. Section 8: Activity & History Panel (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
-  - [9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
-  - [9.2 Declarative Net Request (DNR) Site Blocker](#92-declarative-net-request-dnr-site-blocker)
-  - [9.3 Asymmetric Security Lock (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
-  - [9.4 Categorization & Visual Analytics](#94-categorization--visual-analytics)
-  - [9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
-  - [9.6 Recently Closed Tabs & Browsing History Subsystem](#96-recently-closed-tabs--browsing-history-subsystem)
-  - [9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
-  - [9.8 Compact Sidepanel View](#98-compact-sidepanel-view)
-- [10. Multi-Modal Invocation Matrix](#10-multi-modal-invocation-matrix)
-  - [10.1 Popup UI Interface](#101-popup-ui-interface)
-  - [10.2 Sidepanel Navigation Routes (`?view=...`)](#102-sidepanel-navigation-routes-view)
-  - [10.3 Manifest Keyboard Shortcuts (24 Commands)](#103-manifest-keyboard-shortcuts-24-commands)
-  - [10.4 In-Page Vim Hint Keys (40+ Combinations)](#104-in-page-vim-hint-keys-40-combinations)
-  - [10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
-  - [10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
-- [11. Storage Schemas & Data Persistence](#11-storage-schemas--data-persistence)
-  - [11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
-  - [11.2 Chrome Storage Dual-Routing (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
+- [1. Fondasi Arsitektur & Siklus Hidup Runtime](#1-fondasi-arsitektur--siklus-hidup-runtime)
+- [2. Bagian 1: Manajemen Aturan (Gestionar Reglas)](#2-bagian-1-manajemen-aturan-gestionar-reglas)
+  - [2.1 Skema Data (`CustomRule`)](#21-skema-data-customrule)
+  - [2.2 Arsitektur Presedensi](#22-arsitektur-presedensi)
+  - [2.3 Normalisasi URL & Semantik Pencocokan](#23-normalisasi-url--semantik-pencocokan)
+  - [2.4 Rincian Pengaturan Manajemen Aturan](#24-rincian-pengaturan-manajemen-aturan)
+  - [2.5 Operasi & Persistensi (`mutateRulesAndSync`)](#25-operasi--persistensi-mutaterulesandsync)
+  - [2.6 Modalitas Pemanggilan](#26-modalitas-pemanggilan)
+- [3. Bagian 2: Daftar Grup & Operasi (Listar Grupos)](#3-bagian-2-daftar-grup--operasi-listar-grupos)
+  - [3.1 Arsitektur UI](#31-arsitektur-ui)
+  - [3.2 Siklus Hidup & Perilaku Grup](#32-siklus-hidup--perilaku-grup)
+  - [3.3 Operasi Grup & Manajemen Memori](#33-operasi-grup--manajemen-memori)
+  - [3.4 Subistem Pencadangan & Pemulihan Grup](#34-subsistem-pencadangan--pemulihan-grup)
+  - [3.5 Pemutar YouTube Terparkir di Hidden Groups Bar](#35-pemutar-youtube-terparkir-di-hidden-groups-bar)
+- [4. Bagian 3: Navigasi & Manajemen Tab (Navegación)](#4-bagian-3-navigasi--manajemen-tab-navegación)
+  - [4.1 Gestur Lompat Tab Cepat](#41-gestur-lompat-tab-cepat)
+  - [4.2 Tombol Langkah, Pertukaran & Siklus Hidup](#42-tombol-langkah-pertukaran--siklus-hidup)
+  - [Untuk pengguna tingkat lanjut](#untuk-pengguna-tingkat-lanjut)
+  - [4.3 Manajemen Audio & Suara](#43-manajemen-audio--suara)
+  - [4.4 Alur Kerja Layar Terpisah (Split Screen)](#44-alur-kerja-layar-terpisah-split-screen)
+  - [4.5 Subsistem Pengulangan (Looping) YouTube](#45-subsistem-pengulangan-looping-youtube)
+  - [4.6 Audio Pratinjau YouTube Shorts](#46-audio-pratinjau-youtube-shorts)
+  - [4.7 Arsitektur Picture-in-Picture (PiP)](#47-arsitektur-picture-in-picture-pip)
+  - [4.8 Mode Membaca Halaman & Overlay Visual](#48-mode-membaca-halaman--overlay-visual)
+  - [4.9 Subsistem Cuplikan Teks (Text Snippets) dengan Variabel Templat](#49-subsistem-cuplikan-teks-text-snippets-dengan-variabel-templat)
+  - [4.10 Alat Produktivitas Tersemat](#410-alat-produktivitas-tersemat)
+  - [4.11 Penghapusan Duplikat 3-Tingkat Komprehensif & Pembuangan Cerdas](#411-penghapusan-duplikat-3-tingkat-komprehensif--pembuangan-cerdas)
+- [5. Bagian 4: Asisten AI & Agen Otonom (Asistente AI)](#5-bagian-4-asisten-ai--agen-otonom-asistente-ai)
+  - [5.1 Arsitektur Mesin Model Ganda](#51-arsitektur-mesin-model-ganda)
+  - [5.2 Agen Peramban Otonom (`agent-backend.js`)](#52-agen-peramban-otonom-agent-backendjs)
+  - [5.3 Pelacakan Taint & Pertahanan Prompt Injection](#53-pelacakan-taint--pertahanan-prompt-injection)
+  - [5.4 Subsistem Kueri Gemini Terjadwal (`GeminiScheduleModal.svelte`)](#54-subsistem-kueri-gemini-terjadwal-geminischedulemodalsvelte)
+  - [5.5 Manajemen Percakapan & Ekspor Gemini](#55-manajemen-percakapan--ekspor-gemini)
+  - [5.6 Masukan Multimodal & Lampiran Berkas (`feature_geminiAttachFiles`)](#56-masukan-multimodal--lampiran-berkas-feature_geminiattachfiles)
+  - [5.7 Modalitas Pemanggilan](#57-modalitas-pemanggilan)
+- [6. Bagian 5: Tampilan Catatan & Manajemen Pengetahuan (Ver Notas)](#6-bagian-5-tampilan-catatan--manajemen-pengetahuan-ver-notas)
+  - [6.1 Arsitektur Penyimpanan (`notesStore`)](#61-arsitektur-penyimpanan-notesstore)
+  - [6.2 Format Catatan Khusus & Rendering Lanjutan](#62-format-catatan-khusus--rendering-lanjutan)
+  - [6.3 Cakupan & Hierarki Konteks](#63-cakupan--hierarki-konteks)
+  - [6.4 Modalitas Pemanggilan](#64-modalitas-pemanggilan)
+- [7. Bagian 6: Tampilan Media & Galeri (Ver Galería)](#7-bagian-6-tampilan-media--galeri-ver-galería)
+  - [7.1 Mode & Rekayasa Perekaman (Semua 7 Tipe Perekaman)](#71-mode--rekayasa-perekaman-semua-7-tipe-perekaman)
+  - [7.2 UI Galeri & Persistensi](#72-ui-galeri--persistensi)
+  - [7.3 Ekspor, OCR Dalam Peramban & Markup Eksternal](#73-ekspor-ocr-dalam-peramban--markup-eksternal)
+  - [7.4 Modalitas Pemanggilan](#74-modalitas-pemanggilan)
+- [8. Bagian 7: Pomodoro & Paket Pewaktuan (Pomodoro)](#8-bagian-7-pomodoro--paket-pewaktuan-pomodoro)
+  - [8.1 Mesin Pewaktuan & Arsitektur Latar Belakang](#81-mesin-pewaktuan--arsitektur-latar-belakang)
+  - [8.2 4 Mode Pewaktuan Menyeluruh](#82-4-mode-pewaktuan-menyeluruh)
+  - [8.3 Widget Pewaktu Mengambang di Dalam Halaman](#83-widget-pewaktu-mengambang-di-dalam-halaman)
+  - [8.4 Pewaktu Diam Auto-Collapse Grup](#84-pewaktu-diam-auto-collapse-grup)
+  - [8.5 Pelabelan Proyek & Metadata](#85-pelabelan-proyek--metadata)
+  - [8.6 Mesin Analitik & 19 Kartu KPI](#86-mesin-analitik--19-kartu-kpi)
+- [9. Bagian 8: Panel Aktivitas & Riwayat (Panel de Actividad)](#9-bagian-8-panel-aktivitas--riwayat-panel-de-actividad)
+  - [9.1 Mesin Data & Topologi Penyimpanan (`ITG_WEB_ACTIVITY`)](#91-mesin-data--topologi-penyimpanan-itg_web_activity)
+  - [9.2 Pemblokir Situs Declarative Net Request (DNR)](#92-pemblokir-situs-declarative-net-request-dnr)
+  - [9.3 Kunci Keamanan Asimetris (`blockLock.js`)](#93-kunci-keamanan-asimetris-blocklockjs)
+  - [9.4 Kategorisasi & Analitik Visual](#94-kategorisasi--analitik-visual)
+  - [9.5 Subsistem Manajer Unduhan (`switchMainView('downloads')`)](#95-subsistem-manajer-unduhan-switchmainviewdownloads)
+  - [9.6 Subsistem Tab yang Baru Saja Ditutup & Riwayat Penjelajahan](#96-subsistem-tab-yang-baru-saja-ditutup--riwayat-penjelajahan)
+  - [9.7 Subsistem Penjadwalan Tema (`ThemeScheduleModal.svelte`)](#97-subsistem-penjadwalan-tema-themeschedulemodalsvelte)
+  - [9.8 Tampilan Panel Samping Ringkas](#98-tampilan-panel-samping-ringkas)
+- [10. Matriks Pemanggilan Multi-Modal](#10-matriks-pemanggilan-multi-modal)
+  - [10.1 Antarmuka UI Popup](#101-antarmuka-ui-popup)
+  - [10.2 Rute Navigasi Panel Samping (`?view=...`)](#102-rute-navigasi-panel-samping-view)
+  - [10.3 Pintasan Papan Ketik Manifest (24 Perintah)](#103-pintasan-papan-ketik-manifest-24-perintah)
+  - [10.4 Tombol Petunjuk Vim di Dalam Halaman (40+ Kombinasi)](#104-tombol-petunjuk-vim-di-dalam-halaman-40-kombinasi)
+  - [10.5 Prefiks Subsistem Omnibar di Dalam Halaman (41 Prefiks)](#105-prefiks-subsistem-omnibar-di-dalam-halaman-41-prefiks)
+  - [10.6 Hierarki Pohon Menu Konteks (Semua 5 Grup & 30+ Tindakan)](#106-hierarki-pohon-menu-konteks-semua-5-grup--30-tindakan)
+- [11. Skema Penyimpanan & Persistensi Data](#11-skema-penyimpanan--persistensi-data)
+  - [11.1 Basis Data IndexedDB: `Intelligent_Workspace` (Versi Skema 8)](#111-basis-data-indexeddb-intelligent_workspace-versi-skema-8)
+  - [11.2 Perutean Ganda Chrome Storage (`StorageService`)](#112-perutean-ganda-chrome-storage-storageservice)
   - [11.3 Chrome Storage Session (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
-- [12. Defensive Engineering & Edge Case Handling](#12-defensive-engineering--edge-case-handling)
+- [12. Rekayasa Defensif & Penanganan Kasus Ekstrem (Edge Cases)](#12-rekayasa-defensif--penanganan-kasus-ekstrem-edge-cases)
 
 ---
 
-## 1. Architectural Foundation & Runtime Lifecycle
+## 1. Fondasi Arsitektur & Siklus Hidup Runtime
 
-The extension runs under Google Chrome's Manifest V3 architecture, decoupling persistent processes across a background Service Worker, sandboxed UI panels, offscreen audio documents, and in-page content script overlays:
+Ekstensi ini berjalan di bawah arsitektur Manifest V3 Google Chrome, memisahkan proses-proses persisten di seluruh Service Worker latar belakang, panel UI yang di-sandbox, dokumen audio offscreen, dan overlay content script di dalam halaman:
 
-1. **Manifest Configuration (`manifest.json`)**:
-   - **Permissions (21 items)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, and `idle`.
-   - **Host Permissions**: `["<all_urls>"]`.
-   - **Service Worker**: `src/core/background.js` using synchronous `importScripts` modular loading.
-   - **Toolbar Action**: Deliberately omits `default_popup`. Runtime enforces `chrome.action.setPopup({ popup: '' })`, ensuring `chrome.action.onClicked` fires synchronously and opens `chrome.sidePanel` to the user's pinned view without popup initialization latency.
-   - **Omnibox Keyword**: Registered keyword `"find"`.
-   - **Commands**: 24 system-level keyboard shortcuts registered under `commands`.
+1. **Konfigurasi Manifest (`manifest.json`)**:
+   - **Izin (21 item)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, dan `idle`.
+   - **Izin Host**: `["<all_urls>"]`.
+   - **Service Worker**: `src/core/background.js` menggunakan pemuatan modular `importScripts` secara sinkron.
+   - **Toolbar Action**: Secara sengaja mengabaikan `default_popup`. Runtime menerapkan `chrome.action.setPopup({ popup: '' })`, memastikan `chrome.action.onClicked` terpicu secara sinkron dan membuka `chrome.sidePanel` ke tampilan yang disematkan pengguna tanpa latensi inisialisasi popup.
+   - **Kata Kunci Omnibox**: Kata kunci terdaftar `"find"`.
+   - **Perintah (Commands)**: 24 pintasan papan ketik tingkat sistem yang terdaftar di bawah `commands`.
    - **Content Security Policy**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
 
-2. **Inter-Process Communication Security**:
-   - `src/core/background/messaging.js` filters messages from content scripts against an explicit whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Unprivileged web frames cannot invoke internal storage writers, arbitrary Chrome APIs, or rule mutators.
+2. **Keamanan Komunikasi Antar-Proses**:
+   - `src/core/background/messaging.js` memfilter pesan dari content script terhadap daftar putih eksplisit (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Bingkai web yang tidak memiliki hak istimewa tidak dapat memanggil pemroses penulisan penyimpanan internal, API Chrome sembarang, atau pemutasian aturan.
 
-3. **Dual Execution Worlds**:
-   - Content scripts operate across both `ISOLATED` (extension scope) and `MAIN` (page execution scope) worlds. Scripts like `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, and `youtubeShortsFeedHook.js` run in `MAIN` to intercept prototype methods, override property descriptors, and handle custom events directly.
+3. **Dunia Eksekusi Ganda**:
+   - Content script beroperasi di seluruh dunia `ISOLATED` (cakupan ekstensi) dan `MAIN` (cakupan eksekusi halaman). Skrip seperti `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, dan `youtubeShortsFeedHook.js` berjalan di `MAIN` untuk mencegat metode prototipe, menimpa deskriptor properti, dan menangani peristiwa kustom secara langsung.
 
 ---
 
-## 2. Section 1: Rules Management (Gestionar Reglas)
+## 2. Bagian 1: Manajemen Aturan (Gestionar Reglas)
 
-The Rules Management subsystem automates tab grouping based on strict deterministic criteria defined by the user.
+Subsistem Manajemen Aturan mengotomatiskan pengelompokan tab berdasarkan kriteria deterministik ketat yang ditentukan oleh pengguna.
 
-### 2.1 Data Schema (`CustomRule`)
-Each custom rule adheres to the following interface:
+### 2.1 Skema Data (`CustomRule`)
+Setiap aturan kustom mematuhi antarmuka berikut:
 ```typescript
 interface CustomRule {
-  name: string;        // 1 to 16 characters. Must contain no whitespace characters.
-  color: RuleColor;    // One of 9 colors: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
-  urls: string[];      // Array of valid URLs, domains, or hostnames.
-  active: boolean;     // Master toggle enabling or disabling rule evaluation.
-  isStarred?: boolean; // Optional flag marking rule as a favorite for prioritized UI ordering.
+  name: string;        // 1 hingga 16 karakter. Tidak boleh berisi karakter spasi kosong.
+  color: RuleColor;    // Salah satu dari 9 warna: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange'
+  urls: string[];      // Array URL, domain, atau hostname yang valid.
+  active: boolean;     // Sakelar utama untuk mengaktifkan atau menonaktifkan evaluasi aturan.
+  isStarred?: boolean; // Tanda opsional yang menandai aturan sebagai favorit untuk pengurutan prioritas di UI.
 }
 ```
 
-### 2.2 Precedence Architecture
-When tabs are processed by `groupTabs()` in `src/core/background/groupManager.js`, tabs are evaluated against grouping layers in strict hierarchical order:
-1. **Custom Rules (`applyCustomRules`)**: Matches active custom rules in order of appearance or user priority. Once grouped, tab IDs are registered in `groupedTabIds` and excluded from subsequent layers.
-2. **Special System Groups**: System URLs are intercepted and clustered into dedicated colored groups:
-   - `chrome://` and internal browser pages
-   - `file:///` local disk files
-   - `chrome-extension://` extension pages
-   - IP Addresses & Localhost (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 hosts)
-3. **Domain Clustering**: Tabs sharing the same root domain are grouped if the tab count meets or exceeds `domainThreshold` (default: 2 tabs).
-4. **Subdomain Clustering**: If enabled, tabs within domains are grouped by specific subdomains (e.g., `docs.github.com` vs `gist.github.com`).
-5. **Miscellaneous ("Misc") Group**: Residual unclustered tabs that do not meet grouping thresholds are placed into the `Misc` group (placement configurable: `start`, `end`, or alphabetical `alpha`).
+### 2.2 Arsitektur Presedensi
+Saat tab diproses oleh `groupTabs()` di `src/core/background/groupManager.js`, tab dievaluasi terhadap lapisan pengelompokan dalam urutan hierarki yang ketat:
+1. **Aturan Kustom (`applyCustomRules`)**: Mencocokkan aturan kustom yang aktif berdasarkan urutan kemunculan atau prioritas pengguna. Setelah dikelompokkan, ID tab didaftarkan di `groupedTabIds` dan dikecualikan dari lapisan berikutnya.
+2. **Grup Sistem Khusus**: URL sistem dicegat dan dikelompokkan ke dalam grup berwarna khusus:
+   - `chrome://` dan halaman internal peramban
+   - `file:///` berkas disk lokal
+   - `chrome-extension://` halaman ekstensi
+   - Alamat IP & Localhost (`localhost`, `127.0.0.1`, `[::1]`, host IPv4/IPv6)
+3. **Pengelompokan Domain**: Tab yang berbagi domain root yang sama dikelompokkan jika jumlah tab memenuhi atau melampaui `domainThreshold` (bawaan: 2 tab).
+4. **Pengelompokan Subdomain**: Jika diaktifkan, tab di dalam domain dikelompokkan berdasarkan subdomain spesifik (misalnya, `docs.github.com` vs `gist.github.com`).
+5. **Grup Lain-Lain ("Misc")**: Tab sisa yang tidak terkelompokkan dan tidak memenuhi ambang batas pengelompokan dimasukkan ke dalam grup `Misc` (penempatan dapat dikonfigurasi: `start`, `end`, atau alfabetis `alpha`).
 
-### 2.3 URL Normalization & Matching Semantics
-The matching engine (`matchesRule(tabUrl, ruleUrl)` in `src/core/background/utils.js`) applies rigorous normalization:
-- **Scheme Agnostic**: HTTP and HTTPS protocols are treated as interchangeable (`http://example.com` matches `https://example.com`). Non-web protocols (`file://`, `chrome://`) require exact scheme matches.
-- **Host Normalization**: Leading `www.` prefixes are stripped (`www.github.com` normalizes to `github.com`). Hostnames are lowercased and support internationalized domain names (IDNs) via punycode.
-- **Port Sensitivity**: If a rule specifies a port (e.g., `localhost:3000`), the tab must match that exact port.
-- **Path Matching**: Trailing slashes are stripped. If a rule specifies a path (e.g., `example.com/docs`), it matches tabs with that exact path OR subpaths (`example.com/docs/api`), but does not match sibling paths (`example.com/blog`).
-- **Query & Hash Matching**: If a rule explicitly contains a query string (`?page=1`) or hash (`#section`), the tab must match those parameters verbatim.
-- **Numeric Dword Protection (`ruleValidation.js`)**: The validator strictly rejects bare numeric inputs (e.g., `3242342424`) that WHATWG URL parsers treat as valid IPv4 integer DWORDs, preventing accidental grouping distortions.
+### 2.3 Normalisasi URL & Semantik Pencocokan
+Mesin pencocokan (`matchesRule(tabUrl, ruleUrl)` di `src/core/background/utils.js`) menerapkan normalisasi yang ketat:
+- **Agnostik Skema**: Protokol HTTP dan HTTPS diperlakukan setara (`http://example.com` cocok dengan `https://example.com`). Protokol non-web (`file://`, `chrome://`) memerlukan kecocokan skema yang persis.
+- **Normalisasi Host**: Awalan `www.` dihapus (`www.github.com` dinormalisasi menjadi `github.com`). Nama host diubah menjadi huruf kecil dan mendukung domain nama terinternasionalisasi (IDN) melalui punycode.
+- **Sensitivitas Port**: Jika sebuah aturan menentukan port (misalnya, `localhost:3000`), tab harus cocok dengan port persis tersebut.
+- **Pencocokan Jalur**: Garis miring di akhir dihapus. Jika sebuah aturan menentukan jalur (misalnya, `example.com/docs`), aturan tersebut cocok dengan tab yang memiliki jalur persis tersebut ATAU subjalur (`example.com/docs/api`), tetapi tidak cocok dengan jalur setingkat (`example.com/blog`).
+- **Pencocokan Kueri & Hash**: Jika sebuah aturan secara eksplisit memuat string kueri (`?page=1`) atau hash (`#section`), tab harus cocok dengan parameter tersebut secara kata demi kata.
+- **Proteksi Dword Numerik (`ruleValidation.js`)**: Validator secara ketat menolak masukan numerik murni (misalnya, `3242342424`) yang diperlakukan oleh parser WHATWG URL sebagai DWORD integer IPv4 yang valid, mencegah distorsi pengelompokan yang tidak disengaja.
 
-### 2.4 Rules Management Settings Breakdown
-The Rules Manager provides an exhaustive suite of behavioral controls and settings:
-- **Storage Routing Selection**: Users can route rule storage between `chrome.storage.sync` (for synchronized settings across all devices signed into the Google profile, subject to Chrome sync quotas of 100 KB total and 8 KB per item) and `chrome.storage.local` (for unlimited local capacity suitable for large rule sets containing hundreds of patterns).
-- **Clustering Master Toggle & Thresholds**:
-  - `toggle-clustering`: Master keyboard shortcut and UI toggle enabling or disabling automated domain/subdomain clustering without disabling user-created custom rules.
-  - `domainThreshold`: Minimum tab count required from the same domain to trigger an automatic tab group (default: 2 tabs). Configurable from 1 to 50.
-  - `subdomainThreshold`: Minimum tab count for subdomains before creating separated subgroup clusters.
-  - Subdomain toggle (`toggle-subdomain-grouping`): Distinguishes independent subdomains (e.g., `news.ycombinator.com` vs `ycombinator.com`).
-- **Auto-Sort Groups Alphabetically (`toggle-sort-alpha`)**: Real-time sorting engine enforcing alphabetical ordering across all open tab groups in the browser tab strip (`Ctrl+Shift+S` / `Cmd+Shift+S`).
-- **Visual Status Prefixes (`toggle-prefixes`)**: Emoji markers dynamically prepended to group titles to indicate inspection state:
-  - `🔒` (Lock): The group contains unvisited, unread tabs.
-  - `🔍` (Loupe): The group contains partially visited tabs.
-  - `🗝️` (Open Key): All tabs in the group have been opened and reviewed.
-  - `⚠️` (Warning): Duplicate group name collision detected with another window group.
-- **Auto-Collapse Idle Groups (`toggle-collapse-timer`)**: Automatically collapses groups when inactive to maintain a tidy tab strip.
-- **Master Pause Grouping (`feature_pauseGrouping`)**: Master freeze switch that temporarily suspends all automated grouping operations (both rule matches and heuristic clustering) during active research sessions where tabs should remain in arbitrary user arrangements.
-- **Single Tab Grouping (`featureSingleTabGrouping`)**: Allows custom rules to immediately create a tab group for a single matching tab, bypassing the multi-tab threshold requirement.
-- **Compact View (`toggle-compact-mode`)**: Minimizes tab header width in the browser tab strip by rendering only single-letter badges for group titles.
-- **Drag-and-Drop Priority**: Reordering rules in the `Rules.svelte` list instantly changes their evaluation precedence. Rules at the top evaluate first.
-- **Fuzzy Search**: Live filtering in the Rules Manager and Omnibar allowing instant location of rules by title or matching URL patterns.
-- **JSON Import / Export**:
-  - Mode `add`: Merges imported rules into the existing collection, discarding duplicates.
-  - Mode `overwrite`: Completely replaces the active rule collection with the imported payload after schema validation.
-- **Dynamic Rule Creation**: One-click creation of custom rules directly from Chrome bookmark folders or subgroup domain collections.
-- **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs or domains to existing custom rules, preventing rule inflation and redundant evaluations.
+### 2.4 Rincian Pengaturan Manajemen Aturan
+Manajer Aturan menyediakan rangkaian lengkap kontrol perilaku dan pengaturan:
+- **Pemilihan Perutean Penyimpanan**: Pengguna dapat mengarahkan penyimpanan aturan antara `chrome.storage.sync` (untuk pengaturan yang disinkronkan di semua perangkat yang masuk ke profil Google, tunduk pada kuota sinkronisasi Chrome sebesar 100 KB total dan 8 KB per item) dan `chrome.storage.local` (untuk kapasitas lokal tak terbatas yang cocok untuk kumpulan aturan besar berisi ratusan pola).
+- **Sakelar Utama Pengelompokan & Ambang Batas**:
+  - `toggle-clustering`: Pintasan papan ketik utama dan sakelar UI untuk mengaktifkan atau menonaktifkan pengelompokan otomatis domain/subdomain tanpa menonaktifkan aturan kustom yang dibuat pengguna.
+  - `domainThreshold`: Jumlah tab minimum dari domain yang sama yang diperlukan untuk memicu grup tab otomatis (bawaan: 2 tab). Dapat dikonfigurasi dari 1 hingga 50.
+  - `subdomainThreshold`: Jumlah tab minimum untuk subdomain sebelum membuat kluster subgrup terpisah.
+  - Sakelar subdomain (`toggle-subdomain-grouping`): Membedakan subdomain independen (misalnya, `news.ycombinator.com` vs `ycombinator.com`).
+- **Urutkan Grup Otomatis Berdasarkan Abjad (`toggle-sort-alpha`)**: Mesin pengurutan waktu nyata yang menerapkan urutan abjad di semua grup tab yang terbuka di bilah tab peramban (`Ctrl+Shift+S` / `Cmd+Shift+S`).
+- **Prefiks Status Visual (`toggle-prefixes`)**: Penanda emoji yang secara dinamis ditambahkan di awal judul grup untuk menunjukkan status inspeksi:
+  - `🔒` (Gembok): Grup berisi tab yang belum dikunjungi dan belum dibaca.
+  - `🔍` (Kaca Pembesar): Grup berisi tab yang telah dikunjungi sebagian.
+  - `🗝️` (Kunci Terbuka): Semua tab di dalam grup telah dibuka dan ditinjau.
+  - `⚠️` (Peringatan): Benturan nama grup duplikat terdeteksi dengan grup jendela lain.
+- **Auto-Collapse Grup Diam (`toggle-collapse-timer`)**: Secara otomatis menciutkan grup saat tidak aktif untuk menjaga kerapian bilah tab.
+- **Jeda Pengelompokan Utama (`feature_pauseGrouping`)**: Sakelar pembekuan utama yang menangguhkan sementara semua operasi pengelompokan otomatis (baik kecocokan aturan maupun pengelompokan heuristik) selama sesi riset aktif ketika tab harus tetap berada dalam susunan bebas pengguna.
+- **Pengelompokan Tab Tunggal (`featureSingleTabGrouping`)**: Memungkinkan aturan kustom untuk langsung membuat grup tab untuk satu tab yang cocok, melewati persyaratan ambang batas multi-tab.
+- **Tampilan Ringkas (`toggle-compact-mode`)**: Meminimalkan lebar header tab di bilah tab peramban dengan hanya merender lencana satu huruf untuk judul grup.
+- **Prioritas Drag-and-Drop**: Mengubah urutan aturan dalam daftar `Rules.svelte` secara instan mengubah presedensi evaluasinya. Aturan di posisi paling atas dievaluasi terlebih dahulu.
+- **Pencarian Samar (Fuzzy Search)**: Pemfilteran langsung di Manajer Aturan dan Omnibar yang memungkinkan penemuan aturan secara instan berdasarkan judul atau pola URL yang cocok.
+- **Impor / Ekspor JSON**:
+  - Mode `add`: Menggabungkan aturan yang diimpor ke dalam koleksi yang ada, membuang duplikat.
+  - Mode `overwrite`: Mengganti seluruh koleksi aturan aktif dengan muatan yang diimpor setelah validasi skema.
+- **Pembuatan Aturan Dinamis**: Pembuatan aturan kustom sekali klik langsung dari folder bookmark Chrome atau koleksi domain subgrup.
+- **Deduplikasi Aturan (`feature_v100_dedup_add_to_rule`)**: Secara otomatis membuang pola URL duplikat saat menambahkan URL atau domain ke aturan kustom yang ada, mencegah inflasi aturan dan evaluasi yang berulang.
 
-### 2.5 Operations & Persistence (`mutateRulesAndSync`)
-- **Centralized Mutator**: All rule modifications route through `mutateRulesAndSync(mutateFn, sendResponse)` in `src/core/background/handlers/rules.js`. This guarantees storage synchronization, in-memory cache refreshment (`extensionSettings.customRules`), UI notification (`rulesUpdated`), and automatic tab regrouping (`groupTabs()`).
-- **Live Validation**: Real-time validation checks for name uniqueness, length (1-16 chars), character restrictions, and valid URL syntax before saving.
+### 2.5 Operasi & Persistensi (`mutateRulesAndSync`)
+- **Mutator Terpusat**: Semua modifikasi aturan dialirkan melalui `mutateRulesAndSync(mutateFn, sendResponse)` di `src/core/background/handlers/rules.js`. Hal ini menjamin sinkronisasi penyimpanan, penyegaran cache dalam memori (`extensionSettings.customRules`), notifikasi UI (`rulesUpdated`), dan pengelompokan ulang tab otomatis (`groupTabs()`).
+- **Validasi Langsung**: Pemeriksaan validasi waktu nyata untuk keunikan nama, panjang (1-16 karakter), batasan karakter, dan sintaks URL yang valid sebelum disimpan.
 
-### 2.6 Invocation Modalities
-- **Rules Manager Page (`Rules.svelte`)**: Accessible in full-tab view or side panel (`?view=rules` / `pg`). Provides full drag-and-drop reordering, inline color picker, URL tag chips, and rule toggles.
-- **Omnibar Commands**:
-  - `rl:` — Search rules and open associated URLs.
-  - `cr: <name> [, url1, url2]` — Create a new rule directly from the command bar.
-  - `atcr:` — Add the active tab's domain or URL to an existing rule.
-  - `atr:` — Add selected open tabs or manual URLs to an existing rule.
-  - `ccr:` — Change the color of a custom rule.
-  - `dr:` — Delete rules or individual URLs from a rule.
-  - `er:` — Edit or rename an existing rule.
-- **Context Menus**:
-  - Right-click page -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Reglas" -> Toggle active state, open all rule URLs, or close matching tabs.
-- **Keyboard Shortcuts**:
-  - `Alt+R`: Open Rules Manager.
-  - `Alt+M`: Toggle activation of all rules simultaneously (`toggle-all-rules`).
-
----
-
-## 3. Section 2: Group Listing & Operations (Listar Grupos)
-
-The Group Listing view provides an interactive workspace for inspecting, manipulating, and reordering browser tab groups and individual tabs.
-
-### 3.1 UI Architecture
-- **Component Stack**: Built with `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, and `TabActions.svelte`.
-- **Card Features**: Displays group title, color badge, tab count pill, collapse/expand accordion toggle, card pinning, and customizable action button groups.
-- **Tab Items**: Displays tab favicon with color fallback, title, audible sound badge, mute indicator, active state indicator, and per-tab actions (close, duplicate, pin, split, discard).
-
-### 3.2 Group Lifecycle & Behaviors
-- **Accordion Control**: Smooth expand and collapse states. Optional auto-accordion mode automatically collapses idle groups when a new group is expanded.
-- **Inactivity Auto-Collapse Idle Timer**:
-  - Automatically collapses idle tab groups to reduce visual clutter.
-  - Two distinct thresholds: Inactive groups collapse after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), while the active group collapses after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-- **Inline Renaming & Grace Period**:
-  - Users can rename groups directly in the browser tab strip or UI.
-  - `GROUP_NAMING_GRACE_MS` (5000ms) pauses automatic regrouping while a user edits, preventing title overwrites mid-typing.
-  - Zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) are stripped during evaluation.
-  - Renaming an automatically generated group converts it to a user-named group, updating the corresponding custom rule or marking it permanent.
-- **Visual Group Prefix Indicators**:
-  - Dynamically prepends status symbols: `🔒` (unvisited), `🔍` (partial), `🗝️` (all viewed), `⚠️` (collision).
-- **Drag-and-Drop Reordering**: Integrated with `sortable.js` for reordering tabs within groups, moving tabs between groups, or reordering group cards.
-- **Hidden Groups Feature**:
-  - Prefixes group title with `_hidden_` in the browser tab strip.
-  - Hides group cards from the main list view, transferring them to `HiddenGroupsBar.svelte`.
-  - Users can unhide or restore groups instantly with a single click.
-
-### 3.3 Group Operations & Memory Management
-- **Ungroup**: Disbands the group, leaving tabs open in the window.
-- **Close Group**: Closes all tabs in the group and releases the group ID.
-- **Close Other Groups**: Closes all tab groups except the currently focused group.
-- **Regroup All Tabs (`Alt+Shift+R`)**: Executes a comprehensive re-evaluation pass across custom rules, system groups, and domain clusters.
-- **Group Screenshot Walk**: Sequentially cycles through and captures every tab in the group (`Cs` visible, `Cp` full page, `CP` full page parts).
-
-### 3.4 Group Backups & Restore Subsystem
-- **IndexedDB `backupsGroups` Store**:
-  - Backs up single tab groups or workspace-wide snapshots of all open groups into IndexedDB `Intelligent_Workspace` store `backupsGroups`.
-  - Captures complete group structures: group title, color, collapsed state, tab titles, URLs, favicons, pinned status, and relative tab positions.
-  - **Memory Conservation**: Backed-up tabs are cleanly closed to reclaim system RAM and reduce CPU overhead.
-  - **Restore Mechanisms**:
-    - Backups UI View in `ListGroup.svelte` with one-click group restoration.
-    - Keyboard shortcut `br` (restore) and `bg` (backup all).
-    - Omnibar command `bgr:` (search and restore backed-up groups) and `b:` (bookmark search).
-  - **JSON Export & Import**: Full JSON backup export and import for seamless migration between machines and long-term offline archiving.
-
-### 3.5 Parked YouTube Player in Hidden Groups Bar
-- **Architecture (`HiddenGroupsBar.svelte`)**:
-  - When a user navigates away from an active YouTube video view or launches video content inside the side panel, the player is not closed or lost. It is automatically docked in `HiddenGroupsBar.svelte` as a parked YouTube indicator (`.youtube-indicator`).
-  - Managed reactively via the `hiddenYoutubeView` store in `src/ui/stores/appStore.svelte.js`.
-  - **One-Click Actions**:
-    - Clicking the parked indicator invokes `restoreYoutubeView()`, returning the player immediately to the active workspace view.
-    - Clicking the delete badge invokes `discardYoutubeView()`, cleanly terminating playback and reclaiming resources.
-  - Sits seamlessly alongside hidden tab groups at the top of the ListGroup view without cluttering active tab lists.
+### 2.6 Modalitas Pemanggilan
+- **Halaman Manajer Aturan (`Rules.svelte`)**: Dapat diakses dalam tampilan tab penuh atau panel samping (`?view=rules` / `pg`). Menyediakan pengurutan drag-and-drop lengkap, pemilih warna inline, chip tag URL, dan sakelar aturan.
+- **Perintah Omnibar**:
+  - `rl:` — Cari aturan dan buka URL terkait.
+  - `cr: <name> [, url1, url2]` — Buat aturan baru langsung dari bilah perintah.
+  - `atcr:` — Tambahkan domain atau URL tab aktif ke aturan yang sudah ada.
+  - `atr:` — Tambahkan tab terbuka yang dipilih atau URL manual ke aturan yang sudah ada.
+  - `ccr:` — Ubah warna aturan kustom.
+  - `dr:` — Hapus aturan atau URL individual dari suatu aturan.
+  - `er:` — Edit atau ganti nama aturan yang sudah ada.
+- **Menu Konteks**:
+  - Klik kanan halaman -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Klik kanan halaman -> "Añadir a Regla Existente" -> Pilih aturan -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Klik kanan halaman -> "Reglas" -> Alihkan status aktif, buka semua URL aturan, atau tutup tab yang cocok.
+- **Pintasan Papan Ketik**:
+  - `Alt+R`: Buka Manajer Aturan.
+  - `Alt+M`: Alihkan aktivasi semua aturan secara bersamaan (`toggle-all-rules`).
 
 ---
 
-## 4. Section 3: Navigation & Tab Management (Navegación)
+## 3. Bagian 2: Daftar Grup & Operasi (Listar Grupos)
 
-Accelerated keyboard navigation and workspace controls allow seamless multi-tab control without mouse interaction.
+Tampilan Daftar Grup menyediakan ruang kerja interaktif untuk memeriksa, memanipulasi, dan mengatur ulang grup tab peramban serta tab individual.
 
-### 4.1 Fast Tab Jump Gesture
-- **Gesture Syntax**: `Alt + [groupPrefix] + [tabIndex] + Enter`
-- **Execution**:
-  - Hold `Alt` and type the group's name or prefix letters, followed by the desired 1-based tab index, then press `Enter`.
-  - Example: `Alt + git + 2 + Enter` jumps directly to the second tab in the "GitHub" group.
-  - Index `0` acts as a shortcut for the *last* tab in the group.
-  - Omitting the index jumps to the *first* tab in the group.
-  - Accents are automatically folded (`deaccent`) and matching normalizes diacritics.
+### 3.1 Arsitektur UI
+- **Tumpukan Komponen**: Dibangun dengan `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, dan `TabActions.svelte`.
+- **Fitur Kartu**: Menampilkan judul grup, lencana warna, pil jumlah tab, sakelar akordeon ciutkan/bentangkan, penyematan kartu, dan grup tombol tindakan yang dapat disesuaikan.
+- **Item Tab**: Menampilkan favicon tab dengan fallback warna, judul, lencana suara terdengar, indikator bisu, indikator status aktif, dan tindakan per-tab (tutup, duplikasi, sematkan, pisahkan, buang dari memori).
 
-### 4.2 Stepping, Swapping & Lifecycle Keys
-- `s`: Instantly swap to the previously active tab (`previousActiveTabId`).
-- `h` / `l`: Step to the previous / next tab (or scroll horizontally if the page allows).
-- `H` / `L`: Navigate back / forward in browser history.
-- `t`: Open a new blank tab.
-- `x`: Close the current active tab.
-- `yt`: Duplicate the current tab.
-- `r` / `R`: Reload page / Force reload bypassing cache.
-- `d` / `u`: Scroll to bottom / top of page.
-- `j` / `k`: Smooth scroll down / up (75px step).
-- `f`: Activate Vim link hints (letters appear over clickable elements to click).
-- `cf`: Activate Vim link hints to copy target URL to clipboard.
+### 3.2 Siklus Hidup & Perilaku Grup
+- **Kontrol Akordeon**: Status membentang dan menciut yang mulus. Mode auto-akordeon opsional secara otomatis menciutkan grup diam saat grup baru dibentangkan.
+- **Pewaktu Diam Auto-Collapse Ketidakaktifan**:
+  - Secara otomatis menciutkan grup tab yang diam untuk mengurangi kekacauan visual.
+  - Dua ambang batas berbeda: Grup tidak aktif menciut setelah 1 menit tidak aktif (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), sedangkan grup aktif menciut setelah 15 menit tidak aktif (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Dapat dikonfigurasi dari 0 hingga 1440 menit.
+- **Penggantian Nama Inline & Masa Tenggang (Grace Period)**:
+  - Pengguna dapat mengganti nama grup langsung di bilah tab peramban atau UI.
+  - `GROUP_NAMING_GRACE_MS` (5000ms) menjeda pengelompokan ulang otomatis saat pengguna mengedit, mencegah penimpaan judul di tengah pengetikan.
+  - Karakter spasi dengan lebar nol (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) dibuang selama evaluasi.
+  - Mengganti nama grup yang dibuat secara otomatis akan mengubahnya menjadi grup yang dinamai pengguna, memperbarui aturan kustom yang sesuai atau menandainya permanen.
+- **Indikator Prefiks Grup Visual**:
+  - Menambahkan simbol status secara dinamis di awal judul: `🔒` (belum dikunjungi), `🔍` (sebagian dikunjungi), `🗝️` (semua dilihat), `⚠️` (benturan).
+- **Pengurutan Drag-and-Drop**: Terintegrasi dengan `sortable.js` untuk mengatur ulang tab di dalam grup, memindahkan tab antar grup, atau mengatur ulang kartu grup.
+- **Fitur Grup Tersembunyi (Hidden Groups)**:
+  - Menambahkan prefiks `_hidden_` pada judul grup di bilah tab peramban.
+  - Menyembunyikan kartu grup dari tampilan daftar utama, memindahkannya ke `HiddenGroupsBar.svelte`.
+  - Pengguna dapat menampilkan kembali atau memulihkan grup secara instan dengan satu klik.
 
-### Untuk pengguna tingkat lanjut (For power users)
+### 3.3 Operasi Grup & Manajemen Memori
+- **Ungroup (Pisahkan Grup)**: Membubarkan grup, membiarkan tab tetap terbuka di jendela.
+- **Close Group (Tutup Grup)**: Menutup semua tab di dalam grup dan melepaskan ID grup.
+- **Close Other Groups (Tutup Grup Lain)**: Menutup semua grup tab kecuali grup yang sedang difokuskan.
+- **Regroup All Tabs (Kelompokkan Ulang Semua Tab) (`Alt+Shift+R`)**: Menjalankan evaluasi ulang menyeluruh di seluruh aturan kustom, grup sistem, dan kluster domain.
+- **Tangkapan Layar Grup Sekuensial**: Berpindah dan merekam setiap tab di dalam grup secara berurutan (`Cs` terlihat, `Cp` halaman penuh, `CP` bagian halaman penuh).
 
-Pengguna yang lebih mahir dapat mengatur peramban ke mode layar penuh dan bernavigasi sepenuhnya menggunakan papan ketik, tanpa menggunakan mouse sama sekali.
+### 3.4 Subsistem Pencadangan & Pemulihan Grup
+- **Penyimpanan IndexedDB `backupsGroups`**:
+  - Mencadangkan satu grup tab atau snapshot seluruh ruang kerja dari semua grup yang terbuka ke dalam penyimpanan IndexedDB `Intelligent_Workspace` bernama `backupsGroups`.
+  - Menangkap struktur grup lengkap: judul grup, warna, status penciutan, judul tab, URL, favicon, status penyematan, dan posisi relatif tab.
+  - **Penghematan Memori**: Tab yang dicadangkan ditutup dengan bersih untuk memulihkan RAM sistem dan mengurangi beban CPU.
+  - **Mekanisme Pemulihan**:
+    - Tampilan UI Pencadangan di `ListGroup.svelte` dengan pemulihan grup sekali klik.
+    - Pintasan papan ketik `br` (pulihkan) dan `bg` (cadangkan semua).
+    - Perintah Omnibar `bgr:` (cari dan pulihkan grup yang dicadangkan) dan `b:` (pencarian bookmark).
+  - **Ekspor & Impor JSON**: Ekspor dan impor cadangan JSON penuh untuk migrasi mulus antar mesin dan pengarsipan luring jangka panjang.
 
-#### Full-Screen Immersion & Mouse-Free Browsing
-- **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.
-- **In-Page Vim Link Navigation (`f` / `cf`)**:
-  - Press `f` to generate high-contrast two-character yellow link hints over every clickable element, button, input, and link in the DOM.
-  - Type the two letters matching your target to simulate a direct click without mouse interaction.
-  - Press `cf` to trigger hint badges that copy the target link's URL directly to your system clipboard.
-  - Press `vp` to open an in-page preview modal of the target link.
-  - Press `Esc` at any time to cancel link hints and return to normal scrolling.
-- **Instant Tab Jumping & Switching**:
-  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Execute the Fast Tab Jump gesture (e.g., `Alt + dev + 1 + Enter` jumps directly to the first tab in the "Dev" group; index `0` selects the last tab in the group).
-  - `s`: Instantly swap between the current tab and the previously active tab (`previousActiveTabId`).
-  - `h` / `l`: Step sequentially to the previous / next tab in the tab strip.
-  - `H` / `L`: Move backward / forward through browser navigation history.
-  - `t` / `x` / `yt`: Open a new tab (`t`), close current tab (`x`), or duplicate tab (`yt`).
-- **Floating Omnibar Command Subsystem (`o`)**:
-  - Press `o` on any page to summon the centered Omnibar overlay.
-  - Press `@` to display the interactive directory of all 41 command prefixes.
-  - Type `f: <query>` to execute deep full-text tab search across all open windows.
-  - Type `sp:` to route navigation directly into any Sidepanel view (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
-  - Type `qai: <query>` or `qaia: <task>` to query Gemini or instruct the autonomous browser agent without lifting hands from the keyboard.
-  - Type `ts:` to split open tabs into side-by-side split screen.
-- **In-Page Navigation & Focus**:
-  - `j` / `k`: Smooth scroll down / up (75px increment).
-  - `d` / `u`: Half-page scroll down / up.
-  - `i`: Jump cursor focus immediately into the primary text input field on the page.
-  - `ESC`: Unfocus inputs and return keyboard focus to navigation mode.
+### 3.5 Pemutar YouTube Terparkir di Hidden Groups Bar
+- **Arsitektur (`HiddenGroupsBar.svelte`)**:
+  - Saat pengguna bernavigasi menjauh dari tampilan video YouTube yang aktif atau memutar konten video di dalam panel samping, pemutar tidak ditutup atau hilang. Pemutar secara otomatis berlabuh di `HiddenGroupsBar.svelte` sebagai indikator YouTube terparkir (`.youtube-indicator`).
+  - Dikelola secara reaktif melalui penyimpanan `hiddenYoutubeView` di `src/ui/stores/appStore.svelte.js`.
+  - **Tindakan Sekali Klik**:
+    - Mengklik indikator terparkir memanggil `restoreYoutubeView()`, mengembalikan pemutar seketika ke tampilan ruang kerja aktif.
+    - Mengklik lencana hapus memanggil `discardYoutubeView()`, menghentikan pemutaran dengan bersih dan memulihkan sumber daya.
+  - Berada berdampingan secara mulus dengan grup tab tersembunyi di bagian atas tampilan ListGroup tanpa mengacaukan daftar tab aktif.
 
-### 4.3 Audio & Sound Management
-- Tabs playing audio display a speaker badge in the ListGroup UI.
-- `st`: Toggle mute on the current active tab.
-- `so`: Mute all audible tabs across the entire browser.
-- Context menu: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
+---
 
-### 4.4 Split Screen Workflows
-- **Trigger**: Vim hint `ts` or Omnibar prefix `ts:`.
-- **Behavior**: Uses `chrome.system.display` to calculate screen geometry. Splits two tabs side-by-side into adjacent windows, grouping them under a dedicated `Split` tab group.
-- **Restoration**: Closing the split window or toggling split screen restores original window dimensions and coordinates.
+## 4. Bagian 3: Navigasi & Manajemen Tab (Navegación)
 
-### 4.5 YouTube Looping Subsystem
-The YouTube looping subsystem provides precision media looping controls integrated directly into the YouTube player:
-- **Desktop Player Button (`#itg-yt-loop-button`)**: Injected into the standard YouTube player control bar (`.ytp-right-controls`), positioned to the left of the Cast / Remote button or PiP launcher. Features animated SVG looping glyphs, toggle highlight styling (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), and `aria-pressed` states.
-- **Shorts Player Button (`#itg-yt-shorts-loop-button`)**: Injected inside `#itg-yt-shorts-loop-wrapper` into the YouTube Shorts right-side control column (`ytd-shorts`), providing one-click looping for vertical video content.
-- **Loop Menu & PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Hovering or clicking the loop button opens the comprehensive loop settings menu:
-  - **A-B Looping**: Users can set custom start point (A) and end point (B) down to millisecond precision with interactive range sliders and manual time fields.
-  - **Cycle Mode & Sequence Repetitions**: Set repetition count for specific loops or toggle infinite loop mode (`itg-loop-seq-inf`).
-  - **Loop List & Multi-Segment Sequences**: Queue multiple A-B loop intervals that play consecutively according to configured repetitions.
-  - **Status & Duration Display**: Shows real-time playback position within current loop interval and total media duration (`00:00 / 00:00`).
-  - **Master Toggle (`youtubeLoopEnabled`)**: Persisted in `chrome.storage.sync` and `local`, allowing users to enable or disable the loop buttons across YouTube and YouTube Shorts via the Customize Hints settings page (`YoutubeLoopSection.svelte`).
+Navigasi papan ketik yang dipercepat dan kontrol ruang kerja memungkinkan pengendalian multi-tab yang lancar tanpa interaksi tetikus (mouse).
 
-### 4.6 YouTube Shorts Preview Audio
-- **Audio Unmute Hook (`youtubePreviewAudioHook.js`)**:
-  - Runs in the `MAIN` execution world to access the `#inline-preview-player` property on `ytd-video-preview` elements.
-  - **Overcoming Forced Mute**: YouTube enforces a forced mute on Shorts previews by clearing audio controls and restoring `muted = true` via internal `volumechange` listeners.
-  - The extension hooks `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover. It drops YouTube's forced re-mute while allowing user unmuting, ensuring sound plays continuously without being interrupted across loop restarts until mouse leave.
+### 4.1 Gestur Lompat Tab Cepat
+- **Sintaks Gestur**: `Alt + [groupPrefix] + [tabIndex] + Enter`
+- **Eksekusi**:
+  - Tahan `Alt` dan ketik nama atau huruf prefiks grup, diikuti dengan indeks tab berbasis-1 yang diinginkan, lalu tekan `Enter`.
+  - Contoh: `Alt + git + 2 + Enter` langsung melompat ke tab kedua di dalam grup "GitHub".
+  - Indeks `0` bertindak sebagai pintasan untuk tab *terakhir* di dalam grup.
+  - Mengabaikan indeks akan melompat ke tab *pertama* di dalam grup.
+  - Tanda aksen secara otomatis dilipat (`deaccent`) dan pencocokan menormalisasi tanda diakritik.
 
-### 4.7 Picture-in-Picture (PiP) Architecture
+### 4.2 Tombol Langkah, Pertukaran & Siklus Hidup
+- `s`: Bertukar seketika ke tab yang aktif sebelumnya (`previousActiveTabId`).
+- `h` / `l`: Melangkah ke tab sebelumnya / berikutnya (atau menggulir secara horizontal jika halaman memungkinkan).
+- `H` / `L`: Navigasi mundur / maju dalam riwayat peramban.
+- `t`: Buka tab kosong baru.
+- `x`: Tutup tab aktif saat ini.
+- `yt`: Gandakan tab saat ini.
+- `r` / `R`: Muat ulang halaman / Muat ulang paksa melewati cache.
+- `d` / `u`: Gulir ke bagian paling bawah / paling atas halaman.
+- `j` / `k`: Gulir mulus ke bawah / ke atas (langkah 75px).
+- `f`: Aktifkan petunjuk tautan Vim (huruf muncul di atas elemen yang dapat diklik untuk diklik).
+- `cf`: Aktifkan petunjuk tautan Vim untuk menyalin URL target ke papan klip.
+
+### Untuk pengguna tingkat lanjut
+
+Pengguna yang lebih mahir dapat mengatur peramban ke mode layar penuh dan bernavigasi sepenuhnya menggunakan papan ketik, tanpa menggunakan tetikus sama sekali.
+
+#### Imersi Layar Penuh & Penjelajahan Bebas Tetikus
+- **Alihkan Layar Penuh**: Tekan `F11` (Windows/Linux) atau `Command+Control+F` (macOS). Bingkai peramban, bilah alamat, bilah tab, dan panel sistem operasi disembunyikan, mendedikasikan 100% tampilan untuk konten.
+- **Navigasi Tautan Vim di Dalam Halaman (`f` / `cf`)**:
+  - Tekan `f` untuk menghasilkan lencana petunjuk tautan kuning dua karakter dengan kontras tinggi di atas setiap elemen yang dapat diklik, tombol, masukan, dan tautan di DOM.
+  - Ketik dua huruf yang cocok dengan target Anda untuk menyimulasikan klik langsung tanpa interaksi tetikus.
+  - Tekan `cf` untuk memicu lencana petunjuk yang menyalin URL tautan target langsung ke papan klip sistem Anda.
+  - Tekan `vp` untuk membuka modal pratinjau dalam halaman dari tautan target.
+  - Tekan `Esc` kapan saja untuk membatalkan petunjuk tautan dan kembali ke pengguliran normal.
+- **Lompat & Ganti Tab Seketika**:
+  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Jalankan gestur Lompat Tab Cepat (misalnya, `Alt + dev + 1 + Enter` melompat langsung ke tab pertama dalam grup "Dev"; indeks `0` memilih tab terakhir dalam grup).
+  - `s`: Bertukar seketika antara tab saat ini dan tab yang aktif sebelumnya (`previousActiveTabId`).
+  - `h` / `l`: Melangkah secara berurutan ke tab sebelumnya / berikutnya di bilah tab.
+  - `H` / `L`: Bergerak mundur / maju melalui riwayat navigasi peramban.
+  - `t` / `x` / `yt`: Buka tab baru (`t`), tutup tab saat ini (`x`), atau gandakan tab (`yt`).
+- **Subsistem Perintah Omnibar Mengambang (`o`)**:
+  - Tekan `o` di halaman mana pun untuk memunculkan overlay Omnibar di tengah layar.
+  - Tekan `@` untuk menampilkan direktori interaktif dari semua 41 prefiks perintah.
+  - Ketik `f: <query>` untuk menjalankan pencarian teks lengkap mendalam pada tab di semua jendela yang terbuka.
+  - Ketik `sp:` untuk mengarahkan navigasi langsung ke tampilan Sidepanel mana pun (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
+  - Ketik `qai: <query>` atau `qaia: <task>` untuk mengajukan pertanyaan ke Gemini atau menginstruksikan agen peramban otonom tanpa mengangkat tangan dari papan ketik.
+  - Ketik `ts:` untuk memisahkan tab terbuka menjadi layar terpisah berdampingan.
+- **Navigasi & Fokus di Dalam Halaman**:
+  - `j` / `k`: Gulir mulus ke bawah / ke atas (peningkatan 75px).
+  - `d` / `u`: Gulir setengah halaman ke bawah / ke atas.
+  - `i`: Lompatkan fokus kursor seketika ke bidang input teks utama di halaman.
+  - `ESC`: Lepaskan fokus input dan kembalikan fokus papan ketik ke mode navigasi.
+
+### 4.3 Manajemen Audio & Suara
+- Tab yang memutar audio menampilkan lencana pengeras suara di UI ListGroup.
+- `st`: Alihkan bisu pada tab yang sedang aktif.
+- `so`: Bisukan semua tab yang bersuara di seluruh peramban.
+- Menu konteks: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
+
+### 4.4 Alur Kerja Layar Terpisah (Split Screen)
+- **Pemicu**: Petunjuk Vim `ts` atau prefiks Omnibar `ts:`.
+- **Perilaku**: Menggunakan `chrome.system.display` untuk menghitung geometri layar. Membagi dua tab secara berdampingan ke dalam jendela yang berdekatan, mengelompokkannya di bawah grup tab khusus `Split`.
+- **Pemulihan**: Menutup jendela terpisah atau mengalihkan layar terpisah akan memulihkan dimensi dan koordinat jendela asli.
+
+### 4.5 Subsistem Pengulangan (Looping) YouTube
+Subsistem pengulangan YouTube menyediakan kontrol pengulangan media presisi yang terintegrasi langsung ke dalam pemutar YouTube:
+- **Tombol Pemutar Desktop (`#itg-yt-loop-button`)**: Disuntikkan ke dalam bilah kontrol pemutar YouTube standar (`.ytp-right-controls`), diposisikan di sebelah kiri tombol Cast / Jarak Jauh atau peluncur PiP. Menampilkan glif pengulangan SVG beranimasi, gaya sorotan sakelar (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), dan status `aria-pressed`.
+- **Tombol Pemutar Shorts (`#itg-yt-shorts-loop-button`)**: Disuntikkan di dalam `#itg-yt-shorts-loop-wrapper` ke kolom kontrol sisi kanan YouTube Shorts (`ytd-shorts`), menyediakan pengulangan satu klik untuk konten video vertikal.
+- **Menu Pengulangan & Popup PiP (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Mengarahkan kursor atau mengklik tombol pengulangan akan membuka menu pengaturan pengulangan yang komprehensif:
+  - **Pengulangan A-B**: Pengguna dapat mengatur titik awal (A) dan titik akhir (B) kustom hingga presisi milidetik dengan penggeser rentang interaktif dan bidang waktu manual.
+  - **Mode Siklus & Pengulangan Urutan**: Atur jumlah pengulangan untuk segmen tertentu atau alihkan mode pengulangan tak terbatas (`itg-loop-seq-inf`).
+  - **Daftar Pengulangan & Urutan Multi-Segmen**: Antrekan beberapa interval pengulangan A-B yang diputar berturut-turut sesuai dengan pengulangan yang dikonfigurasi.
+  - **Tampilan Status & Durasi**: Menampilkan posisi pemutaran waktu nyata dalam interval pengulangan saat ini dan total durasi media (`00:00 / 00:00`).
+  - **Sakelar Utama (`youtubeLoopEnabled`)**: Dipersistensikan di `chrome.storage.sync` dan `local`, memungkinkan pengguna mengaktifkan atau menonaktifkan tombol pengulangan di YouTube dan YouTube Shorts melalui halaman pengaturan Customize Hints (`YoutubeLoopSection.svelte`).
+
+### 4.6 Audio Pratinjau YouTube Shorts
+- **Hook Buka Bisu Audio (`youtubePreviewAudioHook.js`)**:
+  - Berjalan di dunia eksekusi `MAIN` untuk mengakses properti `#inline-preview-player` pada elemen `ytd-video-preview`.
+  - **Mengatasi Bisu Paksa**: YouTube menerapkan pembisuan paksa pada pratinjau Shorts dengan menghapus kontrol audio dan mengembalikan `muted = true` melalui pendengar `volumechange` internal.
+  - Ekstensi mengaitkan deskriptor properti `HTMLMediaElement.prototype.muted` pada elemen `<video>` target saat diarahkan kursor. Ini menggagalkan pembisuan ulang paksa oleh YouTube sembari mengizinkan pembatalan bisu oleh pengguna, memastikan suara diputar terus menerus tanpa terputus di seluruh restart pengulangan hingga kursor mouse meninggalkan area.
+
+### 4.7 Arsitektur Picture-in-Picture (PiP)
 - **Document Picture-in-Picture (`wp`)**:
-  - Leverages the modern `documentPictureInPicture` API to open an entire webpage or text snippet inside an always-on-top floating window.
-  - Automatically synchronizes video playback timestamps when transferring media.
-  - Features retry logic (`itgRetryIfPipFrameRefused`) and cleans up DNR iframe headers upon close.
+  - Memanfaatkan API modern `documentPictureInPicture` untuk membuka seluruh halaman web atau cuplikan teks di dalam jendela mengambang yang selalu berada di paling atas.
+  - Secara otomatis menyinkronkan stempel waktu pemutaran video saat mentransfer media.
+  - Menampilkan logika coba lagi (`itgRetryIfPipFrameRefused`) dan membersihkan header iframe DNR saat ditutup.
 - **Video Picture-in-Picture (`wv`)**:
-  - Hooks `HTMLVideoElement.prototype.requestPictureInPicture` via `videoPipHook.js`.
-  - Redirects video players into custom PiP frames with loop controls and playback speed selectors.
+  - Mengaitkan `HTMLVideoElement.prototype.requestPictureInPicture` melalui `videoPipHook.js`.
+  - Mengalihkan pemutar video ke dalam bingkai PiP kustom dengan kontrol pengulangan dan pemilih kecepatan pemutaran.
 - **Auto-PiP**:
-  - `as`: Toggle Auto-PiP on scroll (launches video in PiP when scrolled out of viewport).
-  - `ah`: Toggle Auto-PiP on tab hide (launches video in PiP when switching to another tab).
+  - `as`: Alihkan Auto-PiP saat bergulir (menjalankan video di PiP saat digulir keluar dari area pandang).
+  - `ah`: Alihkan Auto-PiP saat tab disembunyikan (menjalankan video di PiP saat beralih ke tab lain).
 
-### 4.8 Page Reading Modes & Visual Overlays
-- **CSS Filter Themes**: Injects non-destructive styles into web pages:
-  - `mb` / `mB`: Black (Dark High-Contrast) — tab scope / global scope.
-  - `ms` / `mS`: Sepia (Warm Paper) — tab scope / global scope.
-  - `mp` / `mP`: Paper (Monochrome Grayscale) — tab scope / global scope.
-  - `ml` / `mL`: Light (Soft White) — tab scope / global scope.
-  - `me` / `mE`: Custom user-defined CSS filter — tab scope / global scope.
-  - `ESC`: Immediately removes active page filter.
-- **Reader Mode & TTS Read Aloud**:
-  - `fetchContentForReaderView`: Extracts clean article content, removing advertisements, sidebars, and navigation noise.
-  - Built-in Text-to-Speech (TTS) engine reading text aloud sentence by sentence.
-  - Keyboard navigation controls: `zp` (play/pause), `zn` (next sentence), `zb` (previous sentence), `zq` (close reader overlay).
+### 4.8 Mode Membaca Halaman & Overlay Visual
+- **Tema Filter CSS**: Menyuntikkan gaya non-destruktif ke dalam halaman web:
+  - `mb` / `mB`: Hitam (Gelap Kontras Tinggi) — cakupan tab / cakupan global.
+  - `ms` / `mS`: Sepia (Kertas Hangat) — cakupan tab / cakupan global.
+  - `mp` / `mP`: Kertas (Grayscale Monokrom) — cakupan tab / cakupan global.
+  - `ml` / `mL`: Terang (Putih Lembut) — cakupan tab / cakupan global.
+  - `me` / `mE`: Filter CSS kustom yang ditentukan pengguna — cakupan tab / cakupan global.
+  - `ESC`: Segera menghapus filter halaman yang aktif.
+- **Mode Pembaca & TTS Baca Nyaring**:
+  - `fetchContentForReaderView`: Mengekstrak konten artikel bersih, menghapus iklan, bilah samping, dan derau navigasi.
+  - Mesin Text-to-Speech (TTS) bawaan yang membacakan teks dengan lantang kalimat demi kalimat.
+  - Kontrol navigasi papan ketik: `zp` (putar/jeda), `zn` (kalimat berikutnya), `zb` (kalimat sebelumnya), `zq` (tutup overlay pembaca).
 
-### 4.9 Text Snippets Subsystem with Template Variables
-The Text Snippets subsystem (`SnippetManager` in `src/utils/hint/snippets.js` and `src/utils/snippet-panel.js`) accelerates typing by expanding text shortcuts in any input, textarea, or rich editor:
-- **Trigger Modalities**: Type shortcut followed by Space, or type `$$` to summon the interactive snippets search popup.
-- **Clipboard API Integration**: Supports formatted HTML and plain text insertion via the Clipboard API, ensuring 100% compatibility with complex editors like Google Docs, Notion, and Slack.
-- **Template Variables**: Dynamically resolves variables at the moment of expansion:
-  - `{{date}}` / `date`: Formatted locale date (`toLocaleDateString`).
-  - `{{isodate}}` / `isodate`: ISO 8601 date (`YYYY-MM-DD`).
-  - `{{longdate}}` / `longdate`: Long date with weekday, day, month, and year.
-  - `{{time}}` / `time`: 2-digit formatted time (`HH:MM`).
-  - `{{datetime}}` / `datetime`: Date and time combined.
-  - `{{weekday}}` / `weekday`: Full day name (e.g., Monday).
-  - `{{day}}` / `day`: Day of month (1-31).
-  - `{{month}}` / `month`: Full month name (e.g., October).
-  - `{{year}}` / `year`: Full 4-digit year.
-  - `{{tomorrow}}` / `tomorrow`: Next day's date (+1 day).
-  - `{{yesterday}}` / `yesterday`: Previous day's date (-1 day).
-  - `{{nextweek}}` / `nextweek`: Date 7 days ahead (+7 days).
-  - `{{timestamp}}` / `timestamp`: Epoch millisecond timestamp (`Date.now()`).
-  - `{{url}}` / `url`: Active webpage URL (`window.location.href`).
-  - `{{domain}}` / `domain`: Active domain hostname (`window.location.hostname`).
-  - `{{pagetitle}}` / `pagetitle`: Active document title (`document.title`).
-  - `{{uuid}}` / `uuid`: Cryptographically secure unique identifier (`crypto.randomUUID()`).
-  - `{{random}}` / `random`: Random integer between 1 and 1000.
-  - `{{clipboard}}` / `clipboard`: System clipboard buffer text.
+### 4.9 Subsistem Cuplikan Teks (Text Snippets) dengan Variabel Templat
+Subsistem Cuplikan Teks (`SnippetManager` di `src/utils/hint/snippets.js` dan `src/utils/snippet-panel.js`) mempercepat pengetikan dengan memperluas pintasan teks di bidang input, textarea, atau rich editor mana pun:
+- **Modalitas Pemicu**: Ketik pintasan diikuti oleh Spasi, atau ketik `$$` untuk memunculkan popup pencarian cuplikan interaktif.
+- **Integrasi Clipboard API**: Mendukung penyisipan HTML berformat dan teks polos melalui Clipboard API, memastikan kompatibilitas 100% dengan editor kompleks seperti Google Docs, Notion, dan Slack.
+- **Variabel Templat**: Menyelesaikan variabel secara dinamis pada saat pemekaran teks:
+  - `{{date}}` / `date`: Tanggal lokal berformat (`toLocaleDateString`).
+  - `{{isodate}}` / `isodate`: Tanggal ISO 8601 (`YYYY-MM-DD`).
+  - `{{longdate}}` / `longdate`: Tanggal panjang dengan hari dalam seminggu, tanggal, bulan, dan tahun.
+  - `{{time}}` / `time`: Waktu berformat 2 digit (`HH:MM`).
+  - `{{datetime}}` / `datetime`: Tanggal dan waktu digabungkan.
+  - `{{weekday}}` / `weekday`: Nama hari lengkap (misalnya, Monday).
+  - `{{day}}` / `day`: Hari dalam sebulan (1-31).
+  - `{{month}}` / `month`: Nama bulan lengkap (misalnya, October).
+  - `{{year}}` / `year`: Tahun lengkap 4 digit.
+  - `{{tomorrow}}` / `tomorrow`: Tanggal hari berikutnya (+1 hari).
+  - `{{yesterday}}` / `yesterday`: Tanggal hari sebelumnya (-1 hari).
+  - `{{nextweek}}` / `nextweek`: Tanggal 7 hari ke depan (+7 hari).
+  - `{{timestamp}}` / `timestamp`: Stempel waktu milidetik Epoch (`Date.now()`).
+  - `{{url}}` / `url`: URL halaman web aktif (`window.location.href`).
+  - `{{domain}}` / `domain`: Nama host domain aktif (`window.location.hostname`).
+  - `{{pagetitle}}` / `pagetitle`: Judul dokumen aktif (`document.title`).
+  - `{{uuid}}` / `uuid`: Pengidentifikasi unik yang aman secara kriptografis (`crypto.randomUUID()`).
+  - `{{random}}` / `random`: Bilangan bulat acak antara 1 dan 1000.
+  - `{{clipboard}}` / `clipboard`: Teks buffer papan klip sistem.
 
-### 4.10 Embedded Productivity Tools
-- **Allow Right Click Hook (`allowRightClickHook.js`)**:
-  - Injected into the `MAIN` execution world to neutralize hostile web scripts that disable right-click context menus, copy, cut, or text selection.
-  - Intercepts `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-  - Clears inline `oncontextmenu="return false"` handlers via a persistent `MutationObserver`.
-  - Verifies clipboard payloads to prevent breaking legitimate web editors (Google Docs, Telegram Web).
-- **Cookie Editor**: In-page modal inspecting, editing, creating, and deleting HTTP and HTTPS cookies for the active domain.
-- **QR Code Generator**: Generates SVG/Canvas QR codes for the active tab URL for rapid mobile handover.
-- **Clean PDF Print Export**: Routes target pages through `print.html` with headers, ads, and navigational noise stripped for clean document archiving.
+### 4.10 Alat Produktivitas Tersemat
+- **Hook Izinkan Klik Kanan (`allowRightClickHook.js`)**:
+  - Disuntikkan ke dalam dunia eksekusi `MAIN` untuk menetralisir skrip web agresif yang menonaktifkan menu konteks klik kanan, salin, potong, atau pemilihan teks.
+  - Mencegat `preventDefault()` dan `stopPropagation()` pada `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, dan `mouseup`.
+  - Membersihkan penangan inline `oncontextmenu="return false"` melalui `MutationObserver` persisten.
+  - Memverifikasi muatan papan klip untuk mencegah rusaknya fungsi editor web yang sah (Google Docs, Telegram Web).
+- **Editor Cookie**: Modal di dalam halaman untuk memeriksa, mengedit, membuat, dan menghapus cookie HTTP dan HTTPS untuk domain aktif.
+- **Pembangkit Kode QR**: Menghasilkan kode QR SVG/Canvas untuk URL tab aktif guna transfer cepat ke perangkat seluler.
+- **Ekspor Cetak PDF Bersih**: Mengarahkan halaman target melalui `print.html` dengan header, iklan, dan derau navigasi yang dilucuti untuk pengarsipan dokumen yang bersih.
 
-### 4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding
-- **Comprehensive 3-Tier Duplicate Removal**:
-  1. **Tab Deduplication (`removeDuplicateTabsCommand`)**: Scans open tabs across windows or focused groups, identifies duplicate URLs, exempts `Split` screen tabs, and closes redundant tabs while keeping the active or oldest tab. Displays a desktop summary notification.
-  2. **Bookmark Deduplication**: Deep scans Chrome bookmark trees, locates identical URL duplicates across folders, and provides batch consolidation to keep bookmarks clean.
-  3. **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs to existing custom grouping rules, preventing rule inflation.
-- **Intelligent Memory Discarding (`suspendInactiveTabsIntelligently`)**:
-  - Evaluated every 1 minute via alarm `itg-periodic-tasks`.
-  - Discards tabs inactive >= `discardingTimeMinutes` (default: 60 minutes).
-  - Built-in immunity protections: Never discards active tabs, audible tabs playing audio, pinned tabs, or already suspended tabs.
+### 4.11 Penghapusan Duplikat 3-Tingkat Komprehensif & Pembuangan Cerdas
+- **Penghapusan Duplikat 3-Tingkat Komprehensif**:
+  1. **Deduplikasi Tab (`removeDuplicateTabsCommand`)**: Memindai tab terbuka di seluruh jendela atau grup yang difokuskan, mengidentifikasi URL duplikat, mengecualikan tab layar `Split`, dan menutup tab redundan sembari mempertahankan tab yang aktif atau paling lama. Menampilkan notifikasi ringkasan desktop.
+  2. **Deduplikasi Bookmark**: Memindai secara mendalam pohon bookmark Chrome, menemukan duplikat URL identik di berbagai folder, dan menyediakan konsolidasi massal untuk menjaga kebersihan bookmark.
+  3. **Deduplikasi Aturan (`feature_v100_dedup_add_to_rule`)**: Secara otomatis membuang pola URL duplikat saat menambahkan URL ke aturan pengelompokan kustom yang ada, mencegah inflasi aturan.
+- **Pembuangan Memori Cerdas (`suspendInactiveTabsIntelligently`)**:
+  - Dievaluasi setiap 1 menit melalui alarm `itg-periodic-tasks`.
+  - Membuang tab dari memori yang tidak aktif >= `discardingTimeMinutes` (bawaan: 60 menit).
+  - Proteksi kekebalan bawaan: Tidak pernah membuang tab aktif, tab bersuara yang memutar audio, tab yang disematkan, atau tab yang sudah ditangguhkan.
 
 ---
 
-## 5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)
+## 5. Bagian 4: Asisten AI & Agen Otonom (Asistente AI)
 
-The AI Assistant integrates large language models into the browser to provide contextual understanding, automated workflows, and direct browser automation.
+Asisten AI mengintegrasikan model bahasa besar ke dalam peramban untuk memberikan pemahaman kontekstual, alur kerja otomatis, dan otomatisasi peramban langsung.
 
-### 5.1 Dual Model Engine Architecture
+### 5.1 Arsitektur Mesin Model Ganda
 1. **Google Gemini Cloud API (`gemini-api.js`)**:
-   - Integrates with Google Generative Language REST endpoints (`v1beta/models/{model}:generateContent` and `:streamGenerateContent`).
-   - Supports Gemini 2.5 Flash, Gemini 2.5 Pro, and custom model endpoints.
-   - **Multi-Key Rotation**: Manages key pools in `geminiApiKeysList`. Storage obfuscation uses `enc_` prefixes.
-   - **Exponential Backoff**: Handles HTTP 429 quota exhaustion with automated backoff retry (1.5s -> 3s -> 6s).
-   - **Search Grounding**: Enables Google Search Grounding (`google_search: {}`). If HTTP 403 occurs due to quota restrictions on search tools, it automatically retries without grounding.
+   - Terintegrasi dengan endpoint REST Google Generative Language (`v1beta/models/{model}:generateContent` dan `:streamGenerateContent`).
+   - Mendukung Gemini 2.5 Flash, Gemini 2.5 Pro, dan endpoint model kustom.
+   - **Rotasi Multi-Kunci**: Mengelola kumpulan kunci API di `geminiApiKeysList`. Pengaburan penyimpanan menggunakan prefiks `enc_`.
+   - **Exponential Backoff**: Menangani kehabisan kuota HTTP 429 dengan percobaan ulang berundur otomatis (1.5 detik -> 3 detik -> 6 detik).
+   - **Search Grounding**: Mengaktifkan Google Search Grounding (`google_search: {}`). Jika HTTP 403 terjadi karena pembatasan kuota pada alat penelusuran, sistem secara otomatis mencoba ulang tanpa grounding.
 2. **Chrome Built-in AI / Prompt API (`localAiService.js`)**:
-   - On-device Gemini Nano integration via `window.LanguageModel`.
-   - Supports zero-network local execution. Includes model availability checking and live download progress tracking.
+   - Integrasi Gemini Nano di perangkat melalui `window.LanguageModel`.
+   - Mendukung eksekusi lokal tanpa jaringan. Mencakup pemeriksaan ketersediaan model dan pelacakan kemajuan unduhan langsung.
 
-### 5.2 Autonomous Browser Agent (`agent-backend.js`)
-The autonomous agent provides full browser control through 40+ structured tools:
-- **Tab & Group Control**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
-- **Navigation & Search**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
-- **Knowledge & Bookmarks**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
-- **Rules & Appearance**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
+### 5.2 Agen Peramban Otonom (`agent-backend.js`)
+Agen otonom menyediakan kendali penuh atas peramban melalui 40+ alat terstruktur:
+- **Kendali Tab & Grup**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
+- **Navigasi & Pencarian**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
+- **Pengetahuan & Bookmark**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
+- **Aturan & Tampilan**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
 
-### 5.3 Taint Tracking & Prompt Injection Defense
-To neutralize indirect prompt injection attacks from untrusted web pages, the agent backend implements strict taint tracking:
-- **Taint Marking**: Calling `getActiveTabContent` extracts text from a web page and marks the current execution run as tainted (`taintedAgentRuns.add(runId)`).
-- **Egress Guard**: Tainted runs are strictly prohibited from invoking egress tools (`AGENT_EGRESS_TOOLS`):
+### 5.3 Pelacakan Taint & Pertahanan Prompt Injection
+Untuk menetralisir serangan injeksi prompt tidak langsung dari halaman web yang tidak tepercaya, backend agen menerapkan pelacakan taint yang ketat:
+- **Penandaan Taint**: Memanggil `getActiveTabContent` mengekstrak teks dari halaman web dan menandai sesi eksekusi saat ini sebagai tercemar (`taintedAgentRuns.add(runId)`).
+- **Penjaga Egress**: Sesi yang tercemar dilarang keras memanggil alat-alat egress (`AGENT_EGRESS_TOOLS`):
   * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`.
-- **Refusal Mechanism**: Rather than throwing an unhandled exception, the engine returns a structured security explanation. The LLM then informs the user that external data cannot be exfiltrated without explicit user consent.
+- **Mekanisme Penolakan**: Alih-alih melempar exception yang tidak tertangani, mesin mengembalikan penjelasan keamanan terstruktur. LLM kemudian memberi tahu pengguna bahwa data eksternal tidak dapat diekfiltrasi tanpa persetujuan eksplisit pengguna.
 
-### 5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)
-- **Background Execution Engine**:
-  - Automates scheduled AI prompt execution directly within the background service worker via `chrome.alarms` (`gemini-scheduled-*`).
-  - Supports up to 6 scheduled queries per day (`MAX_TIMES = 6`).
-  - **Schedules Modes**:
-    - Recurring Schedules: Executes repeatedly on selected days of the week (`selectedDays`).
-    - One-Time Schedules: Executes at a specific target date and time (`formDate`).
-  - **Prompt Limits**: Enforces a strict 1,000-character prompt limit (`MAX_QUERY_CHARS = 1000`) with real-time character counters.
-  - **Background Notifications**: Fires a desktop notification with a snippet preview when the background query finishes. Clicking the notification immediately opens the response thread inside the sidepanel chat.
+### 5.4 Subsistem Kueri Gemini Terjadwal (`GeminiScheduleModal.svelte`)
+- **Mesin Eksekusi Latar Belakang**:
+  - Mengotomatiskan eksekusi prompt AI terjadwal langsung di dalam background service worker melalui `chrome.alarms` (`gemini-scheduled-*`).
+  - Mendukung hingga 6 kueri terjadwal per hari (`MAX_TIMES = 6`).
+  - **Mode Penjadwalan**:
+    - Jadwal Berulang: Mengeksekusi secara berulang pada hari-hari tertentu dalam seminggu (`selectedDays`).
+    - Jadwal Sekali Jalan: Mengeksekusi pada tanggal dan waktu target tertentu (`formDate`).
+  - **Batasan Prompt**: Menerapkan batas ketat 1.000 karakter prompt (`MAX_QUERY_CHARS = 1000`) dengan penghitung karakter waktu nyata.
+  - **Notifikasi Latar Belakang**: Menampilkan notifikasi desktop dengan cuplikan pratinjau ketika kueri latar belakang selesai. Mengklik notifikasi akan langsung membuka utas tanggapan di dalam obrolan panel samping.
 
-### 5.5 Gemini Conversation Management & Export
-- **Persistent IndexedDB Storage (`geminiConversations`)**: Multi-turn chat sessions are stored in IndexedDB `Intelligent_Workspace` store `geminiConversations`.
-- **Full-Text History Search**: Instant search across all past conversations and individual messages via Omnibar commands `lai:` (browse conversations) and `laiq:` (search messages).
-- **Four Export Formats**:
-  1. **Styled HTML**: Formatted standalone HTML document with styled conversational bubbles, role badges, timestamps, and syntax-highlighted code blocks.
-  2. **Raw JSON**: Complete structured data dump including message arrays, token usage, model configuration, and search citations.
-  3. **Markdown**: Standard Markdown file formatted with headers, timestamps, and fenced code blocks (` ``` `).
-  4. **Plain Text**: Clean, unformatted conversational transcript suitable for email or notes.
-- **Grounding Metadata Tracking**: Tracks model ID, token usage statistics, execution timestamps, and source citations returned by Google Search Grounding.
+### 5.5 Manajemen Percakapan & Ekspor Gemini
+- **Penyimpanan IndexedDB Persisten (`geminiConversations`)**: Sesi obrolan multi-putaran disimpan di penyimpanan IndexedDB `Intelligent_Workspace` bernama `geminiConversations`.
+- **Pencarian Riwayat Teks Lengkap**: Pencarian instan di semua percakapan masa lalu dan pesan individual melalui perintah Omnibar `lai:` (telusuri percakapan) dan `laiq:` (cari pesan).
+- **Empat Format Ekspor**:
+  1. **HTML Bergaya**: Dokumen HTML mandiri berformat dengan gelembung percakapan yang ditata, lencana peran, stempel waktu, dan blok kode dengan penyorotan sintaksis.
+  2. **JSON Mentah**: Dump data terstruktur lengkap termasuk array pesan, penggunaan token, konfigurasi model, dan sitasi pencarian.
+  3. **Markdown**: Berkas Markdown standar yang diformat dengan header, stempel waktu, dan blok kode berpagar (` ``` `).
+  4. **Teks Polos**: Transkrip percakapan bersih tanpa format yang cocok untuk email atau catatan.
+- **Pelacakan Metadata Grounding**: Melacak ID model, statistik penggunaan token, stempel waktu eksekusi, dan sitasi sumber yang dikembalikan oleh Google Search Grounding.
 
-### 5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)
-- **Multimodal Attachments**: Toggle `feature_geminiAttachFiles` enables direct image and document attachments in chat prompts:
-  - Image files (JPEG, PNG, WebP, HEIC/HEIF).
-  - PDF documents and research papers.
-  - Plain Text files and code files.
-  - CSV structured datasets.
-- **Voice Support**:
-  - Web Speech STT (Speech-to-Text) for dictating prompts hands-free.
-  - Web Speech TTS (Text-to-Speech) for reading responses aloud.
+### 5.6 Masukan Multimodal & Lampiran Berkas (`feature_geminiAttachFiles`)
+- **Lampiran Multimodal**: Sakelar `feature_geminiAttachFiles` memungkinkan lampiran gambar dan dokumen langsung dalam prompt obrolan:
+  - Berkas gambar (JPEG, PNG, WebP, HEIC/HEIF).
+  - Dokumen PDF dan makalah penelitian.
+  - Berkas teks polos dan berkas kode sumber.
+  - Dataset terstruktur CSV.
+- **Dukungan Suara**:
+  - Web Speech STT (Speech-to-Text) untuk mendiktekan prompt tanpa tangan.
+  - Web Speech TTS (Text-to-Speech) untuk membacakan tanggapan dengan lantang.
 
-### 5.7 Invocation Modalities
-- **Sidepanel Route**: `?view=gemini` or shortcut `pa`.
-- **In-Page Omnibar Prefixes**:
-  - `qai: <query>` — Ask direct question to configured Gemini model.
-  - `qaia: <prompt>` — Execute prompt via autonomous agent with tool execution.
-  - `lai:` — Browse past AI conversations.
-  - `laiq:` — Full-text search across all AI conversation messages.
-- **Omnibox AI Tab Search (`find <query>`)**:
-  - URL bar keyword `find` initiates hybrid search.
-  - Combines regex word-boundary scoring with Gemini semantic resolution to locate and focus open tabs based on natural language queries.
+### 5.7 Modalitas Pemanggilan
+- **Rute Panel Samping**: `?view=gemini` atau pintasan `pa`.
+- **Prefiks Omnibar di Dalam Halaman**:
+  - `qai: <query>` — Ajukan pertanyaan langsung ke model Gemini yang dikonfigurasi.
+  - `qaia: <prompt>` — Jalankan prompt melalui agen otonom dengan eksekusi alat.
+  - `lai:` — Jelajahi riwayat percakapan AI terdahulu.
+  - `laiq:` — Pencarian teks lengkap di seluruh pesan percakapan AI.
+- **Pencarian Tab AI Omnibox (`find <query>`)**:
+  - Kata kunci bilah URL `find` memulai pencarian hibrida.
+  - Menggabungkan penilaian batas kata regex dengan resolusi semantik Gemini untuk menemukan dan memfokuskan tab terbuka berdasarkan kueri bahasa alami.
 
 ---
 
-## 6. Section 5: Notes View & Knowledge Management (Ver Notas)
+## 6. Bagian 5: Tampilan Catatan & Manajemen Pengetahuan (Ver Notas)
 
-A local-first, context-aware note-taking engine tied to browser tab groups and navigation contexts.
+Mesin pencatatan sadar-konteks yang mengutamakan lokalitas (local-first), terikat pada grup tab peramban dan konteks navigasi.
 
-### 6.1 Storage Architecture (`notesStore`)
-Stored in IndexedDB database `Intelligent_Workspace` (v8) inside object store `notesStore`:
+### 6.1 Arsitektur Penyimpanan (`notesStore`)
+Disimpan di basis data IndexedDB `Intelligent_Workspace` (v8) di dalam object store `notesStore`:
 ```typescript
 interface NoteRecord {
-  id: string;          // Unique note identifier.
-  title: string;       // Note title.
-  text: string;        // Rich text HTML, Markdown, or serialized task payload.
+  id: string;          // Pengidentifikasi catatan unik.
+  title: string;       // Judul catatan.
+  text: string;        // HTML rich text, Markdown, atau muatan tugas yang diserialkan.
   type: NoteType;      // 'text' | 'checklist' | 'kanban'
-  url?: string;        // Origin URL where note was created.
-  contextKey: string;  // Scoping key binding note to workspace hierarchy.
-  createdAt: number;   // Creation timestamp.
-  modifiedAt: number;  // Last edit timestamp.
-  isPersistent: boolean; // Pin flag protecting note from group deletion cleanup.
+  url?: string;        // URL asal tempat catatan dibuat.
+  contextKey: string;  // Kunci pencakup yang mengikat catatan ke hierarki ruang kerja.
+  createdAt: number;   // Stempel waktu pembuatan.
+  modifiedAt: number;  // Stempel waktu pengeditan terakhir.
+  isPersistent: boolean; // Tanda pin yang melindungi catatan dari pembersihan saat penghapusan grup.
 }
 ```
 
-### 6.2 Specialized Note Formats & Advanced Rendering
-1. **Text Note (`NoteTextEditor.svelte`)**:
-   - Rich text `contenteditable` surface.
-   - Embeds media directly: images, audio, video, and PDF documents.
-   - Built-in HTML sanitization and real-time word and character counters.
-   - **Mermaid Diagram Rendering**: Renders dynamic flowcharts, sequence diagrams, class diagrams, and state machines directly from Markdown fences (` ```mermaid `).
-   - **KaTeX Mathematical LaTeX**: Renders inline equations (`$...$`) and block equations (`$$...$$`) with high precision typography.
-2. **Checklist Note (`NoteChecklistEditor.svelte`)**:
-   - Interactive task list with individual completion checkboxes.
-   - Supports keyboard-driven item reordering and progress tracking.
-3. **Kanban Note (`NoteKanbanEditor.svelte`)**:
-   - 3-column workflow board: `To Do` -> `In Progress` -> `Done`.
-   - Cycling status chips for rapid task transitions.
-- **Dynamic Lossless Conversion**: Notes convert losslessly between Text, Checklist, and Kanban representations.
+### 6.2 Format Catatan Khusus & Rendering Lanjutan
+1. **Catatan Teks (`NoteTextEditor.svelte`)**:
+   - Permukaan `contenteditable` rich text.
+   - Menyematkan media secara langsung: gambar, audio, video, dan dokumen PDF.
+   - Sanitasi HTML bawaan serta penghitung kata dan karakter waktu nyata.
+   - **Rendering Diagram Mermaid**: Merender diagram alir dinamis, diagram sekuens, diagram kelas, dan state machine langsung dari pagar Markdown (` ```mermaid `).
+   - **KaTeX LaTeX Matematis**: Merender persamaan sebaris (`$...$`) dan persamaan blok (`$$...$$`) dengan tipografi presisi tinggi.
+2. **Catatan Daftar Periksa (`NoteChecklistEditor.svelte`)**:
+   - Daftar tugas interaktif dengan kotak centang penyelesaian individu.
+   - Mendukung penyusunan ulang item melalui papan ketik dan pelacakan kemajuan.
+3. **Catatan Kanban (`NoteKanbanEditor.svelte`)**:
+   - Papan alur kerja 3-kolom: `To Do` -> `In Progress` -> `Done`.
+   - Chip status berputar untuk transisi tugas yang cepat.
+- **Konversi Dinamis Tanpa Kehilangan Data (Lossless)**: Catatan dapat dikonversi secara mulus tanpa kehilangan data antara representasi Teks, Daftar Periksa, dan Kanban.
 
-### 6.3 Scoping & Context Hierarchy
-Notes bind to browsing contexts via `contextKey`:
-- **Group Scope (`g_<groupId>` or `g_<groupKey>`)**: Attached to an entire tab group.
-- **Subgroup Scope (`s_<groupId>_<domain>`)**: Attached to a specific domain within a tab group.
-- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Notes created on tabs outside of tab groups.
-- **Pomodoro & General Scopes (`pomodoro`, `general`)**: Workspace-wide notes.
-- **Orphan Detection Engine**: When tab groups or domains are deleted, associated non-persistent notes are captured by the Orphan Detector. Notes remain accessible in the UI for reassignment or deletion.
+### 6.3 Cakupan & Hierarki Konteks
+Catatan terikat pada konteks penjelajahan melalui `contextKey`:
+- **Cakupan Grup (`g_<groupId>` atau `g_<groupKey>`)**: Melekat pada seluruh grup tab.
+- **Cakupan Subgrup (`s_<groupId>_<domain>`)**: Melekat pada domain tertentu di dalam grup tab.
+- **Cakupan Tanpa Grup (`g_ungrouped` / `s_ungrouped_<domain>`)**: Catatan yang dibuat pada tab di luar grup tab.
+- **Cakupan Pomodoro & Umum (`pomodoro`, `general`)**: Catatan yang berlaku di seluruh ruang kerja.
+- **Mesin Deteksi Yatim (Orphan Detection Engine)**: Saat grup tab atau domain dihapus, catatan non-persisten yang terkait akan ditangkap oleh Detektor Yatim. Catatan tetap dapat diakses di UI untuk dialihkan atau dihapus.
 
-### 6.4 Invocation Modalities
-- **UI Launchers**: "View Notes" button on Group Cards and Subgroup Cards; "Quick Notes" button in popup header; Sidepanel route `?view=notes` (`pk`).
-- **Context Menu Trigger**: Select text on any web page -> Right-click -> "Crear Nota desde Selección" (`note-from-selection`). Automatically extracts the selected text and sets the nearest `h1`-`h3` heading as the title.
-- **Vim Hint**: `ao` creates a note from the current selection.
-- **Omnibar**: `lnt:` opens notes browser with instant full-text search.
-- **Audio Readout**: In-editor TTS button reads note content aloud using Web Speech API.
-
----
-
-## 7. Section 6: Media & Gallery View (Ver Galería)
-
-A high-performance media capture, annotation, and optical character recognition (OCR) pipeline.
-
-### 7.1 Capture Modes & Engineering (All 7 Capture Types)
-The extension implements 7 specialized capture modalities covering single-tab, cross-tab, cropped, and palette operations:
-1. **`visible` (Visible Viewport Capture - `cs`)**:
-   - Captures the exact visible viewport of the active tab using `chrome.tabs.captureVisibleTab`.
-   - Automatically commits the capture to the IndexedDB `screenshots` store and copies the image bitmap directly to the system clipboard (`screenshotSavedAndCopied`).
-2. **`fullPage` (Seamless Full-Page Scrolling Canvas - `cp`)**:
-   - Executes programmatic page scrolling, calculating total document scroll height.
-   - Suppresses scrollbars and hides sticky/fixed navigation bars after the initial segment to eliminate visual stutter.
-   - Stitches bitmap slices onto an `OffscreenCanvas` up to 30,000px high (`captureFullPageDataUrl`), enforcing Chromium-compliant 600ms delays between frame captures.
-3. **`fullPageParts` (Sequential Sliced Segments - `cpp` / `cP`)**:
-   - Slices tall documents into sequential, individual viewport-height image parts (`captureFullPageParts`), generating up to 60 numbered image chunks for pagination.
-4. **`area` (Interactive Rectangular Drag Crop - `ca`)**:
-   - Injects `area-selector.js`, overlaying a crosshair canvas with real-time bounding box dimensions.
-   - Draggable selection handles, dimension tooltip, confirmation trigger, `Esc` key cancellation, and multi-tab crop queueing (`handleCaptureAreaFromShortcut`).
-5. **`groupTabs` (Batch Active Group Tab Walk - `Cs`, `Cp`, `CP`)**:
-   - Sequentially iterates through every tab within the active tab group (`handleCaptureGroupFromShortcut`).
-   - Supports batch capture in visible, full-page, or segmented parts mode, compiling them into a unified collection.
-6. **`omnibarPickedTabs` (Custom Multi-Tab Queue Capture)**:
-   - Initiated via Omnibar commands `cs:`, `cp:`, `cpp:`, or `ca:` (`handleCaptureTabs`).
-   - Executes sequential captures across all user-filtered tabs, providing real-time progress indicators.
-7. **`colorPickerCapture` (Background Screen Eyedropper Fallback)**:
-   - Takes a background screen capture to power the precision hex eyedropper magnifier tool on operating systems lacking native `window.EyeDropper` support (e.g., Linux).
-
-### 7.2 Gallery UI & Persistence
-- **Interface**: Responsive masonry/grid layout with lightbox zoom, pan, and rotate tools.
-- **Persistence (`screenshots` Store)**: Saved in IndexedDB `Intelligent_Workspace`. Unpinned captures are automatically purged during maintenance; clicking the pin icon (`isPersistent = true`) preserves captures indefinitely.
-
-### 7.3 Export, In-Browser OCR & External Markup
-- **Export Formats (`captureDownloadFormats`)**:
-  - High-efficiency formats: PNG, WebP, AVIF.
-  - Multi-page compiled PDF document export via `pdf.js`.
-- **On-Device WASM OCR**:
-  - In-browser Tesseract.js WebWorker utilizing preloaded Spanish and English (`spa+eng`) language models.
-  - Extracts text directly to clipboard without sending image data over the network.
-- **Direct Send Integration**:
-  - One-click transfer of extracted OCR text or image attachments into Notes (`notesStore`) or Gemini AI prompts (`feature_geminiAttachFiles`).
-- **Excalidraw Markup**: One-click export sends captured images directly into `https://excalidraw.com/` for freehand drawing, arrows, and vector annotations.
-
-### 7.4 Invocation Modalities
-- **UI**: Group Card camera button, Popup quick action, Sidepanel gallery route `?view=gallery` (`ps`).
-- **Vim Hints**: `cs` (visible), `cp` (full page), `cP` (parts), `ca` (area crop), `Cs` (group visible), `Cp` (group full page), `CP` (group parts).
-- **Omnibar Prefixes**: `cs:`, `cp:`, `cpp:`, `ca:`, and `limg:` (browse gallery).
+### 6.4 Modalitas Pemanggilan
+- **Peluncur UI**: Tombol "Ver Notas" pada Kartu Grup dan Kartu Subgrup; Tombol "Quick Notes" di header popup; Rute panel samping `?view=notes` (`pk`).
+- **Pemicu Menu Konteks**: Pilih teks di halaman web mana pun -> Klik kanan -> "Crear Nota desde Selección" (`note-from-selection`). Mengekstrak teks yang dipilih secara otomatis dan menetapkan judul heading `h1`-`h3` terdekat sebagai judul catatan.
+- **Petunjuk Vim**: `ao` membuat catatan dari teks yang sedang dipilih.
+- **Omnibar**: `lnt:` membuka peramban catatan dengan pencarian teks lengkap instan.
+- **Pembacaan Audio**: Tombol TTS di dalam editor membacakan konten catatan dengan lantang menggunakan Web Speech API.
 
 ---
 
-## 8. Section 7: Pomodoro & Timing Suite (Pomodoro)
+## 7. Bagian 6: Tampilan Media & Galeri (Ver Galería)
 
-A focus and timing suite engineered for absolute accuracy across browser sleep cycles.
+Alur kerja perekaman media, anotasi, dan pengenalan karakter optis (OCR) berkinerja tinggi.
 
-### 8.1 Timing Engine & Background Architecture
-- **Zero-Drift Timestamp Math**: State is persisted in `chrome.storage.local` with absolute Unix timestamps (`startTime`, `pausedAt`). Service worker terminations, browser restarts, and operating system sleep states cause zero clock drift.
-- **Alarm Dispatcher**:
-  - High-resolution countdown ticker driven by `chrome.alarms` (`pomodoroTick` 1s interval).
-  - Background maintenance and long-term interval sweeps managed by `itg-periodic-tasks` (1 min interval).
-- **Offscreen Audio Chimes (`offscreen.html`)**: Audio chimes are generated via a dedicated Chrome Offscreen document created with reason `AUDIO_PLAYBACK`. Automatically closes 3.5 seconds after sound completion to conserve memory.
+### 7.1 Mode & Rekayasa Perekaman (Semua 7 Tipe Perekaman)
+Ekstensi ini menerapkan 7 modalitas perekaman khusus yang mencakup operasi tab tunggal, lintas-tab, pemotongan, dan palet:
+1. **`visible` (Perekaman Area Pandang yang Terlihat - `cs`)**:
+   - Menangkap area pandang persis yang terlihat dari tab aktif menggunakan `chrome.tabs.captureVisibleTab`.
+   - Secara otomatis menyimpan tangkapan ke penyimpanan IndexedDB `screenshots` dan menyalin bitmap gambar langsung ke papan klip sistem (`screenshotSavedAndCopied`).
+2. **`fullPage` (Kanvas Pengguliran Halaman Penuh Mulus - `cp`)**:
+   - Menjalankan pengguliran halaman secara terprogram, menghitung total tinggi gulir dokumen.
+   - Menekan bilah gulir dan menyembunyikan bilah navigasi lengket/tetap setelah segmen awal untuk menghilangkan gangguan visual.
+   - Menjahit potongan bitmap ke `OffscreenCanvas` hingga setinggi 30.000px (`captureFullPageDataUrl`), menerapkan jeda 600ms yang patuh Chromium di antara perekaman bingkai.
+3. **`fullPageParts` (Segmen Terpotong Sekuensial - `cpp` / `cP`)**:
+   - Memotong dokumen panjang menjadi bagian-bagian gambar setinggi area pandang individual secara berurutan (`captureFullPageParts`), menghasilkan hingga 60 potongan gambar bernomor untuk penomoran halaman.
+4. **`area` (Pemotongan Seret Persegi Panjang Interaktif - `ca`)**:
+   - Menyuntikkan `area-selector.js`, menampilkan overlay kanvas crosshair dengan dimensi kotak pembatas waktu nyata.
+   - Pegangan pilihan yang dapat diseret, tooltip dimensi, pemicu konfirmasi, pembatalan dengan tombol `Esc`, dan antrean pemotongan multi-tab (`handleCaptureAreaFromShortcut`).
+5. **`groupTabs` (Penelusuran Tab Grup Aktif Massal - `Cs`, `Cp`, `CP`)**:
+   - Mengiterasi secara berurutan setiap tab di dalam grup tab yang aktif (`handleCaptureGroupFromShortcut`).
+   - Mendukung perekaman massal dalam mode terlihat, halaman penuh, atau bagian tersegmentasi, mengumpulkannya ke dalam satu koleksi terpadu.
+6. **`omnibarPickedTabs` (Perekaman Antrean Multi-Tab Kustom)**:
+   - Dimulai melalui perintah Omnibar `cs:`, `cp:`, `cpp:`, atau `ca:` (`handleCaptureTabs`).
+   - Mengeksekusi perekaman berurutan di semua tab yang difilter pengguna, menyediakan indikator kemajuan waktu nyata.
+7. **`colorPickerCapture` (Fallback Pipet Layar Latar Belakang)**:
+   - Mengambil tangkapan layar latar belakang untuk mentenagai alat pembesar pipet hex presisi pada sistem operasi yang tidak memiliki dukungan bawaan `window.EyeDropper` (misalnya, Linux).
 
-### 8.2 Exhaustive 4 Timing Modes
+### 7.2 UI Galeri & Persistensi
+- **Antarmuka**: Tata letak masonry/grid yang responsif dengan alat pembesar lightbox, geser (pan), dan putar.
+- **Persistensi (Penyimpanan `screenshots`)**: Disimpan di IndexedDB `Intelligent_Workspace`. Tangkapan yang tidak disematkan akan dibersihkan secara otomatis selama pemeliharaan; mengklik ikon pin (`isPersistent = true`) akan mempertahankan tangkapan tanpa batas waktu.
+
+### 7.3 Ekspor, OCR Dalam Peramban & Markup Eksternal
+- **Format Ekspor (`captureDownloadFormats`)**:
+  - Format efisiensi tinggi: PNG, WebP, AVIF.
+  - Ekspor dokumen PDF terkompilasi multi-halaman melalui `pdf.js`.
+- **WASM OCR di Perangkat**:
+  - WebWorker Tesseract.js di dalam peramban yang memanfaatkan model bahasa Spanyol dan Inggris (`spa+eng`) yang dimuat sebelumnya.
+  - Mengekstrak teks langsung ke papan klip tanpa mengirim data gambar melalui jaringan.
+- **Integrasi Kirim Langsung**:
+  - Transfer satu klik teks OCR yang diekstrak atau lampiran gambar ke Catatan (`notesStore`) atau prompt Gemini AI (`feature_geminiAttachFiles`).
+  - **Markup Excalidraw**: Ekspor satu klik mengirimkan gambar yang diambil langsung ke `https://excalidraw.com/` untuk menggambar bebas, panah, dan anotasi vektor.
+
+### 7.4 Modalitas Pemanggilan
+- **UI**: Tombol kamera Kartu Grup, tindakan cepat Popup, rute galeri panel samping `?view=gallery` (`ps`).
+- **Petunjuk Vim**: `cs` (terlihat), `cp` (halaman penuh), `cP` (bagian), `ca` (potong area), `Cs` (grup terlihat), `Cp` (grup halaman penuh), `CP` (grup bagian).
+- **Prefiks Omnibar**: `cs:`, `cp:`, `cpp:`, `ca:`, dan `limg:` (jelajahi galeri).
+
+---
+
+## 8. Bagian 7: Pomodoro & Paket Pewaktuan (Pomodoro)
+
+Paket fokus dan pewaktuan yang dirancang untuk akurasi mutlak di seluruh siklus tidur peramban.
+
+### 8.1 Mesin Pewaktuan & Arsitektur Latar Belakang
+- **Matematika Stempel Waktu Bebas Pergeseran (Zero-Drift)**: Status dipersistensikan di `chrome.storage.local` dengan stempel waktu Unix absolut (`startTime`, `pausedAt`). Penghentian service worker, peramban dimulai ulang, dan status tidur sistem operasi tidak menyebabkan pergeseran jam sama sekali.
+- **Pengirim Alarm (Alarm Dispatcher)**:
+  - Penghitung mundur resolusi tinggi yang digerakkan oleh `chrome.alarms` (interval `pomodoroTick` 1 detik).
+  - Pemeliharaan latar belakang dan pembersihan interval jangka panjang dikelola oleh `itg-periodic-tasks` (interval 1 menit).
+- **Lonceng Audio Offscreen (`offscreen.html`)**: Lonceng audio dihasilkan melalui dokumen Chrome Offscreen khusus yang dibuat dengan alasan `AUDIO_PLAYBACK`. Ditutup secara otomatis 3,5 detik setelah suara selesai untuk menghemat memori.
+
+### 8.2 4 Mode Pewaktuan Menyeluruh
 1. **Pomodoro (`pomodoro`)**:
-   - Work duration: 1 to 180 minutes (default: 25 min).
-   - Short break: 1 to 120 minutes (default: 5 min).
-   - Long break: 1 to 180 minutes (default: 15 min).
-   - Cycles before long break: 1 to 12 cycles (default: 4).
-   - Target cycle goal: 1 to 99 cycles (default: 8).
-   - Configurable autostart work, autostart breaks, and notification alerts.
-2. **Stopwatch (`cronometro`)**: Progressive timer with lap recording and pause-as-stop capability.
-3. **Countdown (`temporizador`)**: Custom countdown timer specifying hours, minutes, and seconds.
-4. **Target Time Alarm (`tiempo`)**: Calendar date picker and clock selector setting an alarm for an exact future timestamp.
+   - Durasi kerja: 1 hingga 180 menit (bawaan: 25 menit).
+   - Istirahat pendek: 1 hingga 120 menit (bawaan: 5 menit).
+   - Istirahat panjang: 1 hingga 180 menit (bawaan: 15 menit).
+   - Siklus sebelum istirahat panjang: 1 hingga 12 siklus (bawaan: 4).
+   - Target sasaran siklus: 1 hingga 99 siklus (bawaan: 8).
+   - Mulai otomatis kerja, mulai otomatis istirahat, dan peringatan notifikasi yang dapat dikonfigurasi.
+2. **Stopwatch (`cronometro`)**: Pewaktu progresif dengan pencatatan putaran (lap) dan kemampuan jeda-sebagai-berhenti.
+3. **Hitung Mundur (`temporizador`)**: Pewaktu hitung mundur kustom yang menentukan jam, menit, dan detik.
+4. **Alarm Waktu Target (`tiempo`)**: Pemilih tanggal kalender dan pemilih jam untuk mengatur alarm pada stempel waktu mendatang yang tepat.
 
-### 8.3 In-Page Floating Timer Widget
-- Draggable, minimal overlay displaying real-time countdown, pause/resume, and skip buttons directly on web pages.
-- Allows monitoring focus sessions without switching back to the extension panel or popup.
+### 8.3 Widget Pewaktu Mengambang di Dalam Halaman
+- Overlay minimalis yang dapat diseret menampilkan hitungan mundur waktu nyata, tombol jeda/lanjutkan, dan tombol lewati langsung di halaman web.
+- Memungkinkan pemantauan sesi fokus tanpa harus beralih kembali ke panel ekstensi atau popup.
 
-### 8.4 Group Auto-Collapse Idle Timer
-- Works in tandem with focus routines to automatically collapse inactive groups after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) and the active group after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
+### 8.4 Pewaktu Diam Auto-Collapse Grup
+- Bekerja bersamaan dengan rutinitas fokus untuk menciutkan grup tidak aktif secara otomatis setelah 1 menit tidak aktif (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) dan grup aktif setelah 15 menit tidak aktif (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Dapat dikonfigurasi dari 0 hingga 1440 menit.
 
-### 8.5 Project Tagging & Metadata
-Each session supports categorization metadata:
-- Project Name (up to 18 characters)
-- Project Tag (e.g., `#research`, `#dev`)
-- Project Folder (e.g., `/client/project`)
+### 8.5 Pelabelan Proyek & Metadata
+Setiap sesi mendukung metadata kategorisasi:
+- Nama Proyek (hingga 18 karakter)
+- Tag Proyek (misalnya, `#research`, `#dev`)
+- Folder Proyek (misalnya, `/client/project`)
 
-### 8.6 Analytics Engine & 19 KPI Cards
-The full dashboard (`dashboard.html` or Sidepanel `dashboard.html?context=sidepanel`) computes 19 key performance indicators from deduplicated sessions (`dedupeSessions` by `sessionStarted`):
-1. `focus`: Total focus time.
-2. `sessions`: Total completed sessions.
-3. `cycles`: Total completed work cycles.
-4. `efficiency`: Average efficiency percentage (`Total Focus / Total Time * 100`).
-5. `activeDays`: Number of unique active days.
-6. `break`: Total break duration.
-7. `interruptions`: Total count of manual pauses/interruptions.
-8. `interruptionTime`: Cumulative duration spent in paused state.
-9. `bestSession`: Longest single uninterrupted focus session.
-10. `avgFocus`: Average focus duration per completed cycle.
-11. `totalTime`: Cumulative time spent in work and breaks.
-12. `workRest`: Ratio of work duration to rest duration (`1 : X`).
-13. `distractionRate`: Interruptions per focus hour.
-14. `bestDay`: Most productive day of the week.
-15. `goldenHour`: Peak focus hour interval of the day (e.g., `10:00 - 11:00`).
-16. `projects`: Number of distinct projects tracked.
-17. `avgIntDuration`: Average duration of each interruption.
-18. `topProject`: Project with the highest accumulated focus time.
-19. `focusIntensity`: Average focus hours per active day.
+### 8.6 Mesin Analitik & 19 Kartu KPI
+Dasbor lengkap (`dashboard.html` atau panel samping `dashboard.html?context=sidepanel`) menghitung 19 indikator kinerja utama dari sesi yang telah dideduplikasi (`dedupeSessions` berdasarkan `sessionStarted`):
+1. `focus`: Total waktu fokus.
+2. `sessions`: Total sesi yang diselesaikan.
+3. `cycles`: Total siklus kerja yang diselesaikan.
+4. `efficiency`: Persentase efisiensi rata-rata (`Total Focus / Total Time * 100`).
+5. `activeDays`: Jumlah hari aktif yang unik.
+6. `break`: Total durasi istirahat.
+7. `interruptions`: Jumlah total jeda/interupsi manual.
+8. `interruptionTime`: Durasi kumulatif yang dihabiskan dalam status dijeda.
+9. `bestSession`: Sesi fokus tunggal terpanjang tanpa interupsi.
+10. `avgFocus`: Durasi fokus rata-rata per siklus yang diselesaikan.
+11. `totalTime`: Waktu kumulatif yang dihabiskan untuk bekerja dan istirahat.
+12. `workRest`: Rasio durasi kerja terhadap durasi istirahat (`1 : X`).
+13. `distractionRate`: Interupsi per jam fokus.
+14. `bestDay`: Hari paling produktif dalam seminggu.
+15. `goldenHour`: Interval jam fokus puncak dalam sehari (misalnya, `10:00 - 11:00`).
+16. `projects`: Jumlah proyek berbeda yang dilacak.
+17. `avgIntDuration`: Durasi rata-rata setiap interupsi.
+18. `topProject`: Proyek dengan akumulasi waktu fokus tertinggi.
+19. `focusIntensity`: Rata-rata jam fokus per hari aktif.
 
-Additional visual analytics include a Day Streak Heatmap calendar, an hourly focus distribution bar chart, a Project variety breakdown, and full JSON data import/export.
-
----
-
-## 9. Section 8: Activity & History Panel (Panel de Actividad)
-
-A Declarative Net Request (DNR) tracking, analytics, and web governance engine.
-
-### 9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)
-Managed under `ITG_WEB_ACTIVITY`:
-- `wa:day:YYYY-MM-DD`: Domain counters per day (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
-- `wa:days`: Master index array of recorded date keys.
-- `wa:recent`: Ring buffer storing the latest 400 visit timeline entries.
-- `wa:openSegment`: Active timed segment in `chrome.storage.session`, capped at `WA_MAX_SEGMENT_SECONDS = 900s` (15 minutes) to prevent distorting stats if the machine sleeps without firing idle events.
-- **Idle Detection**: Uses `chrome.idle` (default: 300s / 5m). Audio playback preserves active tracking even when windows are unfocused if `countAudible = true`.
-- **Retention**: Automatically prunes day records older than `retentionDays` (default: 180 days).
-
-### 9.2 Declarative Net Request (DNR) Site Blocker
-- **Dynamic Rule Allocation**: Allocates dynamic rules in the ID range `9000` to `9999`.
-- **Redirect Target**: Blocked requests redirect to `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
-- **Open Tab Sweep**: When a site limit expires, the background worker immediately sweeps and redirects existing open tabs matching the domain.
-- **Overnight Schedule Spanning**: Schedules crossing midnight (e.g., `22:00` to `02:00`) are automatically evaluated across day boundaries.
-- **Grace / Snooze Period (+5 min)**: The block screen allows temporary 5-minute snooze passes, tracked in `wa:snoozeUses`.
-
-### 9.3 Asymmetric Security Lock (`blockLock.js`)
-Site limits can be protected with an asymmetric password lock:
-- **Hash Storage**: Stores random 16-byte salt and SHA-256 hex digest (`wa:settings.blockPassword`).
-- **Asymmetric Rule Policy**: The password is **never requested** when creating new limits or making rules stricter (e.g., reducing time allowances or adding schedule restrictions).
-- **Guarded Actions**: The password is only requested when **loosening rules** (deleting a limit, increasing time allowances, or disabling schedules) or when invoking snooze after exceeding the daily free threshold (`snoozePasswordAfter`).
-
-### 9.4 Categorization & Visual Analytics
-- **16 Built-in Categories**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
-- **Custom Categories**: Supports user-defined categories prefixed with `custom:`.
-- **Focus Ratio**: Contrasts Productive categories (`dev`, `work`, `education`, `reading`, `finance`, `mail`) against Distracting categories (`social`, `video`, `games`, `shopping`, `entertainment`).
-- **Visuals**: Chart.js hourly activity distributions, category donut breakdown, and domain ranking lists.
-
-### 9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)
-- **Dedicated Route**: Accessed in side panel via `switchMainView('downloads')` (`?view=downloads`).
-- **Direct Chrome API Integration**: Hooks `chrome.downloads` to track, manage, and inspect all browser downloads in real time.
-- **Real-Time Fuzzy Search**: Instant search by file name, file path, or download source URL.
-- **Status Filter Chips**: Rapidly filter downloads by state: `All`, `In Progress`, `Complete`, `Paused`, and `Interrupted`.
-- **Calendar Date Range Filtering**: Narrow down downloads by specific dates or time intervals.
-- **Batch Group Downloader**: Extracts all download links from open tabs in the active group and initiates synchronized batch downloads with progress tracking.
-- **File Management**: Direct one-click file opening (`chrome.downloads.open`) and folder reveal (`chrome.downloads.show`).
-
-### 9.6 Recently Closed Tabs & Browsing History Subsystem
-- **Recently Closed Tabs View**:
-  - Integrated directly with `chrome.sessions.getRecentlyClosed`.
-  - Real-time search with automatic diacritic and accent folding (`deaccent`).
-  - Single tab restoration and full window session restoration with a single click or Omnibar command `c:`.
-- **Browsing History View**:
-  - Deep search with 10-second TTL in-memory caching to eliminate redundant `chrome.history.search` query churn.
-  - Search filterable by domain, keyword, and calendar date ranges.
-  - One-click tab activation if already open, or fresh tab creation, accessible via Omnibar `h:`.
-
-### 9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)
-- **Automated Theme Scheduling**:
-  - Managed via `ThemeScheduleModal.svelte` inside the Themes side panel view (`?view=themes` / `pt`).
-  - Supports automatic theme switching based on time of day (`HH:MM`) and active days of the week (`[0..6]`).
-  - Maximum of 7 global theme schedules (`MAX_GLOBAL_SCHEDULES = 7`).
-  - **Auto-Revert**: Automatically returns to default daytime or workplace themes at designated completion hours.
-  - **Desktop Alerts**: Issues desktop notifications when automatic theme switches occur (`chrome.notifications`).
-  - **Dual Persistence**: Persisted in `chrome.storage.sync` (roaming preferences) and `chrome.storage.local` under `savedThemes` and `themeSchedules`.
-
-### 9.8 Compact Sidepanel View
-- **Sidepanel Route (`?view=activity` / `pw`)**: 350px column optimized for real-time monitoring, featuring period selector chips (`Today`, `7d`, `30d`, `All`) and domain limit progress bars.
+Analitik visual tambahan mencakup kalender Day Streak Heatmap, diagram batang distribusi fokus per jam, rincian variasi Proyek, serta impor/ekspor data JSON penuh.
 
 ---
 
-## 10. Multi-Modal Invocation Matrix
+## 9. Bagian 8: Panel Aktivitas & Riwayat (Panel de Actividad)
 
-### 10.1 Popup UI Interface
-- **Rules Tab**: Quick rule toggles, active status indicators, and rule URL launcher.
-- **Groups Tab**: Compact accordion list with tab switching and group cleanup.
-- **AI Launcher**: Direct chat input box routing queries to the side panel.
-- **Quick Actions Toolbar**: One-click buttons for Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, and Sidepanel expansion.
+Mesin pelacakan, analitik, dan tata kelola web berbasis Declarative Net Request (DNR).
 
-### 10.2 Sidepanel Navigation Routes (`?view=...`)
-- `?view=rules` — Comprehensive Rules Manager and URL pattern editor (`pg`).
-- `?view=listgroup` — Full Group and Tab workspace with drag-and-drop reordering (`pl`).
-- `?view=notes` — Notes workspace (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
-- `?view=gallery` — Screenshot gallery, OCR, and Excalidraw tools (`ps`).
-- `?view=gemini` — Multimodal AI Assistant and Autonomous Agent interface (`pa`).
-- `?view=activity` — Web Activity tracker, limits, and category metrics (`pw`).
-- `?view=themes` — Theme editor and automated scheduling palette (`pt`).
-- `?view=hints` — Vim shortcuts, Omnibar, and YouTube loop settings (`pn`).
-- `?view=downloads` — Downloads Manager and batch link downloader (`switchMainView('downloads')`).
+### 9.1 Mesin Data & Topologi Penyimpanan (`ITG_WEB_ACTIVITY`)
+Dikelola di bawah `ITG_WEB_ACTIVITY`:
+- `wa:day:YYYY-MM-DD`: Penghitung domain per hari (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
+- `wa:days`: Array indeks utama dari kunci tanggal yang tercatat.
+- `wa:recent`: Ring buffer yang menyimpan 400 entri garis waktu kunjungan terbaru.
+- `wa:openSegment`: Segmen terhitung waktu aktif di `chrome.storage.session`, dibatasi pada `WA_MAX_SEGMENT_SECONDS = 900s` (15 menit) untuk mencegah distorsi statistik jika komputer tidur tanpa memicu event idle.
+- **Deteksi Diam (Idle)**: Menggunakan `chrome.idle` (bawaan: 300 detik / 5 menit). Pemutaran audio mempertahankan pelacakan aktif meskipun jendela tidak difokuskan jika `countAudible = true`.
+- **Retensi**: Secara otomatis memangkas catatan harian yang lebih lama dari `retentionDays` (bawaan: 180 hari).
 
-### 10.3 Manifest Keyboard Shortcuts (24 Commands)
-1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Toggle collapse of active group.
-2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Toggle collapse of all groups.
-3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Toggle alphabetical group sorting.
-4. `open-popup` (`Alt+Shift+P`): Open popup or focus side panel.
-5. `toggle-collapse-timer`: Toggle group auto-collapse timer.
-6. `toggle-all-rules`: Master toggle for all custom rules (`Alt+M`).
-7. `toggle-expand-all`: Expand all groups in the workspace.
-8. `rules-manager`: Open Rules Manager in a dedicated tab (`Alt+R`).
-9. `toggle-prefixes`: Toggle visual group prefix indicators (`🔒`, `🔍`, `🗝️`, `⚠️`).
-10. `toggle-domain-grouping`: Toggle automatic domain clustering.
-11. `toggle-subdomain-grouping`: Toggle automatic subdomain clustering.
-12. `toggle-compact-mode`: Toggle compact single-letter group titles.
-13. `toggle-chrome-grouping`: Toggle special Chrome internal pages group.
-14. `toggle-files-grouping`: Toggle special local `file://` pages group.
-15. `toggle-extensions-grouping`: Toggle special `chrome-extension://` group.
-16. `toggle-misc-grouping`: Toggle unclustered Miscellaneous group.
-17. `toggle-ip-address-grouping`: Toggle IP address / localhost group.
-18. `toggle-clustering`: Master toggle for all automated clustering.
-19. `regroup-all-tabs`: Trigger comprehensive tab regrouping pass (`Alt+Shift+R`).
-20. `toggle-hints`: Toggle in-page Vim hints overlay engine.
-21. `open-side-panel`: Open extension side panel.
-22. `open-theme-selector`: Open theme customization panel.
-23. `remove-duplicate-tabs`: Clean duplicate tabs across the window.
-24. `open-list-group-sidepanel-command`: Open List Group view in side panel.
+### 9.2 Pemblokir Situs Declarative Net Request (DNR)
+- **Alokasi Aturan Dinamis**: Mengalokasikan aturan dinamis dalam rentang ID `9000` hingga `9999`.
+- **Target Pengalihan**: Permintaan yang diblokir dialihkan ke `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
+- **Pembersihan Tab Terbuka**: Ketika batas situs kedaluwarsa, worker latar belakang segera menyapu dan mengalihkan tab terbuka yang cocok dengan domain tersebut.
+- **Rentang Jadwal Melewati Tengah Malam**: Jadwal yang melintasi tengah malam (misalnya, `22:00` hingga `02:00`) secara otomatis dievaluasi melintasi batas hari.
+- **Masa Tenggang / Tunda (+5 menit)**: Layar blokir memungkinkan izin tunda (snooze) sementara selama 5 menit, dilacak dalam `wa:snoozeUses`.
 
-### 10.4 In-Page Vim Hint Keys (40+ Combinations)
-- **Scrolling & Movement**:
-  - `j` / `k`: Scroll down / up (75px step).
-  - `d` / `u`: Scroll to bottom / top of page.
-  - `h` / `l`: Scroll left / right (or switch to previous / next tab if page cannot scroll).
-  - `H` / `L`: Navigate back / forward in browser history.
-  - `esc`: Blur active input, unfocus elements.
-- **Tab & Window Management**:
-  - `t`: Open new tab.
-  - `x`: Close current tab.
-  - `yt`: Duplicate current tab.
-  - `s`: Swap to previous active tab.
-  - `ts`: Toggle side-by-side Split Screen window.
-  - `we`: Open active tab in standalone popup window.
-  - `wp`: Open active tab in Document Picture-in-Picture.
-  - `wv`: Open active video in custom Video Picture-in-Picture.
-  - `dg`: Close/delete current tab group.
-- **Link Hints & Interaction**:
-  - `f`: Activate Vim link hints (click element).
-  - `cf`: Activate Vim link hints to copy link URL.
-  - `i`: Focus first text input on page.
-  - `c`: Copy current URL to clipboard.
-  - `y`: Append current selection to clipboard buffer.
-  - `vs`: View page source (`view-source:`).
-  - `vp`: Toggle link preview modal.
-  - `as` / `ah`: Toggle Auto-PiP on scroll / on tab hide.
-  - `ar`: Toggle Text-to-Speech Read Aloud.
-  - `ao`: Create note from selection.
-  - `at`: Translate page.
-- **Sidepanel Direct Access**:
-  - `ph`: Open Main side panel view.
-  - `pt`: Open Themes side panel.
-  - `pl`: Open List Group side panel.
-  - `pk`: Open Notes side panel.
-  - `ps`: Open Screenshot Gallery side panel.
-  - `pa`: Open AI Assistant side panel.
-  - `pw`: Open Web Activity side panel.
-  - `pg`: Open Rules side panel.
-  - `pn`: Open Customize Hints side panel.
-- **Media Capture**:
-  - `cs`: Capture visible viewport.
-  - `cp`: Capture full page (stitched).
-  - `cP`: Capture full page in sequential parts.
-  - `ca`: Capture cropped area.
-  - `Cs`: Capture all tabs in group (visible).
-  - `Cp`: Capture all tabs in group (full page).
-  - `CP`: Capture all tabs in group (parts).
-- **Audio & Reading Modes**:
-  - `st`: Toggle mute on current tab.
-  - `so`: Mute all audible tabs.
-  - `mb` / `mB`: Black page mode (tab / global).
-  - `ms` / `mS`: Sepia page mode (tab / global).
-  - `mp` / `mP`: Paper page mode (tab / global).
-  - `ml` / `mL`: Light page mode (tab / global).
-  - `me` / `mE`: Custom CSS filter mode (tab / global).
-- **Text-to-Speech (Read Aloud) Reader Navigation**:
-  - `zp`: Play / Pause speech synthesis reader overlay.
-  - `zn`: Next sentence in Read Aloud session.
-  - `zb`: Previous sentence in Read Aloud session.
-  - `zq`: Close / Terminate Read Aloud speech overlay.
-- **Group Backups & Rules**:
-  - `bg`: Backup all groups to IndexedDB.
-  - `br`: Restore all groups from IndexedDB.
-  - `cr`: Create custom rule from current page.
-  - `ae`: Add current page to existing rule.
-- **Quick URL Launchers**:
+### 9.3 Kunci Keamanan Asimetris (`blockLock.js`)
+Batasan situs dapat dilindungi dengan kunci kata sandi asimetris:
+- **Penyimpanan Hash**: Menyimpan salt acak 16-byte dan digest heksadesimal SHA-256 (`wa:settings.blockPassword`).
+- **Kebijakan Aturan Asimetris**: Kata sandi **tidak pernah diminta** saat membuat batasan baru atau membuat aturan menjadi lebih ketat (misalnya, mengurangi jatah waktu atau menambahkan pembatasan jadwal).
+- **Tindakan yang Dilindungi**: Kata sandi hanya diminta saat **melonggarkan aturan** (menghapus batasan, menambah jatah waktu, atau menonaktifkan jadwal) atau saat memanggil penundaan (snooze) setelah melampaui ambang batas gratis harian (`snoozePasswordAfter`).
+
+### 9.4 Kategorisasi & Analitik Visual
+- **16 Kategori Bawaan**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
+- **Kategori Kustom**: Mendukung kategori yang ditentukan pengguna dengan prefiks `custom:`.
+- **Rasio Fokus**: Membandingkan kategori Produktif (`dev`, `work`, `education`, `reading`, `finance`, `mail`) terhadap kategori Pengalih Perhatian (`social`, `video`, `games`, `shopping`, `entertainment`).
+- **Visual**: Distribusi aktivitas per jam Chart.js, diagram donat kategori, dan daftar peringkat domain.
+
+### 9.5 Subsistem Manajer Unduhan (`switchMainView('downloads')`)
+- **Rute Khusus**: Diakses di panel samping melalui `switchMainView('downloads')` (`?view=downloads`).
+- **Integrasi Langsung Chrome API**: Mengaitkan `chrome.downloads` untuk melacak, mengelola, dan memeriksa semua unduhan peramban secara waktu nyata.
+- **Pencarian Samar Waktu Nyata**: Pencarian instan berdasarkan nama berkas, jalur berkas, atau URL sumber unduhan.
+- **Chip Filter Status**: Memfilter unduhan dengan cepat berdasarkan status: `All`, `In Progress`, `Complete`, `Paused`, dan `Interrupted`.
+- **Pemfilteran Rentang Tanggal Kalender**: Mempersempit unduhan berdasarkan tanggal tertentu atau interval waktu.
+- **Pengunduh Grup Massal**: Mengekstrak semua tautan unduhan dari tab terbuka di grup aktif dan memulai unduhan massal yang disinkronkan dengan pelacakan kemajuan.
+- **Manajemen Berkas**: Pembukaan berkas langsung dengan satu klik (`chrome.downloads.open`) dan penunjukan folder (`chrome.downloads.show`).
+
+### 9.6 Subsistem Tab yang Baru Saja Ditutup & Riwayat Penjelajahan
+- **Tampilan Tab yang Baru Saja Ditutup**:
+  - Terintegrasi langsung dengan `chrome.sessions.getRecentlyClosed`.
+  - Pencarian waktu nyata dengan pelipatan aksen dan tanda diakritik otomatis (`deaccent`).
+  - Pemulihan tab tunggal dan pemulihan sesi seluruh jendela dengan satu klik atau perintah Omnibar `c:`.
+- **Tampilan Riwayat Penjelajahan**:
+  - Pencarian mendalam dengan cache dalam memori TTL 10 detik untuk menghilangkan beban kueri `chrome.history.search` yang berulang.
+  - Pencarian dapat difilter berdasarkan domain, kata kunci, dan rentang tanggal kalender.
+  - Aktivasi tab sekali klik jika sudah terbuka, atau pembuatan tab baru, dapat diakses melalui Omnibar `h:`.
+
+### 9.7 Subsistem Penjadwalan Tema (`ThemeScheduleModal.svelte`)
+- **Penjadwalan Tema Otomatis**:
+  - Dikelola melalui `ThemeScheduleModal.svelte` di dalam tampilan panel samping Themes (`?view=themes` / `pt`).
+  - Mendukung peralihan tema otomatis berdasarkan waktu (`HH:MM`) dan hari aktif dalam seminggu (`[0..6]`).
+  - Maksimum 7 jadwal tema global (`MAX_GLOBAL_SCHEDULES = 7`).
+  - **Kembali Otomatis (Auto-Revert)**: Kembali secara otomatis ke tema siang hari atau tema ruang kerja default pada jam penyelesaian yang ditentukan.
+  - **Peringatan Desktop**: Mengeluarkan notifikasi desktop saat pergantian tema otomatis terjadi (`chrome.notifications`).
+  - **Persistensi Ganda**: Dipersistensikan di `chrome.storage.sync` (preferensi jelajah) dan `chrome.storage.local` di bawah `savedThemes` dan `themeSchedules`.
+
+### 9.8 Tampilan Panel Samping Ringkas
+- **Rute Panel Samping (`?view=activity` / `pw`)**: Kolom 350px yang dioptimalkan untuk pemantauan waktu nyata, menampilkan chip pemilih periode (`Today`, `7d`, `30d`, `All`) dan bilah kemajuan batas domain.
+
+---
+
+## 10. Matriks Pemanggilan Multi-Modal
+
+### 10.1 Antarmuka UI Popup
+- **Tab Rules**: Sakelar cepat aturan, indikator status aktif, dan peluncur URL aturan.
+- **Tab Groups**: Daftar akordeon ringkas dengan peralihan tab dan pembersihan grup.
+- **Peluncur AI**: Kotak masukan obrolan langsung yang mengarahkan kueri ke panel samping.
+- **Bilah Alat Tindakan Cepat**: Tombol sekali klik untuk Tangkapan Layar Area, Perekaman Halaman Penuh, Catatan Cepat, Mulai/Jeda Pomodoro, dan perluasan Panel Samping.
+
+### 10.2 Rute Navigasi Panel Samping (`?view=...`)
+- `?view=rules` — Manajer Aturan komprehensif dan editor pola URL (`pg`).
+- `?view=listgroup` — Ruang kerja penuh Grup dan Tab dengan penyusunan ulang drag-and-drop (`pl`).
+- `?view=notes` — Ruang kerja Catatan (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
+- `?view=gallery` — Galeri tangkapan layar, OCR, dan alat Excalidraw (`ps`).
+- `?view=gemini` — Antarmuka Asisten AI Multimodal dan Agen Otonom (`pa`).
+- `?view=activity` — Pelacak Aktivitas Web, batas situs, dan metrik kategori (`pw`).
+- `?view=themes` — Editor tema dan palet penjadwalan otomatis (`pt`).
+- `?view=hints` — Pintasan Vim, Omnibar, dan pengaturan loop YouTube (`pn`).
+- `?view=downloads` — Manajer Unduhan dan pengunduh tautan massal (`switchMainView('downloads')`).
+
+### 10.3 Pintasan Papan Ketik Manifest (24 Perintah)
+1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Alihkan penciutan grup aktif.
+2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Alihkan penciutan semua grup.
+3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Alihkan pengurutan grup menurut abjad.
+4. `open-popup` (`Alt+Shift+P`): Buka popup atau fokuskan panel samping.
+5. `toggle-collapse-timer`: Alihkan pewaktu auto-collapse grup.
+6. `toggle-all-rules`: Sakelar utama untuk semua aturan kustom (`Alt+M`).
+7. `toggle-expand-all`: Bentangkan semua grup di ruang kerja.
+8. `rules-manager`: Buka Manajer Aturan di tab khusus (`Alt+R`).
+9. `toggle-prefixes`: Alihkan indikator prefiks grup visual (`🔒`, `🔍`, `🗝️`, `⚠️`).
+10. `toggle-domain-grouping`: Alihkan pengelompokan domain otomatis.
+11. `toggle-subdomain-grouping`: Alihkan pengelompokan subdomain otomatis.
+12. `toggle-compact-mode`: Alihkan judul grup ringkas satu huruf.
+13. `toggle-chrome-grouping`: Alihkan grup khusus halaman internal Chrome.
+14. `toggle-files-grouping`: Alihkan grup khusus halaman lokal `file://`.
+15. `toggle-extensions-grouping`: Alihkan grup khusus `chrome-extension://`.
+16. `toggle-misc-grouping`: Alihkan grup Lain-Lain yang tidak terkelompokkan.
+17. `toggle-ip-address-grouping`: Alihkan grup alamat IP / localhost.
+18. `toggle-clustering`: Sakelar utama untuk semua pengelompokan otomatis.
+19. `regroup-all-tabs`: Picu pengelompokan ulang tab secara menyeluruh (`Alt+Shift+R`).
+20. `toggle-hints`: Alihkan mesin overlay petunjuk Vim di dalam halaman.
+21. `open-side-panel`: Buka panel samping ekstensi.
+22. `open-theme-selector`: Buka panel kustomisasi tema.
+23. `remove-duplicate-tabs`: Bersihkan tab duplikat di seluruh jendela.
+24. `open-list-group-sidepanel-command`: Buka tampilan List Group di panel samping.
+
+### 10.4 Tombol Petunjuk Vim di Dalam Halaman (40+ Kombinasi)
+- **Pengguliran & Pergerakan**:
+  - `j` / `k`: Gulir ke bawah / ke atas (langkah 75px).
+  - `d` / `u`: Gulir ke paling bawah / paling atas halaman.
+  - `h` / `l`: Gulir ke kiri / ke kanan (atau beralih ke tab sebelumnya / berikutnya jika halaman tidak dapat digulir).
+  - `H` / `L`: Navigasi mundur / maju dalam riwayat peramban.
+  - `esc`: Lepaskan fokus input aktif, hilangkan fokus elemen.
+- **Manajemen Tab & Jendela**:
+  - `t`: Buka tab baru.
+  - `x`: Tutup tab saat ini.
+  - `yt`: Gandakan tab saat ini.
+  - `s`: Tukar ke tab aktif sebelumnya.
+  - `ts`: Alihkan jendela Layar Terpisah berdampingan.
+  - `we`: Buka tab aktif di jendela popup mandiri.
+  - `wp`: Buka tab aktif di Document Picture-in-Picture.
+  - `wv`: Buka video aktif di Video Picture-in-Picture kustom.
+  - `dg`: Tutup/hapus grup tab saat ini.
+- **Petunjuk Tautan & Interaksi**:
+  - `f`: Aktifkan petunjuk tautan Vim (klik elemen).
+  - `cf`: Aktifkan petunjuk tautan Vim untuk menyalin URL tautan.
+  - `i`: Fokus ke input teks pertama di halaman.
+  - `c`: Salin URL saat ini ke papan klip.
+  - `y`: Tambahkan pilihan saat ini ke buffer papan klip.
+  - `vs`: Lihat sumber halaman (`view-source:`).
+  - `vp`: Alihkan modal pratinjau tautan.
+  - `as` / `ah`: Alihkan Auto-PiP saat bergulir / saat tab disembunyikan.
+  - `ar`: Alihkan Text-to-Speech Baca Nyaring.
+  - `ao`: Buat catatan dari pilihan teks.
+  - `at`: Terjemahkan halaman.
+- **Akses Langsung Panel Samping**:
+  - `ph`: Buka tampilan Utama panel samping.
+  - `pt`: Buka panel samping Themes.
+  - `pl`: Buka panel samping List Group.
+  - `pk`: Buka panel samping Notes.
+  - `ps`: Buka panel samping Screenshot Gallery.
+  - `pa`: Buka panel samping AI Assistant.
+  - `pw`: Buka panel samping Web Activity.
+  - `pg`: Buka panel samping Rules.
+  - `pn`: Buka panel samping Customize Hints.
+- **Perekaman Media**:
+  - `cs`: Tangkap area pandang yang terlihat.
+  - `cp`: Tangkap halaman penuh (dijahit).
+  - `cP`: Tangkap halaman penuh dalam bagian-bagian sekuensial.
+  - `ca`: Tangkap area yang dipotong.
+  - `Cs`: Tangkap semua tab di grup (terlihat).
+  - `Cp`: Tangkap semua tab di grup (halaman penuh).
+  - `CP`: Tangkap semua tab di grup (bagian-bagian).
+- **Mode Audio & Membaca**:
+  - `st`: Alihkan bisu pada tab saat ini.
+  - `so`: Bisukan semua tab yang bersuara.
+  - `mb` / `mB`: Mode halaman hitam (tab / global).
+  - `ms` / `mS`: Mode halaman sepia (tab / global).
+  - `mp` / `mP`: Mode halaman kertas (tab / global).
+  - `ml` / `mL`: Mode halaman terang (tab / global).
+  - `me` / `mE`: Mode filter CSS kustom (tab / global).
+- **Navigasi Pembaca Text-to-Speech (Baca Nyaring)**:
+  - `zp`: Putar / Jeda overlay pembaca sintesis ucapan.
+  - `zn`: Kalimat berikutnya dalam sesi Baca Nyaring.
+  - `zb`: Kalimat sebelumnya dalam sesi Baca Nyaring.
+  - `zq`: Tutup / Hentikan overlay ucapan Baca Nyaring.
+- **Pencadangan Grup & Aturan**:
+  - `bg`: Cadangkan semua grup ke IndexedDB.
+  - `br`: Pulihkan semua grup dari IndexedDB.
+  - `cr`: Buat aturan kustom dari halaman saat ini.
+  - `ae`: Tambahkan halaman saat ini ke aturan yang ada.
+- **Peluncur URL Cepat**:
   - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini.
 
-### 10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)
-Type `o` on any page to open the floating Omnibar. Type `@` to view all available commands:
-1. `we:` — Open selected tab as standalone popup window.
-2. `wp:` — Open selected tab as Document Picture-in-Picture.
-3. `wv:` — Open selected tab as Video Picture-in-Picture.
-4. `sp:` — Open URL, search, or tab in the side panel.
-5. `ar:` — Pick a tab and read its text aloud via TTS.
-6. `b:` — Full-text search browser bookmarks.
-7. `h:` — Search browsing history.
-8. `c:` — Browse and reopen recently closed tabs.
-9. `dg:` — Search and delete or switch tab groups.
-10. `dt:` — Search and close multiple tabs.
-11. `ts:` — Select tabs and launch in side-by-side Split Screen.
-12. `cs:` — Capture visible area of chosen tabs.
-13. `cp:` — Capture full page of chosen tabs.
-14. `cpp:` — Capture full page in sequential parts.
-15. `ca:` — Capture custom cropped area on chosen tabs.
-16. `bg:` — Backup tab groups immediately to IndexedDB.
-17. `bgr:` — Search and restore backed-up groups and tabs.
-18. `f:` — Deep full-text search across all open tabs.
-19. `qai:` — Ask a query directly to configured AI model.
-20. `qaia:` — Instruct the Autonomous AI Agent to execute actions.
-21. `lai:` — Browse past AI conversation history.
-22. `laiq:` — Search within AI messages.
-23. `limg:` — Browse captured screenshots and gallery images.
-24. `lnt:` — Search and view saved notes.
-25. `atcr:` — Add active tab URL to an existing custom rule.
-26. `atr:` — Add open tabs or manual URLs to an existing rule.
-27. `rl:` — Search rules and launch associated URLs.
-28. `cr:` — Create a new rule (`cr: name` or `cr: name, url1, url2`).
-29. `ccr:` — Change the color of a custom rule.
-30. `ccg:` — Change the color of an active tab group.
-31. `dr:` — Delete rules or individual URLs from rules.
-32. `er:` — Rename or edit an existing rule.
-33. `st:` — Open Omnibar interactive tutorial.
-34. `g:` — Search Google (`g: <query>`).
-35. `y:` — Search YouTube (`y: <query>`).
-36. `d:` — Search DuckDuckGo (`d: <query>`).
-37. `w:` — Search Wikipedia (`w: <query>`).
-38. `gm:` — Search Google Maps (`gm: <query>`).
-39. `x:` — Search X / Twitter (`x: <query>`).
-40. `am:` — Search Amazon (`am: <query>`).
-41. `ams:` — Search Amazon Spain (`ams: <query>`).
+### 10.5 Prefiks Subsistem Omnibar di Dalam Halaman (41 Prefiks)
+Ketik `o` pada halaman mana pun untuk membuka Omnibar mengambang. Ketik `@` untuk melihat semua perintah yang tersedia:
+1. `we:` — Buka tab yang dipilih sebagai jendela popup mandiri.
+2. `wp:` — Buka tab yang dipilih sebagai Document Picture-in-Picture.
+3. `wv:` — Buka tab yang dipilih sebagai Video Picture-in-Picture.
+4. `sp:` — Buka URL, pencarian, atau tab di panel samping.
+5. `ar:` — Pilih sebuah tab dan bacakan teksnya dengan lantang melalui TTS.
+6. `b:` — Pencarian teks lengkap pada bookmark peramban.
+7. `h:` — Cari riwayat penjelajahan.
+8. `c:` — Jelajahi dan buka kembali tab yang baru saja ditutup.
+9. `dg:` — Cari dan hapus atau beralih grup tab.
+10. `dt:` — Cari dan tutup beberapa tab sekaligus.
+11. `ts:` — Pilih tab dan luncurkan dalam Layar Terpisah berdampingan.
+12. `cs:` — Tangkap area yang terlihat dari tab yang dipilih.
+13. `cp:` — Tangkap halaman penuh dari tab yang dipilih.
+14. `cpp:` — Tangkap halaman penuh dalam bagian-bagian sekuensial.
+15. `ca:` — Tangkap area pemotongan kustom pada tab yang dipilih.
+16. `bg:` — Cadangkan grup tab seketika ke IndexedDB.
+17. `bgr:` — Cari dan pulihkan grup serta tab yang dicadangkan.
+18. `f:` — Pencarian teks lengkap mendalam di semua tab terbuka.
+19. `qai:` — Ajukan kueri langsung ke model AI yang dikonfigurasi.
+20. `qaia:` — Instruksikan Agen AI Otonom untuk mengeksekusi tindakan.
+21. `lai:` — Jelajahi riwayat percakapan AI terdahulu.
+22. `laiq:` — Cari di dalam pesan AI.
+23. `limg:` — Jelajahi tangkapan layar dan gambar galeri yang tersimpan.
+24. `lnt:` — Cari dan lihat catatan yang tersimpan.
+25. `atcr:` — Tambahkan URL tab aktif ke aturan kustom yang ada.
+26. `atr:` — Tambahkan tab terbuka atau URL manual ke aturan yang ada.
+27. `rl:` — Cari aturan dan luncurkan URL terkait.
+28. `cr:` — Buat aturan baru (`cr: name` atau `cr: name, url1, url2`).
+29. `ccr:` — Ubah warna aturan kustom.
+30. `ccg:` — Ubah warna grup tab aktif.
+31. `dr:` — Hapus aturan atau URL individual dari aturan.
+32. `er:` — Ganti nama atau edit aturan yang ada.
+33. `st:` — Buka tutorial interaktif Omnibar.
+34. `g:` — Cari di Google (`g: <query>`).
+35. `y:` — Cari di YouTube (`y: <query>`).
+36. `d:` — Cari di DuckDuckGo (`d: <query>`).
+37. `w:` — Cari di Wikipedia (`w: <query>`).
+38. `gm:` — Cari di Google Maps (`gm: <query>`).
+39. `x:` — Cari di X / Twitter (`x: <query>`).
+40. `am:` — Cari di Amazon (`am: <query>`).
+41. `ams:` — Cari di Amazon Spanyol (`ams: <query>`).
 
-### 10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)
-The context menu provides a complete hierarchical tree organized into 5 functional command groups:
-1. **Group 1: Rules & URL Submenu**:
-   - Master rules checkbox toggle ("Activar/Desactivar Todas las Reglas").
-   - Per-rule toggles enabling or disabling individual custom rules on the fly.
-   - "Abrir Todas las URLs": Opens all target URLs registered in the selected rule.
-   - Individual URL submenus with dynamic open tab counts `[N]`: Displays currently open tab count matching the URL, provides one-click navigation to the URL, and offers "Cerrar Pestañas para esta URL" to terminate all matching tabs.
-   - Quick Rule Creation: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-   - Add to Existing Rule: "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-2. **Group 2: Tab Cleanup & Audio Controls**:
-   - "Eliminar Pestañas Duplicadas [N]": Shows count of detected redundant tabs and closes them across windows.
-   - "Eliminar Pestañas por Dominio": Dynamic submenu listing all domains with open tab counts `[N]`, allowing surgical tab closure by domain.
-   - "Cerrar Todos Excepto el Grupo Activo": Retains active focused group and closes all other groups.
-   - "Reagrupar Todas las Pestañas": Triggers full background regrouping pass across all open tabs.
-   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Global audio mute and unmute controls.
-3. **Group 3: Reading, Selection & Notes**:
-   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader with overlay controls.
-   - "Leer Selección en Voz Alta": Reads highlighted DOM selection aloud using speech synthesis.
-   - "Crear Nota desde Selección": Extracts text selection, automatically derives note title from the nearest heading (`h1`-`h3`), and stores it in `notesStore`.
-4. **Group 4: Open Extension, PiP & Panels**:
-   - "Abrir como PiP" / "Abrir como Ventana Emergente": Launch target page, highlighted selection, or target image into floating Picture-in-Picture or standalone popup window.
-   - "Abrir Extensión": Opens extension popup or expands side panel.
-   - "Gestionar Reglas": Opens full Rules Manager in a dedicated browser tab.
-   - Direct Sidepanel Launchers: One-click routing to List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), and Customize Hints (`?view=hints`).
-5. **Group 5: Settings & Clustering Options**:
-   - **Gestión de Grupos**: Alternar Grupo Actual (toggle active group collapse), Alternar Todos los Grupos (toggle all groups collapse).
+### 10.6 Hierarki Pohon Menu Konteks (Semua 5 Grup & 30+ Tindakan)
+Menu konteks menyediakan pohon hierarkis lengkap yang diatur ke dalam 5 grup perintah fungsional:
+1. **Grup 1: Aturan & Submenu URL**:
+   - Kotak centang sakelar utama aturan ("Activar/Desactivar Todas las Reglas").
+   - Sakelar per-aturan yang mengaktifkan atau menonaktifkan aturan kustom individual secara langsung.
+   - "Abrir Todas las URLs": Membuka semua URL target yang terdaftar di aturan yang dipilih.
+   - Submenu URL individual dengan hitungan tab terbuka dinamis `[N]`: Menampilkan jumlah tab terbuka saat ini yang cocok dengan URL, menyediakan navigasi sekali klik ke URL tersebut, dan menawarkan "Cerrar Pestañas para esta URL" untuk menghentikan semua tab yang cocok.
+   - Pembuatan Aturan Cepat: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+   - Tambahkan ke Aturan yang Ada: "Añadir a Regla Existente" -> Pilih aturan -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+2. **Grup 2: Pembersihan Tab & Kontrol Audio**:
+   - "Eliminar Pestañas Duplicadas [N]": Menampilkan jumlah tab redundan yang terdeteksi dan menutupnya di seluruh jendela.
+   - "Eliminar Pestañas por Dominio": Submenu dinamis yang mencantumkan semua domain dengan jumlah tab terbuka `[N]`, memungkinkan penutupan tab secara terarah berdasarkan domain.
+   - "Cerrar Todos Excepto el Grupo Activo": Mempertahankan grup aktif yang sedang difokuskan dan menutup semua grup lainnya.
+   - "Reagrupar Todas las Pestañas": Memicu proses pengelompokan ulang latar belakang penuh di semua tab terbuka.
+   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Kontrol pembisuan dan pengaktifan kembali suara secara global.
+3. **Grup 3: Membaca, Pemilihan Teks & Catatan**:
+   - "Leer Página en Voz Alta" (TTS): Pembaca text-to-speech seluruh halaman dengan kontrol overlay.
+   - "Leer Selección en Voz Alta": Membaca seleksi DOM yang disorot dengan lantang menggunakan sintesis ucapan.
+   - "Crear Nota desde Selección": Mengekstrak pilihan teks, secara otomatis mengambil judul catatan dari heading terdekat (`h1`-`h3`), dan menyimpannya di `notesStore`.
+4. **Grup 4: Buka Ekstensi, PiP & Panel**:
+   - "Abrir como PiP" / "Abrir como Ventana Emergente": Luncurkan halaman target, pilihan yang disorot, atau gambar target ke Picture-in-Picture mengambang atau jendela popup mandiri.
+   - "Abrir Extensión": Membuka popup ekstensi atau memperluas panel samping.
+   - "Gestionar Reglas": Membuka Manajer Aturan lengkap di tab peramban khusus.
+   - Peluncur Langsung Panel Samping: Perutean satu klik ke List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), dan Customize Hints (`?view=hints`).
+5. **Grup 5: Pengaturan & Opsi Pengelompokan**:
+   - **Gestión de Grupos**: Alternar Grupo Actual (alihkan penciutan grup aktif), Alternar Todos los Grupos (alihkan penciutan semua grup).
    - **Opciones de Agrupación**:
-     - Agrupación Inteligente (toggle automated heuristic clustering).
-     - Modo Compacto (toggle single-letter group title mode).
-     - Dominio / Subdominio (toggle domain and subdomain grouping).
-     - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost.
+     - Agrupación Inteligente (alihkan pengelompokan heuristik otomatis).
+     - Modo Compacto (alihkan mode judul grup satu huruf).
+     - Dominio / Subdominio (alihkan pengelompokan domain dan subdomain).
+     - Páginas Especiales: Halaman Chrome (`chrome://`), Berkas Lokal (`file:///`), Ekstensi (`chrome-extension://`), Lain-Lain (`Misc`), Alamat IP & Localhost.
    - **Opciones Generales**:
-     - Ordenar Alfabéticamente (enforce alphabetical sorting across tab strip).
-     - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`).
-     - Temporizador de Auto-Colapso (toggle idle group collapse timer).
-     - Prefijos Visuales (toggle `🔒`, `🔍`, `🗝️`, `⚠️` state markers).
-     - Vista Previa de Enlaces (toggle in-page link preview modal).
+     - Ordenar Alfabéticamente (terapkan pengurutan menurut abjad di bilah tab).
+     - Ubicación Miscelánea: Awal (`start`), Akhir (`end`), Alfabetis (`alpha`).
+     - Temporizador de Auto-Colapso (alihkan pewaktu penciutan grup diam).
+     - Prefijos Visuales (alihkan penanda status `🔒`, `🔍`, `🗝️`, `⚠️`).
+     - Vista Previa de Enlaces (alihkan modal pratinjau tautan dalam halaman).
 
 ---
 
-## 11. Storage Schemas & Data Persistence
+## 11. Skema Penyimpanan & Persistensi Data
 
-The extension uses a multi-tier storage model across IndexedDB and Chrome Storage APIs:
+Ekstensi ini menggunakan model penyimpanan multi-tingkat di seluruh IndexedDB dan Chrome Storage API:
 
-### 11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)
-1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Secondary index: `'createdAt'`. Holds binary screenshots, canvas data URLs, persistent flags, dimensions, and segment total indices.
-2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 secondary indexes (retrieved/managed by ID). Stores multi-turn chat threads, message roles, token metrics, and search grounding metadata.
-3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 secondary indexes (filtered in memory by contextKey). Stores rich text, checklist arrays, Kanban board cards, Mermaid specifications, and KaTeX formulas.
-4. `backupsGroups`: keyPath: `'group.id'`. 0 secondary indexes (stores backup group objects keyed by nested `'group.id'`). Stores compressed group structures, colors, titles, and closed tab records.
-5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Secondary indexes: `'projectName'` (keyPath `'projectName'`) and `'savedAt'` (keyPath `'savedAt'`) (no `date` index). Holds focus analytics, cycle metrics, and interruption logs.
+### 11.1 Basis Data IndexedDB: `Intelligent_Workspace` (Versi Skema 8)
+1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Indeks sekunder: `'createdAt'`. Menyimpan tangkapan layar biner, URL data kanvas, tanda persisten, dimensi, dan indeks total segmen.
+2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 indeks sekunder (diambil/dikelola berdasarkan ID). Menyimpan utas obrolan multi-putaran, peran pesan, metrik token, dan metadata search grounding.
+3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 indeks sekunder (difilter dalam memori berdasarkan contextKey). Menyimpan rich text, array daftar periksa, kartu papan Kanban, spesifikasi Mermaid, dan rumus KaTeX.
+4. `backupsGroups`: keyPath: `'group.id'`. 0 indeks sekunder (menyimpan objek grup cadangan yang dikunci oleh `'group.id'` bersarang). Menyimpan struktur grup terkompresi, warna, judul, dan rekaman tab yang ditutup.
+5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Indeks sekunder: `'projectName'` (keyPath `'projectName'`) dan `'savedAt'` (keyPath `'savedAt'`) (tanpa indeks `date`). Menyimpan analitik fokus, metrik siklus, dan log interupsi.
 
-### 11.2 Chrome Storage Dual-Routing (`StorageService`)
-- Dynamically routes reads and writes between `chrome.storage.sync` (for portable settings across user devices) and `chrome.storage.local` (for heavy preferences).
-- Key models:
-  - `customRules`: Array of rule definitions (`[{ name, color, active, urls }]`).
-  - `clusterConfig`: Auto-clustering parameters (thresholds, compact mode, special categories).
-  - `userPrefixes`: Emoji prefix assignments (`{ lock, openKey, loupe, checked, warning }`).
-  - `activeTheme`, `savedThemes`, & `themeSchedules`: 9-palette color configurations and scheduled rotation rules configured via `ThemeScheduleModal.svelte`.
-  - `pomodoroState`: Real-time session timestamps, paused duration, and cycle goals.
-  - `wa:settings` & `wa:limits`: Web activity tracking preferences, site limits, and schedule windows.
-  - `youtubeLoopEnabled`: Boolean flag controlling YouTube and Shorts loop buttons.
+### 11.2 Perutean Ganda Chrome Storage (`StorageService`)
+- Secara dinamis merutekan baca dan tulis antara `chrome.storage.sync` (untuk pengaturan portabel di seluruh perangkat pengguna) dan `chrome.storage.local` (untuk preferensi berukuran besar).
+- Model-model utama:
+  - `customRules`: Array definisi aturan (`[{ name, color, active, urls }]`).
+  - `clusterConfig`: Parameter pengelompokan otomatis (ambang batas, mode ringkas, kategori khusus).
+  - `userPrefixes`: Penetapan prefiks emoji (`{ lock, openKey, loupe, checked, warning }`).
+  - `activeTheme`, `savedThemes`, & `themeSchedules`: Konfigurasi warna 9 palet dan aturan rotasi terjadwal yang dikonfigurasi melalui `ThemeScheduleModal.svelte`.
+  - `pomodoroState`: Stempel waktu sesi waktu nyata, durasi dijeda, dan target sasaran siklus.
+  - `wa:settings` & `wa:limits`: Preferensi pelacakan aktivitas web, batas situs, dan jendela jadwal.
+  - `youtubeLoopEnabled`: Flag boolean yang mengontrol tombol pengulangan YouTube dan Shorts.
 
 ### 11.3 Chrome Storage Session (`chrome.storage.session`)
-Used for ultra-fast, ephemeral runtime coordination:
-- `tabsEverActive`: Set of tab IDs activated during the current browser session.
-- `groupExpandedEver`: Record of groups expanded during the current session.
-- `groupInfoMap`: Real-time registry mapping group IDs to dynamic titles and clustering types.
-- `splitScreenState`: Cached window bounds for restoring original screen dimensions.
-- `contextMenusSignature`: Hash signature preventing redundant context menu rebuild churn during rapid tab switches.
-- `wa:openSegment`: Current active website time segment.
-- `hiddenYoutubeView`: Reference to parked YouTube player view docked in `HiddenGroupsBar.svelte`.
+Digunakan untuk koordinasi runtime yang sangat cepat dan efemeral:
+- `tabsEverActive`: Kumpulan ID tab yang pernah diaktifkan selama sesi peramban saat ini.
+- `groupExpandedEver`: Rekaman grup yang pernah dibentangkan selama sesi saat ini.
+- `groupInfoMap`: Registri waktu nyata yang memetakan ID grup ke judul dinamis dan tipe pengelompokan.
+- `splitScreenState`: Batas jendela yang di-cache untuk memulihkan dimensi layar asli.
+- `contextMenusSignature`: Tanda tangan hash yang mencegah rekonstruksi menu konteks berulang selama pergantian tab yang cepat.
+- `wa:openSegment`: Segmen waktu situs web aktif saat ini.
+- `hiddenYoutubeView`: Referensi ke tampilan pemutar YouTube terparkir yang berlabuh di `HiddenGroupsBar.svelte`.
 
 ---
 
-## 12. Defensive Engineering & Edge Case Handling
+## 12. Rekayasa Defensif & Penanganan Kasus Ekstrem (Edge Cases)
 
-1. **Declarative Net Request Header Unblocking (`dnr.js`)**:
-   - Modifies response headers via dynamic DNR rules to strip `X-Frame-Options` and restrictive `Content-Security-Policy` headers, allowing external sites to render in the Side Panel and Picture-in-Picture iframes.
-   - **WhatsApp Web Safety**: Explicitly preserves `Cross-Origin-Opener-Policy` (COOP) and `Cross-Origin-Embedder-Policy` (COEP) on `web.whatsapp.com` to prevent breaking its WebAssembly Signal cryptographic implementation.
-2. **Right-Click & Selection Unblocker (`allowRightClickHook.js`)**:
-   - Defeats hostile websites blocking copy, paste, context menu, and text selection.
-   - Runs in `MAIN` world to intercept `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-   - Strips inline `oncontextmenu="return false"` handlers via `MutationObserver`.
-   - Protects legitimate web applications (e.g., Telegram Web, Google Docs) by verifying clipboard contents before re-injecting cancelled paste events.
-3. **YouTube Hover Preview Audio Forced-Mute Override (`youtubePreviewAudioHook.js`)**:
-   - Runs in `MAIN` world on `ytd-video-preview #inline-preview-player`.
-   - Overrides `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover.
-   - Eliminates YouTube's internal `volumechange` forced-mute race condition, maintaining unmuted audio across loop restarts while hovering.
-4. **YouTube Shorts Feed Sequence Navigation Hook (`youtubeShortsFeedHook.js`)**:
-   - Runs in `MAIN` world on `ytd-shorts`.
-   - Intercepts `shortsProcessedSequence` property, which is invisible from the extension's isolated world, and dispatches native `yt-navigate` events on `ytd-app` without reloading the page or losing floating window state.
-5. **Infinite-Scroll Canvas Protection**:
-   - Caps full-page screenshot walks at 60 segments (`MAX_FULL_PAGE_SEGMENTS`) and 30,000px maximum canvas height (`MAX_FULL_PAGE_CANVAS_PX`), avoiding out-of-memory browser tab crashes.
-6. **Linux Screen Color Picker Eyedropper Fallback**:
-   - When running on Linux environments lacking the Chromium `window.EyeDropper` API, the extension injects `screen-color-picker.js`, rendering a 9x magnified pixel lens with RGB/HEX/HSL calculation.
-7. **Startup Session Settling Delay**:
-   - Delays group pruning for 20 seconds (`groupsHaveSettledAfterStartup()`) upon browser launch to allow session tabs and window states to settle before evaluating group assignments.
+1. **Pembatalan Pemblokiran Header Declarative Net Request (`dnr.js`)**:
+   - Memodifikasi header respons melalui aturan DNR dinamis untuk melucuti header `X-Frame-Options` dan `Content-Security-Policy` yang membatasi, memungkinkan situs eksternal dirender di Panel Samping dan iframe Picture-in-Picture.
+   - **Keamanan WhatsApp Web**: Secara eksplisit mempertahankan `Cross-Origin-Opener-Policy` (COOP) dan `Cross-Origin-Embedder-Policy` (COEP) pada `web.whatsapp.com` untuk mencegah rusaknya implementasi kriptografi Signal WebAssembly miliknya.
+2. **Pelepas Blokir Klik Kanan & Seleksi (`allowRightClickHook.js`)**:
+   - Menaklukkan situs web agresif yang memblokir salin, tempel, menu konteks, dan pemilihan teks.
+   - Berjalan di dunia `MAIN` untuk mencegat `preventDefault()` dan `stopPropagation()` pada `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, dan `mouseup`.
+   - Melucuti penangan inline `oncontextmenu="return false"` melalui `MutationObserver`.
+   - Melindungi aplikasi web yang sah (misalnya, Telegram Web, Google Docs) dengan memverifikasi konten papan klip sebelum menyuntikkan kembali event tempel yang dibatalkan.
+3. **Penebasan Bisu Paksa Pratinjau Sorot YouTube (`youtubePreviewAudioHook.js`)**:
+   - Berjalan di dunia `MAIN` pada `ytd-video-preview #inline-preview-player`.
+   - Menimpa deskriptor properti `HTMLMediaElement.prototype.muted` pada elemen `<video>` target saat disorot kursor.
+   - Menghilangkan kondisi balapan (race condition) pembisuan paksa internal `volumechange` YouTube, mempertahankan audio tidak dibisukan di seluruh pengulangan restart saat kursor berada di atas elemen.
+4. **Hook Navigasi Urutan Feed YouTube Shorts (`youtubeShortsFeedHook.js`)**:
+   - Berjalan di dunia `MAIN` pada `ytd-shorts`.
+   - Mencegat properti `shortsProcessedSequence`, yang tidak terlihat dari dunia terisolasi ekstensi, dan mengirimkan event bawaan `yt-navigate` pada `ytd-app` tanpa memuat ulang halaman atau kehilangan status jendela mengambang.
+5. **Proteksi Kanvas Gulir Tak Terbatas (Infinite-Scroll)**:
+   - Membatasi penelusuran tangkapan layar halaman penuh hingga 60 segmen (`MAX_FULL_PAGE_SEGMENTS`) dan tinggi kanvas maksimum 30.000px (`MAX_FULL_PAGE_CANVAS_PX`), menghindari kerusakan tab peramban akibat kehabisan memori (out-of-memory).
+6. **Fallback Pipet Pemilih Warna Layar Linux**:
+   - Saat berjalan di lingkungan Linux yang tidak memiliki API Chromium `window.EyeDropper`, ekstensi menyuntikkan `screen-color-picker.js`, merender lensa piksel dengan pembesaran 9x beserta kalkulasi RGB/HEX/HSL.
+7. **Jeda Penyesuaian Sesi Awal Peramban (Startup Session Settling Delay)**:
+   - Menunda pemangkasan grup selama 20 detik (`groupsHaveSettledAfterStartup()`) saat peramban diluncurkan untuk memungkinkan tab sesi dan status jendela stabil sebelum mengevaluasi penugasan grup.

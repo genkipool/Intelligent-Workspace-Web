@@ -1,14 +1,14 @@
 # Intelligent Workspace
 
-> Intelligent Workspace is an advanced Manifest V3 browser extension and productive workspace environment built with Svelte, Vite, and CRXJS. It orchestrates intelligent tab organization, automated and rule-based clustering, autonomous AI agent execution (supporting Google Gemini Cloud API and Chrome Built-in Prompt API), in-page Vim-style link navigation, a 41-prefix Omnibar command system, multi-format note-taking (rich text, checklists, Kanban, Mermaid diagrams, KaTeX formulas), high-fidelity media capture and in-browser WASM OCR, Pomodoro timing with zero-drift alarms and offscreen audio playback, and Declarative Net Request (DNR) web activity metering, domain limits, and site blocking.
+> Ang Intelligent Workspace ay isang advanced na Manifest V3 browser extension at produktibong workspace environment na binuo gamit ang Svelte, Vite, at CRXJS. Pinamamahalaan nito ang matalinong pagsasaayos ng tab, awtomatiko at nakabatay sa panuntunang clustering, autonomous na pagpapatakbo ng AI agent (sumusuporta sa Google Gemini Cloud API at Chrome Built-in Prompt API), in-page na Vim-style na link navigation, isang 41-prefix Omnibar command system, multi-format na pagtatala (rich text, mga checklist, Kanban, mga Mermaid diagram, mga KaTeX formula), high-fidelity na media capture at in-browser WASM OCR, Pomodoro timing na may zero-drift na mga alarma at offscreen audio playback, at Declarative Net Request (DNR) na pagsukat sa aktibidad sa web, mga limitasyon sa domain, at pag-block ng site.
 
 ---
 
 ## Multilingual Editions / Global Directory
 
-This technical specification is available in the top 25 languages worldwide:
+Ang teknikal na detalyeng ito ay available sa nangungunang 25 wika sa buong mundo:
 
-| Language | Native Name | ISO Code | Specification Link |
+| Wika | Katutubong Pangalan | ISO Code | Link ng Detalye |
 | :--- | :--- | :--- | :--- |
 | **English** (Master) | English | `en` | [llms.txt](/llms.txt) |
 | **Mandarin Chinese** | 简体中文 | `zh` | [llms-zh.txt](/llms-zh.txt) |
@@ -38,111 +38,111 @@ This technical specification is available in the top 25 languages worldwide:
 
 ---
 
-## Navigation & Quick Reference Index
+## Index ng Pag-navigate at Mabilisang Sanggunian
 
-- [1. Architectural Foundation & Runtime Lifecycle](#1-architectural-foundation--runtime-lifecycle)
-- [2. Section 1: Rules Management (Gestionar Reglas)](#2-section-1-rules-management-gestionar-reglas)
+- [1. Arkitektural na Pundasyon at Runtime Lifecycle](#1-arkitektural-na-pundasyon-at-runtime-lifecycle)
+- [2. Seksyon 1: Pamamahala ng mga Panuntunan (Gestionar Reglas)](#2-seksyon-1-pamamahala-ng-mga-panuntunan-gestionar-reglas)
   - [2.1 Data Schema (`CustomRule`)](#21-data-schema-customrule)
-  - [2.2 Precedence Architecture](#22-precedence-architecture)
-  - [2.3 URL Normalization & Matching Semantics](#23-url-normalization--matching-semantics)
-  - [2.4 Rules Management Settings Breakdown](#24-rules-management-settings-breakdown)
-  - [2.5 Operations & Persistence (`mutateRulesAndSync`)](#25-operations--persistence-mutaterulesandsync)
-  - [2.6 Invocation Modalities](#26-invocation-modalities)
-- [3. Section 2: Group Listing & Operations (Listar Grupos)](#3-section-2-group-listing--operations-listar-grupos)
-  - [3.1 UI Architecture](#31-ui-architecture)
-  - [3.2 Group Lifecycle & Behaviors](#32-group-lifecycle--behaviors)
-  - [3.3 Group Operations & Memory Management](#33-group-operations--memory-management)
-  - [3.4 Group Backups & Restore Subsystem](#34-group-backups--restore-subsystem)
-  - [3.5 Parked YouTube Player in Hidden Groups Bar](#35-parked-youtube-player-in-hidden-groups-bar)
-- [4. Section 3: Navigation & Tab Management (Navegación)](#4-section-3-navigation--tab-management-navegación)
-  - [4.1 Fast Tab Jump Gesture](#41-fast-tab-jump-gesture)
-  - [4.2 Stepping, Swapping & Lifecycle Keys](#42-stepping-swapping--lifecycle-keys)
-  - [For power users](#for-power-users)
-  - [4.3 Audio & Sound Management](#43-audio--sound-management)
-  - [4.4 Split Screen Workflows](#44-split-screen-workflows)
-  - [4.5 YouTube Looping Subsystem](#45-youtube-looping-subsystem)
-  - [4.6 YouTube Shorts Preview Audio](#46-youtube-shorts-preview-audio)
-  - [4.7 Picture-in-Picture (PiP) Architecture](#47-picture-in-picture-pip-architecture)
-  - [4.8 Page Reading Modes & Visual Overlays](#48-page-reading-modes--visual-overlays)
-  - [4.9 Text Snippets Subsystem with Template Variables](#49-text-snippets-subsystem-with-template-variables)
-  - [4.10 Embedded Productivity Tools](#410-embedded-productivity-tools)
-  - [4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding](#411-comprehensive-3-tier-duplicate-removal--intelligent-discarding)
-- [5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)](#5-section-4-ai-assistant--autonomous-agent-asistente-ai)
-  - [5.1 Dual Model Engine Architecture](#51-dual-model-engine-architecture)
+  - [2.2 Arkitektura ng Precedence](#22-arkitektura-ng-precedence)
+  - [2.3 Pag-normalize ng URL at Semantika ng Pagtutugma](#23-pag-normalize-ng-url-at-semantika-ng-pagtutugma)
+  - [2.4 Detalye ng mga Setting sa Pamamahala ng Panuntunan](#24-detalye-ng-mga-setting-sa-pamamahala-ng-panuntunan)
+  - [2.5 Mga Operasyon at Persistence (`mutateRulesAndSync`)](#25-mga-operasyon-at-persistence-mutaterulesandsync)
+  - [2.6 Mga Paraan ng Pagtawag (Invocation Modalities)](#26-mga-paraan-ng-pagtawag-invocation-modalities)
+- [3. Seksyon 2: Paglista ng Grupo at mga Operasyon (Listar Grupos)](#3-seksyon-2-paglista-ng-grupo-at-mga-operasyon-listar-grupos)
+  - [3.1 Arkitektura ng UI](#31-arkitektura-ng-ui)
+  - [3.2 Lifecycle at mga Pag-uugali ng Grupo](#32-lifecycle-at-mga-pag-uugali-ng-grupo)
+  - [3.3 Mga Operasyon sa Grupo at Pamamahala ng Memory](#33-mga-operasyon-sa-grupo-at-pamamahala-ng-memory)
+  - [3.4 Subsystem ng Pag-backup at Pag-restore ng Grupo](#34-subsystem-ng-pag-backup-at-pag-restore-ng-grupo)
+  - [3.5 Naka-park na YouTube Player sa Hidden Groups Bar](#35-naka-park-na-youtube-player-sa-hidden-groups-bar)
+- [4. Seksyon 3: Pag-navigate at Pamamahala ng Tab (Navegación)](#4-seksyon-3-pag-navigate-at-pamamahala-ng-tab-navegación)
+  - [4.1 Kumpas ng Mabilisang Paglipat ng Tab (Fast Tab Jump)](#41-kumpas-ng-mabilisang-paglipat-ng-tab-fast-tab-jump)
+  - [4.2 Pag-usad, Pagpapalit, at mga Pindutan ng Lifecycle](#42-pag-usad-pagpapalit-at-mga-pindutan-ng-lifecycle)
+  - [Para sa mga advanced na user](#para-sa-mga-advanced-na-user)
+  - [4.3 Pamamahala ng Audio at Tunog](#43-pamamahala-ng-audio-at-tunog)
+  - [4.4 Mga Daloy ng Trabaho sa Split Screen](#44-mga-daloy-ng-trabaho-sa-split-screen)
+  - [4.5 Subsystem ng Pag-loop sa YouTube](#45-subsystem-ng-pag-loop-sa-youtube)
+  - [4.6 Audio ng Preview sa YouTube Shorts](#46-audio-ng-preview-sa-youtube-shorts)
+  - [4.7 Arkitektura ng Picture-in-Picture (PiP)](#47-arkitektura-ng-picture-in-picture-pip)
+  - [4.8 Mga Reading Mode ng Pahina at Visual Overlay](#48-mga-reading-mode-ng-pahina-at-visual-overlay)
+  - [4.9 Subsystem ng Text Snippets na may mga Template Variable](#49-subsystem-ng-text-snippets-na-may-mga-template-variable)
+  - [4.10 Mga Naka-embed na Tool sa Produktibidad](#410-mga-naka-embed-na-tool-sa-produktibidad)
+  - [4.11 Komprehensibong 3-Tier na Pagtanggal ng Duplicate at Matalinong Pag-discard](#411-komprehensibong-3-tier-na-pagtanggal-ng-duplicate-at-matalinong-pag-discard)
+- [5. Seksyon 4: AI Assistant at Autonomous Agent (Asistente AI)](#5-seksyon-4-ai-assistant-at-autonomous-agent-asistente-ai)
+  - [5.1 Arkitektura ng Dual Model Engine](#51-arkitektura-ng-dual-model-engine)
   - [5.2 Autonomous Browser Agent (`agent-backend.js`)](#52-autonomous-browser-agent-agent-backendjs)
-  - [5.3 Taint Tracking & Prompt Injection Defense](#53-taint-tracking--prompt-injection-defense)
-  - [5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)](#54-scheduled-gemini-queries-subsystem-geminischedulemodalsvelte)
-  - [5.5 Gemini Conversation Management & Export](#55-gemini-conversation-management--export)
-  - [5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs--file-attachments-feature_geminiattachfiles)
-  - [5.7 Invocation Modalities](#57-invocation-modalities)
-- [6. Section 5: Notes View & Knowledge Management (Ver Notas)](#6-section-5-notes-view--knowledge-management-ver-notas)
-  - [6.1 Storage Architecture (`notesStore`)](#61-storage-architecture-notesstore)
-  - [6.2 Specialized Note Formats & Advanced Rendering](#62-specialized-note-formats--advanced-rendering)
-  - [6.3 Scoping & Context Hierarchy](#63-scoping--context-hierarchy)
-  - [6.4 Invocation Modalities](#64-invocation-modalities)
-- [7. Section 6: Media & Gallery View (Ver Galería)](#7-section-6-media--gallery-view-ver-galería)
-  - [7.1 Capture Modes & Engineering (All 7 Capture Types)](#71-capture-modes--engineering-all-7-capture-types)
-  - [7.2 Gallery UI & Persistence](#72-gallery-ui--persistence)
-  - [7.3 Export, In-Browser OCR & External Markup](#73-export-in-browser-ocr--external-markup)
-  - [7.4 Invocation Modalities](#74-invocation-modalities)
-- [8. Section 7: Pomodoro & Timing Suite (Pomodoro)](#8-section-7-pomodoro--timing-suite-pomodoro)
-  - [8.1 Timing Engine & Background Architecture](#81-timing-engine--background-architecture)
-  - [8.2 Exhaustive 4 Timing Modes](#82-exhaustive-4-timing-modes)
+  - [5.3 Taint Tracking at Depensa sa Prompt Injection](#53-taint-tracking-at-depensa-sa-prompt-injection)
+  - [5.4 Subsystem ng Nakaiskedyul na mga Query sa Gemini (`GeminiScheduleModal.svelte`)](#54-subsystem-ng-nakaiskedyul-na-mga-query-sa-gemini-geminischedulemodalsvelte)
+  - [5.5 Pamamahala at Pag-export ng Pag-uusap sa Gemini](#55-pamamahala-at-pag-export-ng-pag-uusap-sa-gemini)
+  - [5.6 Multimodal Inputs at File Attachments (`feature_geminiAttachFiles`)](#56-multimodal-inputs-at-file-attachments-feature_geminiattachfiles)
+  - [5.7 Mga Paraan ng Pagtawag (Invocation Modalities)](#57-mga-paraan-ng-pagtawag-invocation-modalities-1)
+- [6. Seksyon 5: View ng Tala at Pamamahala ng Kaalaman (Ver Notas)](#6-seksyon-5-view-ng-tala-at-pamamahala-ng-kaalaman-ver-notas)
+  - [6.1 Arkitektura ng Imbakan (`notesStore`)](#61-arkitektura-ng-imbakan-notesstore)
+  - [6.2 Mga Espesyal na Format ng Tala at Advanced na Pag-render](#62-mga-espesyal-na-format-ng-tala-at-advanced-na-pag-render)
+  - [6.3 Scoping at Hirarkiya ng Konteksto](#63-scoping-at-hirarkiya-ng-konteksto)
+  - [6.4 Mga Paraan ng Pagtawag (Invocation Modalities)](#64-mga-paraan-ng-pagtawag-invocation-modalities-2)
+- [7. Seksyon 6: Media at Gallery View (Ver Galería)](#7-seksyon-6-media-at-gallery-view-ver-galer%C3%ADa)
+  - [7.1 Mga Capture Mode at Inhenyeriya (Lahat ng 7 Uri ng Capture)](#71-mga-capture-mode-at-inhenyeriya-lahat-ng-7-uri-ng-capture)
+  - [7.2 Gallery UI at Persistence](#72-gallery-ui-at-persistence)
+  - [7.3 Pag-export, In-Browser OCR, at Panlabas na Markup](#73-pag-export-in-browser-ocr-at-panlabas-na-markup)
+  - [7.4 Mga Paraan ng Pagtawag (Invocation Modalities)](#74-mga-paraan-ng-pagtawag-invocation-modalities-3)
+- [8. Seksyon 7: Pomodoro at Suite ng Pagsukat ng Oras (Pomodoro)](#8-seksyon-7-pomodoro-at-suite-ng-pagsukat-ng-oras-pomodoro)
+  - [8.1 Timing Engine at Arkitektura sa Background](#81-timing-engine-at-arkitektura-sa-background)
+  - [8.2 Kumpletong 4 na Timing Mode](#82-kumpletong-4-na-timing-mode)
   - [8.3 In-Page Floating Timer Widget](#83-in-page-floating-timer-widget)
-  - [8.4 Group Auto-Collapse Idle Timer](#84-group-auto-collapse-idle-timer)
-  - [8.5 Project Tagging & Metadata](#85-project-tagging--metadata)
-  - [8.6 Analytics Engine & 19 KPI Cards](#86-analytics-engine--19-kpi-cards)
-- [9. Section 8: Activity & History Panel (Panel de Actividad)](#9-section-8-activity--history-panel-panel-de-actividad)
-  - [9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)](#91-data-engine--storage-topology-itg_web_activity)
+  - [8.4 Auto-Collapse Idle Timer ng Grupo](#84-auto-collapse-idle-timer-ng-grupo)
+  - [8.5 Pag-tag ng Proyekto at Metadata](#85-pag-tag-ng-proyekto-at-metadata)
+  - [8.6 Analytics Engine at 19 na KPI Card](#86-analytics-engine-at-19-na-kpi-card)
+- [9. Seksyon 8: Panel ng Aktibidad at Kasaysayan (Panel de Actividad)](#9-seksyon-8-panel-ng-aktibidad-at-kasaysayan-panel-de-actividad)
+  - [9.1 Data Engine at Topolohiya ng Imbakan (`ITG_WEB_ACTIVITY`)](#91-data-engine-at-topolohiya-ng-imbakan-itg_web_activity)
   - [9.2 Declarative Net Request (DNR) Site Blocker](#92-declarative-net-request-dnr-site-blocker)
   - [9.3 Asymmetric Security Lock (`blockLock.js`)](#93-asymmetric-security-lock-blocklockjs)
-  - [9.4 Categorization & Visual Analytics](#94-categorization--visual-analytics)
-  - [9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)](#95-downloads-manager-subsystem-switchmainviewdownloads)
-  - [9.6 Recently Closed Tabs & Browsing History Subsystem](#96-recently-closed-tabs--browsing-history-subsystem)
-  - [9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)](#97-theme-scheduling-subsystem-themeschedulemodalsvelte)
+  - [9.4 Pagkakategorya at Visual Analytics](#94-pagkakategorya-at-visual-analytics)
+  - [9.5 Subsystem ng Tagapamahala ng Downloads (`switchMainView('downloads')`)](#95-subsystem-ng-tagapamahala-ng-downloads-switchmainviewdownloads)
+  - [9.6 Subsystem ng Kamakailang Isinarang mga Tab at Kasaysayan ng Pagba-browse](#96-subsystem-ng-kamakailang-isinarang-mga-tab-at-kasaysayan-ng-pagba-browse)
+  - [9.7 Subsystem ng Pag-iiskedyul ng Tema (`ThemeScheduleModal.svelte`)](#97-subsystem-ng-pag-iiskedyul-ng-tema-themeschedulemodalsvelte)
   - [9.8 Compact Sidepanel View](#98-compact-sidepanel-view)
 - [10. Multi-Modal Invocation Matrix](#10-multi-modal-invocation-matrix)
-  - [10.1 Popup UI Interface](#101-popup-ui-interface)
-  - [10.2 Sidepanel Navigation Routes (`?view=...`)](#102-sidepanel-navigation-routes-view)
-  - [10.3 Manifest Keyboard Shortcuts (24 Commands)](#103-manifest-keyboard-shortcuts-24-commands)
-  - [10.4 In-Page Vim Hint Keys (40+ Combinations)](#104-in-page-vim-hint-keys-40-combinations)
-  - [10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)](#105-in-page-omnibar-subsystem-prefixes-41-prefixes)
-  - [10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)](#106-context-menu-tree-hierarchy-all-5-groups--30-actions)
-- [11. Storage Schemas & Data Persistence](#11-storage-schemas--data-persistence)
+  - [10.1 Interface ng Popup UI](#101-interface-ng-popup-ui)
+  - [10.2 Mga Ruta ng Pag-navigate sa Sidepanel (`?view=...`)](#102-mga-ruta-ng-pag-navigate-sa-sidepanel-view)
+  - [10.3 Mga Shortcut sa Keyboard ng Manifest (24 na Command)](#103-mga-shortcut-sa-keyboard-ng-manifest-24-na-command)
+  - [10.4 In-Page Vim Hint Keys (40+ Kumbinasyon)](#104-in-page-vim-hint-keys-40-kumbinasyon)
+  - [10.5 Mga Prefix ng In-Page Omnibar Subsystem (41 Prefix)](#105-mga-prefix-ng-in-page-omnibar-subsystem-41-prefix)
+  - [10.6 Hirarkiya ng Context Menu Tree (Lahat ng 5 Grupo at 30+ Aksyon)](#106-hirarkiya-ng-context-menu-tree-lahat-ng-5-grupo-at-30-aksyon)
+- [11. Mga Schema ng Imbakan at Persistence ng Data](#11-mga-schema-ng-imbakan-at-persistence-ng-data)
   - [11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)](#111-indexeddb-database-intelligent_workspace-schema-version-8)
   - [11.2 Chrome Storage Dual-Routing (`StorageService`)](#112-chrome-storage-dual-routing-storageservice)
   - [11.3 Chrome Storage Session (`chrome.storage.session`)](#113-chrome-storage-session-chromestoragesession)
-- [12. Defensive Engineering & Edge Case Handling](#12-defensive-engineering--edge-case-handling)
+- [12. Depensibong Inhenyeriya at Pangangasiwa sa mga Edge Case](#12-depensibong-inhenyeriya-at-pangangasiwa-sa-mga-edge-case)
 
 ---
 
-## 1. Architectural Foundation & Runtime Lifecycle
+## 1. Arkitektural na Pundasyon at Runtime Lifecycle
 
-The extension runs under Google Chrome's Manifest V3 architecture, decoupling persistent processes across a background Service Worker, sandboxed UI panels, offscreen audio documents, and in-page content script overlays:
+Tumatakbo ang extension sa ilalim ng arkitektura ng Manifest V3 ng Google Chrome, pinaghihiwalay ang mga persistent na proseso sa isang background Service Worker, mga sandboxed na panel ng UI, mga dokumento ng audio na offscreen, at mga in-page content script overlay:
 
-1. **Manifest Configuration (`manifest.json`)**:
-   - **Permissions (21 items)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, and `idle`.
-   - **Host Permissions**: `["<all_urls>"]`.
-   - **Service Worker**: `src/core/background.js` using synchronous `importScripts` modular loading.
-   - **Toolbar Action**: Deliberately omits `default_popup`. Runtime enforces `chrome.action.setPopup({ popup: '' })`, ensuring `chrome.action.onClicked` fires synchronously and opens `chrome.sidePanel` to the user's pinned view without popup initialization latency.
-   - **Omnibox Keyword**: Registered keyword `"find"`.
-   - **Commands**: 24 system-level keyboard shortcuts registered under `commands`.
+1. **Pagsasaayos ng Manifest (`manifest.json`)**:
+   - **Mga Pahintulot (21 aytem)**: `tabs`, `tabGroups`, `storage`, `favicon`, `contextMenus`, `notifications`, `sidePanel`, `scripting`, `downloads`, `downloads.open`, `system.display`, `declarativeNetRequestWithHostAccess`, `cookies`, `history`, `sessions`, `bookmarks`, `readingList`, `clipboardWrite`, `alarms`, `offscreen`, at `idle`.
+   - **Mga Host Permission**: `["<all_urls>"]`.
+   - **Service Worker**: `src/core/background.js` gamit ang magkakasabay (synchronous) na `importScripts` modular loading.
+   - **Aksyon sa Toolbar**: Sadyang inalis ang `default_popup`. Ipinapatupad ng runtime ang `chrome.action.setPopup({ popup: '' })`, tinitiyak na ang `chrome.action.onClicked` ay mag-trigger nang synchronous at magbubukas ng `chrome.sidePanel` sa naka-pin na view ng user nang walang latency sa pagpapasimula ng popup.
+   - **Keyword ng Omnibox**: Nakarehistrong keyword na `"find"`.
+   - **Mga Command**: 24 na keyboard shortcut sa antas ng system na nakarehistro sa ilalim ng `commands`.
    - **Content Security Policy**: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`.
 
-2. **Inter-Process Communication Security**:
-   - `src/core/background/messaging.js` filters messages from content scripts against an explicit whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Unprivileged web frames cannot invoke internal storage writers, arbitrary Chrome APIs, or rule mutators.
+2. **Seguridad ng Inter-Process Communication**:
+   - Sinasala ng `src/core/background/messaging.js` ang mga mensahe mula sa mga content script laban sa isang tahasang whitelist (`ALLOWED_CONTENT_SCRIPT_ACTIONS`). Ang mga web frame na walang pribilehiyo ay hindi maaaring tumawag sa panloob na storage writers, arbitraryong Chrome APIs, o mga nagbabago ng panuntunan.
 
-3. **Dual Execution Worlds**:
-   - Content scripts operate across both `ISOLATED` (extension scope) and `MAIN` (page execution scope) worlds. Scripts like `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, and `youtubeShortsFeedHook.js` run in `MAIN` to intercept prototype methods, override property descriptors, and handle custom events directly.
+3. **Dalawahang Daigdig ng Pagpapatupad (Dual Execution Worlds)**:
+   - Gumagana ang mga content script sa parehong `ISOLATED` (saklaw ng extension) at `MAIN` (saklaw ng pagpapatupad ng pahina) na mga daigdig. Ang mga script tulad ng `allowRightClickHook.js`, `videoPipHook.js`, `youtubePreviewAudioHook.js`, at `youtubeShortsFeedHook.js` ay tumatakbo sa `MAIN` upang humarang sa mga pamamaraan ng prototype, i-override ang mga property descriptor, at direktang mangasiwa ng mga custom na event.
 
 ---
 
-## 2. Section 1: Rules Management (Gestionar Reglas)
+## 2. Seksyon 1: Pamamahala ng mga Panuntunan (Gestionar Reglas)
 
-The Rules Management subsystem automates tab grouping based on strict deterministic criteria defined by the user.
+Pinapagana nang awtomatiko ng subsystem ng Pamamahala ng mga Panuntunan ang pagpapangkat ng tab batay sa mahigpit at tiyak na pamantayan na tinukoy ng user.
 
 ### 2.1 Data Schema (`CustomRule`)
-Each custom rule adheres to the following interface:
+Ang bawat pasadyang panuntunan ay sumusunod sa sumusunod na interface:
 ```typescript
 interface CustomRule {
   name: string;        // 1 to 16 characters. Must contain no whitespace characters.
@@ -153,368 +153,368 @@ interface CustomRule {
 }
 ```
 
-### 2.2 Precedence Architecture
-When tabs are processed by `groupTabs()` in `src/core/background/groupManager.js`, tabs are evaluated against grouping layers in strict hierarchical order:
-1. **Custom Rules (`applyCustomRules`)**: Matches active custom rules in order of appearance or user priority. Once grouped, tab IDs are registered in `groupedTabIds` and excluded from subsequent layers.
-2. **Special System Groups**: System URLs are intercepted and clustered into dedicated colored groups:
-   - `chrome://` and internal browser pages
-   - `file:///` local disk files
-   - `chrome-extension://` extension pages
-   - IP Addresses & Localhost (`localhost`, `127.0.0.1`, `[::1]`, IPv4/IPv6 hosts)
-3. **Domain Clustering**: Tabs sharing the same root domain are grouped if the tab count meets or exceeds `domainThreshold` (default: 2 tabs).
-4. **Subdomain Clustering**: If enabled, tabs within domains are grouped by specific subdomains (e.g., `docs.github.com` vs `gist.github.com`).
-5. **Miscellaneous ("Misc") Group**: Residual unclustered tabs that do not meet grouping thresholds are placed into the `Misc` group (placement configurable: `start`, `end`, or alphabetical `alpha`).
+### 2.2 Arkitektura ng Precedence
+Kapag pinoproseso ang mga tab ng `groupTabs()` sa `src/core/background/groupManager.js`, sinusuri ang mga tab laban sa mga layer ng pagpapangkat sa mahigpit na pagkakasunod-sunod ng hirarkiya:
+1. **Mga Pasadyang Panuntunan (`applyCustomRules`)**: Tumutugma sa mga aktibong pasadyang panuntunan sa pagkakasunud-sunod ng hitsura o priyoridad ng user. Kapag naipangkat na, ang mga tab ID ay nirerehistro sa `groupedTabIds` at ibinubukod mula sa mga susunod na layer.
+2. **Mga Espesyal na Grupo ng System**: Ang mga URL ng system ay hinaharang at tinitipon sa nakalaang mga may-kulay na grupo:
+   - `chrome://` at mga panloob na pahina ng browser
+   - `file:///` mga lokal na file sa disk
+   - `chrome-extension://` mga pahina ng extension
+   - Mga IP Address at Localhost (`localhost`, `127.0.0.1`, `[::1]`, mga host ng IPv4/IPv6)
+3. **Clustering ng Domain**: Ang mga tab na nagbabahagi ng parehong root domain ay pinapangkat kung ang bilang ng tab ay umaabot o lumalampas sa `domainThreshold` (default: 2 tab).
+4. **Clustering ng Subdomain**: Kung pinagana, ang mga tab sa loob ng mga domain ay pinapangkat ayon sa mga partikular na subdomain (hal., `docs.github.com` laban sa `gist.github.com`).
+5. **Sari-saring ("Misc") Grupo**: Ang mga natitirang hindi na-cluster na tab na hindi nakakatugon sa mga threshold ng pagpapangkat ay inilalagay sa grupong `Misc` (ang pagkakalagay ay maaaring i-configure: `start`, `end`, o paalpabeto `alpha`).
 
-### 2.3 URL Normalization & Matching Semantics
-The matching engine (`matchesRule(tabUrl, ruleUrl)` in `src/core/background/utils.js`) applies rigorous normalization:
-- **Scheme Agnostic**: HTTP and HTTPS protocols are treated as interchangeable (`http://example.com` matches `https://example.com`). Non-web protocols (`file://`, `chrome://`) require exact scheme matches.
-- **Host Normalization**: Leading `www.` prefixes are stripped (`www.github.com` normalizes to `github.com`). Hostnames are lowercased and support internationalized domain names (IDNs) via punycode.
-- **Port Sensitivity**: If a rule specifies a port (e.g., `localhost:3000`), the tab must match that exact port.
-- **Path Matching**: Trailing slashes are stripped. If a rule specifies a path (e.g., `example.com/docs`), it matches tabs with that exact path OR subpaths (`example.com/docs/api`), but does not match sibling paths (`example.com/blog`).
-- **Query & Hash Matching**: If a rule explicitly contains a query string (`?page=1`) or hash (`#section`), the tab must match those parameters verbatim.
-- **Numeric Dword Protection (`ruleValidation.js`)**: The validator strictly rejects bare numeric inputs (e.g., `3242342424`) that WHATWG URL parsers treat as valid IPv4 integer DWORDs, preventing accidental grouping distortions.
+### 2.3 Pag-normalize ng URL at Semantika ng Pagtutugma
+Ang matching engine (`matchesRule(tabUrl, ruleUrl)` sa `src/core/background/utils.js`) ay nagpapatupad ng mahigpit na pag-normalize:
+- **Agnostiko sa Scheme**: Ang mga protocol ng HTTP at HTTPS ay itinuturing na mapagpapalit (`http://example.com` ay tumutugma sa `https://example.com`). Ang mga protocol na hindi web (`file://`, `chrome://`) ay nangangailangan ng eksaktong tugma ng scheme.
+- **Pag-normalize ng Host**: Inaalis ang mga unahang prefix na `www.` (ang `www.github.com` ay nagiging `github.com`). Ang mga hostname ay ginagawang lowercase at sumusuporta sa mga internationalized domain name (mga IDN) sa pamamagitan ng punycode.
+- **Sensitibo sa Port**: Kung ang isang panuntunan ay tumutukoy ng port (hal., `localhost:3000`), dapat tumugma ang tab sa eksaktong port na iyon.
+- **Pagtutugma ng Path**: Inaalis ang mga trailing slash. Kung ang isang panuntunan ay tumutukoy ng path (hal., `example.com/docs`), tumutugma ito sa mga tab na may eksaktong path na iyon O mga subpath (`example.com/docs/api`), ngunit hindi tumutugma sa mga katabing path (`example.com/blog`).
+- **Pagtutugma ng Query at Hash**: Kung ang isang panuntunan ay tahasang naglalaman ng query string (`?page=1`) o hash (`#section`), dapat tumugma ang tab sa mga parameter na iyon nang eksakto.
+- **Proteksyon sa Numeric Dword (`ruleValidation.js`)**: Mahigpit na tinatanggihan ng validator ang mga purong numerong input (hal., `3242342424`) na itinuturing ng mga WHATWG URL parser bilang mga wastong IPv4 integer DWORD, na pumipigil sa hindi sinasadyang pagbaluktot ng pagpapangkat.
 
-### 2.4 Rules Management Settings Breakdown
-The Rules Manager provides an exhaustive suite of behavioral controls and settings:
-- **Storage Routing Selection**: Users can route rule storage between `chrome.storage.sync` (for synchronized settings across all devices signed into the Google profile, subject to Chrome sync quotas of 100 KB total and 8 KB per item) and `chrome.storage.local` (for unlimited local capacity suitable for large rule sets containing hundreds of patterns).
-- **Clustering Master Toggle & Thresholds**:
-  - `toggle-clustering`: Master keyboard shortcut and UI toggle enabling or disabling automated domain/subdomain clustering without disabling user-created custom rules.
-  - `domainThreshold`: Minimum tab count required from the same domain to trigger an automatic tab group (default: 2 tabs). Configurable from 1 to 50.
-  - `subdomainThreshold`: Minimum tab count for subdomains before creating separated subgroup clusters.
-  - Subdomain toggle (`toggle-subdomain-grouping`): Distinguishes independent subdomains (e.g., `news.ycombinator.com` vs `ycombinator.com`).
-- **Auto-Sort Groups Alphabetically (`toggle-sort-alpha`)**: Real-time sorting engine enforcing alphabetical ordering across all open tab groups in the browser tab strip (`Ctrl+Shift+S` / `Cmd+Shift+S`).
-- **Visual Status Prefixes (`toggle-prefixes`)**: Emoji markers dynamically prepended to group titles to indicate inspection state:
-  - `🔒` (Lock): The group contains unvisited, unread tabs.
-  - `🔍` (Loupe): The group contains partially visited tabs.
-  - `🗝️` (Open Key): All tabs in the group have been opened and reviewed.
-  - `⚠️` (Warning): Duplicate group name collision detected with another window group.
-- **Auto-Collapse Idle Groups (`toggle-collapse-timer`)**: Automatically collapses groups when inactive to maintain a tidy tab strip.
-- **Master Pause Grouping (`feature_pauseGrouping`)**: Master freeze switch that temporarily suspends all automated grouping operations (both rule matches and heuristic clustering) during active research sessions where tabs should remain in arbitrary user arrangements.
-- **Single Tab Grouping (`featureSingleTabGrouping`)**: Allows custom rules to immediately create a tab group for a single matching tab, bypassing the multi-tab threshold requirement.
-- **Compact View (`toggle-compact-mode`)**: Minimizes tab header width in the browser tab strip by rendering only single-letter badges for group titles.
-- **Drag-and-Drop Priority**: Reordering rules in the `Rules.svelte` list instantly changes their evaluation precedence. Rules at the top evaluate first.
-- **Fuzzy Search**: Live filtering in the Rules Manager and Omnibar allowing instant location of rules by title or matching URL patterns.
-- **JSON Import / Export**:
-  - Mode `add`: Merges imported rules into the existing collection, discarding duplicates.
-  - Mode `overwrite`: Completely replaces the active rule collection with the imported payload after schema validation.
-- **Dynamic Rule Creation**: One-click creation of custom rules directly from Chrome bookmark folders or subgroup domain collections.
-- **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs or domains to existing custom rules, preventing rule inflation and redundant evaluations.
+### 2.4 Detalye ng mga Setting sa Pamamahala ng Panuntunan
+Ang Rules Manager ay nagbibigay ng komprehensibong hanay ng mga kontrol sa pag-uugali at mga setting:
+- **Pagpili ng Routing ng Imbakan**: Maaaring iruta ng mga user ang imbakan ng panuntunan sa pagitan ng `chrome.storage.sync` (para sa naka-synchronize na mga setting sa lahat ng device na naka-sign in sa profile ng Google, napapailalim sa mga quota ng Chrome sync na 100 KB sa kabuuan at 8 KB bawat aytem) at `chrome.storage.local` (para sa walang limitasyong lokal na kapasidad na angkop para sa malalaking hanay ng panuntunan na naglalaman ng daan-daang pattern).
+- **Pangunahing Switch ng Clustering at mga Threshold**:
+  - `toggle-clustering`: Pangunahing shortcut sa keyboard at switch sa UI na nagpapagana o nagdi-disable sa awtomatikong clustering ng domain/subdomain nang hindi pinapatay ang mga panuntunang ginawa ng user.
+  - `domainThreshold`: Minimum na bilang ng tab na kinakailangan mula sa parehong domain upang mag-trigger ng awtomatikong pangkat ng tab (default: 2 tab). Maaaring isaayos mula 1 hanggang 50.
+  - `subdomainThreshold`: Minimum na bilang ng tab para sa mga subdomain bago gumawa ng hiwalay na mga cluster ng subgroup.
+  - Switch ng Subdomain (`toggle-subdomain-grouping`): Nagbubukod sa mga independiyenteng subdomain (hal., `news.ycombinator.com` laban sa `ycombinator.com`).
+- **Awtomatikong Pag-uri-uri ng mga Grupo nang Paalpabeto (`toggle-sort-alpha`)**: Real-time na sorting engine na nagpapatupad ng paalpabetong pagkakasunod-sunod sa lahat ng bukas na pangkat ng tab sa tab strip ng browser (`Ctrl+Shift+S` / `Cmd+Shift+S`).
+- **Visual Status Prefixes (`toggle-prefixes`)**: Mga emoji marker na dinamikong inilalagay sa unahan ng mga pamagat ng grupo upang ipahiwatig ang katayuan ng pag-inspeksyon:
+  - `🔒` (Kandado): Naglalaman ang grupo ng mga hindi pa nabibisita at hindi pa nababasang tab.
+  - `🔍` (Lente): Naglalaman ang grupo ng mga bahagyang nabisitang tab.
+  - `🗝️` (Bukas na Susi): Ang lahat ng tab sa grupo ay nabuksan at nasuri na.
+  - `⚠️` (Babala): May natukoy na banggaan ng dobleng pangalan ng grupo sa ibang window group.
+- **Awtomatikong Pag-collapse ng mga Idle na Grupo (`toggle-collapse-timer`)**: Awtomatikong nagko-collapse ng mga grupo kapag hindi aktibo upang mapanatiling maayos ang tab strip.
+- **Pangunahing Pag-pause ng Pagpapangkat (`feature_pauseGrouping`)**: Pangunahing switch ng pag-freeze na pansamantalang sinuspinde ang lahat ng awtomatikong operasyon ng pagpapangkat (parehong pagtutugma ng panuntunan at heuristic clustering) sa mga aktibong sesyon ng pagsasaliksik kung saan ang mga tab ay dapat manatili sa sariling pagkakaayos ng user.
+- **Pagpapangkat ng Isang Tab (`featureSingleTabGrouping`)**: Nagbibigay-daan sa mga pasadyang panuntunan na agad na gumawa ng pangkat ng tab para sa isang tumutugmang tab, nilalampasan ang kinakailangang threshold ng maraming tab.
+- **Compact View (`toggle-compact-mode`)**: Pinaliit ang lapad ng header ng tab sa tab strip ng browser sa pamamagitan ng pag-render lamang ng mga single-letter badge para sa mga pamagat ng grupo.
+- **Priyoridad sa pamamagitan ng Drag-and-Drop**: Ang muling pagsasaayos ng mga panuntunan sa listahan ng `Rules.svelte` ay agad na nagbabago sa kanilang precedence ng pagsusuri. Ang mga panuntunan sa itaas ay unang sinusuri.
+- **Fuzzy Search**: Live na pag-filter sa Rules Manager at Omnibar na nagbibigay-daan sa agarang paghahanap ng mga panuntunan ayon sa pamagat o tumutugmang mga pattern ng URL.
+- **Pag-import / Pag-export ng JSON**:
+  - Mode `add`: Pinagsasama ang mga na-import na panuntunan sa kasalukuyang koleksyon, inaalis ang mga duplicate.
+  - Mode `overwrite`: Ganap na pinapalitan ang aktibong koleksyon ng panuntunan ng na-import na payload pagkatapos ng pagpapatunay ng schema.
+- **Dinamikong Paggawa ng Panuntunan**: Isang-click na paggawa ng mga pasadyang panuntunan nang direkta mula sa mga folder ng bookmark ng Chrome o mga koleksyon ng domain ng subgroup.
+- **Deduplication ng Panuntunan (`feature_v100_dedup_add_to_rule`)**: Awtomatikong inaalis ang mga duplicate na pattern ng URL kapag nagdaragdag ng mga URL o domain sa mga kasalukuyang pasadyang panuntunan, na pumipigil sa paglobo ng panuntunan at paulit-ulit na pagsusuri.
 
-### 2.5 Operations & Persistence (`mutateRulesAndSync`)
-- **Centralized Mutator**: All rule modifications route through `mutateRulesAndSync(mutateFn, sendResponse)` in `src/core/background/handlers/rules.js`. This guarantees storage synchronization, in-memory cache refreshment (`extensionSettings.customRules`), UI notification (`rulesUpdated`), and automatic tab regrouping (`groupTabs()`).
-- **Live Validation**: Real-time validation checks for name uniqueness, length (1-16 chars), character restrictions, and valid URL syntax before saving.
+### 2.5 Mga Operasyon at Persistence (`mutateRulesAndSync`)
+- **Sentralisadong Mutator**: Ang lahat ng pagbabago sa panuntunan ay dumadaan sa `mutateRulesAndSync(mutateFn, sendResponse)` sa `src/core/background/handlers/rules.js`. Tinitiyak nito ang pag-synchronize ng imbakan, pag-refresh ng in-memory cache (`extensionSettings.customRules`), abiso sa UI (`rulesUpdated`), at awtomatikong muling pagpapangkat ng tab (`groupTabs()`).
+- **Live na Pagpapatunay**: Ang real-time na pagpapatunay ay sumusuri sa pagiging natatangi ng pangalan, haba (1-16 na character), mga paghihigpit sa character, at wastong syntax ng URL bago i-save.
 
-### 2.6 Invocation Modalities
-- **Rules Manager Page (`Rules.svelte`)**: Accessible in full-tab view or side panel (`?view=rules` / `pg`). Provides full drag-and-drop reordering, inline color picker, URL tag chips, and rule toggles.
-- **Omnibar Commands**:
-  - `rl:` — Search rules and open associated URLs.
-  - `cr: <name> [, url1, url2]` — Create a new rule directly from the command bar.
-  - `atcr:` — Add the active tab's domain or URL to an existing rule.
-  - `atr:` — Add selected open tabs or manual URLs to an existing rule.
-  - `ccr:` — Change the color of a custom rule.
-  - `dr:` — Delete rules or individual URLs from a rule.
-  - `er:` — Edit or rename an existing rule.
-- **Context Menus**:
-  - Right-click page -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-  - Right-click page -> "Reglas" -> Toggle active state, open all rule URLs, or close matching tabs.
-- **Keyboard Shortcuts**:
-  - `Alt+R`: Open Rules Manager.
-  - `Alt+M`: Toggle activation of all rules simultaneously (`toggle-all-rules`).
+### 2.6 Mga Paraan ng Pagtawag (Invocation Modalities)
+- **Pahina ng Rules Manager (`Rules.svelte`)**: Maa-access sa full-tab view o side panel (`?view=rules` / `pg`). Nagbibigay ng kumpletong drag-and-drop na muling pagsasaayos, inline color picker, mga chip ng tag ng URL, at mga switch ng panuntunan.
+- **Mga Command ng Omnibar**:
+  - `rl:` — Maghanap ng mga panuntunan at buksan ang mga nauugnay na URL.
+  - `cr: <name> [, url1, url2]` — Direktang gumawa ng bagong panuntunan mula sa command bar.
+  - `atcr:` — Idagdag ang domain o URL ng aktibong tab sa isang umiiral na panuntunan.
+  - `atr:` — Idagdag ang mga napiling bukas na tab o manu-manong URL sa isang umiiral na panuntunan.
+  - `ccr:` — Baguhin ang kulay ng isang pasadyang panuntunan.
+  - `dr:` — Magbura ng mga panuntunan o indibidwal na URL mula sa isang panuntunan.
+  - `er:` — I-edit o palitan ang pangalan ng isang umiiral na panuntunan.
+- **Mga Context Menu**:
+  - Mag-right-click sa pahina -> "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Mag-right-click sa pahina -> "Añadir a Regla Existente" -> Piliin ang panuntunan -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+  - Mag-right-click sa pahina -> "Reglas" -> I-toggle ang aktibong estado, buksan ang lahat ng URL ng panuntunan, o isara ang mga tumutugmang tab.
+- **Mga Shortcut sa Keyboard**:
+  - `Alt+R`: Buksan ang Rules Manager.
+  - `Alt+M`: Sabay-sabay na i-toggle ang pagpapagana ng lahat ng panuntunan (`toggle-all-rules`).
 
 ---
 
-## 3. Section 2: Group Listing & Operations (Listar Grupos)
+## 3. Seksyon 2: Paglista ng Grupo at mga Operasyon (Listar Grupos)
 
-The Group Listing view provides an interactive workspace for inspecting, manipulating, and reordering browser tab groups and individual tabs.
+Ang view ng Paglista ng Grupo ay nagbibigay ng interactive na workspace para sa pag-inspeksyon, pagmamanipula, at muling pagsasaayos ng mga pangkat ng tab at indibidwal na mga tab sa browser.
 
-### 3.1 UI Architecture
-- **Component Stack**: Built with `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, and `TabActions.svelte`.
-- **Card Features**: Displays group title, color badge, tab count pill, collapse/expand accordion toggle, card pinning, and customizable action button groups.
-- **Tab Items**: Displays tab favicon with color fallback, title, audible sound badge, mute indicator, active state indicator, and per-tab actions (close, duplicate, pin, split, discard).
+### 3.1 Arkitektura ng UI
+- **Component Stack**: Binuo gamit ang `ListGroup.svelte`, `GroupCard.svelte`, `GroupActions.svelte`, `TabItem.svelte`, at `TabActions.svelte`.
+- **Mga Tampok ng Card**: Ipinapakita ang pamagat ng grupo, badge ng kulay, pill ng bilang ng tab, accordion toggle para sa pag-collapse/pag-expand, pag-pin ng card, at nako-customize na mga grupo ng button ng aksyon.
+- **Mga Aytem ng Tab**: Ipinapakita ang favicon ng tab na may fallback na kulay, pamagat, badge ng tunog, indicator ng mute, indicator ng aktibong estado, at bawat-tab na aksyon (isara, i-duplicate, i-pin, i-split, i-discard).
 
-### 3.2 Group Lifecycle & Behaviors
-- **Accordion Control**: Smooth expand and collapse states. Optional auto-accordion mode automatically collapses idle groups when a new group is expanded.
-- **Inactivity Auto-Collapse Idle Timer**:
-  - Automatically collapses idle tab groups to reduce visual clutter.
-  - Two distinct thresholds: Inactive groups collapse after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), while the active group collapses after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
-- **Inline Renaming & Grace Period**:
-  - Users can rename groups directly in the browser tab strip or UI.
-  - `GROUP_NAMING_GRACE_MS` (5000ms) pauses automatic regrouping while a user edits, preventing title overwrites mid-typing.
-  - Zero-width spaces (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) are stripped during evaluation.
-  - Renaming an automatically generated group converts it to a user-named group, updating the corresponding custom rule or marking it permanent.
-- **Visual Group Prefix Indicators**:
-  - Dynamically prepends status symbols: `🔒` (unvisited), `🔍` (partial), `🗝️` (all viewed), `⚠️` (collision).
-- **Drag-and-Drop Reordering**: Integrated with `sortable.js` for reordering tabs within groups, moving tabs between groups, or reordering group cards.
-- **Hidden Groups Feature**:
-  - Prefixes group title with `_hidden_` in the browser tab strip.
-  - Hides group cards from the main list view, transferring them to `HiddenGroupsBar.svelte`.
-  - Users can unhide or restore groups instantly with a single click.
+### 3.2 Lifecycle at mga Pag-uugali ng Grupo
+- **Kontrol ng Accordion**: Maayos na estado ng pag-expand at pag-collapse. Ang opsyonal na auto-accordion mode ay awtomatikong nagko-collapse ng mga idle na grupo kapag pinalawak ang isang bagong grupo.
+- **Auto-Collapse Idle Timer sa Kawalan ng Aktibidad**:
+  - Awtomatikong nagko-collapse ng mga hindi aktibong pangkat ng tab upang mabawasan ang visual na kalat.
+  - Dalawang magkaibang threshold: Ang mga hindi aktibong grupo ay nagko-collapse pagkatapos ng 1 minuto ng kawalan ng aktibidad (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`), habang ang aktibong grupo ay nagko-collapse pagkatapos ng 15 minuto ng kawalan ng aktibidad (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Nako-configure mula 0 hanggang 1440 minuto.
+- **Inline na Pagpapalit ng Pangalan at Grace Period**:
+  - Maaaring palitan ng mga user ang pangalan ng mga grupo nang direkta sa tab strip ng browser o sa UI.
+  - Ang `GROUP_NAMING_GRACE_MS` (5000ms) ay nagpo-pause ng awtomatikong muling pagpapangkat habang nag-e-edit ang user, na pumipigil sa pag-overwrite ng pamagat habang nagta-type.
+  - Ang mga zero-width space (`\u200B`, `\u200C`, `\u200D`, `\u2060`, `\uFEFF`) ay inaalis sa panahon ng pagsusuri.
+  - Ang pagpapalit ng pangalan sa isang awtomatikong binuong grupo ay nagko-convert dito sa isang grupong pinangalanan ng user, ina-update ang kaukulang pasadyang panuntunan o minamarkahan itong permanente.
+- **Mga Visual na Indicator ng Prefix ng Grupo**:
+  - Dinamikong naglalagay ng mga simbolo ng katayuan sa unahan: `🔒` (hindi pa nabibisita), `🔍` (bahagya), `🗝️` (lahat natingnan), `⚠️` (banggaan).
+- **Muling Pagsasaayos gamit ang Drag-and-Drop**: Pinagsama sa `sortable.js` para sa muling pagsasaayos ng mga tab sa loob ng mga grupo, paglilipat ng mga tab sa pagitan ng mga grupo, o muling pagsasaayos ng mga group card.
+- **Tampok na Hidden Groups**:
+  - Nilalagyan ng prefix na `_hidden_` ang pamagat ng grupo sa tab strip ng browser.
+  - Itinatago ang mga group card mula sa pangunahing view ng listahan, inililipat ang mga ito sa `HiddenGroupsBar.svelte`.
+  - Maaaring i-unhide o i-restore ng mga user ang mga grupo kaagad sa isang pag-click.
 
-### 3.3 Group Operations & Memory Management
-- **Ungroup**: Disbands the group, leaving tabs open in the window.
-- **Close Group**: Closes all tabs in the group and releases the group ID.
-- **Close Other Groups**: Closes all tab groups except the currently focused group.
-- **Regroup All Tabs (`Alt+Shift+R`)**: Executes a comprehensive re-evaluation pass across custom rules, system groups, and domain clusters.
-- **Group Screenshot Walk**: Sequentially cycles through and captures every tab in the group (`Cs` visible, `Cp` full page, `CP` full page parts).
+### 3.3 Mga Operasyon sa Grupo at Pamamahala ng Memory
+- **Ungroup**: Binubuwag ang grupo, iniiwang bukas ang mga tab sa window.
+- **Close Group**: Isinasara ang lahat ng tab sa grupo at pinalalaya ang group ID.
+- **Close Other Groups**: Isinasara ang lahat ng pangkat ng tab maliban sa kasalukuyang nakatutok na grupo.
+- **Regroup All Tabs (`Alt+Shift+R`)**: Nagsasagawa ng komprehensibong muling pagsusuri sa mga pasadyang panuntunan, mga grupo ng system, at mga cluster ng domain.
+- **Group Screenshot Walk**: Sunod-sunod na umiikot at kinukunan ang bawat tab sa grupo (`Cs` visible, `Cp` buong pahina, `CP` mga bahagi ng buong pahina).
 
-### 3.4 Group Backups & Restore Subsystem
+### 3.4 Subsystem ng Pag-backup at Pag-restore ng Grupo
 - **IndexedDB `backupsGroups` Store**:
-  - Backs up single tab groups or workspace-wide snapshots of all open groups into IndexedDB `Intelligent_Workspace` store `backupsGroups`.
-  - Captures complete group structures: group title, color, collapsed state, tab titles, URLs, favicons, pinned status, and relative tab positions.
-  - **Memory Conservation**: Backed-up tabs are cleanly closed to reclaim system RAM and reduce CPU overhead.
-  - **Restore Mechanisms**:
-    - Backups UI View in `ListGroup.svelte` with one-click group restoration.
-    - Keyboard shortcut `br` (restore) and `bg` (backup all).
-    - Omnibar command `bgr:` (search and restore backed-up groups) and `b:` (bookmark search).
-  - **JSON Export & Import**: Full JSON backup export and import for seamless migration between machines and long-term offline archiving.
+  - Nagba-back up ng mga solong pangkat ng tab o pangkalahatang snapshot ng workspace ng lahat ng bukas na grupo sa IndexedDB `Intelligent_Workspace` store na `backupsGroups`.
+  - Kinukuha ang kumpletong istruktura ng grupo: pamagat ng grupo, kulay, estado ng pagka-collapse, mga pamagat ng tab, mga URL, mga favicon, katayuan ng pagka-pin, at mga kaugnay na posisyon ng tab.
+  - **Pagtitipid sa Memory**: Ang mga na-back up na tab ay maayos na isinasara upang mabawi ang RAM ng system at mabawasan ang paggamit ng CPU.
+  - **Mga Mekanismo ng Pag-restore**:
+    - Backups UI View sa `ListGroup.svelte` na may isang-click na pagpapanumbalik ng grupo.
+    - Keyboard shortcut na `br` (i-restore) at `bg` (i-backup lahat).
+    - Omnibar command na `bgr:` (maghanap at mag-restore ng mga na-back up na grupo) at `b:` (paghahanap sa bookmark).
+  - **Pag-export at Pag-import ng JSON**: Buong pag-export at pag-import ng backup sa JSON para sa tuluy-tuloy na paglipat sa pagitan ng mga makina at pangmatagalang offline na pag-archive.
 
-### 3.5 Parked YouTube Player in Hidden Groups Bar
-- **Architecture (`HiddenGroupsBar.svelte`)**:
-  - When a user navigates away from an active YouTube video view or launches video content inside the side panel, the player is not closed or lost. It is automatically docked in `HiddenGroupsBar.svelte` as a parked YouTube indicator (`.youtube-indicator`).
-  - Managed reactively via the `hiddenYoutubeView` store in `src/ui/stores/appStore.svelte.js`.
-  - **One-Click Actions**:
-    - Clicking the parked indicator invokes `restoreYoutubeView()`, returning the player immediately to the active workspace view.
-    - Clicking the delete badge invokes `discardYoutubeView()`, cleanly terminating playback and reclaiming resources.
-  - Sits seamlessly alongside hidden tab groups at the top of the ListGroup view without cluttering active tab lists.
+### 3.5 Naka-park na YouTube Player sa Hidden Groups Bar
+- **Arkitektura (`HiddenGroupsBar.svelte`)**:
+  - Kapag lumipat ang isang user palayo sa isang aktibong view ng video sa YouTube o naglunsad ng video content sa loob ng side panel, ang player ay hindi isinasara o nawawala. Awtomatiko itong idinadaong sa `HiddenGroupsBar.svelte` bilang isang naka-park na YouTube indicator (`.youtube-indicator`).
+  - Pinamamahalaan nang reactive sa pamamagitan ng `hiddenYoutubeView` store sa `src/ui/stores/appStore.svelte.js`.
+  - **Mga Aksyon sa Isang Click**:
+    - Ang pag-click sa naka-park na indicator ay tumatawag sa `restoreYoutubeView()`, agad na ibinabalik ang player sa aktibong workspace view.
+    - Ang pag-click sa delete badge ay tumatawag sa `discardYoutubeView()`, maayos na tinatapos ang pag-playback at binabawi ang mga resource.
+  - Walang putol na nakalagay sa tabi ng mga nakatagong pangkat ng tab sa tuktok ng ListGroup view nang hindi pinagugulo ang mga aktibong listahan ng tab.
 
 ---
 
-## 4. Section 3: Navigation & Tab Management (Navegación)
+## 4. Seksyon 3: Pag-navigate at Pamamahala ng Tab (Navegación)
 
-Accelerated keyboard navigation and workspace controls allow seamless multi-tab control without mouse interaction.
+Ang pinabilis na pag-navigate sa keyboard at mga kontrol sa workspace ay nagbibigay-daan sa maayos na pagkontrol ng maraming tab nang hindi gumagamit ng mouse.
 
-### 4.1 Fast Tab Jump Gesture
-- **Gesture Syntax**: `Alt + [groupPrefix] + [tabIndex] + Enter`
-- **Execution**:
-  - Hold `Alt` and type the group's name or prefix letters, followed by the desired 1-based tab index, then press `Enter`.
-  - Example: `Alt + git + 2 + Enter` jumps directly to the second tab in the "GitHub" group.
-  - Index `0` acts as a shortcut for the *last* tab in the group.
-  - Omitting the index jumps to the *first* tab in the group.
-  - Accents are automatically folded (`deaccent`) and matching normalizes diacritics.
+### 4.1 Kumpas ng Mabilisang Paglipat ng Tab (Fast Tab Jump)
+- **Syntax ng Kumpas**: `Alt + [groupPrefix] + [tabIndex] + Enter`
+- **Pagpapatupad**:
+  - Pindutin nang matagal ang `Alt` at i-type ang pangalan o mga titik ng prefix ng grupo, na sinusundan ng nais na 1-based na index ng tab, pagkatapos ay pindutin ang `Enter`.
+  - Halimbawa: Ang `Alt + git + 2 + Enter` ay direktang lilipat sa pangalawang tab sa grupong "GitHub".
+  - Ang index na `0` ay nagsisilbing shortcut para sa *huling* tab sa grupo.
+  - Ang pag-alis sa index ay lilipat sa *unang* tab sa grupo.
+  - Ang mga accent ay awtomatikong inaayos (`deaccent`) at ang pagtutugma ay nagno-normalize ng mga diacritic.
 
-### 4.2 Stepping, Swapping & Lifecycle Keys
-- `s`: Instantly swap to the previously active tab (`previousActiveTabId`).
-- `h` / `l`: Step to the previous / next tab (or scroll horizontally if the page allows).
-- `H` / `L`: Navigate back / forward in browser history.
-- `t`: Open a new blank tab.
-- `x`: Close the current active tab.
-- `yt`: Duplicate the current tab.
-- `r` / `R`: Reload page / Force reload bypassing cache.
-- `d` / `u`: Scroll to bottom / top of page.
-- `j` / `k`: Smooth scroll down / up (75px step).
-- `f`: Activate Vim link hints (letters appear over clickable elements to click).
-- `cf`: Activate Vim link hints to copy target URL to clipboard.
+### 4.2 Pag-usad, Pagpapalit, at mga Pindutan ng Lifecycle
+- `s`: Agad na lumipat sa dating aktibong tab (`previousActiveTabId`).
+- `h` / `l`: Umusad sa nakaraan / susunod na tab (o mag-scroll nang pahalang kung pinapayagan ng pahina).
+- `H` / `L`: Mag-navigate pabalik / pasulong sa kasaysayan ng browser.
+- `t`: Magbukas ng bagong blangkong tab.
+- `x`: Isara ang kasalukuyang aktibong tab.
+- `yt`: I-duplicate ang kasalukuyang tab.
+- `r` / `R`: I-reload ang pahina / Piliting i-reload nang nilalampasan ang cache.
+- `d` / `u`: Mag-scroll sa pinakaibaba / pinakataas ng pahina.
+- `j` / `k`: Maayos na mag-scroll pababa / pataas (hakbang na 75px).
+- `f`: Isaaktibo ang mga Vim link hint (lumilitaw ang mga titik sa ibabaw ng mga naki-click na elemento upang ma-click).
+- `cf`: Isaaktibo ang mga Vim link hint upang kopyahin ang target na URL sa clipboard.
 
-### Para sa mga power user (For power users)
+### Para sa mga advanced na user
 
-Maaaring ilagay ng mga mas advanced na user ang browser sa full-screen mode at mag-navigate nang buo gamit ang keyboard, nang hindi gumagamit ng mouse.
+Maaaring ilagay ng mga mas bihasang user ang browser sa full-screen mode at mag-navigate nang buo gamit ang keyboard, nang hindi gumagamit ng mouse.
 
-#### Full-Screen Immersion & Mouse-Free Browsing
-- **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.
+#### Full-Screen Immersion at Pagba-browse nang Walang Mouse
+- **I-toggle ang Full-Screen**: Pindutin ang `F11` (Windows/Linux) o `Command+Control+F` (macOS). Ang chrome ng browser, address bar, tab strip, at mga panel ng operating system ay itatago, na naglalaan ng 100% ng display sa nilalaman.
 - **In-Page Vim Link Navigation (`f` / `cf`)**:
-  - Press `f` to generate high-contrast two-character yellow link hints over every clickable element, button, input, and link in the DOM.
-  - Type the two letters matching your target to simulate a direct click without mouse interaction.
-  - Press `cf` to trigger hint badges that copy the target link's URL directly to your system clipboard.
-  - Press `vp` to open an in-page preview modal of the target link.
-  - Press `Esc` at any time to cancel link hints and return to normal scrolling.
-- **Instant Tab Jumping & Switching**:
-  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Execute the Fast Tab Jump gesture (e.g., `Alt + dev + 1 + Enter` jumps directly to the first tab in the "Dev" group; index `0` selects the last tab in the group).
-  - `s`: Instantly swap between the current tab and the previously active tab (`previousActiveTabId`).
-  - `h` / `l`: Step sequentially to the previous / next tab in the tab strip.
-  - `H` / `L`: Move backward / forward through browser navigation history.
-  - `t` / `x` / `yt`: Open a new tab (`t`), close current tab (`x`), or duplicate tab (`yt`).
+  - Pindutin ang `f` upang bumuo ng high-contrast na dalawang-titik na dilaw na link hint sa ibabaw ng bawat naki-click na elemento, button, input, at link sa DOM.
+  - I-type ang dalawang titik na tumutugma sa iyong target upang gayahin ang direktang pag-click nang walang interaksyon ng mouse.
+  - Pindutin ang `cf` upang i-trigger ang mga hint badge na kumukopya sa URL ng target na link nang direkta sa clipboard ng iyong system.
+  - Pindutin ang `vp` upang magbukas ng in-page preview modal ng target na link.
+  - Pindutin ang `Esc` anumang oras upang kanselahin ang mga link hint at bumalik sa normal na pag-scroll.
+- **Mabilisang Paglipat at Pagpalit ng Tab**:
+  - `Alt + [groupPrefix] + [tabIndex] + Enter`: Isagawa ang kumpas ng Mabilisang Paglipat ng Tab (hal., ang `Alt + dev + 1 + Enter` ay direktang lilipat sa unang tab sa grupong "Dev"; ang index na `0` ay pipili sa huling tab sa grupo).
+  - `s`: Agad na magpalit sa pagitan ng kasalukuyang tab at ng dating aktibong tab (`previousActiveTabId`).
+  - `h` / `l`: Sunod-sunod na humakbang sa nakaraan / susunod na tab sa tab strip.
+  - `H` / `L`: Gumalaw pabalik / pasulong sa kasaysayan ng pag-navigate sa browser.
+  - `t` / `x` / `yt`: Magbukas ng bagong tab (`t`), isara ang kasalukuyang tab (`x`), o i-duplicate ang tab (`yt`).
 - **Floating Omnibar Command Subsystem (`o`)**:
-  - Press `o` on any page to summon the centered Omnibar overlay.
-  - Press `@` to display the interactive directory of all 41 command prefixes.
-  - Type `f: <query>` to execute deep full-text tab search across all open windows.
-  - Type `sp:` to route navigation directly into any Sidepanel view (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
-  - Type `qai: <query>` or `qaia: <task>` to query Gemini or instruct the autonomous browser agent without lifting hands from the keyboard.
-  - Type `ts:` to split open tabs into side-by-side split screen.
-- **In-Page Navigation & Focus**:
-  - `j` / `k`: Smooth scroll down / up (75px increment).
-  - `d` / `u`: Half-page scroll down / up.
-  - `i`: Jump cursor focus immediately into the primary text input field on the page.
-  - `ESC`: Unfocus inputs and return keyboard focus to navigation mode.
+  - Pindutin ang `o` sa anumang pahina upang ilabas ang nakagitnang overlay ng Omnibar.
+  - Pindutin ang `@` upang ipakita ang interactive na direktoryo ng lahat ng 41 command prefix.
+  - I-type ang `f: <query>` upang magsagawa ng malalimang full-text na paghahanap ng tab sa lahat ng bukas na window.
+  - I-type ang `sp:` upang direktang iruta ang pag-navigate sa anumang view ng Sidepanel (`rules`, `listgroup`, `notes`, `gallery`, `gemini`, `activity`, `themes`, `hints`, `downloads`).
+  - I-type ang `qai: <query>` o `qaia: <task>` upang mag-query sa Gemini o mag-utos sa autonomous browser agent nang hindi inaalis ang mga kamay sa keyboard.
+  - I-type ang `ts:` upang paghiwalayin ang mga bukas na tab sa magkatabing split screen.
+- **In-Page Navigation at Focus**:
+  - `j` / `k`: Maayos na mag-scroll pababa / pataas (dagdag na 75px).
+  - `d` / `u`: Kalahating pahinang pag-scroll pababa / pataas.
+  - `i`: Agad na ilipat ang focus ng cursor sa pangunahing text input field sa pahina.
+  - `ESC`: Alisin ang focus sa mga input at ibalik ang focus ng keyboard sa navigation mode.
 
-### 4.3 Audio & Sound Management
-- Tabs playing audio display a speaker badge in the ListGroup UI.
-- `st`: Toggle mute on the current active tab.
-- `so`: Mute all audible tabs across the entire browser.
+### 4.3 Pamamahala ng Audio at Tunog
+- Ang mga tab na nagpe-play ng audio ay nagpapakita ng speaker badge sa ListGroup UI.
+- `st`: I-toggle ang mute sa kasalukuyang aktibong tab.
+- `so`: I-mute ang lahat ng tab na may tunog sa buong browser.
 - Context menu: "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas".
 
-### 4.4 Split Screen Workflows
-- **Trigger**: Vim hint `ts` or Omnibar prefix `ts:`.
-- **Behavior**: Uses `chrome.system.display` to calculate screen geometry. Splits two tabs side-by-side into adjacent windows, grouping them under a dedicated `Split` tab group.
-- **Restoration**: Closing the split window or toggling split screen restores original window dimensions and coordinates.
+### 4.4 Mga Daloy ng Trabaho sa Split Screen
+- **Trigger**: Vim hint na `ts` o Omnibar prefix na `ts:`.
+- **Pag-uugali**: Gumagamit ng `chrome.system.display` upang kalkulahin ang geometry ng screen. Hinahati ang dalawang tab nang magkatabi sa mga magkatabing window, pinapangkat ang mga ito sa ilalim ng isang nakalaang `Split` tab group.
+- **Pagpapanumbalik**: Ang pagsasara sa split window o pag-toggle sa split screen ay nagpapanumbalik sa orihinal na mga sukat at coordinate ng window.
 
-### 4.5 YouTube Looping Subsystem
-The YouTube looping subsystem provides precision media looping controls integrated directly into the YouTube player:
-- **Desktop Player Button (`#itg-yt-loop-button`)**: Injected into the standard YouTube player control bar (`.ytp-right-controls`), positioned to the left of the Cast / Remote button or PiP launcher. Features animated SVG looping glyphs, toggle highlight styling (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), and `aria-pressed` states.
-- **Shorts Player Button (`#itg-yt-shorts-loop-button`)**: Injected inside `#itg-yt-shorts-loop-wrapper` into the YouTube Shorts right-side control column (`ytd-shorts`), providing one-click looping for vertical video content.
-- **Loop Menu & PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Hovering or clicking the loop button opens the comprehensive loop settings menu:
-  - **A-B Looping**: Users can set custom start point (A) and end point (B) down to millisecond precision with interactive range sliders and manual time fields.
-  - **Cycle Mode & Sequence Repetitions**: Set repetition count for specific loops or toggle infinite loop mode (`itg-loop-seq-inf`).
-  - **Loop List & Multi-Segment Sequences**: Queue multiple A-B loop intervals that play consecutively according to configured repetitions.
-  - **Status & Duration Display**: Shows real-time playback position within current loop interval and total media duration (`00:00 / 00:00`).
-  - **Master Toggle (`youtubeLoopEnabled`)**: Persisted in `chrome.storage.sync` and `local`, allowing users to enable or disable the loop buttons across YouTube and YouTube Shorts via the Customize Hints settings page (`YoutubeLoopSection.svelte`).
+### 4.5 Subsystem ng Pag-loop sa YouTube
+Ang subsystem ng pag-loop sa YouTube ay nagbibigay ng mga kontrol sa pag-loop ng media na may mataas na katumpakan na direktang isinama sa player ng YouTube:
+- **Button sa Desktop Player (`#itg-yt-loop-button`)**: Iniksyon sa karaniwang control bar ng player ng YouTube (`.ytp-right-controls`), nakaposisyon sa kaliwa ng button ng Cast / Remote o PiP launcher. Nagtatampok ng mga animated na SVG looping glyph, styling sa pag-highlight ng toggle (`ytp-loop-active`, `var(--interactive-color, #ff4444)`), at mga estado ng `aria-pressed`.
+- **Button sa Shorts Player (`#itg-yt-shorts-loop-button`)**: Iniksyon sa loob ng `#itg-yt-shorts-loop-wrapper` sa column ng kontrol sa kanang bahagi ng YouTube Shorts (`ytd-shorts`), na nagbibigay ng isang-click na pag-loop para sa vertical video content.
+- **Menu ng Loop at PiP Popup (`#itg-yt-loop-menu` & `#itg-pip-loop-popup`)**: Ang pag-hover o pag-click sa button ng loop ay nagbubukas ng komprehensibong menu ng mga setting ng loop:
+  - **A-B Looping**: Maaaring magtakda ang mga user ng pasadyang simula (A) at dulo (B) hanggang sa katumpakan ng millisecond gamit ang mga interactive na range slider at manu-manong field ng oras.
+  - **Cycle Mode at mga Pag-uulit ng Sequence**: Magtakda ng bilang ng pag-uulit para sa mga partikular na loop o i-toggle ang infinite loop mode (`itg-loop-seq-inf`).
+  - **Listahan ng Loop at Multi-Segment Sequences**: Magpila ng maraming agwat ng A-B loop na sunod-sunod na magpe-play ayon sa isinaayos na mga pag-uulit.
+  - **Display ng Katayuan at Tagal**: Nagpapakita ng real-time na posisyon ng playback sa loob ng kasalukuyang agwat ng loop at kabuuang tagal ng media (`00:00 / 00:00`).
+  - **Pangunahing Toggle (`youtubeLoopEnabled`)**: Naka-persist sa `chrome.storage.sync` at `local`, na nagpapahintulot sa mga user na paganahin o i-disable ang mga button ng loop sa buong YouTube at YouTube Shorts sa pamamagitan ng pahina ng mga setting ng Customize Hints (`YoutubeLoopSection.svelte`).
 
-### 4.6 YouTube Shorts Preview Audio
-- **Audio Unmute Hook (`youtubePreviewAudioHook.js`)**:
-  - Runs in the `MAIN` execution world to access the `#inline-preview-player` property on `ytd-video-preview` elements.
-  - **Overcoming Forced Mute**: YouTube enforces a forced mute on Shorts previews by clearing audio controls and restoring `muted = true` via internal `volumechange` listeners.
-  - The extension hooks `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover. It drops YouTube's forced re-mute while allowing user unmuting, ensuring sound plays continuously without being interrupted across loop restarts until mouse leave.
+### 4.6 Audio ng Preview sa YouTube Shorts
+- **Hook para sa Pag-unmute ng Audio (`youtubePreviewAudioHook.js`)**:
+  - Tumatakbo sa `MAIN` execution world upang ma-access ang `#inline-preview-player` property sa mga elementong `ytd-video-preview`.
+  - **Pagtagumpay sa Sapilitang Mute**: Nagpapatupad ang YouTube ng sapilitang pag-mute sa mga preview ng Shorts sa pamamagitan ng pag-alis ng mga kontrol sa audio at pagpapanumbalik ng `muted = true` sa pamamagitan ng panloob na mga `volumechange` listener.
+  - Sinasabit ng extension ang `HTMLMediaElement.prototype.muted` property descriptor sa target na elementong `<video>` kapag nag-hover. Ibinabagsak nito ang sapilitang muling pag-mute ng YouTube habang pinapayagan ang pag-unmute ng user, na tinitiyak na ang tunog ay patuloy na tutugtog nang hindi naaabala sa mga pag-restart ng loop hanggang sa umalis ang mouse.
 
-### 4.7 Picture-in-Picture (PiP) Architecture
+### 4.7 Arkitektura ng Picture-in-Picture (PiP)
 - **Document Picture-in-Picture (`wp`)**:
-  - Leverages the modern `documentPictureInPicture` API to open an entire webpage or text snippet inside an always-on-top floating window.
-  - Automatically synchronizes video playback timestamps when transferring media.
-  - Features retry logic (`itgRetryIfPipFrameRefused`) and cleans up DNR iframe headers upon close.
+  - Ginagamit ang modernong `documentPictureInPicture` API upang magbukas ng isang buong webpage o text snippet sa loob ng isang laging-nasa-itaas na lumulutang na window.
+  - Awtomatikong sini-synchronize ang mga timestamp ng pag-playback ng video kapag naglilipat ng media.
+  - Nagtatampok ng lohika ng muling pagsubok (`itgRetryIfPipFrameRefused`) at nililinis ang mga header ng iframe ng DNR sa pagsasara.
 - **Video Picture-in-Picture (`wv`)**:
-  - Hooks `HTMLVideoElement.prototype.requestPictureInPicture` via `videoPipHook.js`.
-  - Redirects video players into custom PiP frames with loop controls and playback speed selectors.
+  - Sinasabit ang `HTMLVideoElement.prototype.requestPictureInPicture` sa pamamagitan ng `videoPipHook.js`.
+  - Inililipat ang mga video player sa mga pasadyang PiP frame na may mga kontrol sa loop at mga selector ng bilis ng playback.
 - **Auto-PiP**:
-  - `as`: Toggle Auto-PiP on scroll (launches video in PiP when scrolled out of viewport).
-  - `ah`: Toggle Auto-PiP on tab hide (launches video in PiP when switching to another tab).
+  - `as`: I-toggle ang Auto-PiP sa pag-scroll (inilulunsad ang video sa PiP kapag na-scroll palabas ng viewport).
+  - `ah`: I-toggle ang Auto-PiP sa pagtago ng tab (inilulunsad ang video sa PiP kapag lumilipat sa ibang tab).
 
-### 4.8 Page Reading Modes & Visual Overlays
-- **CSS Filter Themes**: Injects non-destructive styles into web pages:
-  - `mb` / `mB`: Black (Dark High-Contrast) — tab scope / global scope.
-  - `ms` / `mS`: Sepia (Warm Paper) — tab scope / global scope.
-  - `mp` / `mP`: Paper (Monochrome Grayscale) — tab scope / global scope.
-  - `ml` / `mL`: Light (Soft White) — tab scope / global scope.
-  - `me` / `mE`: Custom user-defined CSS filter — tab scope / global scope.
-  - `ESC`: Immediately removes active page filter.
-- **Reader Mode & TTS Read Aloud**:
-  - `fetchContentForReaderView`: Extracts clean article content, removing advertisements, sidebars, and navigation noise.
-  - Built-in Text-to-Speech (TTS) engine reading text aloud sentence by sentence.
-  - Keyboard navigation controls: `zp` (play/pause), `zn` (next sentence), `zb` (previous sentence), `zq` (close reader overlay).
+### 4.8 Mga Reading Mode ng Pahina at Visual Overlay
+- **Mga Tema ng Filter ng CSS**: Naglalagay ng mga hindi nakakasirang istilo sa mga webpage:
+  - `mb` / `mB`: Black (Dark High-Contrast) — saklaw ng tab / pandaigdigang saklaw.
+  - `ms` / `mS`: Sepia (Warm Paper) — saklaw ng tab / pandaigdigang saklaw.
+  - `mp` / `mP`: Paper (Monochrome Grayscale) — saklaw ng tab / pandaigdigang saklaw.
+  - `ml` / `mL`: Light (Soft White) — saklaw ng tab / pandaigdigang saklaw.
+  - `me` / `mE`: Pasadyang filter ng CSS na tinukoy ng user — saklaw ng tab / pandaigdigang saklaw.
+  - `ESC`: Agad na inaalis ang aktibong filter ng pahina.
+- **Reader Mode at TTS Read Aloud**:
+  - `fetchContentForReaderView`: Kinukuha ang malinis na nilalaman ng artikulo, inaalis ang mga patalastas, mga sidebar, at ingay sa pag-navigate.
+  - Built-in na Text-to-Speech (TTS) engine na nagbabasa ng teksto nang malakas bawat pangungusap.
+  - Mga kontrol sa pag-navigate sa keyboard: `zp` (i-play/i-pause), `zn` (susunod na pangungusap), `zb` (nakaraang pangungusap), `zq` (isara ang reader overlay).
 
-### 4.9 Text Snippets Subsystem with Template Variables
-The Text Snippets subsystem (`SnippetManager` in `src/utils/hint/snippets.js` and `src/utils/snippet-panel.js`) accelerates typing by expanding text shortcuts in any input, textarea, or rich editor:
-- **Trigger Modalities**: Type shortcut followed by Space, or type `$$` to summon the interactive snippets search popup.
-- **Clipboard API Integration**: Supports formatted HTML and plain text insertion via the Clipboard API, ensuring 100% compatibility with complex editors like Google Docs, Notion, and Slack.
-- **Template Variables**: Dynamically resolves variables at the moment of expansion:
-  - `{{date}}` / `date`: Formatted locale date (`toLocaleDateString`).
-  - `{{isodate}}` / `isodate`: ISO 8601 date (`YYYY-MM-DD`).
-  - `{{longdate}}` / `longdate`: Long date with weekday, day, month, and year.
-  - `{{time}}` / `time`: 2-digit formatted time (`HH:MM`).
-  - `{{datetime}}` / `datetime`: Date and time combined.
-  - `{{weekday}}` / `weekday`: Full day name (e.g., Monday).
-  - `{{day}}` / `day`: Day of month (1-31).
-  - `{{month}}` / `month`: Full month name (e.g., October).
-  - `{{year}}` / `year`: Full 4-digit year.
-  - `{{tomorrow}}` / `tomorrow`: Next day's date (+1 day).
-  - `{{yesterday}}` / `yesterday`: Previous day's date (-1 day).
-  - `{{nextweek}}` / `nextweek`: Date 7 days ahead (+7 days).
+### 4.9 Subsystem ng Text Snippets na may mga Template Variable
+Ang subsystem ng Text Snippets (`SnippetManager` sa `src/utils/hint/snippets.js` at `src/utils/snippet-panel.js`) ay nagpapabilis sa pagta-type sa pamamagitan ng pagpapalawak ng mga shortcut ng teksto sa anumang input, textarea, o rich editor:
+- **Mga Paraan ng Pag-trigger**: I-type ang shortcut na sinusundan ng Space, o i-type ang `$$` upang ilabas ang interactive na popup sa paghahanap ng mga snippet.
+- **Pagsasama sa Clipboard API**: Sumusuporta sa naka-format na HTML at paglalagay ng plain text sa pamamagitan ng Clipboard API, na tinitiyak ang 100% pagiging tugma sa mga kumplikadong editor tulad ng Google Docs, Notion, at Slack.
+- **Mga Variable ng Template**: Dinamikong nireresolba ang mga variable sa sandali ng pagpapalawak:
+  - `{{date}}` / `date`: Naka-format na petsa ng lokalidad (`toLocaleDateString`).
+  - `{{isodate}}` / `isodate`: Petsa ng ISO 8601 (`YYYY-MM-DD`).
+  - `{{longdate}}` / `longdate`: Mahabang petsa na may araw ng linggo, araw, buwan, at taon.
+  - `{{time}}` / `time`: 2-digit na naka-format na oras (`HH:MM`).
+  - `{{datetime}}` / `datetime`: Pinagsamang petsa at oras.
+  - `{{weekday}}` / `weekday`: Buong pangalan ng araw (hal., Lunes).
+  - `{{day}}` / `day`: Araw ng buwan (1-31).
+  - `{{month}}` / `month`: Buong pangalan ng buwan (hal., Oktubre).
+  - `{{year}}` / `year`: Buong 4-digit na taon.
+  - `{{tomorrow}}` / `tomorrow`: Petsa sa susunod na araw (+1 araw).
+  - `{{yesterday}}` / `yesterday`: Petsa sa nakaraang araw (-1 araw).
+  - `{{nextweek}}` / `nextweek`: Petsa 7 araw mula ngayon (+7 araw).
   - `{{timestamp}}` / `timestamp`: Epoch millisecond timestamp (`Date.now()`).
-  - `{{url}}` / `url`: Active webpage URL (`window.location.href`).
-  - `{{domain}}` / `domain`: Active domain hostname (`window.location.hostname`).
-  - `{{pagetitle}}` / `pagetitle`: Active document title (`document.title`).
-  - `{{uuid}}` / `uuid`: Cryptographically secure unique identifier (`crypto.randomUUID()`).
-  - `{{random}}` / `random`: Random integer between 1 and 1000.
-  - `{{clipboard}}` / `clipboard`: System clipboard buffer text.
+  - `{{url}}` / `url`: URL ng aktibong webpage (`window.location.href`).
+  - `{{domain}}` / `domain`: Aktibong domain hostname (`window.location.hostname`).
+  - `{{pagetitle}}` / `pagetitle`: Pamagat ng aktibong dokumento (`document.title`).
+  - `{{uuid}}` / `uuid`: Cryptographically secure na natatanging identifier (`crypto.randomUUID()`).
+  - `{{random}}` / `random`: Random na integer sa pagitan ng 1 at 1000.
+  - `{{clipboard}}` / `clipboard`: Teksto sa clipboard buffer ng system.
 
-### 4.10 Embedded Productivity Tools
+### 4.10 Mga Naka-embed na Tool sa Produktibidad
 - **Allow Right Click Hook (`allowRightClickHook.js`)**:
-  - Injected into the `MAIN` execution world to neutralize hostile web scripts that disable right-click context menus, copy, cut, or text selection.
-  - Intercepts `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-  - Clears inline `oncontextmenu="return false"` handlers via a persistent `MutationObserver`.
-  - Verifies clipboard payloads to prevent breaking legitimate web editors (Google Docs, Telegram Web).
-- **Cookie Editor**: In-page modal inspecting, editing, creating, and deleting HTTP and HTTPS cookies for the active domain.
-- **QR Code Generator**: Generates SVG/Canvas QR codes for the active tab URL for rapid mobile handover.
-- **Clean PDF Print Export**: Routes target pages through `print.html` with headers, ads, and navigational noise stripped for clean document archiving.
+  - Iniksyon sa `MAIN` execution world upang i-neutralize ang mga mapanirang web script na nagdi-disable sa mga right-click context menu, pagkopya, pag-cut, o pagpili ng teksto.
+  - Humaharang sa `preventDefault()` at `stopPropagation()` sa `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, at `mouseup`.
+  - Nililinis ang mga inline na handler na `oncontextmenu="return false"` sa pamamagitan ng isang persistent na `MutationObserver`.
+  - Sinusuri ang mga payload ng clipboard upang maiwasan ang pagkasira ng mga lehitimong web editor (Google Docs, Telegram Web).
+- **Editor ng Cookie**: In-page modal na nag-iinspeksyon, nag-e-edit, gumagawa, at nagtatanggal ng mga HTTP at HTTPS cookie para sa aktibong domain.
+- **Tagabuo ng QR Code**: Bumubuo ng SVG/Canvas QR code para sa URL ng aktibong tab para sa mabilisang paglipat sa mobile.
+- **Malinis na Pag-export sa PDF Print**: Niruruta ang mga target na pahina sa pamamagitan ng `print.html` nang inalis ang mga header, patalastas, at ingay sa pag-navigate para sa malinis na pag-archive ng dokumento.
 
-### 4.11 Comprehensive 3-Tier Duplicate Removal & Intelligent Discarding
-- **Comprehensive 3-Tier Duplicate Removal**:
-  1. **Tab Deduplication (`removeDuplicateTabsCommand`)**: Scans open tabs across windows or focused groups, identifies duplicate URLs, exempts `Split` screen tabs, and closes redundant tabs while keeping the active or oldest tab. Displays a desktop summary notification.
-  2. **Bookmark Deduplication**: Deep scans Chrome bookmark trees, locates identical URL duplicates across folders, and provides batch consolidation to keep bookmarks clean.
-  3. **Rule Deduplication (`feature_v100_dedup_add_to_rule`)**: Automatically strips duplicate URL patterns when adding URLs to existing custom grouping rules, preventing rule inflation.
-- **Intelligent Memory Discarding (`suspendInactiveTabsIntelligently`)**:
-  - Evaluated every 1 minute via alarm `itg-periodic-tasks`.
-  - Discards tabs inactive >= `discardingTimeMinutes` (default: 60 minutes).
-  - Built-in immunity protections: Never discards active tabs, audible tabs playing audio, pinned tabs, or already suspended tabs.
+### 4.11 Komprehensibong 3-Tier na Pagtanggal ng Duplicate at Matalinong Pag-discard
+- **Komprehensibong 3-Tier na Pagtanggal ng Duplicate**:
+  1. **Deduplication ng Tab (`removeDuplicateTabsCommand`)**: Ini-scan ang mga bukas na tab sa mga window o nakatutok na grupo, tinutukoy ang mga duplicate na URL, ibinubukod ang mga `Split` screen tab, at isinasara ang mga paulit-ulit na tab habang pinapanatili ang aktibo o pinakalumang tab. Nagpapakita ng buod na abiso sa desktop.
+  2. **Deduplication ng Bookmark**: Malalimang ini-scan ang mga puno ng bookmark ng Chrome, hinahanap ang magkakaparehong duplicate na URL sa mga folder, at nagbibigay ng batch consolidation upang mapanatiling malinis ang mga bookmark.
+  3. **Deduplication ng Panuntunan (`feature_v100_dedup_add_to_rule`)**: Awtomatikong inaalis ang mga duplicate na pattern ng URL kapag nagdaragdag ng mga URL sa mga kasalukuyang pasadyang panuntunan sa pagpapangkat, na pumipigil sa paglobo ng panuntunan.
+- **Matalinong Pag-discard sa Memory (`suspendInactiveTabsIntelligently`)**:
+  - Sinusuri bawat 1 minuto sa pamamagitan ng alarm na `itg-periodic-tasks`.
+  - Nagdi-discard ng mga tab na hindi aktibo nang >= `discardingTimeMinutes` (default: 60 minuto).
+  - May mga built-in na proteksyon sa resistensya: Hindi kailanman nagdi-discard ng mga aktibong tab, mga tab na nagpe-play ng audio, mga naka-pin na tab, o mga nasuspinde nang tab.
 
 ---
 
-## 5. Section 4: AI Assistant & Autonomous Agent (Asistente AI)
+## 5. Seksyon 4: AI Assistant at Autonomous Agent (Asistente AI)
 
-The AI Assistant integrates large language models into the browser to provide contextual understanding, automated workflows, and direct browser automation.
+Isinasama ng AI Assistant ang malalaking language model sa browser upang magbigay ng pag-unawa sa konteksto, mga awtomatikong daloy ng trabaho, at direktang automation ng browser.
 
-### 5.1 Dual Model Engine Architecture
+### 5.1 Arkitektura ng Dual Model Engine
 1. **Google Gemini Cloud API (`gemini-api.js`)**:
-   - Integrates with Google Generative Language REST endpoints (`v1beta/models/{model}:generateContent` and `:streamGenerateContent`).
-   - Supports Gemini 2.5 Flash, Gemini 2.5 Pro, and custom model endpoints.
-   - **Multi-Key Rotation**: Manages key pools in `geminiApiKeysList`. Storage obfuscation uses `enc_` prefixes.
-   - **Exponential Backoff**: Handles HTTP 429 quota exhaustion with automated backoff retry (1.5s -> 3s -> 6s).
-   - **Search Grounding**: Enables Google Search Grounding (`google_search: {}`). If HTTP 403 occurs due to quota restrictions on search tools, it automatically retries without grounding.
+   - Sumasama sa mga Google Generative Language REST endpoint (`v1beta/models/{model}:generateContent` at `:streamGenerateContent`).
+   - Sumusuporta sa Gemini 2.5 Flash, Gemini 2.5 Pro, at mga pasadyang endpoint ng modelo.
+   - **Multi-Key Rotation**: Namamahala ng mga pool ng key sa `geminiApiKeysList`. Ang obfuscation ng imbakan ay gumagamit ng mga prefix na `enc_`.
+   - **Exponential Backoff**: Nangangasiwa sa pagkaubos ng quota ng HTTP 429 gamit ang awtomatikong retry ng backoff (1.5s -> 3s -> 6s).
+   - **Search Grounding**: Pinapagana ang Google Search Grounding (`google_search: {}`). Kung maganap ang HTTP 403 dahil sa mga paghihigpit sa quota sa mga tool sa paghahanap, awtomatiko itong sumusubok muli nang walang grounding.
 2. **Chrome Built-in AI / Prompt API (`localAiService.js`)**:
-   - On-device Gemini Nano integration via `window.LanguageModel`.
-   - Supports zero-network local execution. Includes model availability checking and live download progress tracking.
+   - Pagsasama ng on-device Gemini Nano sa pamamagitan ng `window.LanguageModel`.
+   - Sumusuporta sa zero-network na lokal na pagpapatupad. May kasamang pagsusuri sa availability ng modelo at live na pagsubaybay sa progreso ng pag-download.
 
 ### 5.2 Autonomous Browser Agent (`agent-backend.js`)
-The autonomous agent provides full browser control through 40+ structured tools:
-- **Tab & Group Control**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
-- **Navigation & Search**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
-- **Knowledge & Bookmarks**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
-- **Rules & Appearance**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
+Ang autonomous agent ay nagbibigay ng buong kontrol sa browser sa pamamagitan ng 40+ structured tool:
+- **Kontrol sa Tab at Grupo**: `getOpenTabs`, `switchToTab`, `createNewTab`, `closeTab`, `closeTabs`, `duplicateTab`, `findAndSwitchToTab`, `groupTabs`, `ungroupTabs`, `deleteTabGroup`, `collapseTabGroup`, `expandTabGroup`, `collapseAllGroups`, `expandAllGroups`, `setGroupColor`, `renameTabGroup`, `regroupAllTabs`, `removeDuplicateTabs`, `closeTabsWithSound`.
+- **Pag-navigate at Paghahanap**: `openUrl`, `searchGoogle`, `getActiveTab`, `getActiveTabContent`.
+- **Kaalaman at mga Bookmark**: `getBookmarks`, `searchBookmarks`, `createBookmark`, `getHistory`, `getRecentlyClosed`.
+- **Mga Panuntunan at Hitsura**: `getRules`, `createRule`, `updateRule`, `deleteRule`, `getActiveTheme`, `getSavedThemes`, `applyTheme`.
 
-### 5.3 Taint Tracking & Prompt Injection Defense
-To neutralize indirect prompt injection attacks from untrusted web pages, the agent backend implements strict taint tracking:
-- **Taint Marking**: Calling `getActiveTabContent` extracts text from a web page and marks the current execution run as tainted (`taintedAgentRuns.add(runId)`).
-- **Egress Guard**: Tainted runs are strictly prohibited from invoking egress tools (`AGENT_EGRESS_TOOLS`):
+### 5.3 Taint Tracking at Depensa sa Prompt Injection
+Upang i-neutralize ang mga hindi direktang pag-atake ng prompt injection mula sa mga hindi pinagkakatiwalaang webpage, ang backend ng agent ay nagpapatupad ng mahigpit na taint tracking:
+- **Pagmamarka ng Taint**: Ang pagtawag sa `getActiveTabContent` ay kumukuha ng teksto mula sa isang webpage at minamarkahan ang kasalukuyang pagtakbo ng pagpapatupad bilang tainted (`taintedAgentRuns.add(runId)`).
+- **Bantay sa Egress**: Ang mga tainted na pagtakbo ay mahigpit na pinagbabawalan sa pagtawag ng mga egress tool (`AGENT_EGRESS_TOOLS`):
   * `openUrl`, `searchGoogle`, `createBookmark`, `createRule`, `addUrlToRule`, `createSiteShortcut`, `updateSiteShortcut`, `updateRule`.
-- **Refusal Mechanism**: Rather than throwing an unhandled exception, the engine returns a structured security explanation. The LLM then informs the user that external data cannot be exfiltrated without explicit user consent.
+- **Mekanismo ng Pagtanggi**: Sa halip na magtapon ng unhandled exception, ang engine ay nagbabalik ng isang structured na paliwanag sa seguridad. Pagkatapos ay ipinapaalam ng LLM sa user na ang panlabas na data ay hindi maaaring ilabas nang walang tahasang pahintulot ng user.
 
-### 5.4 Scheduled Gemini Queries Subsystem (`GeminiScheduleModal.svelte`)
-- **Background Execution Engine**:
-  - Automates scheduled AI prompt execution directly within the background service worker via `chrome.alarms` (`gemini-scheduled-*`).
-  - Supports up to 6 scheduled queries per day (`MAX_TIMES = 6`).
-  - **Schedules Modes**:
-    - Recurring Schedules: Executes repeatedly on selected days of the week (`selectedDays`).
-    - One-Time Schedules: Executes at a specific target date and time (`formDate`).
-  - **Prompt Limits**: Enforces a strict 1,000-character prompt limit (`MAX_QUERY_CHARS = 1000`) with real-time character counters.
-  - **Background Notifications**: Fires a desktop notification with a snippet preview when the background query finishes. Clicking the notification immediately opens the response thread inside the sidepanel chat.
+### 5.4 Subsystem ng Nakaiskedyul na mga Query sa Gemini (`GeminiScheduleModal.svelte`)
+- **Engine ng Pagpapatupad sa Background**:
+  - Ginagawang awtomatiko ang nakaiskedyul na pagpapatupad ng AI prompt nang direkta sa loob ng background service worker sa pamamagitan ng `chrome.alarms` (`gemini-scheduled-*`).
+  - Sumusuporta sa hanggang 6 na nakaiskedyul na query bawat araw (`MAX_TIMES = 6`).
+  - **Mga Mode ng Iskedyul**:
+    - Paulit-ulit na Iskedyul: Paulit-ulit na tumatakbo sa mga napiling araw ng linggo (`selectedDays`).
+    - Isahang Iskedyul: Tumatakbo sa isang partikular na target na petsa at oras (`formDate`).
+  - **Mga Limitasyon sa Prompt**: Nagpapatupad ng mahigpit na 1,000-character na limitasyon sa prompt (`MAX_QUERY_CHARS = 1000`) na may mga real-time na counter ng character.
+  - **Mga Abiso sa Background**: Nagpapadala ng abiso sa desktop na may snippet preview kapag natapos ang background query. Ang pag-click sa abiso ay agad na nagbubukas ng thread ng tugon sa loob ng chat sa sidepanel.
 
-### 5.5 Gemini Conversation Management & Export
-- **Persistent IndexedDB Storage (`geminiConversations`)**: Multi-turn chat sessions are stored in IndexedDB `Intelligent_Workspace` store `geminiConversations`.
-- **Full-Text History Search**: Instant search across all past conversations and individual messages via Omnibar commands `lai:` (browse conversations) and `laiq:` (search messages).
-- **Four Export Formats**:
-  1. **Styled HTML**: Formatted standalone HTML document with styled conversational bubbles, role badges, timestamps, and syntax-highlighted code blocks.
-  2. **Raw JSON**: Complete structured data dump including message arrays, token usage, model configuration, and search citations.
-  3. **Markdown**: Standard Markdown file formatted with headers, timestamps, and fenced code blocks (` ``` `).
-  4. **Plain Text**: Clean, unformatted conversational transcript suitable for email or notes.
-- **Grounding Metadata Tracking**: Tracks model ID, token usage statistics, execution timestamps, and source citations returned by Google Search Grounding.
+### 5.5 Pamamahala at Pag-export ng Pag-uusap sa Gemini
+- **Persistent na Imbakan sa IndexedDB (`geminiConversations`)**: Ang mga multi-turn chat session ay iniimbak sa IndexedDB `Intelligent_Workspace` store na `geminiConversations`.
+- **Paghahanap ng Buong Teksto sa Kasaysayan**: Agarang paghahanap sa lahat ng nakaraang pag-uusap at indibidwal na mensahe sa pamamagitan ng mga command ng Omnibar na `lai:` (mag-browse ng mga pag-uusap) at `laiq:` (maghanap ng mga mensahe).
+- **Apat na Format ng Pag-export**:
+  1. **Naka-istilong HTML**: Naka-format na standalone na dokumentong HTML na may mga naka-istilong speech bubble sa pag-uusap, mga badge ng role, mga timestamp, at mga code block na may syntax highlighting.
+  2. **Raw JSON**: Kumpletong structured data dump kabilang ang mga array ng mensahe, paggamit ng token, pagsasaayos ng modelo, at mga citation sa paghahanap.
+  3. **Markdown**: Karaniwang Markdown file na naka-format na may mga header, timestamp, at nabakurang code block (` ``` `).
+  4. **Plain Text**: Malinis, hindi naka-format na transcript ng pag-uusap na angkop para sa email o mga tala.
+- **Pagsubaybay sa Metadata ng Grounding**: Sinusubaybayan ang model ID, mga istatistika ng paggamit ng token, mga timestamp ng pagpapatupad, at mga citation ng pinagmulan na ibinalik ng Google Search Grounding.
 
-### 5.6 Multimodal Inputs & File Attachments (`feature_geminiAttachFiles`)
-- **Multimodal Attachments**: Toggle `feature_geminiAttachFiles` enables direct image and document attachments in chat prompts:
-  - Image files (JPEG, PNG, WebP, HEIC/HEIF).
-  - PDF documents and research papers.
-  - Plain Text files and code files.
-  - CSV structured datasets.
-- **Voice Support**:
-  - Web Speech STT (Speech-to-Text) for dictating prompts hands-free.
-  - Web Speech TTS (Text-to-Speech) for reading responses aloud.
+### 5.6 Multimodal Inputs at File Attachments (`feature_geminiAttachFiles`)
+- **Mga Multimodal na Attachment**: Ang switch na `feature_geminiAttachFiles` ay nagbibigay-daan sa direktang pag-attach ng imahe at dokumento sa mga chat prompt:
+  - Mga file ng imahe (JPEG, PNG, WebP, HEIC/HEIF).
+  - Mga dokumentong PDF at mga research paper.
+  - Mga Plain Text file at code file.
+  - Mga structured dataset ng CSV.
+- **Suporta sa Boses**:
+  - Web Speech STT (Speech-to-Text) para sa pagdidikta ng mga prompt nang hands-free.
+  - Web Speech TTS (Text-to-Speech) para sa pagbabasa ng mga tugon nang malakas.
 
-### 5.7 Invocation Modalities
-- **Sidepanel Route**: `?view=gemini` or shortcut `pa`.
-- **In-Page Omnibar Prefixes**:
-  - `qai: <query>` — Ask direct question to configured Gemini model.
-  - `qaia: <prompt>` — Execute prompt via autonomous agent with tool execution.
-  - `lai:` — Browse past AI conversations.
-  - `laiq:` — Full-text search across all AI conversation messages.
-- **Omnibox AI Tab Search (`find <query>`)**:
-  - URL bar keyword `find` initiates hybrid search.
-  - Combines regex word-boundary scoring with Gemini semantic resolution to locate and focus open tabs based on natural language queries.
+### 5.7 Mga Paraan ng Pagtawag (Invocation Modalities)
+- **Ruta ng Sidepanel**: `?view=gemini` o shortcut na `pa`.
+- **Mga Prefix ng In-Page Omnibar**:
+  - `qai: <query>` — Direktang magtanong sa naisaayos na modelo ng Gemini.
+  - `qaia: <prompt>` — Magpatupad ng prompt sa pamamagitan ng autonomous agent na may pagpapatupad ng tool.
+  - `lai:` — Mag-browse ng nakaraang kasaysayan ng pag-uusap sa AI.
+  - `laiq:` — Maghanap ng buong teksto sa lahat ng mensahe sa pag-uusap ng AI.
+- **Paghahanap ng Tab sa AI ng Omnibox (`find <query>`)**:
+  - Ang keyword na `find` sa URL bar ay nagpapasimula ng hybrid na paghahanap.
+  - Pinagsasama ang pagmamarka ng hangganan ng salita sa regex sa semantic resolution ng Gemini upang mahanap at ituon ang mga bukas na tab batay sa mga query sa natural na wika.
 
 ---
 
-## 6. Section 5: Notes View & Knowledge Management (Ver Notas)
+## 6. Seksyon 5: View ng Tala at Pamamahala ng Kaalaman (Ver Notas)
 
-A local-first, context-aware note-taking engine tied to browser tab groups and navigation contexts.
+Isang local-first, context-aware na engine sa pagtatala na nakatali sa mga pangkat ng tab at konteksto ng pag-navigate sa browser.
 
-### 6.1 Storage Architecture (`notesStore`)
-Stored in IndexedDB database `Intelligent_Workspace` (v8) inside object store `notesStore`:
+### 6.1 Arkitektura ng Imbakan (`notesStore`)
+Naka-imbak sa IndexedDB database na `Intelligent_Workspace` (v8) sa loob ng object store na `notesStore`:
 ```typescript
 interface NoteRecord {
   id: string;          // Unique note identifier.
@@ -529,465 +529,465 @@ interface NoteRecord {
 }
 ```
 
-### 6.2 Specialized Note Formats & Advanced Rendering
+### 6.2 Mga Espesyal na Format ng Tala at Advanced na Pag-render
 1. **Text Note (`NoteTextEditor.svelte`)**:
-   - Rich text `contenteditable` surface.
-   - Embeds media directly: images, audio, video, and PDF documents.
-   - Built-in HTML sanitization and real-time word and character counters.
-   - **Mermaid Diagram Rendering**: Renders dynamic flowcharts, sequence diagrams, class diagrams, and state machines directly from Markdown fences (` ```mermaid `).
-   - **KaTeX Mathematical LaTeX**: Renders inline equations (`$...$`) and block equations (`$$...$$`) with high precision typography.
+   - Rich text na `contenteditable` na surface.
+   - Direktang nag-e-embed ng media: mga imahe, audio, video, at mga dokumentong PDF.
+   - May built-in na HTML sanitization at mga real-time na counter ng salita at character.
+   - **Pag-render ng Mermaid Diagram**: Nagre-render ng mga dinamikong flowchart, sequence diagram, class diagram, at state machine nang direkta mula sa mga bakod ng Markdown (` ```mermaid `).
+   - **KaTeX Mathematical LaTeX**: Nagre-render ng mga inline na equation (`$...$`) at mga block equation (`$$...$$`) na may mataas na katumpakan sa typography.
 2. **Checklist Note (`NoteChecklistEditor.svelte`)**:
-   - Interactive task list with individual completion checkboxes.
-   - Supports keyboard-driven item reordering and progress tracking.
+   - Interactive na listahan ng gawain na may mga indibidwal na checkbox ng pagkumpleto.
+   - Sumusuporta sa muling pagsasaayos ng aytem gamit ang keyboard at pagsubaybay sa progreso.
 3. **Kanban Note (`NoteKanbanEditor.svelte`)**:
-   - 3-column workflow board: `To Do` -> `In Progress` -> `Done`.
-   - Cycling status chips for rapid task transitions.
-- **Dynamic Lossless Conversion**: Notes convert losslessly between Text, Checklist, and Kanban representations.
+   - 3-column na board ng daloy ng trabaho: `To Do` -> `In Progress` -> `Done`.
+   - Nagpapalit-palit na status chips para sa mabilisang paglipat ng gawain.
+- **Dinamikong Lossless na Pagpapalit**: Ang mga tala ay nagpapalit-palit nang walang pagkawala ng data sa pagitan ng mga representasyon ng Text, Checklist, at Kanban.
 
-### 6.3 Scoping & Context Hierarchy
-Notes bind to browsing contexts via `contextKey`:
-- **Group Scope (`g_<groupId>` or `g_<groupKey>`)**: Attached to an entire tab group.
-- **Subgroup Scope (`s_<groupId>_<domain>`)**: Attached to a specific domain within a tab group.
-- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Notes created on tabs outside of tab groups.
-- **Pomodoro & General Scopes (`pomodoro`, `general`)**: Workspace-wide notes.
-- **Orphan Detection Engine**: When tab groups or domains are deleted, associated non-persistent notes are captured by the Orphan Detector. Notes remain accessible in the UI for reassignment or deletion.
+### 6.3 Scoping at Hirarkiya ng Konteksto
+Ang mga tala ay nagbubuklod sa mga konteksto ng pagba-browse sa pamamagitan ng `contextKey`:
+- **Group Scope (`g_<groupId>` o `g_<groupKey>`)**: Naka-attach sa isang buong pangkat ng tab.
+- **Subgroup Scope (`s_<groupId>_<domain>`)**: Naka-attach sa isang partikular na domain sa loob ng isang pangkat ng tab.
+- **Ungrouped Scope (`g_ungrouped` / `s_ungrouped_<domain>`)**: Mga talang ginawa sa mga tab sa labas ng mga pangkat ng tab.
+- **Pomodoro at General Scopes (`pomodoro`, `general`)**: Mga tala sa buong workspace.
+- **Orphan Detection Engine**: Kapag ang mga pangkat ng tab o domain ay binura, ang mga kaugnay na hindi persistent na tala ay kinukuha ng Orphan Detector. Ang mga tala ay nananatiling naa-access sa UI para sa muling pagtatalaga o pagbura.
 
-### 6.4 Invocation Modalities
-- **UI Launchers**: "View Notes" button on Group Cards and Subgroup Cards; "Quick Notes" button in popup header; Sidepanel route `?view=notes` (`pk`).
-- **Context Menu Trigger**: Select text on any web page -> Right-click -> "Crear Nota desde Selección" (`note-from-selection`). Automatically extracts the selected text and sets the nearest `h1`-`h3` heading as the title.
-- **Vim Hint**: `ao` creates a note from the current selection.
-- **Omnibar**: `lnt:` opens notes browser with instant full-text search.
-- **Audio Readout**: In-editor TTS button reads note content aloud using Web Speech API.
+### 6.4 Mga Paraan ng Pagtawag (Invocation Modalities)
+- **Mga UI Launcher**: Button na "View Notes" sa mga Group Card at Subgroup Card; button na "Quick Notes" sa header ng popup; ruta ng Sidepanel na `?view=notes` (`pk`).
+- **Trigger sa Context Menu**: Pumili ng teksto sa anumang webpage -> Mag-right-click -> "Crear Nota desde Selección" (`note-from-selection`). Awtomatikong kinukuha ang napiling teksto at itinatakda ang pinakamalapit na heading na `h1`-`h3` bilang pamagat.
+- **Vim Hint**: Ang `ao` ay gumagawa ng tala mula sa kasalukuyang seleksyon.
+- **Omnibar**: Ang `lnt:` ay nagbubukas ng browser ng mga tala na may agarang full-text search.
+- **Audio Readout**: Ang in-editor TTS button ay nagbabasa ng nilalaman ng tala nang malakas gamit ang Web Speech API.
 
 ---
 
-## 7. Section 6: Media & Gallery View (Ver Galería)
+## 7. Seksyon 6: Media at Gallery View (Ver Galería)
 
-A high-performance media capture, annotation, and optical character recognition (OCR) pipeline.
+Isang high-performance na pipeline para sa pagkuha ng media, anotasyon, at optical character recognition (OCR).
 
-### 7.1 Capture Modes & Engineering (All 7 Capture Types)
-The extension implements 7 specialized capture modalities covering single-tab, cross-tab, cropped, and palette operations:
+### 7.1 Mga Capture Mode at Inhenyeriya (Lahat ng 7 Uri ng Capture)
+Ang extension ay nagpapatupad ng 7 espesyal na paraan ng pagkuha na sumasaklaw sa single-tab, cross-tab, na-crop, at mga operasyon sa palette:
 1. **`visible` (Visible Viewport Capture - `cs`)**:
-   - Captures the exact visible viewport of the active tab using `chrome.tabs.captureVisibleTab`.
-   - Automatically commits the capture to the IndexedDB `screenshots` store and copies the image bitmap directly to the system clipboard (`screenshotSavedAndCopied`).
+   - Kinukuha ang eksaktong nakikitang viewport ng aktibong tab gamit ang `chrome.tabs.captureVisibleTab`.
+   - Awtomatikong nagko-commit ng kuha sa IndexedDB `screenshots` store at direktang kumukopya ng image bitmap sa clipboard ng system (`screenshotSavedAndCopied`).
 2. **`fullPage` (Seamless Full-Page Scrolling Canvas - `cp`)**:
-   - Executes programmatic page scrolling, calculating total document scroll height.
-   - Suppresses scrollbars and hides sticky/fixed navigation bars after the initial segment to eliminate visual stutter.
-   - Stitches bitmap slices onto an `OffscreenCanvas` up to 30,000px high (`captureFullPageDataUrl`), enforcing Chromium-compliant 600ms delays between frame captures.
+   - Nagsasagawa ng programmatic na pag-scroll sa pahina, kinakalkula ang kabuuang taas ng pag-scroll ng dokumento.
+   - Pinipigilan ang mga scrollbar at itinatago ang mga sticky/fixed na navigation bar pagkatapos ng paunang bahagi upang alisin ang visual stutter.
+   - Pinagdurugtong ang mga hiwa ng bitmap sa isang `OffscreenCanvas` hanggang sa 30,000px ang taas (`captureFullPageDataUrl`), nagpapatupad ng Chromium-compliant na 600ms na pagkaantala sa pagitan ng mga pagkuha ng frame.
 3. **`fullPageParts` (Sequential Sliced Segments - `cpp` / `cP`)**:
-   - Slices tall documents into sequential, individual viewport-height image parts (`captureFullPageParts`), generating up to 60 numbered image chunks for pagination.
+   - Hinihiwa ang matataas na dokumento sa magkakasunod, indibidwal na mga bahagi ng imahe na kasingtaas ng viewport (`captureFullPageParts`), bumubuo ng hanggang 60 may bilang na piraso ng imahe para sa pagination.
 4. **`area` (Interactive Rectangular Drag Crop - `ca`)**:
-   - Injects `area-selector.js`, overlaying a crosshair canvas with real-time bounding box dimensions.
-   - Draggable selection handles, dimension tooltip, confirmation trigger, `Esc` key cancellation, and multi-tab crop queueing (`handleCaptureAreaFromShortcut`).
+   - Nag-i-inject ng `area-selector.js`, nagpapatong ng canvas ng crosshair na may real-time na mga sukat ng bounding box.
+   - May mga nahihilang handle ng seleksyon, tooltip ng sukat, trigger ng kumpirmasyon, pagkansela gamit ang `Esc` key, at pagpipila ng pag-crop sa maraming tab (`handleCaptureAreaFromShortcut`).
 5. **`groupTabs` (Batch Active Group Tab Walk - `Cs`, `Cp`, `CP`)**:
-   - Sequentially iterates through every tab within the active tab group (`handleCaptureGroupFromShortcut`).
-   - Supports batch capture in visible, full-page, or segmented parts mode, compiling them into a unified collection.
-6. **`omnibarPickedTabs` (Custom Multi-Tab Queue Capture)**:
-   - Initiated via Omnibar commands `cs:`, `cp:`, `cpp:`, or `ca:` (`handleCaptureTabs`).
-   - Executes sequential captures across all user-filtered tabs, providing real-time progress indicators.
-7. **`colorPickerCapture` (Background Screen Eyedropper Fallback)**:
-   - Takes a background screen capture to power the precision hex eyedropper magnifier tool on operating systems lacking native `window.EyeDropper` support (e.g., Linux).
+   - Sunod-sunod na nag-iiterate sa bawat tab sa loob ng aktibong pangkat ng tab (`handleCaptureGroupFromShortcut`).
+   - Sumusuporta sa maramihang pagkuha sa visible, full-page, o segmented parts mode, pinagsasama ang mga ito sa isang pinag-isang koleksyon.
+6. **`omnibarPickedTabs` (Pasadyang Pagkuha ng Nakapilang Maraming Tab)**:
+   - Sinisimulan sa pamamagitan ng mga command ng Omnibar na `cs:`, `cp:`, `cpp:`, o `ca:` (`handleCaptureTabs`).
+   - Nagsasagawa ng magkakasunod na pagkuha sa lahat ng tab na sinala ng user, nagbibigay ng mga real-time na indicator ng progreso.
+7. **`colorPickerCapture` (Fallback sa Eyedropper ng Background Screen)**:
+   - Kumukuha ng screenshot sa background upang paganahin ang tool na pampalaki ng eyedropper para sa eksaktong hex sa mga operating system na walang katutubong suporta sa `window.EyeDropper` (hal., Linux).
 
-### 7.2 Gallery UI & Persistence
-- **Interface**: Responsive masonry/grid layout with lightbox zoom, pan, and rotate tools.
-- **Persistence (`screenshots` Store)**: Saved in IndexedDB `Intelligent_Workspace`. Unpinned captures are automatically purged during maintenance; clicking the pin icon (`isPersistent = true`) preserves captures indefinitely.
+### 7.2 Gallery UI at Persistence
+- **Interface**: Responsive na masonry/grid layout na may mga tool sa lightbox zoom, pan, at pag-ikot.
+- **Persistence (`screenshots` Store)**: Naka-save sa IndexedDB `Intelligent_Workspace`. Ang mga hindi naka-pin na kuha ay awtomatikong nililinis sa panahon ng maintenance; ang pag-click sa icon ng pin (`isPersistent = true`) ay nagpapanatili ng mga kuha nang walang hanggan.
 
-### 7.3 Export, In-Browser OCR & External Markup
-- **Export Formats (`captureDownloadFormats`)**:
-  - High-efficiency formats: PNG, WebP, AVIF.
-  - Multi-page compiled PDF document export via `pdf.js`.
+### 7.3 Pag-export, In-Browser OCR, at Panlabas na Markup
+- **Mga Format ng Pag-export (`captureDownloadFormats`)**:
+  - Mga format na may mataas na kahusayan: PNG, WebP, AVIF.
+  - Pag-export ng multi-page na pinagsamang dokumentong PDF sa pamamagitan ng `pdf.js`.
 - **On-Device WASM OCR**:
-  - In-browser Tesseract.js WebWorker utilizing preloaded Spanish and English (`spa+eng`) language models.
-  - Extracts text directly to clipboard without sending image data over the network.
-- **Direct Send Integration**:
-  - One-click transfer of extracted OCR text or image attachments into Notes (`notesStore`) or Gemini AI prompts (`feature_geminiAttachFiles`).
-- **Excalidraw Markup**: One-click export sends captured images directly into `https://excalidraw.com/` for freehand drawing, arrows, and vector annotations.
+  - In-browser Tesseract.js WebWorker na gumagamit ng mga preloaded na modelo ng wikang Espanyol at Ingles (`spa+eng`).
+  - Direktang kumukuha ng teksto patungo sa clipboard nang hindi nagpapadala ng data ng imahe sa network.
+- **Pagsasama sa Direktang Pagpapadala**:
+  - Isang-click na paglilipat ng nakuhang teksto sa OCR o mga kalakip na imahe patungo sa Notes (`notesStore`) o mga prompt ng Gemini AI (`feature_geminiAttachFiles`).
+- **Markup sa Excalidraw**: Ang isang-click na pag-export ay direktang nagpapadala ng mga nakuhang imahe sa `https://excalidraw.com/` para sa libreng pagguhit, mga arrow, at mga anotasyong vector.
 
-### 7.4 Invocation Modalities
-- **UI**: Group Card camera button, Popup quick action, Sidepanel gallery route `?view=gallery` (`ps`).
-- **Vim Hints**: `cs` (visible), `cp` (full page), `cP` (parts), `ca` (area crop), `Cs` (group visible), `Cp` (group full page), `CP` (group parts).
-- **Omnibar Prefixes**: `cs:`, `cp:`, `cpp:`, `ca:`, and `limg:` (browse gallery).
+### 7.4 Mga Paraan ng Pagtawag (Invocation Modalities)
+- **UI**: Camera button sa Group Card, quick action sa Popup, ruta ng gallery sa Sidepanel na `?view=gallery` (`ps`).
+- **Mga Vim Hint**: `cs` (visible), `cp` (buong pahina), `cP` (mga bahagi), `ca` (crop ng lugar), `Cs` (visible ng grupo), `Cp` (buong pahina ng grupo), `CP` (mga bahagi ng grupo).
+- **Mga Prefix ng Omnibar**: `cs:`, `cp:`, `cpp:`, `ca:`, at `limg:` (mag-browse ng gallery).
 
 ---
 
-## 8. Section 7: Pomodoro & Timing Suite (Pomodoro)
+## 8. Seksyon 7: Pomodoro at Suite ng Pagsukat ng Oras (Pomodoro)
 
-A focus and timing suite engineered for absolute accuracy across browser sleep cycles.
+Isang focus at timing suite na idinisenyo para sa ganap na katumpakan sa mga sleep cycle ng browser.
 
-### 8.1 Timing Engine & Background Architecture
-- **Zero-Drift Timestamp Math**: State is persisted in `chrome.storage.local` with absolute Unix timestamps (`startTime`, `pausedAt`). Service worker terminations, browser restarts, and operating system sleep states cause zero clock drift.
-- **Alarm Dispatcher**:
-  - High-resolution countdown ticker driven by `chrome.alarms` (`pomodoroTick` 1s interval).
-  - Background maintenance and long-term interval sweeps managed by `itg-periodic-tasks` (1 min interval).
-- **Offscreen Audio Chimes (`offscreen.html`)**: Audio chimes are generated via a dedicated Chrome Offscreen document created with reason `AUDIO_PLAYBACK`. Automatically closes 3.5 seconds after sound completion to conserve memory.
+### 8.1 Timing Engine at Arkitektura sa Background
+- **Zero-Drift Timestamp Math**: Ang estado ay naka-persist sa `chrome.storage.local` na may ganap na mga Unix timestamp (`startTime`, `pausedAt`). Ang mga paghinto ng service worker, pag-restart ng browser, at mga estado ng pagtulog ng operating system ay nagdudulot ng zero clock drift.
+- **Dispatcher ng Alarma**:
+  - High-resolution countdown ticker na pinapatakbo ng `chrome.alarms` (`pomodoroTick` 1s agwat).
+  - Pagpapanatili sa background at pangmatagalang pagsusuri ng agwat na pinamamahalaan ng `itg-periodic-tasks` (1 minutong agwat).
+- **Mga Tunog ng Audio sa Offscreen (`offscreen.html`)**: Ang mga tunog ng audio ay nabubuo sa pamamagitan ng isang nakalaang Chrome Offscreen document na ginawa nang may dahilang `AUDIO_PLAYBACK`. Awtomatiko itong nagsasara 3.5 segundo pagkatapos matapos ang tunog upang makatipid sa memory.
 
-### 8.2 Exhaustive 4 Timing Modes
+### 8.2 Kumpletong 4 na Timing Mode
 1. **Pomodoro (`pomodoro`)**:
-   - Work duration: 1 to 180 minutes (default: 25 min).
-   - Short break: 1 to 120 minutes (default: 5 min).
-   - Long break: 1 to 180 minutes (default: 15 min).
-   - Cycles before long break: 1 to 12 cycles (default: 4).
-   - Target cycle goal: 1 to 99 cycles (default: 8).
-   - Configurable autostart work, autostart breaks, and notification alerts.
-2. **Stopwatch (`cronometro`)**: Progressive timer with lap recording and pause-as-stop capability.
-3. **Countdown (`temporizador`)**: Custom countdown timer specifying hours, minutes, and seconds.
-4. **Target Time Alarm (`tiempo`)**: Calendar date picker and clock selector setting an alarm for an exact future timestamp.
+   - Tagal ng trabaho: 1 hanggang 180 minuto (default: 25 min).
+   - Maikling pahinga: 1 hanggang 120 minuto (default: 5 min).
+   - Mahabang pahinga: 1 hanggang 180 minuto (default: 15 min).
+   - Mga cycle bago ang mahabang pahinga: 1 hanggang 12 cycle (default: 4).
+   - Target na layunin ng cycle: 1 hanggang 99 na cycle (default: 8).
+   - Nako-configure ang awtomatikong pagsisimula ng trabaho, awtomatikong pagsisimula ng pahinga, at mga abiso ng alarma.
+2. **Stopwatch (`cronometro`)**: Progresibong timer na may pagtatala ng lap at kakayahang pause-as-stop.
+3. **Countdown (`temporizador`)**: Pasadyang countdown timer na tumutukoy ng mga oras, minuto, at segundo.
+4. **Alarma sa Target na Oras (`tiempo`)**: Calendar date picker at tagapili ng orasan na nagtatakda ng alarma para sa isang eksaktong timestamp sa hinaharap.
 
 ### 8.3 In-Page Floating Timer Widget
-- Draggable, minimal overlay displaying real-time countdown, pause/resume, and skip buttons directly on web pages.
-- Allows monitoring focus sessions without switching back to the extension panel or popup.
+- Nahihila at minimal na overlay na nagpapakita ng real-time countdown, pag-pause/pagpapatuloy, at mga button ng paglaktaw nang direkta sa mga webpage.
+- Nagbibigay-daan sa pagsubaybay sa mga sesyon ng pagtuon nang hindi lumilipat pabalik sa panel ng extension o popup.
 
-### 8.4 Group Auto-Collapse Idle Timer
-- Works in tandem with focus routines to automatically collapse inactive groups after 1 minute of inactivity (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) and the active group after 15 minutes of inactivity (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Configurable from 0 to 1440 minutes.
+### 8.4 Auto-Collapse Idle Timer ng Grupo
+- Gumagana kasabay ng mga gawain sa pagtuon upang awtomatikong i-collapse ang mga hindi aktibong grupo pagkatapos ng 1 minuto ng kawalan ng aktibidad (`INACTIVITY_THRESHOLD_INACTIVE_GROUP`) at ang aktibong grupo pagkatapos ng 15 minuto ng kawalan ng aktibidad (`INACTIVITY_THRESHOLD_ACTIVE_GROUP`). Nako-configure mula 0 hanggang 1440 minuto.
 
-### 8.5 Project Tagging & Metadata
-Each session supports categorization metadata:
-- Project Name (up to 18 characters)
-- Project Tag (e.g., `#research`, `#dev`)
-- Project Folder (e.g., `/client/project`)
+### 8.5 Pag-tag ng Proyekto at Metadata
+Ang bawat sesyon ay sumusuporta sa metadata ng pagkakategorya:
+- Pangalan ng Proyekto (hanggang 18 character)
+- Tag ng Proyekto (hal., `#research`, `#dev`)
+- Folder ng Proyekto (hal., `/client/project`)
 
-### 8.6 Analytics Engine & 19 KPI Cards
-The full dashboard (`dashboard.html` or Sidepanel `dashboard.html?context=sidepanel`) computes 19 key performance indicators from deduplicated sessions (`dedupeSessions` by `sessionStarted`):
-1. `focus`: Total focus time.
-2. `sessions`: Total completed sessions.
-3. `cycles`: Total completed work cycles.
-4. `efficiency`: Average efficiency percentage (`Total Focus / Total Time * 100`).
-5. `activeDays`: Number of unique active days.
-6. `break`: Total break duration.
-7. `interruptions`: Total count of manual pauses/interruptions.
-8. `interruptionTime`: Cumulative duration spent in paused state.
-9. `bestSession`: Longest single uninterrupted focus session.
-10. `avgFocus`: Average focus duration per completed cycle.
-11. `totalTime`: Cumulative time spent in work and breaks.
-12. `workRest`: Ratio of work duration to rest duration (`1 : X`).
-13. `distractionRate`: Interruptions per focus hour.
-14. `bestDay`: Most productive day of the week.
-15. `goldenHour`: Peak focus hour interval of the day (e.g., `10:00 - 11:00`).
-16. `projects`: Number of distinct projects tracked.
-17. `avgIntDuration`: Average duration of each interruption.
-18. `topProject`: Project with the highest accumulated focus time.
-19. `focusIntensity`: Average focus hours per active day.
+### 8.6 Analytics Engine at 19 na KPI Card
+Ang buong dashboard (`dashboard.html` o Sidepanel `dashboard.html?context=sidepanel`) ay nagkakalkula ng 19 na key performance indicator mula sa mga na-deduplicate na sesyon (`dedupeSessions` ayon sa `sessionStarted`):
+1. `focus`: Kabuuang oras ng pagtuon.
+2. `sessions`: Kabuuang nakumpletong sesyon.
+3. `cycles`: Kabuuang nakumpletong cycle ng trabaho.
+4. `efficiency`: Karaniwang porsyento ng kahusayan (`Total Focus / Total Time * 100`).
+5. `activeDays`: Bilang ng mga natatanging aktibong araw.
+6. `break`: Kabuuang tagal ng pahinga.
+7. `interruptions`: Kabuuang bilang ng manu-manong pag-pause/pagkaantala.
+8. `interruptionTime`: Pinagsama-samang tagal na ginugol sa naka-pause na estado.
+9. `bestSession`: Pinakamahabang solong tuloy-tuloy na sesyon ng pagtuon.
+10. `avgFocus`: Karaniwang tagal ng pagtuon bawat nakumpletong cycle.
+11. `totalTime`: Pinagsama-samang oras na ginugol sa trabaho at mga pahinga.
+12. `workRest`: Ratio ng tagal ng trabaho sa tagal ng pahinga (`1 : X`).
+13. `distractionRate`: Mga pagkaantala bawat oras ng pagtuon.
+14. `bestDay`: Pinakaproduktibong araw ng linggo.
+15. `goldenHour`: Peak na agwat ng oras ng pagtuon sa araw (hal., `10:00 - 11:00`).
+16. `projects`: Bilang ng mga natatanging proyektong nasubaybayan.
+17. `avgIntDuration`: Karaniwang tagal ng bawat pagkaantala.
+18. `topProject`: Proyekto na may pinakamataas na naipong oras ng pagtuon.
+19. `focusIntensity`: Karaniwang oras ng pagtuon bawat aktibong araw.
 
-Additional visual analytics include a Day Streak Heatmap calendar, an hourly focus distribution bar chart, a Project variety breakdown, and full JSON data import/export.
+Kasama sa mga karagdagang visual analytics ang isang Day Streak Heatmap calendar, isang bar chart ng pamamahagi ng pagtuon bawat oras, isang breakdown ng pagkakaiba-iba ng Proyekto, at buong pag-import/pag-export ng data sa JSON.
 
 ---
 
-## 9. Section 8: Activity & History Panel (Panel de Actividad)
+## 9. Seksyon 8: Panel ng Aktibidad at Kasaysayan (Panel de Actividad)
 
-A Declarative Net Request (DNR) tracking, analytics, and web governance engine.
+Isang tracking, analytics, at web governance engine gamit ang Declarative Net Request (DNR).
 
-### 9.1 Data Engine & Storage Topology (`ITG_WEB_ACTIVITY`)
-Managed under `ITG_WEB_ACTIVITY`:
-- `wa:day:YYYY-MM-DD`: Domain counters per day (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
-- `wa:days`: Master index array of recorded date keys.
-- `wa:recent`: Ring buffer storing the latest 400 visit timeline entries.
-- `wa:openSegment`: Active timed segment in `chrome.storage.session`, capped at `WA_MAX_SEGMENT_SECONDS = 900s` (15 minutes) to prevent distorting stats if the machine sleeps without firing idle events.
-- **Idle Detection**: Uses `chrome.idle` (default: 300s / 5m). Audio playback preserves active tracking even when windows are unfocused if `countAudible = true`.
-- **Retention**: Automatically prunes day records older than `retentionDays` (default: 180 days).
+### 9.1 Data Engine at Topolohiya ng Imbakan (`ITG_WEB_ACTIVITY`)
+Pinamamahalaan sa ilalim ng `ITG_WEB_ACTIVITY`:
+- `wa:day:YYYY-MM-DD`: Mga counter ng domain bawat araw (`{ domains: { host: { t: seconds, v: visits, s: sessions, h: { hour: seconds } } } }`).
+- `wa:days`: Master index array ng mga naitalang key ng petsa.
+- `wa:recent`: Ring buffer na nag-iimbak ng pinakabagong 400 entry sa timeline ng pagbisita.
+- `wa:openSegment`: Aktibong timed segment sa `chrome.storage.session`, nilimitahan sa `WA_MAX_SEGMENT_SECONDS = 900s` (15 minuto) upang maiwasang mabaluktot ang mga istatistika kung matulog ang makina nang hindi nagti-trigger ng mga idle event.
+- **Pagtukoy sa Kawalan ng Aktibidad (Idle Detection)**: Gumagamit ng `chrome.idle` (default: 300s / 5m). Pinapanatili ng pag-playback ng audio ang aktibong pagsubaybay kahit na hindi nakatutok ang mga window kung ang `countAudible = true`.
+- **Pagpapanatili (Retention)**: Awtomatikong pinuputol ang mga tala ng araw na mas luma sa `retentionDays` (default: 180 araw).
 
 ### 9.2 Declarative Net Request (DNR) Site Blocker
-- **Dynamic Rule Allocation**: Allocates dynamic rules in the ID range `9000` to `9999`.
-- **Redirect Target**: Blocked requests redirect to `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
-- **Open Tab Sweep**: When a site limit expires, the background worker immediately sweeps and redirects existing open tabs matching the domain.
-- **Overnight Schedule Spanning**: Schedules crossing midnight (e.g., `22:00` to `02:00`) are automatically evaluated across day boundaries.
-- **Grace / Snooze Period (+5 min)**: The block screen allows temporary 5-minute snooze passes, tracked in `wa:snoozeUses`.
+- **Dinamikong Paglalaan ng Panuntunan**: Naglalaan ng mga dinamikong panuntunan sa hanay ng ID na `9000` hanggang `9999`.
+- **Target ng Pag-redirect**: Ang mga na-block na kahilingan ay nagre-redirect sa `src/ui/pages/web-activity/blocked.html?d=<domain>&u=\1`.
+- **Pagsusuri sa mga Bukas na Tab**: Kapag nag-expire ang limitasyon ng site, agad na sinusuri at inililipat ng background worker ang mga umiiral nang bukas na tab na tumutugma sa domain.
+- **Pagsaklaw sa Magdamag na Iskedyul**: Ang mga iskedyul na lumalagpas sa hatinggabi (hal., `22:00` hanggang `02:00`) ay awtomatikong sinusuri sa mga hangganan ng araw.
+- **Palugit / Panahon ng Pag-snooze (+5 min)**: Ang screen ng block ay nagbibigay-daan sa pansamantalang 5 minutong snooze pass, na sinusubaybayan sa `wa:snoozeUses`.
 
 ### 9.3 Asymmetric Security Lock (`blockLock.js`)
-Site limits can be protected with an asymmetric password lock:
-- **Hash Storage**: Stores random 16-byte salt and SHA-256 hex digest (`wa:settings.blockPassword`).
-- **Asymmetric Rule Policy**: The password is **never requested** when creating new limits or making rules stricter (e.g., reducing time allowances or adding schedule restrictions).
-- **Guarded Actions**: The password is only requested when **loosening rules** (deleting a limit, increasing time allowances, or disabling schedules) or when invoking snooze after exceeding the daily free threshold (`snoozePasswordAfter`).
+Maaaring protektahan ang mga limitasyon sa site gamit ang isang asymmetric na password lock:
+- **Imbakan ng Hash**: Nag-iimbak ng random na 16-byte salt at SHA-256 hex digest (`wa:settings.blockPassword`).
+- **Patakaran sa Asymmetric na Panuntunan**: Ang password ay **hindi kailanman hinihingi** kapag gumagawa ng mga bagong limitasyon o ginagawang mas mahigpit ang mga panuntunan (hal., pagbabawas ng mga allowance sa oras o pagdaragdag ng mga paghihigpit sa iskedyul).
+- **Mga Binabantayang Aksyon**: Hinihingi lamang ang password kapag **nagpapaluwag ng mga panuntunan** (pagbura ng limitasyon, pagpapataas ng mga allowance sa oras, o pag-disable ng mga iskedyul) o kapag gumagamit ng snooze pagkatapos lumampas sa pang-araw-araw na libreng threshold (`snoozePasswordAfter`).
 
-### 9.4 Categorization & Visual Analytics
-- **16 Built-in Categories**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
-- **Custom Categories**: Supports user-defined categories prefixed with `custom:`.
-- **Focus Ratio**: Contrasts Productive categories (`dev`, `work`, `education`, `reading`, `finance`, `mail`) against Distracting categories (`social`, `video`, `games`, `shopping`, `entertainment`).
-- **Visuals**: Chart.js hourly activity distributions, category donut breakdown, and domain ranking lists.
+### 9.4 Pagkakategorya at Visual Analytics
+- **16 na Built-in na Kategorya**: `social`, `video`, `music`, `news`, `shopping`, `reading`, `entertainment`, `dev`, `work`, `education`, `games`, `finance`, `mail`, `ai`, `search`, `other`.
+- **Mga Pasadyang Kategorya**: Sumusuporta sa mga kategoryang tinukoy ng user na may unahang `custom:`.
+- **Ratio ng Pagtuon**: Inihahambing ang mga Produktibong kategorya (`dev`, `work`, `education`, `reading`, `finance`, `mail`) laban sa mga Nakakagambalang kategorya (`social`, `video`, `games`, `shopping`, `entertainment`).
+- **Mga Visual**: Mga pamamahagi ng aktibidad bawat oras sa Chart.js, donut breakdown ng kategorya, at mga listahan ng ranking ng domain.
 
-### 9.5 Downloads Manager Subsystem (`switchMainView('downloads')`)
-- **Dedicated Route**: Accessed in side panel via `switchMainView('downloads')` (`?view=downloads`).
-- **Direct Chrome API Integration**: Hooks `chrome.downloads` to track, manage, and inspect all browser downloads in real time.
-- **Real-Time Fuzzy Search**: Instant search by file name, file path, or download source URL.
-- **Status Filter Chips**: Rapidly filter downloads by state: `All`, `In Progress`, `Complete`, `Paused`, and `Interrupted`.
-- **Calendar Date Range Filtering**: Narrow down downloads by specific dates or time intervals.
-- **Batch Group Downloader**: Extracts all download links from open tabs in the active group and initiates synchronized batch downloads with progress tracking.
-- **File Management**: Direct one-click file opening (`chrome.downloads.open`) and folder reveal (`chrome.downloads.show`).
+### 9.5 Subsystem ng Tagapamahala ng Downloads (`switchMainView('downloads')`)
+- **Nakalaang Ruta**: Naa-access sa side panel sa pamamagitan ng `switchMainView('downloads')` (`?view=downloads`).
+- **Direktang Pagsasama sa Chrome API**: Sinasabit ang `chrome.downloads` upang subaybayan, pamahalaan, at suriin ang lahat ng download sa browser sa real time.
+- **Real-Time Fuzzy Search**: Agarang paghahanap ayon sa pangalan ng file, file path, o URL ng pinagmulan ng download.
+- **Mga Filter Chip ng Katayuan**: Mabilisang i-filter ang mga download ayon sa estado: `All`, `In Progress`, `Complete`, `Paused`, at `Interrupted`.
+- **Pag-filter sa Saklaw ng Petsa ng Kalendaryo**: Paliitin ang mga download ayon sa mga partikular na petsa o agwat ng oras.
+- **Maramihang Downloader ng Grupo (Batch Group Downloader)**: Kinukuha ang lahat ng link ng download mula sa mga bukas na tab sa aktibong grupo at sinisimulan ang sabay-sabay na maramihang pag-download na may pagsubaybay sa progreso.
+- **Pamamahala ng File**: Direktang isang-click na pagbubukas ng file (`chrome.downloads.open`) at pagpapakita ng folder (`chrome.downloads.show`).
 
-### 9.6 Recently Closed Tabs & Browsing History Subsystem
-- **Recently Closed Tabs View**:
-  - Integrated directly with `chrome.sessions.getRecentlyClosed`.
-  - Real-time search with automatic diacritic and accent folding (`deaccent`).
-  - Single tab restoration and full window session restoration with a single click or Omnibar command `c:`.
-- **Browsing History View**:
-  - Deep search with 10-second TTL in-memory caching to eliminate redundant `chrome.history.search` query churn.
-  - Search filterable by domain, keyword, and calendar date ranges.
-  - One-click tab activation if already open, or fresh tab creation, accessible via Omnibar `h:`.
+### 9.6 Subsystem ng Kamakailang Isinarang mga Tab at Kasaysayan ng Pagba-browse
+- **View ng Kamakailang Isinarang mga Tab**:
+  - Direktang isinama sa `chrome.sessions.getRecentlyClosed`.
+  - Real-time na paghahanap na may awtomatikong pag-aalis ng diacritic at accent (`deaccent`).
+  - Isahang pagpapanumbalik ng tab at buong pagpapanumbalik ng sesyon ng window sa isang click o gamit ang Omnibar command na `c:`.
+- **View ng Kasaysayan ng Pagba-browse**:
+  - Malalimang paghahanap na may 10-segundong TTL in-memory caching upang alisin ang paulit-ulit na pag-churn sa query ng `chrome.history.search`.
+  - Pagsasala sa paghahanap ayon sa domain, keyword, at mga saklaw ng petsa sa kalendaryo.
+  - Isang-click na pag-aktibo ng tab kung bukas na, o paggawa ng bagong tab, naa-access sa pamamagitan ng Omnibar `h:`.
 
-### 9.7 Theme Scheduling Subsystem (`ThemeScheduleModal.svelte`)
-- **Automated Theme Scheduling**:
-  - Managed via `ThemeScheduleModal.svelte` inside the Themes side panel view (`?view=themes` / `pt`).
-  - Supports automatic theme switching based on time of day (`HH:MM`) and active days of the week (`[0..6]`).
-  - Maximum of 7 global theme schedules (`MAX_GLOBAL_SCHEDULES = 7`).
-  - **Auto-Revert**: Automatically returns to default daytime or workplace themes at designated completion hours.
-  - **Desktop Alerts**: Issues desktop notifications when automatic theme switches occur (`chrome.notifications`).
-  - **Dual Persistence**: Persisted in `chrome.storage.sync` (roaming preferences) and `chrome.storage.local` under `savedThemes` and `themeSchedules`.
+### 9.7 Subsystem ng Pag-iiskedyul ng Tema (`ThemeScheduleModal.svelte`)
+- **Awtomatikong Pag-iiskedyul ng Tema**:
+  - Pinamamahalaan sa pamamagitan ng `ThemeScheduleModal.svelte` sa loob ng view ng Themes sa side panel (`?view=themes` / `pt`).
+  - Sumusuporta sa awtomatikong pagpapalit ng tema batay sa oras ng araw (`HH:MM`) at mga aktibong araw ng linggo (`[0..6]`).
+  - Maximum na 7 pangkalahatang iskedyul ng tema (`MAX_GLOBAL_SCHEDULES = 7`).
+  - **Awtomatikong Pagbabalik (Auto-Revert)**: Awtomatikong bumabalik sa default na tema sa araw o sa lugar ng trabaho sa mga itinalagang oras ng pagtatapos.
+  - **Mga Alerto sa Desktop**: Naglalabas ng mga abiso sa desktop kapag naganap ang awtomatikong pagpapalit ng tema (`chrome.notifications`).
+  - **Dalawahang Persistence**: Naka-persist sa `chrome.storage.sync` (mga roaming preference) at `chrome.storage.local` sa ilalim ng `savedThemes` at `themeSchedules`.
 
 ### 9.8 Compact Sidepanel View
-- **Sidepanel Route (`?view=activity` / `pw`)**: 350px column optimized for real-time monitoring, featuring period selector chips (`Today`, `7d`, `30d`, `All`) and domain limit progress bars.
+- **Ruta ng Sidepanel (`?view=activity` / `pw`)**: 350px na column na na-optimize para sa real-time na pagsubaybay, nagtatampok ng mga chip sa pagpili ng panahon (`Today`, `7d`, `30d`, `All`) at mga progress bar ng limitasyon sa domain.
 
 ---
 
 ## 10. Multi-Modal Invocation Matrix
 
-### 10.1 Popup UI Interface
-- **Rules Tab**: Quick rule toggles, active status indicators, and rule URL launcher.
-- **Groups Tab**: Compact accordion list with tab switching and group cleanup.
-- **AI Launcher**: Direct chat input box routing queries to the side panel.
-- **Quick Actions Toolbar**: One-click buttons for Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, and Sidepanel expansion.
+### 10.1 Interface ng Popup UI
+- **Tab ng Rules**: Mabilisang switch ng panuntunan, mga indicator ng aktibong katayuan, at launcher ng URL ng panuntunan.
+- **Tab ng Groups**: Compact na listahan ng accordion na may pagpapalit ng tab at paglilinis ng grupo.
+- **AI Launcher**: Direktang input box ng chat na nagruruta ng mga query sa side panel.
+- **Toolbar ng Mabilisang Aksyon**: Mga button sa isang click para sa Area Screenshot, Full-Page Capture, Quick Notes, Pomodoro Start/Pause, at pagpapalawak ng Sidepanel.
 
-### 10.2 Sidepanel Navigation Routes (`?view=...`)
-- `?view=rules` — Comprehensive Rules Manager and URL pattern editor (`pg`).
-- `?view=listgroup` — Full Group and Tab workspace with drag-and-drop reordering (`pl`).
-- `?view=notes` — Notes workspace (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
-- `?view=gallery` — Screenshot gallery, OCR, and Excalidraw tools (`ps`).
-- `?view=gemini` — Multimodal AI Assistant and Autonomous Agent interface (`pa`).
-- `?view=activity` — Web Activity tracker, limits, and category metrics (`pw`).
-- `?view=themes` — Theme editor and automated scheduling palette (`pt`).
-- `?view=hints` — Vim shortcuts, Omnibar, and YouTube loop settings (`pn`).
-- `?view=downloads` — Downloads Manager and batch link downloader (`switchMainView('downloads')`).
+### 10.2 Mga Ruta ng Pag-navigate sa Sidepanel (`?view=...`)
+- `?view=rules` — Komprehensibong Rules Manager at editor ng pattern ng URL (`pg`).
+- `?view=listgroup` — Buong workspace ng Grupo at Tab na may muling pagsasaayos gamit ang drag-and-drop (`pl`).
+- `?view=notes` — Workspace ng mga tala (Text, Checklist, Kanban, Mermaid, KaTeX) (`pk`).
+- `?view=gallery` — Gallery ng screenshot, OCR, at mga tool ng Excalidraw (`ps`).
+- `?view=gemini` — Interface ng Multimodal AI Assistant at Autonomous Agent (`pa`).
+- `?view=activity` — Tagasubaybay ng Aktibidad sa Web, mga limitasyon, at sukatan ng kategorya (`pw`).
+- `?view=themes` — Editor ng tema at palette ng awtomatikong pag-iiskedyul (`pt`).
+- `?view=hints` — Mga shortcut ng Vim, Omnibar, at mga setting ng loop sa YouTube (`pn`).
+- `?view=downloads` — Tagapamahala ng Downloads at maramihang downloader ng link (`switchMainView('downloads')`).
 
-### 10.3 Manifest Keyboard Shortcuts (24 Commands)
-1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): Toggle collapse of active group.
-2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): Toggle collapse of all groups.
-3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): Toggle alphabetical group sorting.
-4. `open-popup` (`Alt+Shift+P`): Open popup or focus side panel.
-5. `toggle-collapse-timer`: Toggle group auto-collapse timer.
-6. `toggle-all-rules`: Master toggle for all custom rules (`Alt+M`).
-7. `toggle-expand-all`: Expand all groups in the workspace.
-8. `rules-manager`: Open Rules Manager in a dedicated tab (`Alt+R`).
-9. `toggle-prefixes`: Toggle visual group prefix indicators (`🔒`, `🔍`, `🗝️`, `⚠️`).
-10. `toggle-domain-grouping`: Toggle automatic domain clustering.
-11. `toggle-subdomain-grouping`: Toggle automatic subdomain clustering.
-12. `toggle-compact-mode`: Toggle compact single-letter group titles.
-13. `toggle-chrome-grouping`: Toggle special Chrome internal pages group.
-14. `toggle-files-grouping`: Toggle special local `file://` pages group.
-15. `toggle-extensions-grouping`: Toggle special `chrome-extension://` group.
-16. `toggle-misc-grouping`: Toggle unclustered Miscellaneous group.
-17. `toggle-ip-address-grouping`: Toggle IP address / localhost group.
-18. `toggle-clustering`: Master toggle for all automated clustering.
-19. `regroup-all-tabs`: Trigger comprehensive tab regrouping pass (`Alt+Shift+R`).
-20. `toggle-hints`: Toggle in-page Vim hints overlay engine.
-21. `open-side-panel`: Open extension side panel.
-22. `open-theme-selector`: Open theme customization panel.
-23. `remove-duplicate-tabs`: Clean duplicate tabs across the window.
-24. `open-list-group-sidepanel-command`: Open List Group view in side panel.
+### 10.3 Mga Shortcut sa Keyboard ng Manifest (24 na Command)
+1. `toggle-current-group` (`Ctrl+Shift+Z` / Mac `Command+Shift+Z`): I-toggle ang pag-collapse ng aktibong grupo.
+2. `toggle-all-groups` (`Ctrl+Shift+Q` / Mac `Command+Shift+Q`): I-toggle ang pag-collapse ng lahat ng grupo.
+3. `toggle-sort-alpha` (`Ctrl+Shift+S` / Mac `Command+Shift+S`): I-toggle ang paalpabetong pag-uri-uri ng grupo.
+4. `open-popup` (`Alt+Shift+P`): Buksan ang popup o ituon ang side panel.
+5. `toggle-collapse-timer`: I-toggle ang timer ng auto-collapse ng grupo.
+6. `toggle-all-rules`: Pangunahing switch para sa lahat ng pasadyang panuntunan (`Alt+M`).
+7. `toggle-expand-all`: Palawakin ang lahat ng grupo sa workspace.
+8. `rules-manager`: Buksan ang Rules Manager sa isang nakalaang tab (`Alt+R`).
+9. `toggle-prefixes`: I-toggle ang mga visual na indicator ng prefix ng grupo (`🔒`, `🔍`, `🗝️`, `⚠️`).
+10. `toggle-domain-grouping`: I-toggle ang awtomatikong clustering ng domain.
+11. `toggle-subdomain-grouping`: I-toggle ang awtomatikong clustering ng subdomain.
+12. `toggle-compact-mode`: I-toggle ang compact na pamagat ng grupo na may iisang titik.
+13. `toggle-chrome-grouping`: I-toggle ang espesyal na grupo ng mga panloob na pahina ng Chrome.
+14. `toggle-files-grouping`: I-toggle ang espesyal na grupo ng mga lokal na pahina ng `file://`.
+15. `toggle-extensions-grouping`: I-toggle ang espesyal na grupo ng `chrome-extension://`.
+16. `toggle-misc-grouping`: I-toggle ang grupong Miscellaneous na hindi naka-cluster.
+17. `toggle-ip-address-grouping`: I-toggle ang grupo ng IP address / localhost.
+18. `toggle-clustering`: Pangunahing switch para sa lahat ng awtomatikong clustering.
+19. `regroup-all-tabs`: I-trigger ang komprehensibong muling pagpapangkat ng tab (`Alt+Shift+R`).
+20. `toggle-hints`: I-toggle ang in-page Vim hints overlay engine.
+21. `open-side-panel`: Buksan ang side panel ng extension.
+22. `open-theme-selector`: Buksan ang panel ng pagpapasadya ng tema.
+23. `remove-duplicate-tabs`: Linisin ang mga duplicate na tab sa buong window.
+24. `open-list-group-sidepanel-command`: Buksan ang List Group view sa side panel.
 
-### 10.4 In-Page Vim Hint Keys (40+ Combinations)
-- **Scrolling & Movement**:
-  - `j` / `k`: Scroll down / up (75px step).
-  - `d` / `u`: Scroll to bottom / top of page.
-  - `h` / `l`: Scroll left / right (or switch to previous / next tab if page cannot scroll).
-  - `H` / `L`: Navigate back / forward in browser history.
-  - `esc`: Blur active input, unfocus elements.
-- **Tab & Window Management**:
-  - `t`: Open new tab.
-  - `x`: Close current tab.
-  - `yt`: Duplicate current tab.
-  - `s`: Swap to previous active tab.
-  - `ts`: Toggle side-by-side Split Screen window.
-  - `we`: Open active tab in standalone popup window.
-  - `wp`: Open active tab in Document Picture-in-Picture.
-  - `wv`: Open active video in custom Video Picture-in-Picture.
-  - `dg`: Close/delete current tab group.
-- **Link Hints & Interaction**:
-  - `f`: Activate Vim link hints (click element).
-  - `cf`: Activate Vim link hints to copy link URL.
-  - `i`: Focus first text input on page.
-  - `c`: Copy current URL to clipboard.
-  - `y`: Append current selection to clipboard buffer.
-  - `vs`: View page source (`view-source:`).
-  - `vp`: Toggle link preview modal.
-  - `as` / `ah`: Toggle Auto-PiP on scroll / on tab hide.
-  - `ar`: Toggle Text-to-Speech Read Aloud.
-  - `ao`: Create note from selection.
-  - `at`: Translate page.
-- **Sidepanel Direct Access**:
-  - `ph`: Open Main side panel view.
-  - `pt`: Open Themes side panel.
-  - `pl`: Open List Group side panel.
-  - `pk`: Open Notes side panel.
-  - `ps`: Open Screenshot Gallery side panel.
-  - `pa`: Open AI Assistant side panel.
-  - `pw`: Open Web Activity side panel.
-  - `pg`: Open Rules side panel.
-  - `pn`: Open Customize Hints side panel.
-- **Media Capture**:
-  - `cs`: Capture visible viewport.
-  - `cp`: Capture full page (stitched).
-  - `cP`: Capture full page in sequential parts.
-  - `ca`: Capture cropped area.
-  - `Cs`: Capture all tabs in group (visible).
-  - `Cp`: Capture all tabs in group (full page).
-  - `CP`: Capture all tabs in group (parts).
-- **Audio & Reading Modes**:
-  - `st`: Toggle mute on current tab.
-  - `so`: Mute all audible tabs.
-  - `mb` / `mB`: Black page mode (tab / global).
-  - `ms` / `mS`: Sepia page mode (tab / global).
-  - `mp` / `mP`: Paper page mode (tab / global).
-  - `ml` / `mL`: Light page mode (tab / global).
-  - `me` / `mE`: Custom CSS filter mode (tab / global).
-- **Text-to-Speech (Read Aloud) Reader Navigation**:
-  - `zp`: Play / Pause speech synthesis reader overlay.
-  - `zn`: Next sentence in Read Aloud session.
-  - `zb`: Previous sentence in Read Aloud session.
-  - `zq`: Close / Terminate Read Aloud speech overlay.
-- **Group Backups & Rules**:
-  - `bg`: Backup all groups to IndexedDB.
-  - `br`: Restore all groups from IndexedDB.
-  - `cr`: Create custom rule from current page.
-  - `ae`: Add current page to existing rule.
-- **Quick URL Launchers**:
+### 10.4 In-Page Vim Hint Keys (40+ Kumbinasyon)
+- **Pag-scroll at Paggalaw**:
+  - `j` / `k`: Mag-scroll pababa / pataas (hakbang na 75px).
+  - `d` / `u`: Mag-scroll sa pinakaibaba / pinakataas ng pahina.
+  - `h` / `l`: Mag-scroll pakaliwa / pakanan (o lumipat sa nakaraan / susunod na tab kung hindi makapag-scroll ang pahina).
+  - `H` / `L`: Mag-navigate pabalik / pasulong sa kasaysayan ng browser.
+  - `esc`: Alisin ang focus sa aktibong input, alisin ang focus sa mga elemento.
+- **Pamamahala ng Tab at Window**:
+  - `t`: Magbukas ng bagong tab.
+  - `x`: Isara ang kasalukuyang tab.
+  - `yt`: I-duplicate ang kasalukuyang tab.
+  - `s`: Lumipat sa dating aktibong tab.
+  - `ts`: I-toggle ang magkatabing Split Screen window.
+  - `we`: Buksan ang aktibong tab sa isang hiwalay na popup window.
+  - `wp`: Buksan ang aktibong tab sa Document Picture-in-Picture.
+  - `wv`: Buksan ang aktibong video sa pasadyang Video Picture-in-Picture.
+  - `dg`: Isara/burahin ang kasalukuyang pangkat ng tab.
+- **Mga Link Hint at Pakikipag-ugnayan**:
+  - `f`: Isaaktibo ang mga Vim link hint (i-click ang elemento).
+  - `cf`: Isaaktibo ang mga Vim link hint upang kopyahin ang URL ng link.
+  - `i`: Ituon ang unang text input sa pahina.
+  - `c`: Kopyahin ang kasalukuyang URL sa clipboard.
+  - `y`: Idagdag ang kasalukuyang seleksyon sa buffer ng clipboard.
+  - `vs`: Tingnan ang source ng pahina (`view-source:`).
+  - `vp`: I-toggle ang link preview modal.
+  - `as` / `ah`: I-toggle ang Auto-PiP sa pag-scroll / sa pagtago ng tab.
+  - `ar`: I-toggle ang Text-to-Speech Read Aloud.
+  - `ao`: Gumawa ng tala mula sa seleksyon.
+  - `at`: Isalin ang pahina.
+- **Direktang Pag-access sa Sidepanel**:
+  - `ph`: Buksan ang Main side panel view.
+  - `pt`: Buksan ang Themes side panel.
+  - `pl`: Buksan ang List Group side panel.
+  - `pk`: Buksan ang Notes side panel.
+  - `ps`: Buksan ang Screenshot Gallery side panel.
+  - `pa`: Buksan ang AI Assistant side panel.
+  - `pw`: Buksan ang Web Activity side panel.
+  - `pg`: Buksan ang Rules side panel.
+  - `pn`: Buksan ang Customize Hints side panel.
+- **Pagkuha ng Media**:
+  - `cs`: Kunin ang nakikitang viewport.
+  - `cp`: Kunin ang buong pahina (pinagdugtong).
+  - `cP`: Kunin ang buong pahina sa magkakasunod na bahagi.
+  - `ca`: Kunin ang na-crop na lugar.
+  - `Cs`: Kunin ang lahat ng tab sa grupo (visible).
+  - `Cp`: Kunin ang lahat ng tab sa grupo (buong pahina).
+  - `CP`: Kunin ang lahat ng tab sa grupo (mga bahagi).
+- **Mga Mode ng Audio at Pagbasa**:
+  - `st`: I-toggle ang mute sa kasalukuyang tab.
+  - `so`: I-mute ang lahat ng tab na may tunog.
+  - `mb` / `mB`: Black page mode (tab / pandaigdigan).
+  - `ms` / `mS`: Sepia page mode (tab / pandaigdigan).
+  - `mp` / `mP`: Paper page mode (tab / pandaigdigan).
+  - `ml` / `mL`: Light page mode (tab / pandaigdigan).
+  - `me` / `mE`: Pasadyang CSS filter mode (tab / pandaigdigan).
+- **Pag-navigate sa Text-to-Speech (Read Aloud) Reader**:
+  - `zp`: I-play / I-pause ang overlay ng speech synthesis reader.
+  - `zn`: Susunod na pangungusap sa sesyon ng Read Aloud.
+  - `zb`: Nakaraang pangungusap sa sesyon ng Read Aloud.
+  - `zq`: Isara / Wakasan ang overlay ng pagsasalita ng Read Aloud.
+- **Mga Backup at Panuntunan ng Grupo**:
+  - `bg`: I-backup ang lahat ng grupo sa IndexedDB.
+  - `br`: I-restore ang lahat ng grupo mula sa IndexedDB.
+  - `cr`: Gumawa ng pasadyang panuntunan mula sa kasalukuyang pahina.
+  - `ae`: Idagdag ang kasalukuyang pahina sa isang umiiral na panuntunan.
+- **Mabilisang URL Launcher**:
   - `gy`: YouTube, `gm`: Gmail, `gp`: Google Maps, `gx`: X (Twitter), `gi`: Instagram, `gu`: Udemy, `gc`: ChatGPT, `gg`: Gemini.
 
-### 10.5 In-Page Omnibar Subsystem Prefixes (41 Prefixes)
-Type `o` on any page to open the floating Omnibar. Type `@` to view all available commands:
-1. `we:` — Open selected tab as standalone popup window.
-2. `wp:` — Open selected tab as Document Picture-in-Picture.
-3. `wv:` — Open selected tab as Video Picture-in-Picture.
-4. `sp:` — Open URL, search, or tab in the side panel.
-5. `ar:` — Pick a tab and read its text aloud via TTS.
-6. `b:` — Full-text search browser bookmarks.
-7. `h:` — Search browsing history.
-8. `c:` — Browse and reopen recently closed tabs.
-9. `dg:` — Search and delete or switch tab groups.
-10. `dt:` — Search and close multiple tabs.
-11. `ts:` — Select tabs and launch in side-by-side Split Screen.
-12. `cs:` — Capture visible area of chosen tabs.
-13. `cp:` — Capture full page of chosen tabs.
-14. `cpp:` — Capture full page in sequential parts.
-15. `ca:` — Capture custom cropped area on chosen tabs.
-16. `bg:` — Backup tab groups immediately to IndexedDB.
-17. `bgr:` — Search and restore backed-up groups and tabs.
-18. `f:` — Deep full-text search across all open tabs.
-19. `qai:` — Ask a query directly to configured AI model.
-20. `qaia:` — Instruct the Autonomous AI Agent to execute actions.
-21. `lai:` — Browse past AI conversation history.
-22. `laiq:` — Search within AI messages.
-23. `limg:` — Browse captured screenshots and gallery images.
-24. `lnt:` — Search and view saved notes.
-25. `atcr:` — Add active tab URL to an existing custom rule.
-26. `atr:` — Add open tabs or manual URLs to an existing rule.
-27. `rl:` — Search rules and launch associated URLs.
-28. `cr:` — Create a new rule (`cr: name` or `cr: name, url1, url2`).
-29. `ccr:` — Change the color of a custom rule.
-30. `ccg:` — Change the color of an active tab group.
-31. `dr:` — Delete rules or individual URLs from rules.
-32. `er:` — Rename or edit an existing rule.
-33. `st:` — Open Omnibar interactive tutorial.
-34. `g:` — Search Google (`g: <query>`).
-35. `y:` — Search YouTube (`y: <query>`).
-36. `d:` — Search DuckDuckGo (`d: <query>`).
-37. `w:` — Search Wikipedia (`w: <query>`).
-38. `gm:` — Search Google Maps (`gm: <query>`).
-39. `x:` — Search X / Twitter (`x: <query>`).
-40. `am:` — Search Amazon (`am: <query>`).
-41. `ams:` — Search Amazon Spain (`ams: <query>`).
+### 10.5 Mga Prefix ng In-Page Omnibar Subsystem (41 Prefix)
+I-type ang `o` sa anumang pahina upang buksan ang lumulutang na Omnibar. I-type ang `@` upang makita ang lahat ng available na command:
+1. `we:` — Buksan ang napiling tab bilang hiwalay na popup window.
+2. `wp:` — Buksan ang napiling tab bilang Document Picture-in-Picture.
+3. `wv:` — Buksan ang napiling tab bilang Video Picture-in-Picture.
+4. `sp:` — Buksan ang URL, paghahanap, o tab sa side panel.
+5. `ar:` — Pumili ng tab at basahin ang teksto nito nang malakas sa pamamagitan ng TTS.
+6. `b:` — Maghanap ng buong teksto sa mga bookmark ng browser.
+7. `h:` — Maghanap sa kasaysayan ng pagba-browse.
+8. `c:` — Mag-browse at muling buksan ang kamakailang isinarang mga tab.
+9. `dg:` — Maghanap at magbura o lumipat ng mga pangkat ng tab.
+10. `dt:` — Maghanap at magsara ng maraming tab.
+11. `ts:` — Pumili ng mga tab at ilunsad sa magkatabing Split Screen.
+12. `cs:` — Kunin ang nakikitang bahagi ng mga napiling tab.
+13. `cp:` — Kunin ang buong pahina ng mga napiling tab.
+14. `cpp:` — Kunin ang buong pahina sa magkakasunod na bahagi.
+15. `ca:` — Kunin ang pasadyang na-crop na lugar sa mga napiling tab.
+16. `bg:` — I-backup ang mga pangkat ng tab agad sa IndexedDB.
+17. `bgr:` — Maghanap at mag-restore ng mga na-back up na grupo at tab.
+18. `f:` — Malalimang full-text search sa lahat ng bukas na tab.
+19. `qai:` — Magtanong nang direkta sa naisaayos na modelo ng AI.
+20. `qaia:` — Utusan ang Autonomous AI Agent na magsagawa ng mga aksyon.
+21. `lai:` — Mag-browse ng nakaraang kasaysayan ng pag-uusap sa AI.
+22. `laiq:` — Maghanap sa loob ng mga mensahe ng AI.
+23. `limg:` — Mag-browse ng mga nakuhang screenshot at imahe sa gallery.
+24. `lnt:` — Maghanap at tumingin ng mga naka-save na tala.
+25. `atcr:` — Idagdag ang URL ng aktibong tab sa isang umiiral na pasadyang panuntunan.
+26. `atr:` — Idagdag ang mga bukas na tab o manu-manong URL sa isang umiiral na panuntunan.
+27. `rl:` — Maghanap ng mga panuntunan at ilunsad ang mga nauugnay na URL.
+28. `cr:` — Gumawa ng bagong panuntunan (`cr: name` o `cr: name, url1, url2`).
+29. `ccr:` — Baguhin ang kulay ng isang pasadyang panuntunan.
+30. `ccg:` — Baguhin ang kulay ng isang aktibong pangkat ng tab.
+31. `dr:` — Magbura ng mga panuntunan o indibidwal na URL mula sa mga panuntunan.
+32. `er:` — Palitan ang pangalan o i-edit ang isang umiiral na panuntunan.
+33. `st:` — Buksan ang interactive tutorial ng Omnibar.
+34. `g:` — Maghanap sa Google (`g: <query>`).
+35. `y:` — Maghanap sa YouTube (`y: <query>`).
+36. `d:` — Maghanap sa DuckDuckGo (`d: <query>`).
+37. `w:` — Maghanap sa Wikipedia (`w: <query>`).
+38. `gm:` — Maghanap sa Google Maps (`gm: <query>`).
+39. `x:` — Maghanap sa X / Twitter (`x: <query>`).
+40. `am:` — Maghanap sa Amazon (`am: <query>`).
+41. `ams:` — Maghanap sa Amazon Spain (`ams: <query>`).
 
-### 10.6 Context Menu Tree Hierarchy (All 5 Groups & 30+ Actions)
-The context menu provides a complete hierarchical tree organized into 5 functional command groups:
-1. **Group 1: Rules & URL Submenu**:
-   - Master rules checkbox toggle ("Activar/Desactivar Todas las Reglas").
-   - Per-rule toggles enabling or disabling individual custom rules on the fly.
-   - "Abrir Todas las URLs": Opens all target URLs registered in the selected rule.
-   - Individual URL submenus with dynamic open tab counts `[N]`: Displays currently open tab count matching the URL, provides one-click navigation to the URL, and offers "Cerrar Pestañas para esta URL" to terminate all matching tabs.
-   - Quick Rule Creation: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-   - Add to Existing Rule: "Añadir a Regla Existente" -> Select rule -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
-2. **Group 2: Tab Cleanup & Audio Controls**:
-   - "Eliminar Pestañas Duplicadas [N]": Shows count of detected redundant tabs and closes them across windows.
-   - "Eliminar Pestañas por Dominio": Dynamic submenu listing all domains with open tab counts `[N]`, allowing surgical tab closure by domain.
-   - "Cerrar Todos Excepto el Grupo Activo": Retains active focused group and closes all other groups.
-   - "Reagrupar Todas las Pestañas": Triggers full background regrouping pass across all open tabs.
-   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Global audio mute and unmute controls.
-3. **Group 3: Reading, Selection & Notes**:
-   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader with overlay controls.
-   - "Leer Selección en Voz Alta": Reads highlighted DOM selection aloud using speech synthesis.
-   - "Crear Nota desde Selección": Extracts text selection, automatically derives note title from the nearest heading (`h1`-`h3`), and stores it in `notesStore`.
-4. **Group 4: Open Extension, PiP & Panels**:
-   - "Abrir como PiP" / "Abrir como Ventana Emergente": Launch target page, highlighted selection, or target image into floating Picture-in-Picture or standalone popup window.
-   - "Abrir Extensión": Opens extension popup or expands side panel.
-   - "Gestionar Reglas": Opens full Rules Manager in a dedicated browser tab.
-   - Direct Sidepanel Launchers: One-click routing to List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), and Customize Hints (`?view=hints`).
-5. **Group 5: Settings & Clustering Options**:
-   - **Gestión de Grupos**: Alternar Grupo Actual (toggle active group collapse), Alternar Todos los Grupos (toggle all groups collapse).
+### 10.6 Hirarkiya ng Context Menu Tree (Lahat ng 5 Grupo at 30+ Aksyon)
+Ang context menu ay nagbibigay ng isang kumpletong hierarchical tree na nakaayos sa 5 functional command group:
+1. **Grupo 1: Submenu ng mga Panuntunan at URL**:
+   - Master checkbox toggle ng mga panuntunan ("Activar/Desactivar Todas las Reglas").
+   - Bawat-panuntunang switch na nagpapagana o nagdi-disable ng mga indibidwal na pasadyang panuntunan habang nagba-browse.
+   - "Abrir Todas las URLs": Binubuksan ang lahat ng target na URL na nakarehistro sa napiling panuntunan.
+   - Mga indibidwal na submenu ng URL na may dinamikong bilang ng bukas na tab `[N]`: Ipinapakita ang kasalukuyang bukas na bilang ng tab na tumutugma sa URL, nagbibigay ng isang-click na pag-navigate sa URL, at nag-aalok ng "Cerrar Pestañas para esta URL" upang tapusin ang lahat ng tumutugmang tab.
+   - Mabilisang Paggawa ng Panuntunan: "Crear Regla para esta Página" -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+   - Idagdag sa Umiiral na Panuntunan: "Añadir a Regla Existente" -> Piliin ang panuntunan -> "Añadir Raíz del Sitio" / "Añadir URL Completa".
+2. **Grupo 2: Paglilinis ng Tab at mga Kontrol sa Audio**:
+   - "Eliminar Pestañas Duplicadas [N]": Ipinapakita ang bilang ng mga natukoy na paulit-ulit na tab at isinasara ang mga ito sa lahat ng window.
+   - "Eliminar Pestañas por Dominio": Dinamikong submenu na naglilista ng lahat ng domain na may bilang ng bukas na tab `[N]`, na nagbibigay-daan sa tumpak na pagsasara ng tab ayon sa domain.
+   - "Cerrar Todos Excepto el Grupo Activo": Pinapanatili ang aktibong nakatutok na grupo at isinasara ang lahat ng iba pang grupo.
+   - "Reagrupar Todas las Pestañas": Nagti-trigger ng buong background pass ng muling pagpapangkat sa lahat ng bukas na tab.
+   - "Silenciar Todas las Pestañas" / "Reactivar Sonido en Todas las Pestañas": Pandaigdigang kontrol sa pag-mute at pag-unmute ng audio.
+3. **Grupo 3: Pagbasa, Seleksyon, at mga Tala**:
+   - "Leer Página en Voz Alta" (TTS): Full-page text-to-speech reader na may mga kontrol sa overlay.
+   - "Leer Selección en Voz Alta": Binabasa ang naka-highlight na seleksyon ng DOM nang malakas gamit ang speech synthesis.
+   - "Crear Nota desde Selección": Kinukuha ang seleksyon ng teksto, awtomatikong kinukuha ang pamagat ng tala mula sa pinakamalapit na heading (`h1`-`h3`), at iniimbak ito sa `notesStore`.
+4. **Grupo 4: Buksan ang Extension, PiP, at mga Panel**:
+   - "Abrir como PiP" / "Abrir como Ventana Emergente": Ilunsad ang target na pahina, naka-highlight na seleksyon, o target na imahe sa lumulutang na Picture-in-Picture o hiwalay na popup window.
+   - "Abrir Extensión": Binubuksan ang popup ng extension o pinalalawak ang side panel.
+   - "Gestionar Reglas": Binubuksan ang buong Rules Manager sa isang nakalaang tab ng browser.
+   - Mga Direktang Sidepanel Launcher: Isang-click na pagruruta sa List Groups (`?view=listgroup`), Themes (`?view=themes`), AI Assistant (`?view=gemini`), at Customize Hints (`?view=hints`).
+5. **Grupo 5: Mga Setting at Opsyong Pag-cluster**:
+   - **Gestión de Grupos**: Alternar Grupo Actual (i-toggle ang pag-collapse ng aktibong grupo), Alternar Todos los Grupos (i-toggle ang pag-collapse ng lahat ng grupo).
    - **Opciones de Agrupación**:
-     - Agrupación Inteligente (toggle automated heuristic clustering).
-     - Modo Compacto (toggle single-letter group title mode).
-     - Dominio / Subdominio (toggle domain and subdomain grouping).
+     - Agrupación Inteligente (i-toggle ang awtomatikong heuristic clustering).
+     - Modo Compacto (i-toggle ang mode ng pamagat ng grupo na may iisang titik).
+     - Dominio / Subdominio (i-toggle ang pagpapangkat ng domain at subdomain).
      - Páginas Especiales: Páginas Chrome (`chrome://`), Archivos Locales (`file:///`), Extensiones (`chrome-extension://`), Miscelánea (`Misc`), Direcciones IP & Localhost.
    - **Opciones Generales**:
-     - Ordenar Alfabéticamente (enforce alphabetical sorting across tab strip).
+     - Ordenar Alfabéticamente (ipatupad ang paalpabetong pag-uri-uri sa buong tab strip).
      - Ubicación Miscelánea: Principio (`start`), Final (`end`), Alfabéticamente (`alpha`).
-     - Temporizador de Auto-Colapso (toggle idle group collapse timer).
-     - Prefijos Visuales (toggle `🔒`, `🔍`, `🗝️`, `⚠️` state markers).
-     - Vista Previa de Enlaces (toggle in-page link preview modal).
+     - Temporizador de Auto-Colapso (i-toggle ang idle group collapse timer).
+     - Prefijos Visuales (i-toggle ang mga state marker na `🔒`, `🔍`, `🗝️`, `⚠️`).
+     - Vista Previa de Enlaces (i-toggle ang in-page link preview modal).
 
 ---
 
-## 11. Storage Schemas & Data Persistence
+## 11. Mga Schema ng Imbakan at Persistence ng Data
 
-The extension uses a multi-tier storage model across IndexedDB and Chrome Storage APIs:
+Gumagamit ang extension ng multi-tier na modelo ng imbakan sa IndexedDB at Chrome Storage APIs:
 
 ### 11.1 IndexedDB Database: `Intelligent_Workspace` (Schema Version 8)
-1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Secondary index: `'createdAt'`. Holds binary screenshots, canvas data URLs, persistent flags, dimensions, and segment total indices.
-2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 secondary indexes (retrieved/managed by ID). Stores multi-turn chat threads, message roles, token metrics, and search grounding metadata.
-3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 secondary indexes (filtered in memory by contextKey). Stores rich text, checklist arrays, Kanban board cards, Mermaid specifications, and KaTeX formulas.
-4. `backupsGroups`: keyPath: `'group.id'`. 0 secondary indexes (stores backup group objects keyed by nested `'group.id'`). Stores compressed group structures, colors, titles, and closed tab records.
-5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Secondary indexes: `'projectName'` (keyPath `'projectName'`) and `'savedAt'` (keyPath `'savedAt'`) (no `date` index). Holds focus analytics, cycle metrics, and interruption logs.
+1. `screenshots`: keyPath: `'id'`, autoIncrement: true. Pangalawang index: `'createdAt'`. Naglalaman ng mga binary screenshot, canvas data URL, persistent flag, mga sukat, at mga index ng kabuuan ng segment.
+2. `geminiConversations`: keyPath: `'id'`, autoIncrement: true. 0 pangalawang index (kinukuha/pinamamahalaan ayon sa ID). Nag-iimbak ng mga multi-turn chat thread, role ng mensahe, sukatan ng token, at metadata ng search grounding.
+3. `notesStore`: keyPath: `'id'`, autoIncrement: false. 0 pangalawang index (sinasala sa memory ayon sa contextKey). Nag-iimbak ng rich text, mga checklist array, mga card ng Kanban board, mga detalye ng Mermaid, at mga KaTeX formula.
+4. `backupsGroups`: keyPath: `'group.id'`. 0 pangalawang index (nag-iimbak ng mga backup group object na naka-key ayon sa nested `'group.id'`). Nag-iimbak ng mga compressed group structure, kulay, pamagat, at mga talaan ng isinarang tab.
+5. `pomodoroStats`: keyPath: `'id'`, autoIncrement: true. Mga pangalawang index: `'projectName'` (keyPath `'projectName'`) at `'savedAt'` (keyPath `'savedAt'`) (walang index ng `date`). Naglalaman ng focus analytics, mga sukatan ng cycle, at mga log ng pagkaantala.
 
 ### 11.2 Chrome Storage Dual-Routing (`StorageService`)
-- Dynamically routes reads and writes between `chrome.storage.sync` (for portable settings across user devices) and `chrome.storage.local` (for heavy preferences).
-- Key models:
-  - `customRules`: Array of rule definitions (`[{ name, color, active, urls }]`).
-  - `clusterConfig`: Auto-clustering parameters (thresholds, compact mode, special categories).
-  - `userPrefixes`: Emoji prefix assignments (`{ lock, openKey, loupe, checked, warning }`).
-  - `activeTheme`, `savedThemes`, & `themeSchedules`: 9-palette color configurations and scheduled rotation rules configured via `ThemeScheduleModal.svelte`.
-  - `pomodoroState`: Real-time session timestamps, paused duration, and cycle goals.
-  - `wa:settings` & `wa:limits`: Web activity tracking preferences, site limits, and schedule windows.
-  - `youtubeLoopEnabled`: Boolean flag controlling YouTube and Shorts loop buttons.
+- Dinamikong niruruta ang mga pagbasa at pagsusulat sa pagitan ng `chrome.storage.sync` (para sa mga portable na setting sa mga device ng user) at `chrome.storage.local` (para sa mabibigat na kagustuhan).
+- Mga pangunahing modelo:
+  - `customRules`: Array ng mga kahulugan ng panuntunan (`[{ name, color, active, urls }]`).
+  - `clusterConfig`: Mga parameter ng auto-clustering (mga threshold, compact mode, mga espesyal na kategorya).
+  - `userPrefixes`: Mga pagtatalaga ng emoji prefix (`{ lock, openKey, loupe, checked, warning }`).
+  - `activeTheme`, `savedThemes`, & `themeSchedules`: Mga pagsasaayos ng kulay sa 9-palette at mga panuntunan ng nakaiskedyul na pag-ikot na isinaayos sa pamamagitan ng `ThemeScheduleModal.svelte`.
+  - `pomodoroState`: Real-time na mga timestamp ng sesyon, tagal ng pagka-pause, at mga layunin ng cycle.
+  - `wa:settings` & `wa:limits`: Mga kagustuhan sa pagsubaybay sa aktibidad sa web, mga limitasyon sa site, at mga window ng iskedyul.
+  - `youtubeLoopEnabled`: Boolean flag na kumokontrol sa mga button ng loop sa YouTube at Shorts.
 
 ### 11.3 Chrome Storage Session (`chrome.storage.session`)
-Used for ultra-fast, ephemeral runtime coordination:
-- `tabsEverActive`: Set of tab IDs activated during the current browser session.
-- `groupExpandedEver`: Record of groups expanded during the current session.
-- `groupInfoMap`: Real-time registry mapping group IDs to dynamic titles and clustering types.
-- `splitScreenState`: Cached window bounds for restoring original screen dimensions.
-- `contextMenusSignature`: Hash signature preventing redundant context menu rebuild churn during rapid tab switches.
-- `wa:openSegment`: Current active website time segment.
-- `hiddenYoutubeView`: Reference to parked YouTube player view docked in `HiddenGroupsBar.svelte`.
+Ginagamit para sa napakabilis at panandaliang runtime coordination:
+- `tabsEverActive`: Set ng mga tab ID na na-activate sa kasalukuyang sesyon ng browser.
+- `groupExpandedEver`: Talaan ng mga grupong pinalawak sa kasalukuyang sesyon.
+- `groupInfoMap`: Real-time na registry na nagmamapa ng mga group ID sa mga dinamikong pamagat at uri ng clustering.
+- `splitScreenState`: Naka-cache na mga hangganan ng window para sa pagpapanumbalik ng orihinal na sukat ng screen.
+- `contextMenusSignature`: Hash signature na pumipigil sa paulit-ulit na pagbuo ng context menu sa panahon ng mabilisang pagpapalit ng tab.
+- `wa:openSegment`: Kasalukuyang aktibong time segment ng website.
+- `hiddenYoutubeView`: Sanggunian sa naka-park na view ng YouTube player na nakadaong sa `HiddenGroupsBar.svelte`.
 
 ---
 
-## 12. Defensive Engineering & Edge Case Handling
+## 12. Depensibong Inhenyeriya at Pangangasiwa sa mga Edge Case
 
-1. **Declarative Net Request Header Unblocking (`dnr.js`)**:
-   - Modifies response headers via dynamic DNR rules to strip `X-Frame-Options` and restrictive `Content-Security-Policy` headers, allowing external sites to render in the Side Panel and Picture-in-Picture iframes.
-   - **WhatsApp Web Safety**: Explicitly preserves `Cross-Origin-Opener-Policy` (COOP) and `Cross-Origin-Embedder-Policy` (COEP) on `web.whatsapp.com` to prevent breaking its WebAssembly Signal cryptographic implementation.
-2. **Right-Click & Selection Unblocker (`allowRightClickHook.js`)**:
-   - Defeats hostile websites blocking copy, paste, context menu, and text selection.
-   - Runs in `MAIN` world to intercept `preventDefault()` and `stopPropagation()` on `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, and `mouseup`.
-   - Strips inline `oncontextmenu="return false"` handlers via `MutationObserver`.
-   - Protects legitimate web applications (e.g., Telegram Web, Google Docs) by verifying clipboard contents before re-injecting cancelled paste events.
-3. **YouTube Hover Preview Audio Forced-Mute Override (`youtubePreviewAudioHook.js`)**:
-   - Runs in `MAIN` world on `ytd-video-preview #inline-preview-player`.
-   - Overrides `HTMLMediaElement.prototype.muted` property descriptor on the target `<video>` element on hover.
-   - Eliminates YouTube's internal `volumechange` forced-mute race condition, maintaining unmuted audio across loop restarts while hovering.
-4. **YouTube Shorts Feed Sequence Navigation Hook (`youtubeShortsFeedHook.js`)**:
-   - Runs in `MAIN` world on `ytd-shorts`.
-   - Intercepts `shortsProcessedSequence` property, which is invisible from the extension's isolated world, and dispatches native `yt-navigate` events on `ytd-app` without reloading the page or losing floating window state.
-5. **Infinite-Scroll Canvas Protection**:
-   - Caps full-page screenshot walks at 60 segments (`MAX_FULL_PAGE_SEGMENTS`) and 30,000px maximum canvas height (`MAX_FULL_PAGE_CANVAS_PX`), avoiding out-of-memory browser tab crashes.
-6. **Linux Screen Color Picker Eyedropper Fallback**:
-   - When running on Linux environments lacking the Chromium `window.EyeDropper` API, the extension injects `screen-color-picker.js`, rendering a 9x magnified pixel lens with RGB/HEX/HSL calculation.
-7. **Startup Session Settling Delay**:
-   - Delays group pruning for 20 seconds (`groupsHaveSettledAfterStartup()`) upon browser launch to allow session tabs and window states to settle before evaluating group assignments.
+1. **Pag-unblock ng Header ng Declarative Net Request (`dnr.js`)**:
+   - Binabago ang mga header ng tugon sa pamamagitan ng mga dinamikong panuntunan ng DNR upang alisin ang `X-Frame-Options` at mahigpit na mga `Content-Security-Policy` header, na nagpapahintulot sa mga panlabas na site na mag-render sa Side Panel at Picture-in-Picture iframe.
+   - **Kaligtasan sa WhatsApp Web**: Tahasang pinapanatili ang `Cross-Origin-Opener-Policy` (COOP) at `Cross-Origin-Embedder-Policy` (COEP) sa `web.whatsapp.com` upang maiwasan ang pagkasira ng WebAssembly Signal cryptographic implementation nito.
+2. **Tagapagtanggal ng Harang sa Right-Click at Seleksyon (`allowRightClickHook.js`)**:
+   - Tinatalo ang mga mapanirang website na humaharang sa pagkopya, pag-paste, context menu, at pagpili ng teksto.
+   - Tumatakbo sa `MAIN` world upang humarang sa `preventDefault()` at `stopPropagation()` sa `contextmenu`, `copy`, `cut`, `selectstart`, `mousedown`, at `mouseup`.
+   - Inaalis ang mga inline na handler na `oncontextmenu="return false"` sa pamamagitan ng `MutationObserver`.
+   - Pinoprotektahan ang mga lehitimong web application (hal., Telegram Web, Google Docs) sa pamamagitan ng pagsusuri sa nilalaman ng clipboard bago muling i-inject ang mga nakanselang paste event.
+3. **Pag-override sa Sapilitang Pag-mute ng Preview Audio sa Pag-hover sa YouTube (`youtubePreviewAudioHook.js`)**:
+   - Tumatakbo sa `MAIN` world sa `ytd-video-preview #inline-preview-player`.
+   - Ini-override ang `HTMLMediaElement.prototype.muted` property descriptor sa target na elementong `<video>` kapag nag-hover.
+   - Inaalis ang panloob na race condition ng sapilitang pag-mute sa `volumechange` ng YouTube, pinapanatili ang naka-unmute na audio sa lahat ng pag-restart ng loop habang nagho-hover.
+4. **Hook sa Pag-navigate ng Sequence sa Feed ng YouTube Shorts (`youtubeShortsFeedHook.js`)**:
+   - Tumatakbo sa `MAIN` world sa `ytd-shorts`.
+   - Humaharang sa property na `shortsProcessedSequence`, na hindi nakikita mula sa isolated world ng extension, at nagpapadala ng mga katutubong `yt-navigate` event sa `ytd-app` nang hindi muling nilo-load ang pahina o nawawala ang estado ng lumulutang na window.
+5. **Proteksyon sa Canvas ng Infinite-Scroll**:
+   - Nililimitahan ang mga full-page screenshot walk sa 60 segment (`MAX_FULL_PAGE_SEGMENTS`) at 30,000px na maximum taas ng canvas (`MAX_FULL_PAGE_CANVAS_PX`), iniiwasan ang pag-crash ng tab ng browser dahil sa pagkaubos ng memory.
+6. **Fallback sa Eyedropper ng Screen Color Picker sa Linux**:
+   - Kapag tumatakbo sa mga Linux environment na walang Chromium `window.EyeDropper` API, nag-i-inject ang extension ng `screen-color-picker.js`, nagre-render ng 9x magnified pixel lens na may kalkulasyon ng RGB/HEX/HSL.
+7. **Pagkaantala sa Pag-aayos ng Sesyon sa Pagsisimula (Startup Session Settling Delay)**:
+   - Inaantala ang paglilinis ng grupo nang 20 segundo (`groupsHaveSettledAfterStartup()`) sa paglunsad ng browser upang bigyang-daan ang mga tab ng sesyon at estado ng window na maayos bago suriin ang mga pagtatalaga ng grupo.
