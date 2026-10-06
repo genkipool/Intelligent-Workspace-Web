@@ -8,9 +8,11 @@ export const defaultLang = 'en' as const;
 export const ui = {
     en: {
         // Metadata & Global
-        'meta.title': 'Intelligent Workspace: a browser that files itself',
+        'meta.title': 'Intelligent Workspace — Tab Manager, Keyboard Navigation & Dual AI',
         'meta.description':
-            'Tab rules that file every window, a floating omnibar, an AI assistant with 58 tools, screen-time caps that block, and 14 panels. All local, no account.',
+            'Organize tabs automatically, browse with 77 link hints, run dual AI (Gemini Cloud + local Nano) with 58 tools, and loop YouTube videos. 100% local, no account.',
+        'meta.keywords':
+            'tab manager, tab groups, auto tab grouping, keyboard navigation, link hints, mouse-free browsing, keyboard-driven browsing, local ai browser extension, gemini nano, dual ai assistant, autonomous ai agent, youtube video looper, youtube shorts loop, shorts hover audio preview, floating picture in picture, auto pip, parked youtube player, text snippets expander, sidepanel downloads manager, bookmarks to rules, reader mode text to speech, full page screenshot ocr, kanban notes, dnr website blocker, pomodoro timer, cookie editor, right click enabler, qr code generator, 100% local first, zero telemetry, chrome extension manifest v3',
         /** The `alt` on the social card, and the only description a screen reader gets of it. */
         'meta.ogAlt': 'Intelligent Workspace — transform your browser into an autonomous workstation',
 
@@ -1377,9 +1379,11 @@ export const ui = {
 
     es: {
         // Metadata & Global
-        'meta.title': 'Intelligent Workspace: un navegador que se archiva solo',
+        'meta.title': 'Intelligent Workspace: Gestor de Pestañas, Navegación Teclado e IA',
         'meta.description':
-            'Reglas que agrupan tus pestañas, omnibar flotante, asistente de IA con 58 herramientas, topes de tiempo que bloquean y 14 paneles. Todo local, sin cuenta.',
+            'Agrupa pestañas con reglas, navega con 77 etiquetas, usa IA dual (Gemini y Nano) con 58 herramientas y bucle en YouTube. 100% local y privado, sin cuenta.',
+        'meta.keywords':
+            'gestor de pestañas chrome, organizador de pestañas, grupos automáticos de pestañas, navegación por teclado, etiquetas de enlaces, navegación sin ratón, atajos de teclado, asistente ia local, gemini nano, agente ia autónomo, bucle youtube y shorts, repetición a-b youtube, previsualización audio shorts, picture in picture flotante, auto pip, reproductor youtube en segundo plano, snippets de texto con variables, gestor de descargas en panel lateral, convertir marcadores a reglas, modo lectura tts voz alta, captura de pantalla completa ocr, notas kanban, bloqueo de sitios web dnr, temporizador pomodoro, editor de cookies, habilitar clic derecho, generador de códigos qr, 100% local, sin cuenta, privacidad total, extensión manifest v3',
         'meta.ogAlt': 'Intelligent Workspace — transforma tu navegador en una estación de trabajo autónoma',
 
         // Navigation

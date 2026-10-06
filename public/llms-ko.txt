@@ -306,9 +306,9 @@ Accelerated keyboard navigation and workspace controls allow seamless multi-tab 
 - `f`: Activate Vim link hints (letters appear over clickable elements to click).
 - `cf`: Activate Vim link hints to copy target URL to clipboard.
 
-### For power users
+### 파워 유저를 위한 안내 (For power users)
 
-The more advanced users can put the browser into full-screen mode and navigate entirely with the keyboard, without using the mouse at all.
+고급 사용자는 브라우저를 전체 화면 모드로 전환하고 마우스를 전혀 사용하지 않고 키보드만으로 완전히 탐색할 수 있습니다.
 
 #### Full-Screen Immersion & Mouse-Free Browsing
 - **Toggle Full-Screen**: Press `F11` (Windows/Linux) or `Command+Control+F` (macOS). The browser chrome, address bar, tabs strip, and operating system panels are hidden, dedicating 100% of the display to content.

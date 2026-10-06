@@ -25,6 +25,38 @@ const LANGS = [
     { code: 'es', prefix: '/es' },
 ] as const;
 
+/**
+ * The LLM specification files across 25 languages.
+ * Master English specification at `/llms.txt`, and 24 localized files at `/llms-{code}.txt`.
+ */
+const LLMS_SPECS = [
+    '/llms.txt',
+    '/llms-zh.txt',
+    '/llms-hi.txt',
+    '/llms-es.txt',
+    '/llms-fr.txt',
+    '/llms-ar.txt',
+    '/llms-bn.txt',
+    '/llms-pt.txt',
+    '/llms-ru.txt',
+    '/llms-ur.txt',
+    '/llms-id.txt',
+    '/llms-de.txt',
+    '/llms-ja.txt',
+    '/llms-mr.txt',
+    '/llms-te.txt',
+    '/llms-tr.txt',
+    '/llms-ta.txt',
+    '/llms-vi.txt',
+    '/llms-tl.txt',
+    '/llms-ko.txt',
+    '/llms-fa.txt',
+    '/llms-ha.txt',
+    '/llms-sw.txt',
+    '/llms-it.txt',
+    '/llms-pa.txt',
+] as const;
+
 function localised(prefix: string, path: string): string {
     if (path === '/') return prefix === '' ? '/' : `${prefix}/`;
     return `${prefix}${path}`;
@@ -53,10 +85,15 @@ export const GET: APIRoute = ({ site }) => {
         }),
     );
 
+    const llmsEntries = LLMS_SPECS.map((path) =>
+        ['    <url>', `        <loc>${origin}${path}</loc>`, '    </url>'].join('\n'),
+    );
+
     const xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
         ...entries,
+        ...llmsEntries,
         '</urlset>',
         '',
     ].join('\n');

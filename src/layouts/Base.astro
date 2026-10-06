@@ -14,6 +14,7 @@ interface Props {
     lang: Lang;
     title?: string;
     description?: string;
+    keywords?: string;
     noindex?: boolean;
     /**
      * The glyphs this page's sprite carries. A page pays for the whole set only if it
@@ -48,6 +49,7 @@ const {
     lang,
     title,
     description,
+    keywords,
     noindex = false,
     icons = chromeIconNames,
     transitions = true,
@@ -57,6 +59,7 @@ const t = useTranslations(lang);
 
 const pageTitle = title ?? t('meta.title');
 const pageDescription = description ?? t('meta.description');
+const pageKeywords = keywords ?? t('meta.keywords');
 
 /**
  * The social card, in the language of the page it belongs to.
@@ -82,16 +85,47 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: site.name,
-    operatingSystem: 'Google Chrome, Brave, Microsoft Edge, Opera, Vivaldi',
     applicationCategory: 'ProductivityApplication',
+    applicationSubCategory: 'Browser Extension / Tab & Workspace Manager',
+    operatingSystem: 'Google Chrome, Brave, Microsoft Edge, Opera, Vivaldi (Chromium Manifest V3)',
+    browserRequirements: 'Requires Chromium-based browser supporting Manifest V3 (Chrome 116+)',
+    softwareVersion: '1.0.0',
     description: pageDescription,
     url: new URL(Astro.url.pathname, Astro.site).href,
+    downloadUrl: site.storeUrl,
+    installUrl: site.storeUrl,
+    screenshot: ogImage,
+    featureList: [
+        'Automated rule-based and domain/subdomain tab grouping with auto-collapse timers and memory hibernation',
+        'Universal keyboard navigation with 24 manifest shortcuts and 77 Vim link hints for mouse-free browsing',
+        'Floating Omnibar with 41 search/action prefixes and address bar find keyword integration',
+        'Dual AI Assistant: cloud Google Gemini API and offline on-device Gemini Nano with 58 autonomous browser tools',
+        '100% local-first privacy architecture: zero telemetry, zero analytics tracking, no account or login required',
+        'YouTube Video & Shorts Looping with A-B loop segment repeats and playback speed controls',
+        'YouTube Shorts Hover Audio Preview with instant mouse-over unmuting',
+        'Floating document and video Picture-in-Picture (PiP) with automatic detachment on scroll or tab switch',
+        'Parked YouTube background audio player inside hidden tab groups bar',
+        'Dynamic text snippets with template variables ({{var|default}}) and rich/plain expansion',
+        'Sidepanel Downloads Manager with status filtering, keyword search, and in-page file grabber',
+        'Full bookmark tree manager with broken link auditor and single-click bookmark-to-rule conversion',
+        'Distraction-free Reader Mode with synchronized text-to-speech (TTS) and word-by-word highlighting',
+        'Full-page scrolling screenshot stitcher up to 30,000px with on-device OCR text extraction',
+        'Multi-format notes suite: rich text, interactive checklists, and Kanban board in side panel',
+        'Declarative Net Request (DNR) web activity metering, daily/weekly site caps, and password-protected blocking',
+        'Pomodoro timer suite with 4 techniques, audio alarms, interruptions counter, and streak dashboard',
+        'In-browser developer toolkit: cookie manager/editor, right-click enabler, QR generator/scanner, and screen color eyedropper',
+    ],
     offers: {
         '@type': 'Offer',
         price: '0.00',
         priceCurrency: 'USD',
     },
     author: {
+        '@type': 'Organization',
+        name: site.owner,
+        url: site.sourceUrl,
+    },
+    publisher: {
         '@type': 'Organization',
         name: site.owner,
         url: site.sourceUrl,
@@ -106,6 +140,7 @@ const jsonLd = {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
+        <meta name="keywords" content={pageKeywords} />
 
         {
             /*
