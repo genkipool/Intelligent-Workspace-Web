@@ -1,0 +1,11 @@
+{
+    "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+    "notGrouped": "bottom",
+    "groupings": [
+        {
+            "title": "Browser Productivity",
+            "description": "Functional guides, user manuals, and references for the Intelligent Workspace Chrome extension.",
+            "skills": ["intelligent-workspace"]
+        }
+    ]
+}

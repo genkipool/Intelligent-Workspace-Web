@@ -1,7 +1,19 @@
 # Intelligent Workspace Web
 
+[![skills.sh](https://skills.sh/b/genkipool/intelligent-workspace-web)](https://skills.sh/genkipool/intelligent-workspace-web)
+
 The marketing site for **Intelligent Workspace**, plus the donation form the extension
 frames in its side panel. Deployed to Vercel.
+
+### 🤖 AI Agent Skill (`intelligent-workspace`)
+
+This repository publishes the official **Intelligent Workspace** Agent Skill to [skills.sh](https://skills.sh/genkipool/intelligent-workspace-web), providing a comprehensive functional guide, shortcuts reference, and capability manual for AI coding agents (Claude Code, Cursor, GitHub Copilot, Antigravity, Windsurf).
+
+Install into your AI agent with:
+
+```bash
+npx skills add genkipool/Intelligent-Workspace-Web
+```
 
 This is a separate repository from the extension on purpose: different deploy target,
 different lifecycle, and — the reason that actually matters — nothing here can ever end

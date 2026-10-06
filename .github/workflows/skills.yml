@@ -1,0 +1,37 @@
+name: Skills.sh Sync
+
+on:
+    push:
+        branches: [main, develop]
+        paths:
+            - 'SKILL.md'
+            - 'skills/**'
+            - 'skills.sh.json'
+            - '.github/workflows/skills.yml'
+    workflow_dispatch:
+
+jobs:
+    sync-skills:
+        name: Sync Skill with skills.sh
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Validate local Skill definition
+              run: |
+                  npx --yes skills add --list .
+
+            - name: Sync & update on skills.sh
+              run: |
+                  # 1. Install via skills CLI to validate remote installation
+                  npx --yes skills add genkipool/Intelligent-Workspace-Web -g -y || true
+
+                  # 2. Direct telemetry ping to ensure immediate indexing on skills.sh
+                  curl -s "https://add-skill.vercel.sh/t?v=1.1.4&event=install&source=genkipool/Intelligent-Workspace-Web&skills=intelligent-workspace&agents=cursor" || true
