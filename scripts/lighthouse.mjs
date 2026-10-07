@@ -28,6 +28,22 @@ import os from 'node:os';
 import path from 'node:path';
 
 const TARGET = process.argv[2];
+
+if (TARGET !== undefined) {
+    try {
+        const parsed = new URL(TARGET);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+            console.error(`Invalid URL protocol: "${parsed.protocol}". Only http: and https: are allowed.`);
+            process.exit(1);
+        }
+    } catch {
+        console.error(
+            `Invalid URL provided to lighthouse audit: "${TARGET}". Expected a valid http:// or https:// URL.`,
+        );
+        process.exit(1);
+    }
+}
+
 const PORT = 4173;
 const OUT = fs.mkdtempSync(path.join(os.tmpdir(), 'iw-lh-'));
 
