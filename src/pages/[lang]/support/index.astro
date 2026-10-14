@@ -1,17 +1,21 @@
 ---
 /**
- * The same support centre in Spanish, at the same path under `/es/` — see
+ * The same support centre in every other language, at the same path under its prefix. See
  * `pages/support/` for why the route is not translated along with the copy.
  */
 import Base from '@/layouts/Base.astro';
 import SupportCenter from '@/components/SupportCenter.astro';
-import { useTranslations } from '@/i18n/utils';
+import { prefixedLangPaths, useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
 
-const t = useTranslations('es');
+export const getStaticPaths = prefixedLangPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
 ---
 
 <Base
-    lang="es"
+    lang={lang}
     title={t('support.meta.title')}
     description={t('support.meta.description')}
     icons={[
@@ -29,5 +33,5 @@ const t = useTranslations('es');
         'heart',
     ]}
 >
-    <SupportCenter lang="es" />
+    <SupportCenter lang={lang} />
 </Base>

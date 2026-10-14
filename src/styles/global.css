@@ -528,3 +528,35 @@ svg {
         transition: none !important;
     }
 }
+
+/*
+ * Arabic and Urdu.
+ *
+ * The page keeps the same layout as every other language: nothing is mirrored, so the
+ * navigation, the columns and the product shots of the extension (which is laid out
+ * left to right in every language it ships in) sit where they always do. What turns is
+ * the text: every element takes its direction from its own first letter, so an Arabic
+ * paragraph reads and aligns right to left inside the same box, while a brand name or
+ * a URL on its own stays left to right.
+ */
+:root:is(:lang(ar), :lang(ur)) body * {
+    unicode-bidi: plaintext;
+}
+
+/* Prefixes and keys are typed left to right whatever the text around them: `lnt:` must
+   not come out as `:lnt`, nor `Ctrl+Shift+Z` as `Z+Shift+Ctrl`. */
+:root:is(:lang(ar), :lang(ur)) :is(code, kbd) {
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+/*
+ * Urdu. Inter has no Arabic-script glyphs, and the fallback most systems pick for Urdu
+ * is Nastaliq, whose tall stacked letters overflow the line heights this page is set
+ * in and run into the line below. A Naskh face sits on the same metrics as the rest
+ * of the page and stays legible at every size.
+ */
+:root:lang(ur) {
+    --font-display:
+        'Inter', 'Noto Naskh Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, -apple-system, sans-serif;
+}

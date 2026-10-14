@@ -1,15 +1,15 @@
 /**
  * A translation nobody reads.
  *
- * `ui.ts` is the largest file in the project, and the entries in it are the ones most
+ * The dictionaries under `locales/` are the largest files in the project, and the entries in it are the ones most
  * likely to outlive what used them: a section is rewritten, its copy is not deleted,
- * and the dictionary keeps a paragraph in two languages that no page renders. Eighty-six
+ * and the dictionary keeps a paragraph in every language that no page renders. Eighty-six
  * of them had accumulated that way. Nothing catches it — a key is only ever read
  * dynamically, so neither the compiler nor the bundler can tell.
  *
  * This walks the source for every key and fails on the ones nothing mentions. If a key
  * really is meant to sit unused for now, delete it: it is in the history, and writing it
- * again when the section arrives costs less than carrying it in both languages until
+ * again when the section arrives costs less than carrying it in every language until
  * then.
  */
 import { describe, it, expect } from 'vitest';
@@ -18,13 +18,13 @@ import path from 'node:path';
 import { ui } from '@/i18n/ui';
 
 const SOURCE_ROOT = path.resolve(process.cwd(), 'src');
-const DICTIONARY = path.join(SOURCE_ROOT, 'i18n', 'ui.ts');
+const LOCALES = path.join(SOURCE_ROOT, 'i18n', 'locales');
 
 function sourceFiles(dir: string): string[] {
     return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
         const full = path.join(dir, entry.name);
-        if (entry.isDirectory()) return sourceFiles(full);
-        if (!/\.(astro|ts)$/.test(entry.name) || full === DICTIONARY) return [];
+        if (entry.isDirectory()) return full === LOCALES ? [] : sourceFiles(full);
+        if (!/\.(astro|ts)$/.test(entry.name)) return [];
         return [full];
     });
 }

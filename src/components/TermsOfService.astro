@@ -22,6 +22,7 @@
  */
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import { languages } from '@/i18n/languages';
 import { site } from '@/data/site';
 import { sections, identityRows, tipRows, effectiveDate } from '@/data/terms';
 import Icon from '@/components/Icon.astro';
@@ -42,7 +43,7 @@ const privacyUrl = localisePath(lang, '/privacy');
 const payUrl = localisePath(lang, '/pay');
 const supportUrl = localisePath(lang, '/support');
 
-const effectiveLabel = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+const effectiveLabel = new Intl.DateTimeFormat(languages[lang].locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

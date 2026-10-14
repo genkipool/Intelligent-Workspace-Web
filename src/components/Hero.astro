@@ -103,7 +103,7 @@ const slides = [
             </div>
 
             {/* Carousel Progress Controls (3 Radix-style bars + Chevrons) */}
-            <div class="carousel-nav-row" role="region" aria-label="Hero Carousel Navigation">
+            <div class="carousel-nav-row" role="region" aria-label={t('hero.carouselLabel')}>
                 <button
                     type="button"
                     class="carousel-arrow-btn"
@@ -210,7 +210,7 @@ const slides = [
                             <li class="hint-omni-result-item">
                                 <span class="hint-omni-favicon fav-fg"></span>
                                 <span class="hint-omni-text-container">
-                                    <span class="hint-omni-title">Landing · panel lateral</span>
+                                    <span class="hint-omni-title">{t('demo.tab.landing')}</span>
                                     <span class="hint-omni-url">figma.com/file/iw-landing</span>
                                 </span>
                             </li>
@@ -259,9 +259,7 @@ const slides = [
                                         },
                                         {
                                             domain: 'jira.atlassian.net',
-                                            tabs: [
-                                                { title: 'IW-214 · Panel de actividad web', fav: 'fav-ji' },
-                                            ],
+                                            tabs: [{ title: t('demo.tab.activityPanel'), fav: 'fav-ji' }],
                                         },
                                     ],
                                 },
@@ -279,7 +277,7 @@ const slides = [
                                     name: t('hero.m3.g3'),
                                     color: 'c-purple',
                                     count: '0/2',
-                                    tabs: [{ title: 'Landing · panel lateral', fav: 'fav-fg' }],
+                                    tabs: [{ title: t('demo.tab.landing'), fav: 'fav-fg' }],
                                 },
                             ]}
                         />

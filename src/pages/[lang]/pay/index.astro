@@ -2,9 +2,12 @@
 import Base from '@/layouts/Base.astro';
 import PaySheet from '@/components/PaySheet.astro';
 import '@/styles/pay.css';
-import { useTranslations } from '@/i18n/utils';
+import { prefixedLangPaths, useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
 
-const lang = 'es' as const;
+export const getStaticPaths = prefixedLangPaths;
+
+const { lang } = Astro.props as { lang: Lang };
 const t = useTranslations(lang);
 ---
 

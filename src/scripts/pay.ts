@@ -17,6 +17,8 @@
 
 import { contributionAmounts, defaultContributionAmount, contributionCurrency } from '@/data/site';
 import { CARD_FORM_METHODS, clampAmount } from '@/lib/contribution';
+import { languages } from '@/i18n/languages';
+import type { Lang } from '@/i18n/ui';
 
 /**
  * The publishable key of the account that receives the contributions.
@@ -164,15 +166,39 @@ const CHANNEL_PREFIX = 'iw-pay-';
 
 /** Present only in a hand-off window: the channel the sheet that opened it is listening on. */
 const CHANNEL = params.get('channel');
-const LANG = document.documentElement.lang === 'es' ? 'es' : 'en';
+const LANG: Lang =
+    document.documentElement.lang in languages ? (document.documentElement.lang as Lang) : 'en';
+
+/**
+ * The languages Stripe Elements is translated into, by the code it expects. A language
+ * it does not have gets `auto`, which follows the browser rather than falling to English.
+ */
+const STRIPE_LOCALES: Partial<Record<Lang, string>> = {
+    en: 'en',
+    es: 'es',
+    zh: 'zh',
+    fr: 'fr',
+    ar: 'ar',
+    pt: 'pt-BR',
+    ru: 'ru',
+    id: 'id',
+    de: 'de',
+    ja: 'ja',
+    tr: 'tr',
+    vi: 'vi',
+    tl: 'fil',
+    ko: 'ko',
+    it: 'it',
+};
 
 const strings: PayStrings = JSON.parse(document.getElementById('pay-strings')?.textContent ?? '{}');
 
 /**
  * Currency goes before the number in English and after it in Spanish. Intl knows that;
- * a template literal does not, and produced "Donar €5" on the Spanish sheet.
+ * a template literal does not, and produced "Donar €5" on the Spanish sheet. English
+ * uses `en-IE` rather than the site's `en-GB` because the sheet charges in euros.
  */
-const money = new Intl.NumberFormat(LANG === 'es' ? 'es-ES' : 'en-IE', {
+const money = new Intl.NumberFormat(LANG === 'en' ? 'en-IE' : languages[LANG].locale, {
     style: 'currency',
     currency: CURRENCY.toUpperCase(),
     maximumFractionDigits: 0,
@@ -618,7 +644,7 @@ if (!PUBLISHABLE_KEY) {
     throw new Error('PUBLIC_STRIPE_PUBLISHABLE_KEY is not set');
 }
 
-const stripe = Stripe(PUBLISHABLE_KEY, { locale: LANG });
+const stripe = Stripe(PUBLISHABLE_KEY, { locale: STRIPE_LOCALES[LANG] ?? 'auto' });
 
 /**
  * Finishes a payment.

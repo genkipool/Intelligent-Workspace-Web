@@ -113,12 +113,12 @@ const t = useTranslations(lang);
                                     domain: 'youtube.com',
                                     tabs: [
                                         {
-                                            title: 'Astro 6 en veinte minutos',
+                                            title: t('demo.tab.astroTalk'),
                                             fav: 'fav-yt',
                                             active: true,
                                         },
                                         {
-                                            title: 'Svelte 5 runes, explicadas',
+                                            title: t('demo.tab.svelteRunes'),
                                             fav: 'fav-yt',
                                             seen: true,
                                         },
@@ -126,7 +126,7 @@ const t = useTranslations(lang);
                                 },
                                 {
                                     domain: 'open.spotify.com',
-                                    tabs: [{ title: 'Focus · Deep work', fav: 'fav-sp' }],
+                                    tabs: [{ title: t('demo.tab.focus'), fav: 'fav-sp' }],
                                 },
                             ],
                         },
@@ -136,8 +136,8 @@ const t = useTranslations(lang);
                             count: '3/3',
                             allSeen: true,
                             tabs: [
-                                { title: 'Reserva de vuelos · Julio', fav: 'fav-bk', seen: true },
-                                { title: 'Apartamento en Lisboa', fav: 'fav-bk', seen: true },
+                                { title: t('demo.tab.flights'), fav: 'fav-bk', seen: true },
+                                { title: t('demo.tab.lisbon'), fav: 'fav-bk', seen: true },
                             ],
                         },
                         {

@@ -1,0 +1,18 @@
+---
+import Base from '@/layouts/Base.astro';
+import Landing from '@/components/Landing.astro';
+import PayWarmup from '@/components/PayWarmup.astro';
+import { allIconNames } from '@/data/icons';
+import { localisePath, prefixedLangPaths } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+/** The landing page once per prefixed language: `/es/`, `/fr/`, `/ja/` and the rest. */
+export const getStaticPaths = prefixedLangPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+---
+
+<Base lang={lang} icons={allIconNames}>
+    <PayWarmup slot="head" payPath={localisePath(lang, '/pay')} />
+    <Landing lang={lang} />
+</Base>

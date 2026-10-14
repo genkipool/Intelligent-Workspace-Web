@@ -46,14 +46,42 @@ export default defineConfig({
     adapter: vercel(),
 
     /**
-     * English is the default and lives at the root; Spanish is prefixed. Astro renders
-     * both at build time from one set of components, so a translation is a dictionary
-     * entry rather than a second copy of the page — and each language gets a real URL
-     * that search engines can index, which a client-side toggle never does.
+     * English is the default and lives at the root; every other language is prefixed.
+     * Astro renders them all at build time from one set of components, so a translation
+     * is a dictionary file rather than a second copy of the page, and each language gets
+     * a real URL that search engines can index, which a client-side toggle never does.
+     *
+     * The list matches `src/i18n/ui.ts`, and both match the languages `public/llms-*.txt`
+     * is published in.
      */
     i18n: {
         defaultLocale: 'en',
-        locales: ['en', 'es'],
+        locales: [
+            'en',
+            'es',
+            'zh',
+            'hi',
+            'fr',
+            'ar',
+            'bn',
+            'pt',
+            'ru',
+            'ur',
+            'id',
+            'de',
+            'ja',
+            'mr',
+            'te',
+            'tr',
+            'ta',
+            'vi',
+            'tl',
+            'ko',
+            'ha',
+            'sw',
+            'it',
+            'pa',
+        ],
         routing: {
             prefixDefaultLocale: false,
         },

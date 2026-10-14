@@ -2,10 +2,10 @@
  * The sitemap, written by hand rather than pulled from `@astrojs/sitemap`.
  *
  * The integration would work, but it would also be a dependency to earn its keep against
- * a site of four pages in two languages. What it gives that a generated list does not is
+ * a site of four pages. What it gives that a generated list does not is
  * the `xhtml:link` alternates, and those are twelve lines here.
  *
- * WHAT IS DELIBERATELY MISSING: `/pay` and `/es/pay`. They are served `Cache-Control:
+ * WHAT IS DELIBERATELY MISSING: `/pay` and its translations (`/es/pay`, `/fr/pay`...). They are served `Cache-Control:
  * no-store`, they carry a per-open nonce in the query string, and there is nothing on them
  * to rank — a payment sheet in a search result is a worse answer than the page that links
  * to it. They stay crawlable, they are simply not advertised.
@@ -15,15 +15,14 @@
  */
 
 import type { APIRoute } from 'astro';
+import { langs } from '@/i18n/utils';
+import { defaultLang } from '@/i18n/ui';
 
 /** The page types, each of which exists once per language. */
 const PATHS = ['/', '/privacy', '/support', '/terms'] as const;
 
-/** `en` lives at the root and `es` under its prefix — the same rule as `localisePath`. */
-const LANGS = [
-    { code: 'en', prefix: '' },
-    { code: 'es', prefix: '/es' },
-] as const;
+/** `en` lives at the root and every other language under its prefix, as in `localisePath`. */
+const LANGS = langs.map((code) => ({ code, prefix: code === defaultLang ? '' : `/${code}` }));
 
 /**
  * The LLM specification files across 25 languages.

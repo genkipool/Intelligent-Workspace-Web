@@ -24,7 +24,7 @@ const t = useTranslations(lang);
         />
 
         {/* Interactive Category Filters */}
-        <div class="bento-filter-bar" role="tablist" aria-label="Arsenal Category Filter" data-reveal>
+        <div class="bento-filter-bar" role="tablist" aria-label={t('bento.filter.label')} data-reveal>
             {
                 bentoCategories.map((cat, index) => (
                     <button

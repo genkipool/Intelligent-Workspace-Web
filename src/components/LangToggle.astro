@@ -1,6 +1,16 @@
 ---
-import { localisePath, useTranslations } from '@/i18n/utils';
-import { ui, type Lang } from '@/i18n/ui';
+/**
+ * The language switcher.
+ *
+ * Two pills were enough for English and Spanish; twenty-five are not, so this is a
+ * disclosure: the current code as the button, and every language listed under it by its
+ * own name, which is how a reader scans for theirs. It is a `<details>` so it opens and
+ * every link works with no script at all; the script below only closes it on an outside
+ * click or Escape, which is what a menu is expected to do.
+ */
+import { localisePath, useTranslations, langs, barePath } from '@/i18n/utils';
+import { languages } from '@/i18n/languages';
+import type { Lang } from '@/i18n/ui';
 
 interface Props {
     lang: Lang;
@@ -9,62 +19,198 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const bare = lang === 'en' ? Astro.url.pathname : Astro.url.pathname.replace(`/${lang}`, '') || '/';
-const options = (Object.keys(ui) as Lang[]).map((code) => ({
+const bare = barePath(lang, Astro.url.pathname);
+const options = langs.map((code) => ({
     code,
+    name: languages[code].name,
+    dir: languages[code].dir,
     href: localisePath(code, bare),
     current: code === lang,
 }));
 ---
 
-<div class="lang-toggle-wrap" role="group" aria-label={t('nav.language')}>
-    {
-        options.map((option) => (
-            <a
-                href={option.href}
-                hreflang={option.code}
-                data-astro-history="replace"
-                class:list={['lang-pill', { active: option.current }]}
-                aria-current={option.current ? 'true' : undefined}
-            >
-                {option.code.toUpperCase()}
-            </a>
-        ))
+<details class="lang-menu" data-lang-menu>
+    <summary class="lang-trigger" aria-label={`${t('nav.language')}: ${languages[lang].name}`}>
+        <span class="lang-code">{lang.toUpperCase()}</span>
+        <svg class="lang-chevron" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+            <path
+                d="M2.5 4.5 6 8l3.5-3.5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+        </svg>
+    </summary>
+    <ul class="lang-list" role="list" aria-label={t('nav.language')}>
+        {
+            options.map((option) => (
+                <li>
+                    <a
+                        href={option.href}
+                        hreflang={option.code}
+                        data-astro-history="replace"
+                        class:list={['lang-option', { active: option.current }]}
+                        aria-current={option.current ? 'true' : undefined}
+                    >
+                        <span class="lang-option-code">{option.code.toUpperCase()}</span>
+                        <span class="lang-option-name" lang={option.code} dir={option.dir}>
+                            {option.name}
+                        </span>
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</details>
+
+<script>
+    function closeOnOutside(event: Event) {
+        for (const menu of document.querySelectorAll<HTMLDetailsElement>('[data-lang-menu][open]')) {
+            if (!menu.contains(event.target as Node)) menu.open = false;
+        }
     }
-</div>
+
+    function closeOnEscape(event: KeyboardEvent) {
+        if (event.key !== 'Escape') return;
+        for (const menu of document.querySelectorAll<HTMLDetailsElement>('[data-lang-menu][open]')) {
+            menu.open = false;
+            menu.querySelector('summary')?.focus();
+        }
+    }
+
+    // Bound once on the document, so the client router swapping the page does not
+    // need to bind them again.
+    document.addEventListener('click', closeOnOutside);
+    document.addEventListener('keydown', closeOnEscape);
+</script>
 
 <style>
-    .lang-toggle-wrap {
+    .lang-menu {
+        position: relative;
+    }
+
+    .lang-trigger {
         display: inline-flex;
         align-items: center;
-        padding: 3px;
+        justify-content: center;
+        gap: 6px;
+        /* Fixed, so the two-letter code of one language is never wider than another's. */
+        width: 64px;
+        height: 32px;
+        padding: 0 12px;
+        line-height: 1;
         border-radius: var(--radius-full);
         border: 1px solid var(--border-color);
         background: var(--bg-panel-color);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .lang-pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px 10px;
-        border-radius: var(--radius-full);
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.05em;
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: all 0.18s ease;
-    }
-
-    .lang-pill:hover {
         color: var(--text-color);
+        cursor: pointer;
+        list-style: none;
+        user-select: none;
+        transition: border-color 0.18s ease;
     }
 
-    .lang-pill.active {
+    /* Capitals have no descenders, so a line box centred in the button leaves them
+       sitting high. Trimming the box to the cap height centres what is actually drawn. */
+    .lang-code {
+        display: block;
+        text-box: trim-both cap alphabetic;
+    }
+
+    .lang-trigger::-webkit-details-marker {
+        display: none;
+    }
+
+    .lang-trigger:hover,
+    .lang-menu[open] .lang-trigger {
+        border-color: #16a085;
+    }
+
+    .lang-chevron {
+        display: block;
+        color: var(--text-muted);
+        transition: transform 0.18s ease;
+    }
+
+    .lang-menu[open] .lang-chevron {
+        transform: rotate(180deg);
+    }
+
+    .lang-list {
+        position: absolute;
+        inset-inline-end: 0;
+        top: calc(100% + 8px);
+        z-index: 100;
+        /* Three columns hold all twenty-five in nine rows, short enough that the list
+           never needs a scrollbar of its own. */
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2px;
+        width: 540px;
+        margin: 0;
+        padding: 6px;
+        list-style: none;
+        border-radius: 14px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-panel-color);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    .lang-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 0.8125rem;
+        line-height: 1.35;
+        color: var(--text-color);
+        text-decoration: none;
+        transition: background 0.15s ease;
+    }
+
+    /* On a phone the trigger is not at the edge of the screen, so the list is pinned to
+       the viewport instead of to it, in two columns that still fit without scrolling. */
+    @media (max-width: 600px) {
+        .lang-list {
+            position: fixed;
+            inset-inline: 16px;
+            top: 68px;
+            width: auto;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .lang-option:hover,
+    .lang-option:focus-visible {
+        background: rgba(22, 160, 133, 0.12);
+    }
+
+    .lang-option-code {
+        flex: none;
+        min-width: 2.2em;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+
+    .lang-option-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .lang-option.active {
         background: linear-gradient(135deg, #16a085 0%, #0e6655 100%);
         color: #ffffff;
-        box-shadow: 0 2px 8px rgba(22, 160, 133, 0.3);
+    }
+
+    .lang-option.active .lang-option-code {
+        color: rgba(255, 255, 255, 0.8);
     }
 </style>

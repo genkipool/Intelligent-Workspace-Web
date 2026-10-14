@@ -45,8 +45,8 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
             <img
                 src="/assets/logo.svg"
                 alt=""
-                width="32"
-                height="32"
+                width="36"
+                height="36"
                 class="brand-logo-img"
                 fetchpriority="high"
                 decoding="async"
@@ -58,7 +58,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         </a>
 
         {/* Desktop Navigation Links (Clean & Essential) */}
-        <nav class="nav-links" aria-label="Main Navigation">
+        <nav class="nav-links" aria-label={t('nav.mainLabel')}>
             {
                 links.map((link) => (
                     <a href={link.href} class="nav-item">
@@ -266,10 +266,18 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
             border-color 0.2s ease;
     }
 
+    /*
+     * THREE FIXED COLUMNS, SO NOTHING MOVES WITH THE LANGUAGE.
+     *
+     * The brand and the actions take their own, fixed widths at the two ends, and the
+     * links are centred in whatever is left between them. A longer word for "Features"
+     * in one of the twenty-four languages can only move the links themselves, inside
+     * their own column: it can never push a button along the bar.
+     */
     .header-inner {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: center;
-        justify-content: space-between;
         gap: 20px;
         height: var(--header-height);
     }
@@ -285,8 +293,8 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
     }
 
     .brand-logo-img {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         object-fit: contain;
         display: block;
     }
@@ -318,10 +326,13 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
     .nav-links {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
+        min-width: 0;
     }
 
     .nav-item {
+        white-space: nowrap;
         padding: 8px 14px;
         border-radius: var(--radius-full);
         font-size: 0.9rem;
@@ -344,12 +355,19 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
     .nav-actions {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
         gap: 12px;
     }
 
+    /* Fixed for the same reason as the contribute button below: sized for the longest
+       of the twenty-four labels, with the label centred in it. */
     .nav-install-btn {
-        padding: 9px 20px;
-        font-size: 0.88rem;
+        width: 208px;
+        flex-shrink: 0;
+        padding: 9px 0;
+        justify-content: center;
+        white-space: nowrap;
+        font-size: 0.86rem;
         min-width: unset;
         min-height: unset;
     }
@@ -361,11 +379,11 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
     /*
      * A FIXED WIDTH, NOT ONE THE LABEL DECIDES.
      *
-     * `.btn-secondary` sizes itself to its content, which means this button is 105px in
-     * English and 98px in Spanish — the bar shifts under the language switch, and it
-     * would shift again for any third language. It is a fixed control in a fixed bar,
-     * so the width is stated here and the label is centred in it. The room is set for
-     * the longer of the two labels plus its heart, with a little to spare.
+     * `.btn-secondary` sizes itself to its content, which means this button changed
+     * width with every language and the bar shifted under the language switch. It is a
+     * fixed control in a fixed bar, so the width is stated here and the label is
+     * centred in it. The room is set for the longest of the twenty-four labels plus its
+     * heart, with space either side so none of them reads as squeezed.
      *
      * `.nav-install-btn` gives `.btn-primary` the same treatment for the same reason:
      * the shared button is sized for a page's call to action, and a 50px-tall pill in a
@@ -373,14 +391,15 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
      * primary action up here, and it is installing.
      */
     .nav-contribute-btn {
-        width: 116px;
+        width: 140px;
         /* Fixed means fixed: without this the flex row squeezes it as the window
            narrows, so the button that was not supposed to move with its label moves
            with the viewport instead. */
         flex-shrink: 0;
         padding: 8px 0;
         justify-content: center;
-        font-size: 0.88rem;
+        white-space: nowrap;
+        font-size: 0.86rem;
         min-width: unset;
         min-height: unset;
         gap: 7px;
@@ -680,7 +699,7 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
      * folds into the drawer — at 1120px rather than 920, because 920 was a promise the
      * bar could not keep.
      */
-    @media (max-width: 1360px) {
+    @media (max-width: 1440px) {
         .nav-item {
             padding: 8px 10px;
         }
@@ -772,7 +791,31 @@ const links: readonly { href: string; labelKey: TranslationKey }[] = [
         }
     }
 
-    @media (max-width: 1230px) {
+    /* Below this the label of the contribute button costs the links their room, so it
+       drops to its heart, at one fixed size in every language. The translated label
+       stays as its accessible name and its tooltip. */
+    @media (max-width: 1400px) {
+        .nav-contribute-btn {
+            width: 41px;
+            height: 41px;
+            padding: 0;
+        }
+
+        .nav-contribute-btn span {
+            display: none;
+        }
+    }
+
+    /* The longest labels among the twenty-four languages (Portuguese, Russian, Tamil)
+       need a little less type before the bar runs out of room for them. */
+    @media (max-width: 1340px) {
+        .nav-item {
+            padding: 8px 8px;
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 1260px) {
         .nav-links {
             display: none;
         }

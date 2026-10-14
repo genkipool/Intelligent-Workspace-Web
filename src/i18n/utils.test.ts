@@ -3,7 +3,7 @@
  * English page, which nobody reports because the page still works.
  */
 import { describe, it, expect } from 'vitest';
-import { getLangFromUrl, useTranslations, localisePath, otherLang } from '@/i18n/utils';
+import { getLangFromUrl, useTranslations, localisePath, barePath, prefixedLangs } from '@/i18n/utils';
 import { ui } from '@/i18n/ui';
 
 describe('getLangFromUrl', () => {
@@ -18,7 +18,8 @@ describe('getLangFromUrl', () => {
     });
 
     it('falls back rather than trusting an unknown prefix', () => {
-        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/fr/'))).toBe('en');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/xx/'))).toBe('en');
+        expect(getLangFromUrl(new URL('https://intelligentworkspace.genkipool.com/payments'))).toBe('en');
     });
 });
 
@@ -38,10 +39,20 @@ describe('localisePath', () => {
     });
 });
 
-describe('otherLang', () => {
-    it('is its own inverse', () => {
-        expect(otherLang('en')).toBe('es');
-        expect(otherLang(otherLang('en'))).toBe('en');
+describe('barePath', () => {
+    it('strips the prefix so every language can be linked from the same path', () => {
+        expect(barePath('en', '/support')).toBe('/support');
+        expect(barePath('ja', '/ja/support')).toBe('/support');
+        expect(barePath('ja', '/ja/')).toBe('/');
+        expect(barePath('fr', '/fr')).toBe('/');
+    });
+});
+
+describe('prefixedLangs', () => {
+    it('is every language but the default', () => {
+        expect(prefixedLangs).not.toContain('en');
+        expect(prefixedLangs).toContain('es');
+        expect(prefixedLangs.length).toBe(Object.keys(ui).length - 1);
     });
 });
 

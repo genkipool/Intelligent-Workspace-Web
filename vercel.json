@@ -18,7 +18,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 },
                 {
                     "key": "Permissions-Policy",
@@ -35,7 +35,381 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/zh/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/hi/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/fr/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ar/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/bn/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/pt/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ru/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ur/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/id/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/de/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ja/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/mr/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/te/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/tr/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ta/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/vi/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/tl/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ko/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/ha/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/sw/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/it/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "payment=(self \"https://js.stripe.com\"), browsing-topics=()"
+                },
+                {
+                    "key": "Cache-Control",
+                    "value": "no-store"
+                }
+            ]
+        },
+        {
+            "source": "/pa/pay",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com; font-src 'self'; connect-src 'self' https://api.stripe.com https://merchant-ui-api.stripe.com https://m.stripe.network https://q.stripe.com; frame-src https://js.stripe.com https://hooks.stripe.com https://pay.google.com https://m.stripe.network; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 },
                 {
                     "key": "Permissions-Policy",
@@ -52,7 +426,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
@@ -61,7 +435,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
@@ -70,7 +444,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
@@ -79,7 +453,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
@@ -88,7 +462,7 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
@@ -97,16 +471,610 @@
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },
         {
-            "source": "/((?!es/pay|pay|support|terms|privacy|es/support|es/terms|es/privacy).*)",
+            "source": "/zh/support",
             "headers": [
                 {
                     "key": "Content-Security-Policy",
-                    "value": "default-src 'self'; script-src 'self' 'sha256-AW7sRxgdIvbBIXU3ncJSd8UHk/DBY45Abks2HjxQjOI=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/zh/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/zh/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/hi/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/hi/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/hi/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/fr/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/fr/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/fr/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ar/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ar/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ar/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/bn/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/bn/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/bn/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pt/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pt/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pt/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ru/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ru/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ru/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ur/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ur/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ur/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/id/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/id/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/id/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/de/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/de/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/de/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ja/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ja/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ja/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/mr/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/mr/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/mr/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/te/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/te/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/te/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tr/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tr/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tr/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ta/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ta/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ta/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/vi/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/vi/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/vi/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tl/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tl/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/tl/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ko/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ko/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ko/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ha/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ha/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/ha/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/sw/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/sw/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/sw/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/it/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/it/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/it/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pa/support",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pa/terms",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/pa/privacy",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors chrome-extension://cmkbnppbnhoklenlngmbdfecgbnlojoo chrome-extension://phfhghnjjimkbbmfjcjgaegjombeophi; base-uri 'none'; form-action 'none'; object-src 'none'"
+                }
+            ]
+        },
+        {
+            "source": "/((?!(?:es|zh|hi|fr|ar|bn|pt|ru|ur|id|de|ja|mr|te|tr|ta|vi|tl|ko|ha|sw|it|pa)/(?:pay|support|terms|privacy)|pay|support|terms|privacy).*)",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' 'sha256-T9Yx9CtVEMwcJP7qu0RO88FiIFy+yNZkUv5ZNqAFd+k=' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; object-src 'none'"
                 }
             ]
         },

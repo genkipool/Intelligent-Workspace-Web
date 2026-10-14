@@ -1,0 +1,122 @@
+{
+    "en": {
+        "headline": ["Transform your browser into an", "autonomous workstation"],
+        "lede": "Tab rules, a floating omnibar and an AI assistant.",
+        "meta": "100% local  ·  No account  ·  Chrome"
+    },
+    "es": {
+        "headline": ["Transforma tu navegador en una", "estación de trabajo autónoma"],
+        "lede": "Reglas de pestañas, omnibar y asistente de IA.",
+        "meta": "100% local  ·  Sin cuenta  ·  Chrome"
+    },
+    "zh": {
+        "headline": ["把你的浏览器", "变成自主工作站"],
+        "lede": "标签页规则、悬浮 Omnibar 与 AI 助手。",
+        "meta": "100% 本地  ·  无需账号  ·  Chrome"
+    },
+    "hi": {
+        "headline": ["अपने ब्राउज़र को एक स्वायत्त", "वर्कस्टेशन में बदलें"],
+        "lede": "टैब नियम, फ़्लोटिंग Omnibar और एक AI सहायक।",
+        "meta": "100% लोकल  ·  कोई खाता नहीं  ·  Chrome"
+    },
+    "fr": {
+        "headline": ["Transformez votre navigateur", "en poste de travail autonome"],
+        "lede": "Règles d’onglets, omnibar flottante, assistant IA.",
+        "meta": "100 % local  ·  Sans compte  ·  Chrome"
+    },
+    "ar": {
+        "headline": ["حوّل متصفحك إلى", "محطة عمل مستقلة"],
+        "lede": "قواعد للعلامات، وOmnibar عائم، ومساعد ذكاء اصطناعي.",
+        "meta": "محلي 100%  ·  بلا حساب  ·  Chrome"
+    },
+    "bn": {
+        "headline": ["আপনার ব্রাউজারকে করে তুলুন", "এক স্বয়ংক্রিয় ওয়ার্কস্টেশন"],
+        "lede": "ট্যাবের নিয়ম, ভাসমান Omnibar আর এআই সহকারী।",
+        "meta": "100% লোকাল  ·  অ্যাকাউন্ট লাগে না  ·  Chrome"
+    },
+    "pt": {
+        "headline": ["Transforme seu navegador em uma", "estação de trabalho autônoma"],
+        "lede": "Regras de abas, omnibar flutuante e assistente de IA.",
+        "meta": "100% local  ·  Sem conta  ·  Chrome"
+    },
+    "ru": {
+        "headline": ["Превратите браузер", "в автономную рабочую станцию"],
+        "lede": "Правила для вкладок, плавающий Omnibar и ИИ-ассистент.",
+        "meta": "100% локально  ·  Без аккаунта  ·  Chrome"
+    },
+    "ur": {
+        "headline": ["اپنے براؤزر کو ایک خود مختار", "ورک اسٹیشن میں بدل دیں"],
+        "lede": "ٹیب قواعد، تیرتا Omnibar اور ایک AI اسسٹنٹ۔",
+        "meta": "100% مقامی  ·  کوئی اکاؤنٹ نہیں  ·  Chrome"
+    },
+    "id": {
+        "headline": ["Ubah peramban Anda menjadi", "stasiun kerja otonom"],
+        "lede": "Aturan tab, omnibar mengambang, dan asisten AI.",
+        "meta": "100% lokal  ·  Tanpa akun  ·  Chrome"
+    },
+    "de": {
+        "headline": ["Verwandeln Sie Ihren Browser", "in eine autonome Arbeitsstation"],
+        "lede": "Tab-Regeln, schwebende Omnibar und KI-Assistent.",
+        "meta": "100 % lokal  ·  Kein Konto  ·  Chrome"
+    },
+    "ja": {
+        "headline": ["ブラウザを自律型の", "ワークステーションに"],
+        "lede": "タブのルール、フローティング Omnibar、AI アシスタント。",
+        "meta": "100% ローカル  ·  アカウント不要  ·  Chrome"
+    },
+    "mr": {
+        "headline": ["तुमच्या ब्राउझरचे रूपांतर करा", "एका स्वायत्त कार्यस्थानात"],
+        "lede": "टॅब नियम, तरंगता Omnibar आणि एक AI सहाय्यक.",
+        "meta": "100% स्थानिक  ·  खाते नाही  ·  Chrome"
+    },
+    "te": {
+        "headline": ["మీ బ్రౌజర్‌ను ఒక స్వయంప్రతిపత్త", "వర్క్‌స్టేషన్‌గా మార్చండి"],
+        "lede": "ట్యాబ్ నియమాలు, ఫ్లోటింగ్ omnibar మరియు AI అసిస్టెంట్.",
+        "meta": "100% లోకల్  ·  ఖాతా అవసరం లేదు  ·  Chrome"
+    },
+    "tr": {
+        "headline": ["Tarayıcınızı otonom bir", "çalışma istasyonuna dönüştürün"],
+        "lede": "Sekme kuralları, kayan Omnibar ve yapay zekâ asistanı.",
+        "meta": "%100 yerel  ·  Hesap yok  ·  Chrome"
+    },
+    "ta": {
+        "headline": ["உங்கள் உலாவியை ஒரு தன்னாட்சிப்", "பணிநிலையமாக மாற்றுங்கள்"],
+        "lede": "தாவல் விதிகள், மிதக்கும் omnibar மற்றும் AI உதவியாளர்.",
+        "meta": "100% உள்ளூர்  ·  கணக்கு தேவையில்லை  ·  Chrome"
+    },
+    "vi": {
+        "headline": ["Biến trình duyệt thành một", "trạm làm việc tự động"],
+        "lede": "Quy tắc thẻ, omnibar nổi và trợ lý AI.",
+        "meta": "100% cục bộ  ·  Không cần tài khoản  ·  Chrome"
+    },
+    "tl": {
+        "headline": ["Gawing autonomous na", "workstation ang iyong browser"],
+        "lede": "Mga panuntunan sa tab, omnibar at AI assistant.",
+        "meta": "100% lokal  ·  Walang account  ·  Chrome"
+    },
+    "ko": {
+        "headline": ["브라우저를 자율적인", "워크스테이션으로 바꾸세요"],
+        "lede": "탭 규칙, 플로팅 Omnibar, AI 어시스턴트.",
+        "meta": "100% 로컬  ·  계정 불필요  ·  Chrome"
+    },
+    "ha": {
+        "headline": ["Mayar da manhajar bincikenka", "wurin aiki mai cin gashin kansa"],
+        "lede": "Ƙa’idojin shafi, omnibar mai yawo da mataimakin AI.",
+        "meta": "100% a cikin na’ura  ·  Babu asusu  ·  Chrome"
+    },
+    "sw": {
+        "headline": ["Geuza kivinjari chako", "kuwa kituo huru cha kazi"],
+        "lede": "Sheria za vichupo, omnibar inayoelea, msaidizi wa AI.",
+        "meta": "100% ndani ya kifaa  ·  Bila akaunti  ·  Chrome"
+    },
+    "it": {
+        "headline": ["Trasforma il tuo browser in una", "postazione di lavoro autonoma"],
+        "lede": "Regole per schede, omnibar fluttuante, assistente IA.",
+        "meta": "100% locale  ·  Nessun account  ·  Chrome"
+    },
+    "pa": {
+        "headline": ["ਆਪਣੇ ਬ੍ਰਾਊਜ਼ਰ ਨੂੰ ਇੱਕ ਸਵੈਚਾਲਿਤ", "ਵਰਕਸਟੇਸ਼ਨ ਵਿੱਚ ਬਦਲੋ"],
+        "lede": "ਟੈਬ ਨਿਯਮ, ਤੈਰਦਾ Omnibar ਅਤੇ AI ਸਹਾਇਕ।",
+        "meta": "100% ਲੋਕਲ  ·  ਕੋਈ ਖਾਤਾ ਨਹੀਂ  ·  Chrome"
+    }
+}

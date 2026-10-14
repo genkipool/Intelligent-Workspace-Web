@@ -1,0 +1,24 @@
+---
+/**
+ * The same terms in every other language, at the same path under its prefix. See
+ * `pages/terms/` for why the route is not translated along with the copy.
+ */
+import Base from '@/layouts/Base.astro';
+import TermsOfService from '@/components/TermsOfService.astro';
+import { prefixedLangPaths, useTranslations } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+export const getStaticPaths = prefixedLangPaths;
+
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+---
+
+<Base
+    lang={lang}
+    title={t('terms.meta.title')}
+    description={t('terms.meta.description')}
+    icons={['sun', 'moon', 'back', 'shieldCheck', 'heart', 'globe', 'github']}
+>
+    <TermsOfService lang={lang} />
+</Base>

@@ -1,8 +1,14 @@
 /**
- * The two helpers every page uses. Nothing else should read `ui` directly.
+ * The helpers every page uses. Nothing else should read `ui` directly.
  */
 
 import { ui, defaultLang, type Lang, type TranslationKey } from '@/i18n/ui';
+
+/** Every published language, the default first, in the order the switcher lists them. */
+export const langs = Object.keys(ui) as Lang[];
+
+/** The languages that live under a prefix, which is every one but the default. */
+export const prefixedLangs = langs.filter((lang) => lang !== defaultLang);
 
 /**
  * Reads the language out of the URL Astro is rendering.
@@ -12,10 +18,10 @@ import { ui, defaultLang, type Lang, type TranslationKey } from '@/i18n/ui';
  */
 export function getLangFromUrl(url: URL): Lang {
     const [, segment] = url.pathname.split('/');
-    return segment in ui ? (segment as Lang) : defaultLang;
+    return segment && segment in ui ? (segment as Lang) : defaultLang;
 }
 
-/** `const t = useTranslations(lang)` — then `t('hero.title')`. */
+/** `const t = useTranslations(lang)`, then `t('hero.title')`. */
 export function useTranslations(lang: Lang) {
     return function t(key: TranslationKey): string {
         return ui[lang][key];
@@ -32,7 +38,12 @@ export function localisePath(lang: Lang, path: string): string {
     return lang === defaultLang ? clean : `/${lang}${clean}`;
 }
 
-/** The other language, for the switcher. Extend when a third language arrives. */
-export function otherLang(lang: Lang): Lang {
-    return lang === 'en' ? 'es' : 'en';
+/** The path a page has in every language: the current URL with its prefix taken off. */
+export function barePath(lang: Lang, pathname: string): string {
+    return lang === defaultLang ? pathname : pathname.replace(`/${lang}`, '') || '/';
+}
+
+/** `getStaticPaths` for a page that exists once per prefixed language. */
+export function prefixedLangPaths() {
+    return prefixedLangs.map((lang) => ({ params: { lang }, props: { lang } }));
 }

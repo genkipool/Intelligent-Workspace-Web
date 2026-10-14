@@ -15,12 +15,17 @@
  *
  *     pnpm run og
  *
- * It needs `rsvg-convert` (librsvg) on the PATH; that is the only thing here that is not
+ *     pnpm run og            every language in `og-cards.json`
+ *     pnpm run og -- ja ar   only those
+ *
+ * It needs `rsvg-convert` and `pango-view` (librsvg and pango) on the PATH, and the Noto
+ * fonts for the scripts in `SCRIPT_FONTS`; those are the only things here that are not
  * Node. The PNGs it writes are committed, because a crawler asks for them long after any
  * build has finished and Vercel serves `public/` verbatim.
  */
 
-import { writeFileSync, unlinkSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, unlinkSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
+import os from 'node:os';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
@@ -35,45 +40,71 @@ const MARGIN = 76;
 const SAFE = WIDTH - MARGIN * 2;
 
 /**
- * Copy, per language. The headline is two lines because one line of 66px type does not
- * fit 1048px in either language, and a card that wraps its own headline wraps it badly.
+ * Copy, per language, in `og-cards.json`: one entry per language the site is published
+ * in. The headline is two lines because one line of large type fits in no language, and
+ * a card that wraps its own headline wraps it badly.
  */
-const CARDS = {
-    en: {
-        wordmark: 'Intelligent Workspace',
-        headline: ['Transform your browser into an', 'autonomous workstation'],
-        lede: 'Tab rules, a floating omnibar and an AI assistant.',
-        meta: '100% local  ·  No account  ·  Chrome',
-    },
-    es: {
-        wordmark: 'Intelligent Workspace',
-        headline: ['Transforma tu navegador en una', 'estación de trabajo autónoma'],
-        lede: 'Reglas de pestañas, omnibar y asistente de IA.',
-        meta: '100% local  ·  Sin cuenta  ·  Chrome',
-    },
-};
+const CARDS = JSON.parse(readFileSync(path.join(ROOT, 'scripts', 'og-cards.json'), 'utf8'));
+
+/** Languages written right to left: their lines are anchored to the right margin. */
+const RTL = new Set(['ar', 'ur']);
 
 /**
- * Roughly how wide a string sets, in pixels.
- *
- * There is no font metric available to a Node script that has not loaded the font, so
- * this is the average advance of the sans-serif the renderer will pick, measured against
- * the rendered output rather than assumed. It is only ever used to catch a line that has
- * grown too long, so an approximation with headroom is the right tool: `fits` keeps a
- * 4% margin on top of it.
+ * The font each non-Latin script is set in, ahead of the Latin stack so brand names and
+ * figures inside a line still come from a font that has them. Latin-script languages use
+ * the Latin stack alone, which is what the English and Spanish cards were drawn with.
  */
-function textWidth(text, size, bold = false) {
-    return text.length * size * (bold ? 0.63 : 0.55);
+const SCRIPT_FONTS = {
+    zh: 'Noto Sans CJK SC',
+    ja: 'Noto Sans CJK JP',
+    ko: 'Noto Sans CJK KR',
+    ar: 'Noto Sans Arabic',
+    ur: 'Noto Sans Arabic',
+    hi: 'Noto Sans Devanagari',
+    mr: 'Noto Sans Devanagari',
+    bn: 'Noto Sans Bengali',
+    pa: 'Noto Sans Gurmukhi',
+    ta: 'Noto Sans Tamil',
+    te: 'Noto Sans Telugu',
+};
+
+const MEASURE_DIR = mkdtempSync(path.join(os.tmpdir(), 'og-measure-'));
+process.on('exit', () => rmSync(MEASURE_DIR, { recursive: true, force: true }));
+
+/**
+ * How wide a line really sets, in pixels.
+ *
+ * The first version of this guessed from the character count, which is fine for Latin
+ * text and useless for Devanagari or Arabic, where glyphs join and stack. So the line is
+ * set by Pango, the same engine `rsvg-convert` draws with, into a PNG whose width is the
+ * answer. At 72 dpi a Pango point is one pixel, the unit the SVG uses.
+ */
+function textWidth(text, size, weight, family) {
+    const out = path.join(MEASURE_DIR, 'line.png');
+    const style = weight >= 800 ? 'Ultra-Bold' : weight >= 700 ? 'Bold' : weight >= 600 ? 'Semi-Bold' : '';
+    const fonts = family.replace(/'/g, '');
+    execFileSync('pango-view', [
+        '--no-display',
+        '--dpi=72',
+        '--margin=0',
+        `--font=${fonts} ${style} ${size}px`,
+        `--text=${text}`,
+        `--output=${out}`,
+    ]);
+    // A PNG's width is the big-endian integer at byte 16 of its IHDR chunk.
+    return readFileSync(out).readUInt32BE(16);
 }
 
-function fits(label, text, size, bold, budget = SAFE) {
-    const width = textWidth(text, size, bold) * 1.04;
-    if (width > budget) {
-        throw new Error(
-            `${label} does not fit: "${text}" sets about ${Math.round(width)}px, budget ${budget}px. ` +
-                `Shorten the copy or drop the size.`,
-        );
+/**
+ * The largest size, at or under `size`, at which the line fits its budget with a 4%
+ * margin to spare, never going below `floor`. Below that the copy is too long for the
+ * card and has to be shortened rather than squeezed.
+ */
+function fit(label, text, size, floor, weight, family, budget = SAFE) {
+    for (let s = size; s >= floor; s -= 1) {
+        if (textWidth(text, s, weight, family) * 1.04 <= budget) return s;
     }
+    throw new Error(`${label} does not fit even at ${floor}px: "${text}". Shorten the copy.`);
 }
 
 /** The three-card mark from `public/assets/logo.svg`, at its own coordinates. */
@@ -91,19 +122,35 @@ const LOGO = `
 
 const FONT = "'Inter', 'DejaVu Sans', 'Liberation Sans', sans-serif";
 
+/** Card copy goes inside SVG text, so the three characters XML reserves are escaped. */
+function xml(text) {
+    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function card(lang) {
-    const { wordmark, headline, lede, meta } = CARDS[lang];
+    const { headline, lede, meta } = CARDS[lang];
+    const wordmark = 'Intelligent Workspace';
+    const family = SCRIPT_FONTS[lang] ? `'${SCRIPT_FONTS[lang]}', ${FONT}` : FONT;
+    const rtl = RTL.has(lang);
 
     // The mark sits at 0.21 of its drawn size: 508 units wide becomes 107px.
     const markScale = 0.21;
     const wordmarkX = MARGIN + 508 * markScale + 28;
 
-    const headlineSize = 48;
+    // Each line takes the largest size that fits, starting from the one the English card
+    // was designed at, and the two headline lines share the smaller of their two sizes.
+    fit('wordmark', wordmark, 34, 34, 700, FONT, SAFE - (wordmarkX - MARGIN));
+    const headlineSize = Math.min(
+        ...headline.map((line, i) => fit(`${lang} headline line ${i + 1}`, line, 48, 34, 800, family)),
+    );
+    const ledeSize = fit(`${lang} lede`, lede, 27, 20, 400, family);
+    const metaSize = fit(`${lang} meta`, meta, 22, 17, 600, family);
 
-    fits('wordmark', wordmark, 34, true, SAFE - (wordmarkX - MARGIN));
-    headline.forEach((line, i) => fits(`headline line ${i + 1}`, line, headlineSize, true));
-    fits('lede', lede, 27, false);
-    fits('meta', meta, 22, false);
+    // Tight tracking suits the Latin display face and breaks joined or stacked scripts.
+    const tracking = (value) => (SCRIPT_FONTS[lang] ? 0 : value);
+    const x = rtl ? WIDTH - MARGIN : MARGIN;
+    // In right-to-left text `start` is the right-hand edge, which is where these lines hang.
+    const align = rtl ? ' text-anchor="start" direction="rtl"' : '';
 
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}">
   <defs>
@@ -137,20 +184,22 @@ function card(lang) {
   </g>
   <text x="${wordmarkX}" y="128" font-family="${FONT}" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="-0.4">${wordmark}</text>
 
-  <text font-family="${FONT}" font-size="${headlineSize}" font-weight="800" fill="#FFFFFF" letter-spacing="-1.5">
-    <tspan x="${MARGIN}" y="290">${headline[0]}</tspan>
-    <tspan x="${MARGIN}" y="356">${headline[1]}</tspan>
+  <text font-family="${family}" font-size="${headlineSize}" font-weight="800" fill="#FFFFFF" letter-spacing="${tracking(-1.5)}"${align}>
+    <tspan x="${x}" y="290">${xml(headline[0])}</tspan>
+    <tspan x="${x}" y="${290 + Math.round(headlineSize * 1.375)}">${xml(headline[1])}</tspan>
   </text>
 
-  <text x="${MARGIN}" y="432" font-family="${FONT}" font-size="27" font-weight="400" fill="#cfe6de">${lede}</text>
-  <text x="${MARGIN}" y="544" font-family="${FONT}" font-size="22" font-weight="600" fill="#6fe0c2" letter-spacing="0.3">${meta}</text>
+  <text x="${x}" y="432" font-family="${family}" font-size="${ledeSize}" font-weight="400" fill="#cfe6de"${align}>${xml(lede)}</text>
+  <text x="${x}" y="544" font-family="${family}" font-size="${metaSize}" font-weight="600" fill="#6fe0c2" letter-spacing="${tracking(0.3)}"${align}>${xml(meta)}</text>
 
   <rect x="0" y="${HEIGHT - 8}" width="${WIDTH}" height="8" fill="url(#rule)"/>
 </svg>
 `;
 }
 
-for (const lang of Object.keys(CARDS)) {
+const only = process.argv.slice(2);
+for (const lang of only.length ? only : Object.keys(CARDS)) {
+    if (!CARDS[lang]) throw new Error(`No card copy for "${lang}" in og-cards.json.`);
     const svg = card(lang);
     const svgPath = path.join(OUT, `og-${lang}.svg`);
     const pngPath = path.join(OUT, `og-${lang}.png`);

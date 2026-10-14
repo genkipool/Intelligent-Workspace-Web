@@ -21,6 +21,7 @@
  */
 import { useTranslations, localisePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import { languages } from '@/i18n/languages';
 import { site } from '@/data/site';
 import { sections, basicRows, storageRows, connectionRows, effectiveDate } from '@/data/privacy';
 import Icon from '@/components/Icon.astro';
@@ -42,7 +43,7 @@ const homeUrl = localisePath(lang, '/');
    the fragment, so it works from here and keeps working if this page is ever framed. */
 const permissionsUrl = `${homeUrl}#privacidad`;
 
-const effectiveLabel = new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+const effectiveLabel = new Intl.DateTimeFormat(languages[lang].locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
