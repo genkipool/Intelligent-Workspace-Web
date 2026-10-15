@@ -1,6 +1,6 @@
 # Capturas para la Chrome Web Store
 
-Las imágenes promocionales de Intelligent Workspace, en los dos idiomas de la ficha.
+Las imágenes promocionales de Intelligent Workspace, en los idiomas de la extensión.
 
 No forman parte del sitio: esta carpeta queda fuera de `public/` y de `src/`, así que
 Astro no las copia a `dist/` ni existe ninguna ruta pública que las sirva. Están aquí
@@ -9,6 +9,7 @@ solo para tenerlas versionadas y localizadas a la hora de publicar la extensión
 ```
 1280x800/en/   las diecisiete capturas de la ficha inglesa
 1280x800/es/   las mismas diecisiete, de la versión en español del sitio
+1280x800/<lang>/  de, fr, it, pt, ru, hi, ja, zh y ko: dieciséis, sin la 08
 440x280/<lang>/   mosaico promocional pequeño
 1400x560/<lang>/  mosaico promocional con desplazamiento (marquee)
 ```
@@ -21,14 +22,16 @@ scripts.
 
 ```bash
 pnpm build          # se toman del build, no del servidor de desarrollo
-pnpm shots          # los dos idiomas, diecisiete cada uno
+pnpm shots          # los once idiomas de la extensión
 pnpm shots -- es    # solo uno
 pnpm shots -- en 09 # solo una, por su número
 ```
 
 `scripts/store-shots.mjs` sirve `.vercel/output/static`, lanza `google-chrome-stable` sin
 ventana y lo maneja por el protocolo de DevTools. Necesita además `magick` (ImageMagick).
-No se ejecuta durante el build.
+No se ejecuta durante el build. Fuerza `prefers-color-scheme: dark`, porque Chrome sin
+ventana pide el tema claro y la ficha va con el oscuro. La 08 (música y radio) solo existe
+en `en` y `es`: ese pilar se retiró de la web y el script la salta si no lo encuentra.
 
 ## Los mosaicos promocionales
 

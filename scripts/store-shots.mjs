@@ -1,5 +1,5 @@
 /**
- * The Chrome Web Store listing's screenshots, both languages, from the built site.
+ * The Chrome Web Store listing's screenshots, in every language of the extension, from the built site.
  *
  * The seventeen images in `assets/chrome-web-store/1280x800/<lang>/` are shots of this site —
  * its hero, its five pillar panels, its showcases — so they can be taken again rather
@@ -12,7 +12,7 @@
  * that element to keep out of the picture. There is not a pixel offset anywhere, so a
  * section that grows by a line still lands in the middle of its own shot.
  *
- *     pnpm run shots          both languages, all seventeen each
+ *     pnpm run shots          every language, all seventeen each
  *     pnpm run shots -- es    one language
  *     pnpm run shots -- en 09 one shot, by its number
  *
@@ -91,12 +91,18 @@ const SHOTS = [
     { n: '17', name: 'atajos-de-teclado', at: '#teclado', wide: true },
 ];
 
+/**
+ * The extension's languages, by the code the site serves each one under. The extension
+ * calls two of them `pt_BR` and `zh_CN`; the site and these folders call them `pt` and `zh`.
+ */
+const STORE_LANGS = ['en', 'es', 'de', 'fr', 'it', 'pt', 'ru', 'hi', 'ja', 'zh', 'ko'];
+
 const [, , langArg, shotArg] = process.argv;
-const LANGS = langArg ? [langArg] : ['en', 'es'];
+const LANGS = langArg ? [langArg] : STORE_LANGS;
 const WANTED = shotArg ? SHOTS.filter((s) => s.n === shotArg) : SHOTS;
 
-if (LANGS.some((l) => l !== 'en' && l !== 'es')) {
-    console.error(`Unknown language "${langArg}". Use en or es.`);
+if (LANGS.some((l) => !STORE_LANGS.includes(l))) {
+    console.error(`Unknown language "${langArg}". Use one of ${STORE_LANGS.join(', ')}.`);
     process.exit(1);
 }
 if (WANTED.length === 0) {
@@ -188,6 +194,9 @@ async function stage(shot) {
     }
 
     if (shot.tab) {
+        // A pillar the site no longer has (music and radio was retired) is skipped, not fatal.
+        const found = await evaluate(`!!document.querySelector('[data-tab="tab-${shot.tab}"]')`);
+        if (!found) return null;
         await evaluate(`document.querySelector('[data-tab="tab-${shot.tab}"]').click(); true;`);
         await sleep(500);
     }
@@ -389,11 +398,16 @@ await send('Emulation.setDeviceMetricsOverride', {
     deviceScaleFactor: 1,
     mobile: false,
 });
+// The listing shows the dark theme. Headless Chrome reports a light preference, and the
+// site follows it, so without this every shot comes out on the light background.
+await send('Emulation.setEmulatedMedia', {
+    features: [{ name: 'prefers-color-scheme', value: 'dark' }],
+});
 
 /* ── Take them ────────────────────────────────────────────────────────────────── */
 
 for (const lang of LANGS) {
-    const url = lang === 'en' ? `http://localhost:${PORT}/` : `http://localhost:${PORT}/es/`;
+    const url = lang === 'en' ? `http://localhost:${PORT}/` : `http://localhost:${PORT}/${lang}/`;
     const directory = path.join(OUT, lang);
     mkdirSync(directory, { recursive: true });
 
@@ -408,6 +422,10 @@ for (const lang of LANGS) {
         await sleep(400);
 
         const frame = await stage(shot);
+        if (!frame) {
+            console.warn(`${lang}  skipped ${shot.n}-${shot.name}: the site has no "${shot.tab}" pillar`);
+            continue;
+        }
 
         const { data } = await send('Page.captureScreenshot', {
             format: 'png',
