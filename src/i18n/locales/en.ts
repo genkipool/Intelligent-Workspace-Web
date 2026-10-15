@@ -1184,6 +1184,8 @@ export const en = {
     'team.heading': 'Made by a couple',
     'team.subtitle':
         'No investors, no bloated roadmap. Built with craft for users who demand peak performance and complete control over their browser.',
+    'team.social': 'Social media',
+    'team.youtube': 'YouTube channel',
     'team.dev': 'Architecture, AI & Core Engineering',
     'team.design': 'UX/UI Design & Quality Assurance',
     'team.quote':

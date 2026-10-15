@@ -1186,6 +1186,8 @@ export const es: Dictionary = {
     'team.heading': 'Hecho por una pareja',
     'team.subtitle':
         'Sin inversores ni hojas de ruta dictadas por terceros. Desarrollado con dedicación para quienes exigen un rendimiento impecable y control total en su navegador.',
+    'team.social': 'Redes sociales',
+    'team.youtube': 'Canal de YouTube',
     'team.dev': 'Arquitectura, IA y Desarrollo Core',
     'team.design': 'Diseño UX/UI y Control de Calidad',
     'team.quote':

@@ -1197,6 +1197,8 @@ export const tl: Dictionary = {
     'team.heading': 'Gawa ng isang mag-asawa',
     'team.subtitle':
         'Walang investor, walang sobrang habang roadmap. Binuo nang may husay para sa mga user na humihingi ng pinakamataas na performance at kumpletong kontrol sa kanilang browser.',
+    'team.social': 'Social media',
+    'team.youtube': 'YouTube channel',
     'team.dev': 'Arkitektura, AI at Core Engineering',
     'team.design': 'UX/UI Design at Quality Assurance',
     'team.quote':

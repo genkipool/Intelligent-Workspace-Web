@@ -1181,6 +1181,8 @@ export const vi: Dictionary = {
     'team.heading': 'Do một cặp đôi làm ra',
     'team.subtitle':
         'Không nhà đầu tư, không lộ trình cồng kềnh. Được xây dựng tỉ mỉ cho những người dùng đòi hỏi hiệu năng cao nhất và toàn quyền kiểm soát trình duyệt của mình.',
+    'team.social': 'Mạng xã hội',
+    'team.youtube': 'Kênh YouTube',
     'team.dev': 'Kiến trúc, AI & Kỹ thuật lõi',
     'team.design': 'Thiết kế UX/UI & Đảm bảo chất lượng',
     'team.quote':

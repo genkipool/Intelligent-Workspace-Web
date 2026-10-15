@@ -1183,6 +1183,8 @@ export const tr: Dictionary = {
     'team.heading': 'İki kişinin eseri',
     'team.subtitle':
         'Yatırımcı yok, şişirilmiş yol haritası yok. En yüksek performansı ve tarayıcıları üzerinde tam kontrolü talep eden kullanıcılar için özenle geliştirildi.',
+    'team.social': 'Sosyal medya',
+    'team.youtube': 'YouTube kanalı',
     'team.dev': 'Mimari, Yapay Zekâ ve Çekirdek Mühendislik',
     'team.design': 'UX/UI Tasarımı ve Kalite Güvencesi',
     'team.quote':
