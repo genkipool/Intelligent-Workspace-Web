@@ -1186,6 +1186,8 @@ export const sw: Dictionary = {
     'team.heading': 'Imetengenezwa na wanandoa',
     'team.subtitle':
         'Hakuna wawekezaji, hakuna mpango uliojaa kupita kiasi. Imejengwa kwa ustadi kwa watumiaji wanaodai utendaji wa hali ya juu na udhibiti kamili wa kivinjari chao.',
+    'team.social': 'Mitandao ya kijamii',
+    'team.youtube': 'Chaneli ya YouTube',
     'team.dev': 'Usanifu wa Mfumo, AI na Uhandisi Mkuu',
     'team.design': 'Usanifu wa UX/UI na Uhakikisho wa Ubora',
     'team.quote':

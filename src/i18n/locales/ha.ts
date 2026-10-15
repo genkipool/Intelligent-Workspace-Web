@@ -1184,6 +1184,8 @@ export const ha: Dictionary = {
     'team.heading': 'Ma’aurata ne suka yi ta',
     'team.subtitle':
         'Babu masu zuba jari, babu taswirar hanya mai kumbura. An gina ta da ƙwarewa ga masu amfani da ke buƙatar mafi kyawun aiki da cikakken iko a kan manhajar bincikensu.',
+    'team.social': 'Kafofin sada zumunta',
+    'team.youtube': 'Tashar YouTube',
     'team.dev': 'Tsarin Gine-gine, AI da Babban Injiniyanci',
     'team.design': 'Zanen UX/UI da Tabbatar da Inganci',
     'team.quote':

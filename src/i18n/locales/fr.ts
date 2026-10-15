@@ -1189,6 +1189,8 @@ export const fr: Dictionary = {
     'team.heading': 'Conçu par un couple',
     'team.subtitle':
         'Pas d’investisseurs, pas de feuille de route pléthorique. Construit avec soin pour des utilisateurs qui exigent des performances optimales et un contrôle total de leur navigateur.',
+    'team.social': 'Réseaux sociaux',
+    'team.youtube': 'Chaîne YouTube',
     'team.dev': 'Architecture, IA et ingénierie principale',
     'team.design': 'Design UX/UI et assurance qualité',
     'team.quote':

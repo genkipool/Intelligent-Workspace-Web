@@ -1192,6 +1192,8 @@ export const de: Dictionary = {
     'team.heading': 'Von einem Paar entwickelt',
     'team.subtitle':
         'Keine Investoren, keine aufgeblähte Roadmap. Mit Sorgfalt gebaut für Nutzer, die Höchstleistung und volle Kontrolle über ihren Browser verlangen.',
+    'team.social': 'Soziale Medien',
+    'team.youtube': 'YouTube-Kanal',
     'team.dev': 'Architektur, KI & Kernentwicklung',
     'team.design': 'UX/UI-Design & Qualitätssicherung',
     'team.quote':

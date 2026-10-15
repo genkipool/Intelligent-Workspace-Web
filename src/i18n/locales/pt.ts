@@ -1185,6 +1185,8 @@ export const pt: Dictionary = {
     'team.heading': 'Feito por um casal',
     'team.subtitle':
         'Sem investidores, sem roadmap inchado. Construído com capricho para usuários que exigem desempenho máximo e controle total do navegador.',
+    'team.social': 'Redes sociais',
+    'team.youtube': 'Canal no YouTube',
     'team.dev': 'Arquitetura, IA e engenharia principal',
     'team.design': 'Design UX/UI e garantia de qualidade',
     'team.quote':

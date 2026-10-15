@@ -21,6 +21,7 @@ export const site = {
      * details before it will answer a question.
      */
     privacyEmail: 'luisrb1985@gmail.com',
+    youtubeUrl: 'https://www.youtube.com/@IntelligentWorkspace',
 } as const;
 
 /**

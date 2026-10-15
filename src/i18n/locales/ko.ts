@@ -1158,6 +1158,8 @@ export const ko: Dictionary = {
     'team.heading': '두 사람이 만들었습니다',
     'team.subtitle':
         '투자자도, 부풀려진 로드맵도 없습니다. 최고의 성능과 브라우저에 대한 완전한 제어를 원하는 사용자를 위해 정성껏 만들었습니다.',
+    'team.social': '소셜 미디어',
+    'team.youtube': 'YouTube 채널',
     'team.dev': '아키텍처, AI, 핵심 엔지니어링',
     'team.design': 'UX/UI 디자인 및 품질 보증',
     'team.quote':

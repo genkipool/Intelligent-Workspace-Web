@@ -1119,6 +1119,8 @@ export const zh: Dictionary = {
     // Team Section
     'team.heading': '由一对伴侣打造',
     'team.subtitle': '没有投资人，没有臃肿的路线图。用心打造，献给追求极致性能、希望完全掌控浏览器的用户。',
+    'team.social': '社交媒体',
+    'team.youtube': 'YouTube 频道',
     'team.dev': '架构、AI 与核心工程',
     'team.design': 'UX/UI 设计与质量保证',
     'team.quote':

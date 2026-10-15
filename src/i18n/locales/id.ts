@@ -1191,6 +1191,8 @@ export const id: Dictionary = {
     'team.heading': 'Dibuat oleh pasangan',
     'team.subtitle':
         'Tanpa investor, tanpa peta jalan yang membengkak. Dibuat dengan cermat untuk pengguna yang menuntut performa puncak dan kendali penuh atas peramban mereka.',
+    'team.social': 'Media sosial',
+    'team.youtube': 'Kanal YouTube',
     'team.dev': 'Arsitektur, AI & Rekayasa Inti',
     'team.design': 'Desain UX/UI & Penjaminan Mutu',
     'team.quote':

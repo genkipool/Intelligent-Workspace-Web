@@ -1177,6 +1177,8 @@ export const ja: Dictionary = {
     'team.heading': 'ふたりで作っています',
     'team.subtitle':
         '投資家も、膨れ上がったロードマップもありません。最高のパフォーマンスとブラウザの完全なコントロールを求めるユーザーのために、丁寧に作り上げました。',
+    'team.social': 'ソーシャルメディア',
+    'team.youtube': 'YouTube チャンネル',
     'team.dev': 'アーキテクチャ、AI、コアエンジニアリング',
     'team.design': 'UX/UI デザインと品質保証',
     'team.quote':
