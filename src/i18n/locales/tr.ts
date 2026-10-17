@@ -857,8 +857,8 @@ export const tr: Dictionary = {
     'privacy.net.r5.what': 'Küçük resim ve gömülü oynatıcı için video kimliği',
     'privacy.net.r5.when': 'Yalnızca önizlediğiniz veya oynattığınız bir YouTube bağlantısı için',
     'privacy.net.r7.what':
-        'Sizinle ilgili hiçbir şey. İngilizce ve İspanyolca dışındaki bir dilin OCR dil modelini indirir (bu ikisi eklentiyle birlikte gelir); ardından Chrome onu önbelleğe alır',
-    'privacy.net.r7.when': 'İngilizce veya İspanyolca dışındaki bir dilde OCR’ı ilk kez çalıştırdığınızda',
+        'Sizinle ilgili hiçbir şey. OCR modellerini indirir: İngilizce ve İspanyolca dışındaki bir dilin modelini (bu ikisi eklentiyle birlikte gelir) ve bir okuma başarısız olduğunda yazı sistemi algılayıcısını; ardından Chrome bunları önbelleğe alır',
+    'privacy.net.r7.when': 'OCR bunlardan birine ilk kez ihtiyaç duyduğunda',
 
     'privacy.transfers.title': 'Avrupa Ekonomik Alanı dışına aktarımlar',
     'privacy.transfers.p1':
