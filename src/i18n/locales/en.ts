@@ -859,8 +859,9 @@ export const en = {
     'privacy.net.r2.when': 'When you choose it instead of Gemini',
     'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
     'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
-    'privacy.net.r7.what': 'Nothing about you. It fetches the OCR language model, which Chrome then caches',
-    'privacy.net.r7.when': 'The first time you run OCR on a screenshot',
+    'privacy.net.r7.what':
+        'Nothing about you. It fetches the OCR language model for a language other than English or Spanish, which ship with the extension; Chrome then caches it',
+    'privacy.net.r7.when': 'The first time you run OCR in a language other than English or Spanish',
 
     'privacy.transfers.title': 'Transfers outside the European Economic Area',
     'privacy.transfers.p1':

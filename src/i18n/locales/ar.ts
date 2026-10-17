@@ -847,8 +847,9 @@ export const ar: Dictionary = {
     'privacy.net.r2.when': 'حين تختاره بدلاً من Gemini',
     'privacy.net.r5.what': 'معرّف الفيديو، للصورة المصغّرة والمشغّل المضمَّن',
     'privacy.net.r5.when': 'فقط لرابط YouTube تعاينه أو تشغّله',
-    'privacy.net.r7.what': 'لا شيء عنك. يجلب نموذج اللغة الخاص بـ OCR، الذي يخزّنه Chrome مؤقتاً بعد ذلك',
-    'privacy.net.r7.when': 'أول مرة تشغّل فيها OCR على لقطة شاشة',
+    'privacy.net.r7.what':
+        'لا شيء عنك. يُنزّل نموذج اللغة الخاص بـ OCR للغة غير الإنجليزية والإسبانية، فهاتان مضمّنتان في الإضافة، ثم يخزّنه Chrome مؤقتًا',
+    'privacy.net.r7.when': 'أول مرة تشغّل فيها OCR بلغة غير الإنجليزية أو الإسبانية',
 
     'privacy.transfers.title': 'عمليات النقل خارج المنطقة الاقتصادية الأوروبية',
     'privacy.transfers.p1':

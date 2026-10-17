@@ -868,8 +868,8 @@ export const tl: Dictionary = {
     'privacy.net.r5.what': 'Ang video id, para sa thumbnail at sa naka-embed na player',
     'privacy.net.r5.when': 'Para lang sa YouTube link na pini-preview o pinapatugtog mo',
     'privacy.net.r7.what':
-        'Walang anuman tungkol sa iyo. Kinukuha nito ang language model ng OCR, na pagkatapos ay kina-cache ng Chrome',
-    'privacy.net.r7.when': 'Sa unang pagkakataong magpatakbo ka ng OCR sa isang screenshot',
+        'Walang tungkol sa iyo. Dina-download ang language model ng OCR para sa wikang hindi Ingles o Espanyol, na kasama na sa extension; pagkatapos ay ika-cache ito ng Chrome',
+    'privacy.net.r7.when': 'Sa unang beses na patakbuhin mo ang OCR sa wikang hindi Ingles o Espanyol',
 
     'privacy.transfers.title': 'Mga paglilipat sa labas ng European Economic Area',
     'privacy.transfers.p1':

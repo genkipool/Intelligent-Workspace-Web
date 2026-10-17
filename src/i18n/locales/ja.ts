@@ -856,8 +856,8 @@ export const ja: Dictionary = {
     'privacy.net.r5.what': 'サムネイルと埋め込みプレーヤーのための動画 ID',
     'privacy.net.r5.when': 'プレビューまたは再生する YouTube リンクに限り',
     'privacy.net.r7.what':
-        'あなたに関する情報は一切なし。OCR の言語モデルを取得し、Chrome がそれをキャッシュします',
-    'privacy.net.r7.when': 'スクリーンショットで初めて OCR を実行したとき',
+        'あなたに関する情報は一切なし。英語とスペイン語以外の言語の OCR 言語モデルを取得し（この 2 つは拡張機能に同梱）、Chrome がそれをキャッシュします',
+    'privacy.net.r7.when': '英語とスペイン語以外の言語で初めて OCR を実行したとき',
 
     'privacy.transfers.title': '欧州経済領域外への移転',
     'privacy.transfers.p1':

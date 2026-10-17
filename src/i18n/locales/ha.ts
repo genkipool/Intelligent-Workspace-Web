@@ -858,8 +858,8 @@ export const ha: Dictionary = {
     'privacy.net.r5.what': 'ID na bidiyon, don ƙaramin hoto da na’urar kunnawa da aka saka',
     'privacy.net.r5.when': 'Sai ga mahaɗar YouTube da ka duba ko ka kunna',
     'privacy.net.r7.what':
-        'Babu wani abu game da kai. Yana ɗauko samfurin harshen OCR, wanda Chrome ke ajiye shi a ma’ajiyar wucin gadi',
-    'privacy.net.r7.when': 'A karo na farko da ka gudanar da OCR a kan hoton allo',
+        'Babu wani abu game da kai. Yana sauke samfurin harshe na OCR don harshen da ba Turanci ko Sifaniyanci ba, waɗanda ke tare da ƙarin; sannan Chrome ya adana shi',
+    'privacy.net.r7.when': 'A karon farko da ka yi amfani da OCR a harshen da ba Turanci ko Sifaniyanci ba',
 
     'privacy.transfers.title': 'Canja wuri zuwa wajen Yankin Tattalin Arzikin Turai',
     'privacy.transfers.p1':

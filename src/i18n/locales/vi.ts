@@ -856,8 +856,9 @@ export const vi: Dictionary = {
     'privacy.net.r2.when': 'Khi bạn chọn nó thay cho Gemini',
     'privacy.net.r5.what': 'ID của video, cho ảnh thu nhỏ và trình phát nhúng',
     'privacy.net.r5.when': 'Chỉ với liên kết YouTube bạn xem trước hoặc phát',
-    'privacy.net.r7.what': 'Không gì về bạn. Nó tải mô hình ngôn ngữ OCR, sau đó Chrome lưu vào bộ nhớ đệm',
-    'privacy.net.r7.when': 'Lần đầu tiên bạn chạy OCR trên một ảnh chụp màn hình',
+    'privacy.net.r7.what':
+        'Không có gì về bạn. Tải mô hình ngôn ngữ OCR cho một ngôn ngữ khác tiếng Anh và tiếng Tây Ban Nha (hai ngôn ngữ này có sẵn trong tiện ích); sau đó Chrome lưu nó vào bộ nhớ đệm',
+    'privacy.net.r7.when': 'Lần đầu bạn chạy OCR bằng một ngôn ngữ khác tiếng Anh hoặc tiếng Tây Ban Nha',
 
     'privacy.transfers.title': 'Chuyển giao ra ngoài Khu vực Kinh tế Châu Âu',
     'privacy.transfers.p1':

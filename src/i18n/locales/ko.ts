@@ -841,8 +841,9 @@ export const ko: Dictionary = {
     'privacy.net.r2.when': 'Gemini 대신 이 모델을 선택할 때',
     'privacy.net.r5.what': '썸네일과 임베드 플레이어를 위한 동영상 ID',
     'privacy.net.r5.when': '미리 보거나 재생하는 YouTube 링크에 대해서만',
-    'privacy.net.r7.what': '사용자에 관한 정보는 없음. OCR 언어 모델을 가져오며, Chrome이 이를 캐시합니다',
-    'privacy.net.r7.when': '스크린샷에서 처음 OCR을 실행할 때',
+    'privacy.net.r7.what':
+        '사용자에 관한 정보는 없습니다. 영어와 스페인어 이외 언어의 OCR 언어 모델을 받아 오며(이 두 언어는 확장 프로그램에 포함), Chrome이 이를 캐시합니다',
+    'privacy.net.r7.when': '영어나 스페인어 이외의 언어로 처음 OCR을 실행할 때',
 
     'privacy.transfers.title': '유럽 경제 지역(EEA) 밖으로의 이전',
     'privacy.transfers.p1':
