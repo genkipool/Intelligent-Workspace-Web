@@ -818,8 +818,8 @@ export const zh: Dictionary = {
     'privacy.net.r5.what': '视频 ID，用于获取缩略图和嵌入式播放器',
     'privacy.net.r5.when': '仅针对你预览或播放的 YouTube 链接',
     'privacy.net.r7.what':
-        '不涉及任何关于你的信息。下载英语和西班牙语以外语言的 OCR 语言模型（这两种已随扩展提供），之后由 Chrome 缓存',
-    'privacy.net.r7.when': '首次以英语和西班牙语以外的语言运行 OCR 时',
+        '不涉及任何关于你的信息。下载 OCR 模型：英语和西班牙语以外语言的模型（这两种已随扩展提供），以及识别失败时使用的文字系统检测模型；之后由 Chrome 缓存',
+    'privacy.net.r7.when': '首次在 OCR 需要其中某个模型时',
 
     'privacy.transfers.title': '向欧洲经济区以外的传输',
     'privacy.transfers.p1':

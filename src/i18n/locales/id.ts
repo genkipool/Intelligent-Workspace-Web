@@ -860,8 +860,8 @@ export const id: Dictionary = {
     'privacy.net.r5.what': 'ID video, untuk thumbnail dan pemutar tersemat',
     'privacy.net.r5.when': 'Hanya untuk tautan YouTube yang Anda pratinjau atau putar',
     'privacy.net.r7.what':
-        'Tidak ada apa pun tentang Anda. Mengunduh model bahasa OCR untuk bahasa selain Inggris atau Spanyol, yang sudah disertakan dalam ekstensi; Chrome lalu menyimpannya di cache',
-    'privacy.net.r7.when': 'Saat pertama kali Anda menjalankan OCR dalam bahasa selain Inggris atau Spanyol',
+        'Tidak ada apa pun tentang Anda. Mengunduh model OCR: model untuk bahasa selain Inggris atau Spanyol, yang sudah disertakan dalam ekstensi, dan pendeteksi aksara saat pembacaan gagal; Chrome lalu menyimpannya di cache',
+    'privacy.net.r7.when': 'Saat pertama kali OCR membutuhkan salah satunya',
 
     'privacy.transfers.title': 'Transfer ke luar Wilayah Ekonomi Eropa',
     'privacy.transfers.p1':

@@ -860,8 +860,8 @@ export const en = {
     'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
     'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
     'privacy.net.r7.what':
-        'Nothing about you. It fetches the OCR language model for a language other than English or Spanish, which ship with the extension; Chrome then caches it',
-    'privacy.net.r7.when': 'The first time you run OCR in a language other than English or Spanish',
+        'Nothing about you. It fetches OCR models: the one for a language other than English or Spanish, which ship with the extension, and a script detector when a reading fails; Chrome then caches them',
+    'privacy.net.r7.when': 'The first time OCR needs one of them',
 
     'privacy.transfers.title': 'Transfers outside the European Economic Area',
     'privacy.transfers.p1':
