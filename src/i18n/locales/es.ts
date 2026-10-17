@@ -858,8 +858,9 @@ export const es: Dictionary = {
     'privacy.net.r2.when': 'Cuando lo eliges en lugar de Gemini',
     'privacy.net.r5.what': 'El identificador del vídeo, para la miniatura y el reproductor incrustado',
     'privacy.net.r5.when': 'Solo con un enlace de YouTube que previsualizas o reproduces',
-    'privacy.net.r7.what': 'Nada sobre ti. Descarga el modelo de idioma del OCR, que Chrome luego cachea',
-    'privacy.net.r7.when': 'La primera vez que pasas el OCR por una captura',
+    'privacy.net.r7.what':
+        'Nada sobre ti. Descarga el modelo de idioma del OCR para un idioma que no sea inglés ni español, que ya vienen con la extensión; Chrome luego lo cachea',
+    'privacy.net.r7.when': 'La primera vez que pasas el OCR en un idioma que no sea inglés ni español',
 
     'privacy.transfers.title': 'Transferencias fuera del Espacio Económico Europeo',
     'privacy.transfers.p1':

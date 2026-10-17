@@ -859,8 +859,8 @@ export const sw: Dictionary = {
     'privacy.net.r5.what': 'Kitambulisho cha video, kwa picha ndogo na kicheza kilichopachikwa',
     'privacy.net.r5.when': 'Kwa kiungo cha YouTube unachokihakiki au kukicheza pekee',
     'privacy.net.r7.what':
-        'Hakuna kinachokuhusu. Hupakua modeli ya lugha ya OCR, ambayo Chrome kisha huihifadhi kwenye akiba',
-    'privacy.net.r7.when': 'Mara ya kwanza unapoendesha OCR kwenye picha ya skrini',
+        'Hakuna chochote kukuhusu. Hupakua modeli ya lugha ya OCR kwa lugha isiyo Kiingereza au Kihispania, ambazo huja na kiendelezi; kisha Chrome huihifadhi kwenye akiba',
+    'privacy.net.r7.when': 'Mara ya kwanza unapotumia OCR kwa lugha isiyo Kiingereza au Kihispania',
 
     'privacy.transfers.title': 'Uhamishaji nje ya Eneo la Kiuchumi la Ulaya',
     'privacy.transfers.p1':

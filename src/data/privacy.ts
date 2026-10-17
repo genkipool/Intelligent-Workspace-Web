@@ -18,7 +18,7 @@
 import type { TranslationKey } from '@/i18n/ui';
 
 /** Bump this, and the date in the page's header moves. ISO, so `<time>` can use it. */
-export const effectiveDate = '2026-09-04';
+export const effectiveDate = '2026-10-17';
 
 export interface PolicySection {
     /** The `id` on the `<section>` and the fragment the contents list points at. */

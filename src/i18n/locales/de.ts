@@ -861,8 +861,8 @@ export const de: Dictionary = {
     'privacy.net.r5.what': 'Die Video-ID, für das Vorschaubild und den eingebetteten Player',
     'privacy.net.r5.when': 'Nur für einen YouTube-Link, den Sie in der Vorschau ansehen oder abspielen',
     'privacy.net.r7.what':
-        'Nichts über Sie. Es lädt das OCR-Sprachmodell, das Chrome anschließend zwischenspeichert',
-    'privacy.net.r7.when': 'Beim ersten Ausführen von OCR auf einem Screenshot',
+        'Nichts über dich. Lädt das OCR-Sprachmodell für eine andere Sprache als Englisch oder Spanisch, die mit der Erweiterung geliefert werden; Chrome speichert es danach zwischen',
+    'privacy.net.r7.when': 'Beim ersten OCR in einer anderen Sprache als Englisch oder Spanisch',
 
     'privacy.transfers.title': 'Übermittlungen außerhalb des Europäischen Wirtschaftsraums',
     'privacy.transfers.p1':
