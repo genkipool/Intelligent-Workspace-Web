@@ -18,7 +18,7 @@
 import type { TranslationKey } from '@/i18n/ui';
 
 /** Bump this, and the date in the page's header moves. ISO, so `<time>` can use it. */
-export const effectiveDate = '2026-10-17';
+export const effectiveDate = '2026-11-06';
 
 export interface PolicySection {
     /** The `id` on the `<section>` and the fragment the contents list points at. */
@@ -134,6 +134,8 @@ export const connectionRows: readonly ConnectionRow[] = [
         whenKey: 'privacy.net.r1.when',
     },
     { hostKey: 'privacy.net.r2.host', sendsKey: 'privacy.net.r2.what', whenKey: 'privacy.net.r2.when' },
+    { host: 'api.radio-browser.info', sendsKey: 'privacy.net.r3.what', whenKey: 'privacy.net.r3.when' },
+    { hostKey: 'privacy.net.r4.host', sendsKey: 'privacy.net.r4.what', whenKey: 'privacy.net.r4.when' },
     { host: 'youtube.com · i.ytimg.com', sendsKey: 'privacy.net.r5.what', whenKey: 'privacy.net.r5.when' },
     { host: 'cdn.jsdelivr.net', sendsKey: 'privacy.net.r7.what', whenKey: 'privacy.net.r7.when' },
 ];

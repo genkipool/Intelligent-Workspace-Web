@@ -46,7 +46,7 @@ export const id: Dictionary = {
     'hero.slide3.line1': 'Stasiun kerja lengkap Anda',
     'hero.slide3.line2': 'terpadu di panel samping',
     'hero.slide3.lede':
-        'Bookmark, riwayat, tab yang baru ditutup, daftar bacaan, dan unduhan tidak lagi menjadi halaman yang harus Anda buka. Di sampingnya: catatan dengan daftar periksa dan papan Kanban, galeri tangkapan layar dengan OCR di perangkat, asisten AI, timer Pomodoro, serta musik Anda sendiri atau radio online.',
+        'Bookmark, riwayat, tab yang baru ditutup, daftar bacaan, dan unduhan tidak lagi menjadi halaman yang harus Anda buka. Di sampingnya: catatan dengan daftar periksa dan papan Kanban, galeri tangkapan layar dengan OCR di perangkat, asisten AI, timer Pomodoro, serta pemutar audio untuk suara fokus atau radio online.',
     'hero.slide3.tag': 'Satu panel samping, semuanya ada di sana',
 
     'hero.carousel.prev': 'Slide sebelumnya',
@@ -107,6 +107,7 @@ export const id: Dictionary = {
     'fhub.tab2': 'Tab & aturan',
     'fhub.tab3': 'Waktu & fokus',
     'fhub.tab4': 'Keyboard',
+    'fhub.tab5': 'Audio & radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Asisten yang dapat bertindak di peramban, bukan sekadar membicarakannya',
@@ -160,7 +161,25 @@ export const id: Dictionary = {
     'fhub.keys.f4':
         'Mode gelap, sepia, skala abu-abu, atau terang untuk satu tab atau semuanya, layar terpisah, picture-in-picture, dan bacakan teks, masing-masing dengan tombolnya sendiri.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Suara untuk fokus, radio untuk belajar',
+    'fhub.media.lead':
+        'Pemutar audio di dalam panel samping untuk white noise, suara hujan, atau suara apa pun yang membantu Anda berkonsentrasi, serta untuk stasiun radio internet yang menemani Anda belajar atau bekerja. Suaranya diputar oleh dokumen offscreen, bukan oleh panel, sehingga tetap berjalan saat Anda menyembunyikan panel, berganti tampilan, atau menutup halaman.',
+    'fhub.media.f1':
+        'Arahkan ke folder berisi white noise, suara hujan, atau suara latar, atau ke beberapa berkas: hingga lima ratus trek, dikelompokkan menurut folder asalnya, bisa diurutkan ulang dengan menyeret, dan bisa dicari berdasarkan nama.',
+    'fhub.media.f2':
+        'Radio internet di pemutar yang sama, untuk bahasa yang sedang Anda pelajari, stasiun bincang-bincang, atau sesuatu yang tenang untuk menemani kerja: cari di direktori Radio Browser berdasarkan nama, negara, atau tag, atau tempel sendiri alamat streaming.',
+    'fhub.media.f3':
+        'Kontrol pemutaran, lompat sepuluh detik, volume, dan bisukan di panel, serta kontrol yang sama di bawah tombol bilah alat saat panel tertutup. Siaran streaming menampilkan bilah live alih-alih bilah posisi, karena tidak ada akhir yang bisa dituju.',
+    'fhub.media.f4':
+        'Tidak ada yang diunggah. Folder diserahkan melalui File System Access API, bukan melalui kolom pilih berkas, dan daftar putar serta stasiun tersimpan di penyimpanan peramban Anda sendiri.',
+    'fhub.media.mockup.badge': 'Pemutar audio',
+    'fhub.media.mockup.searchPlaceholder': 'Cari trek…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'Semua',
+    'fhub.media.mockup.savedStations': 'Stasiun tersimpan',
+    'fhub.media.mockup.folder': 'Fokus',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Tab Fitur',
@@ -580,9 +599,28 @@ export const id: Dictionary = {
     'bento.qrTools.h2': 'Pemindai langsung di layar tanpa kamera',
     'bento.qrTools.h3': 'Ekspor dalam PNG resolusi tinggi atau SVG vektor',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Radio internet untuk belajar atau fokus',
+    'bento.radio.desc':
+        'Cari di direktori Radio Browser berdasarkan nama, negara, atau tag, atau tempel sendiri alamat streaming: stasiun dalam bahasa yang sedang Anda pelajari, saluran bincang-bincang, atau sesuatu yang tenang untuk menemani kerja. Stasiun yang Anda simpan berada di pemutar yang sama dengan suara-suara Anda, di tabnya sendiri.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'Siaran langsung',
+    'bento.radio.h1': 'Ribuan stasiun untuk dicari, atau alamat yang Anda tempel sendiri',
+    'bento.radio.h2': 'Ekspor dan impor daftar sebagai JSON',
+    'bento.radio.h3': 'Sinkronisasi opsional stasiun Anda di semua Chrome tempat Anda masuk',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Pemutar audio untuk fokus, di panel samping',
+    'bento.musicPlayer.desc':
+        'Berikan folder berisi white noise, suara hujan, atau suara apa pun yang membantu Anda berkonsentrasi, dan semuanya diputar di samping halaman yang sedang Anda baca. Suaranya diputar oleh dokumen offscreen, bukan oleh panel, sehingga menyembunyikan panel, berganti tampilan, atau menutup halaman tidak menghentikannya.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Tetap berputar saat disembunyikan',
+    'bento.musicPlayer.h1':
+        'Folder atau pilihan berkas, dikelompokkan per folder dan diurutkan dengan menyeret',
+    'bento.musicPlayer.h2':
+        'Bilah posisi, lompat sepuluh detik, volume dan bisukan, serta kontrol yang sama di bawah tombol bilah alat',
+    'bento.musicPlayer.h3':
+        'Tidak ada yang diunggah: folder dibaca di komputer Anda dan disimpan di peramban Anda sendiri',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Layar Terpisah Dua Tab',
@@ -823,8 +861,9 @@ export const id: Dictionary = {
     'privacy.store.r5.leaves': 'Hanya di dalam berkas yang Anda ekspor sendiri, ke folder pilihan Anda',
     'privacy.store.r6.what': 'Sesi Pomodoro dan riwayatnya',
     'privacy.store.r6.leaves': 'Tidak',
-    'privacy.store.r7.what': 'Musik yang Anda tambahkan dan radio favorit Anda',
-    'privacy.store.r7.leaves': 'Tidak',
+    'privacy.store.r7.what': 'Audio yang Anda tambahkan dan stasiun radio yang Anda simpan',
+    'privacy.store.r7.leaves':
+        'Audionya, tidak pernah. Daftar stasiun hanya jika Anda mengaktifkan sinkronisasinya, yang nonaktif secara bawaan',
     'privacy.store.r8.what': 'Aktivitas web: detik, kunjungan, dan sesi per situs, per hari',
     'privacy.store.r8.leaves':
         'Tidak, kecuali Anda mengaktifkan sinkronisasi khusus catatan tersebut, yang nonaktif secara bawaan',
@@ -857,6 +896,12 @@ export const id: Dictionary = {
     'privacy.net.r2.what':
         'Tidak ada. Model berjalan di dalam Chrome, di komputer ini, dan tidak membuat permintaan apa pun',
     'privacy.net.r2.when': 'Saat Anda memilihnya sebagai ganti Gemini',
+    'privacy.net.r3.what': 'Nama stasiun atau genre yang Anda ketik, tidak lebih',
+    'privacy.net.r3.when': 'Saat Anda mencari atau menjelajahi radio online',
+    'privacy.net.r4.host': 'Stasiun radio yang Anda putar',
+    'privacy.net.r4.what':
+        'Permintaan audio biasa ke server milik stasiun itu sendiri, yang melihat alamat IP Anda seperti situs web mana pun',
+    'privacy.net.r4.when': 'Selama stasiun diputar',
     'privacy.net.r5.what': 'ID video, untuk thumbnail dan pemutar tersemat',
     'privacy.net.r5.when': 'Hanya untuk tautan YouTube yang Anda pratinjau atau putar',
     'privacy.net.r7.what':
@@ -873,7 +918,7 @@ export const id: Dictionary = {
     'privacy.retention.p1':
         'Tidak ada data di sini yang memiliki masa simpan di sisi server, karena tidak ada server yang menyimpannya. Apa yang ada di perangkat Anda tetap ada sampai Anda menghapusnya, dan berikut aturan yang berlaku.',
     'privacy.retention.li1':
-        'Catatan, tangkapan layar, cadangan, percakapan, riwayat Pomodoro, dan pustaka musik: disimpan sampai Anda menghapusnya atau mencopot ekstensi.',
+        'Catatan, tangkapan layar, cadangan, percakapan, riwayat Pomodoro, dan pustaka audio: disimpan sampai Anda menghapusnya atau mencopot ekstensi.',
     'privacy.retention.li2':
         'Catatan aktivitas web: disimpan selama jumlah hari yang Anda tetapkan di pengaturannya, dan hari-hari yang lebih lama dihapus secara otomatis.',
     'privacy.retention.li3':
@@ -1006,7 +1051,7 @@ export const id: Dictionary = {
 
     'terms.service.title': 'Apa itu Intelligent Workspace',
     'terms.service.p1':
-        'Intelligent Workspace adalah ekstensi untuk Chrome dan peramban berbasis Chromium, didistribusikan melalui Chrome Web Store, yang mengubah peramban menjadi ruang kerja: grup tab dan aturan, panel samping dengan catatan, bookmark, riwayat, tangkapan layar, timer, dan pemutar musik, navigasi keyboard, serta asisten opsional.',
+        'Intelligent Workspace adalah ekstensi untuk Chrome dan peramban berbasis Chromium, didistribusikan melalui Chrome Web Store, yang mengubah peramban menjadi ruang kerja: grup tab dan aturan, panel samping dengan catatan, bookmark, riwayat, tangkapan layar, timer, dan pemutar audio, navigasi keyboard, serta asisten opsional.',
     'terms.service.li1':
         'Berfungsi tanpa akun, tanpa pendaftaran, dan tanpa server kami yang menyimpan data Anda.',
     'terms.service.li2':
@@ -1105,7 +1150,7 @@ export const id: Dictionary = {
     'terms.third.li2':
         'Chrome Web Store, yang mendistribusikan dan memperbarui ekstensi berdasarkan ketentuan Google.',
     'terms.third.li3':
-        'YouTube, untuk pratinjau video, dan CDN yang menyajikan model pengenalan teks yang berjalan di komputer Anda.',
+        'Direktori radio online dan stasiun yang tercantum di dalamnya, YouTube, untuk pratinjau video, dan CDN yang menyajikan model pengenalan teks yang berjalan di komputer Anda.',
     'terms.third.li4': 'Stripe, untuk tip, sebagaimana dijelaskan di bagian 8.',
     'terms.third.p2':
         'Konten yang Anda jangkau melalui ekstensi adalah milik pihak yang menerbitkannya, dan menautkan ke konten tersebut bukan merupakan dukungan. Kebijakan privasi mencantumkan setiap host yang dapat dihubungi ekstensi, apa yang dikirimnya, dan kapan.',

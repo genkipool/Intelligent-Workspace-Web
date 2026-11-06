@@ -46,7 +46,7 @@ export const ja: Dictionary = {
     'hero.slide3.line1': 'ワークステーションのすべてを',
     'hero.slide3.line2': 'サイドパネルに統合',
     'hero.slide3.lede':
-        'ブックマーク、履歴、最近閉じたタブ、リーディングリスト、ダウンロードは、もうわざわざ開きに行くページではありません。その隣には、チェックリストと Kanban ボード付きのノート、端末内 OCR を備えたスクリーンショットギャラリー、AI アシスタント、ポモドーロタイマー、そして自分の音楽やオンラインラジオがあります。',
+        'ブックマーク、履歴、最近閉じたタブ、リーディングリスト、ダウンロードは、もうわざわざ開きに行くページではありません。その隣には、チェックリストと Kanban ボード付きのノート、端末内 OCR を備えたスクリーンショットギャラリー、AI アシスタント、ポモドーロタイマー、そして集中用サウンドやオンラインラジオのためのオーディオプレーヤーがあります。',
     'hero.slide3.tag': 'ひとつのサイドパネルにすべてを',
 
     'hero.carousel.prev': '前のスライド',
@@ -107,6 +107,7 @@ export const ja: Dictionary = {
     'fhub.tab2': 'タブとルール',
     'fhub.tab3': '時間と集中',
     'fhub.tab4': 'キーボード',
+    'fhub.tab5': 'オーディオとラジオ',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'ブラウザについて話すだけでなく、ブラウザを操作できるアシスタント',
@@ -159,7 +160,25 @@ export const ja: Dictionary = {
     'fhub.keys.f4':
         'ダーク、セピア、グレースケール、ライトの各モードを 1 つのタブまたは全タブに適用。画面分割、ピクチャー・イン・ピクチャー、読み上げも、それぞれ専用のキーで。',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': '集中するためのサウンドと、学ぶためのラジオ',
+    'fhub.media.lead':
+        'サイドパネルの中のオーディオプレーヤーで、ホワイトノイズや雨音など集中を助けるあらゆるサウンドを流せます。学習や作業のお供になるインターネットラジオ局にも対応しています。音はパネルではなくオフスクリーンドキュメントが鳴らすので、パネルを隠しても、表示を切り替えても、ページを閉じても再生が続きます。',
+    'fhub.media.f1':
+        'ホワイトノイズ、雨音、環境音のフォルダや、いくつかのファイルを指定するだけ。最大 500 トラックを元のフォルダごとにまとめて表示し、ドラッグで並べ替え、名前で検索できます。',
+    'fhub.media.f2':
+        '同じプレーヤーでインターネットラジオも。学習中の言語の放送、トーク中心の局、作業向けの落ち着いた放送などを、Radio Browser のディレクトリから名前・国・タグで検索するか、ストリームのアドレスを自分で貼り付けて追加できます。',
+    'fhub.media.f3':
+        '再生操作、10 秒スキップ、音量、ミュートはパネルで。パネルを閉じているときは、ツールバーボタンの下に同じ操作が表示されます。ストリームには終わりがなくシークする先がないため、シークバーの代わりにライブバーが表示されます。',
+    'fhub.media.f4':
+        '何もアップロードされません。フォルダはファイル入力ではなく File System Access API を通じて渡され、プレイリストとラジオ局はブラウザ自身のストレージに保存されます。',
+    'fhub.media.mockup.badge': 'オーディオプレーヤー',
+    'fhub.media.mockup.searchPlaceholder': 'トラックを検索…',
+    'fhub.media.mockup.tabMusic': 'オーディオ',
+    'fhub.media.mockup.tabRadio': 'ラジオ',
+    'fhub.media.mockup.tabAll': 'すべて',
+    'fhub.media.mockup.savedStations': '保存した局',
+    'fhub.media.mockup.folder': '集中',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': '機能タブ',
@@ -578,9 +597,26 @@ export const ja: Dictionary = {
     'bento.qrTools.h2': 'カメラ不要の画面上スキャナー',
     'bento.qrTools.h3': '高解像度 PNG またはベクター SVG でエクスポート',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': '学習や集中のためのインターネットラジオ',
+    'bento.radio.desc':
+        'Radio Browser のディレクトリを名前・国・タグで検索するか、ストリームのアドレスを自分で貼り付けます。学習中の言語の局、トーク中心のチャンネル、作業向けの落ち着いた放送など。保存した局は、サウンドと同じプレーヤーの専用タブに並びます。',
+    'bento.radio.tag': 'ラジオ',
+    'bento.radio.badge': 'ライブストリーム',
+    'bento.radio.h1': '検索できる数千の局、または自分で貼り付けたアドレス',
+    'bento.radio.h2': 'リストを JSON でエクスポート・インポート',
+    'bento.radio.h3': 'ログインしている Chrome 間でラジオ局を同期（任意）',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': '集中のためのオーディオプレーヤーをサイドパネルに',
+    'bento.musicPlayer.desc':
+        'ホワイトノイズや雨音など、集中を助けるサウンドのフォルダを渡せば、読んでいるページの隣で再生します。音はパネルではなくオフスクリーンドキュメントが鳴らすので、パネルを隠しても、表示を切り替えても、ページを閉じても止まりません。',
+    'bento.musicPlayer.tag': 'オーディオ',
+    'bento.musicPlayer.badge': '隠しても再生が続く',
+    'bento.musicPlayer.h1': 'フォルダまたは選んだファイルを、フォルダごとにまとめてドラッグで並べ替え',
+    'bento.musicPlayer.h2': 'シークバー、10 秒スキップ、音量、ミュート。ツールバーボタンの下にも同じ操作',
+    'bento.musicPlayer.h3':
+        'アップロードは一切なし：フォルダはあなたのマシン上で読み込まれ、あなたのブラウザに保存されます',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': '2 タブの画面分割',
@@ -820,8 +856,9 @@ export const ja: Dictionary = {
         'あなた自身がエクスポートしたファイルとして、選んだフォルダに保存される場合のみ',
     'privacy.store.r6.what': 'ポモドーロのセッションとその履歴',
     'privacy.store.r6.leaves': 'いいえ',
-    'privacy.store.r7.what': '追加した音楽とラジオのお気に入り',
-    'privacy.store.r7.leaves': 'いいえ',
+    'privacy.store.r7.what': '追加したオーディオと保存したラジオ局',
+    'privacy.store.r7.leaves':
+        'オーディオは一切外に出ません。ラジオ局の一覧は、デフォルトでオフになっているその同期をオンにした場合のみ',
     'privacy.store.r8.what': 'Web アクティビティ：サイト別・日別の秒数、訪問回数、セッション',
     'privacy.store.r8.leaves':
         'いいえ。ただし、デフォルトでオフになっているこの記録専用の同期をオンにした場合を除きます',
@@ -853,6 +890,12 @@ export const ja: Dictionary = {
     'privacy.net.r2.host': 'Chrome 組み込みの端末内モデル',
     'privacy.net.r2.what': 'なし。このマシン上の Chrome 内で動作し、リクエストを一切行いません',
     'privacy.net.r2.when': 'Gemini の代わりにこれを選んだとき',
+    'privacy.net.r3.what': '入力した局名またはジャンルのみ',
+    'privacy.net.r3.when': 'オンラインラジオを検索・閲覧している間',
+    'privacy.net.r4.host': '再生ボタンを押したラジオ局',
+    'privacy.net.r4.what':
+        'その局自身のサーバーへの通常のオーディオリクエスト。どの Web サイトとも同じく、相手にはあなたの IP アドレスが見えます',
+    'privacy.net.r4.when': '局を再生している間',
     'privacy.net.r5.what': 'サムネイルと埋め込みプレーヤーのための動画 ID',
     'privacy.net.r5.when': 'プレビューまたは再生する YouTube リンクに限り',
     'privacy.net.r7.what':
@@ -869,7 +912,7 @@ export const ja: Dictionary = {
     'privacy.retention.p1':
         'データを保持するサーバーが存在しないため、サーバー側の保存期間というものはありません。あなたの端末上にあるものは、あなたが削除するまで残ります。以下がそのルールです。',
     'privacy.retention.li1':
-        'ノート、スクリーンショット、バックアップ、会話、ポモドーロの履歴、音楽ライブラリ：削除するか拡張機能を削除するまで保存されます。',
+        'ノート、スクリーンショット、バックアップ、会話、ポモドーロの履歴、オーディオライブラリ：削除するか拡張機能を削除するまで保存されます。',
     'privacy.retention.li2':
         'Web アクティビティの記録：専用の設定で指定した日数だけ保存され、それより古い日のデータは自動的に削除されます。',
     'privacy.retention.li3':
@@ -1002,7 +1045,7 @@ export const ja: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace とは',
     'terms.service.p1':
-        'Chrome および Chromium ベースのブラウザ向けの拡張機能で、Chrome Web Store を通じて配布され、ブラウザをワークスペースに変えます：タブグループとルール、ノート、ブックマーク、履歴、スクリーンショット、タイマー、音楽プレーヤーを備えたサイドパネル、キーボードナビゲーション、そしてオプションのアシスタント。',
+        'Chrome および Chromium ベースのブラウザ向けの拡張機能で、Chrome Web Store を通じて配布され、ブラウザをワークスペースに変えます：タブグループとルール、ノート、ブックマーク、履歴、スクリーンショット、タイマー、オーディオプレーヤーを備えたサイドパネル、キーボードナビゲーション、そしてオプションのアシスタント。',
     'terms.service.li1': 'アカウントも登録も、あなたのデータを保持する当方のサーバーもなしで動作します。',
     'terms.service.li2':
         'あなたのマシン上のブラウザ内で動作します。第三者のサービスにアクセスする機能はわずかで、それもその機能を使ったときだけです。',
@@ -1095,7 +1138,7 @@ export const ja: Dictionary = {
         'アシスタントのための Google Gemini。API キーはあなたのものであり、あなたが入力し、あなたのマシンに保存されます：そのキーのクォータ、費用、規約は、あなたと Google の間の問題です。',
     'terms.third.li2': 'Google の規約に基づいて拡張機能を配布・更新する Chrome Web Store。',
     'terms.third.li3':
-        '動画プレビューのための YouTube、およびあなたのマシンで動作する文字認識モデルを配信する CDN。',
+        'オンラインラジオのディレクトリとそこに掲載されている局、動画プレビューのための YouTube、およびあなたのマシンで動作する文字認識モデルを配信する CDN。',
     'terms.third.li4': '第 8 項で説明するとおり、チップのための Stripe。',
     'terms.third.p2':
         '拡張機能を通じてアクセスするコンテンツはその公開者に帰属し、リンクすることは推奨を意味しません。拡張機能が通信し得るすべてのホスト、送信内容、そのタイミングは、プライバシーポリシーに記載しています。',

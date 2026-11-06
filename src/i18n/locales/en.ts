@@ -50,7 +50,7 @@ export const en = {
     'hero.slide3.line1': 'Your complete workstation',
     'hero.slide3.line2': 'integrated in the side panel',
     'hero.slide3.lede':
-        'Bookmarks, history, recently closed tabs, the reading list and downloads stop being pages you go and open. Beside them: notes with checklists and Kanban boards, the screenshot gallery with on-device OCR, the AI assistant, the Pomodoro timer, and your own music or online radio.',
+        'Bookmarks, history, recently closed tabs, the reading list and downloads stop being pages you go and open. Beside them: notes with checklists and Kanban boards, the screenshot gallery with on-device OCR, the AI assistant, the Pomodoro timer, and an audio player for focus sounds or online radio.',
     'hero.slide3.tag': 'One side panel, everything in it',
 
     'hero.carousel.prev': 'Previous slide',
@@ -111,6 +111,7 @@ export const en = {
     'fhub.tab2': 'Tabs & rules',
     'fhub.tab3': 'Time & focus',
     'fhub.tab4': 'Keyboard',
+    'fhub.tab5': 'Audio & radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'An assistant that can act on the browser, not just talk about it',
@@ -164,7 +165,25 @@ export const en = {
     'fhub.keys.f4':
         'Dark, sepia, grayscale or light mode for one tab or all of them, split screen, picture-in-picture, and read-aloud, each on its own key.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Sound to focus by, and radio to learn from',
+    'fhub.media.lead':
+        'An audio player inside the side panel for white noise, rain or any sound that helps you concentrate, and for the internet radio stations you learn or work with. The sound is made by an offscreen document rather than by the panel, so it carries on when you hide the drawer, change view or close the page.',
+    'fhub.media.f1':
+        'Point it at a folder of white noise, rain or ambient sound, or at a handful of files: up to five hundred tracks, grouped by the folder they came from, reordered by dragging and searchable by name.',
+    'fhub.media.f2':
+        'Internet radio in the same player, for a language you are learning, a talk station or something calm to work with: search the Radio Browser directory by name, country or tag, or paste a stream address yourself.',
+    'fhub.media.f3':
+        'Transport, ten-second jumps, volume and mute in the panel, and the same controls under the toolbar button while the drawer is closed. A stream shows a live bar instead of a seek bar, because it has no end to seek to.',
+    'fhub.media.f4':
+        'Nothing is uploaded. The folder is handed over by the File System Access API rather than by a file input, and the playlist and the stations live in your browser’s own storage.',
+    'fhub.media.mockup.badge': 'Audio player',
+    'fhub.media.mockup.searchPlaceholder': 'Search tracks…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'All',
+    'fhub.media.mockup.savedStations': 'Saved stations',
+    'fhub.media.mockup.folder': 'Focus',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Feature Tabs',
@@ -583,9 +602,27 @@ export const en = {
     'bento.qrTools.h2': 'Direct on-screen scanner without camera',
     'bento.qrTools.h3': 'Export in high-resolution PNG or vector SVG',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Internet radio to learn or focus',
+    'bento.radio.desc':
+        'Search the Radio Browser directory by name, country or tag, or paste the address of a stream yourself: a station in the language you are learning, a talk channel, or something calm to work with. The stations you keep live in the same player as your sounds, under their own tab.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'Live streams',
+    'bento.radio.h1': 'Thousands of stations to search, or an address you paste in',
+    'bento.radio.h2': 'Export and import the list as JSON',
+    'bento.radio.h3': 'Optional sync of your stations across the Chromes you are signed in to',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'An audio player for focus, in the side panel',
+    'bento.musicPlayer.desc':
+        'Hand it a folder of white noise, rain or any sound that helps you concentrate, and it plays beside the page you are reading. The sound is made by an offscreen document rather than by the panel, so hiding the drawer, changing view or closing the page does not stop it.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Keeps playing when hidden',
+    'bento.musicPlayer.h1': 'A folder or a file selection, grouped by folder and reordered by dragging',
+    'bento.musicPlayer.h2':
+        'Seek bar, ten-second jumps, volume and mute, and the same controls under the toolbar button',
+    'bento.musicPlayer.h3':
+        'Nothing is uploaded: the folder is read on your machine and kept in your own browser',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Dual-Tab Split Screen',
@@ -826,8 +863,9 @@ export const en = {
     'privacy.store.r5.leaves': 'Only inside a file you export yourself, to the folder you choose',
     'privacy.store.r6.what': 'Pomodoro sessions and their history',
     'privacy.store.r6.leaves': 'No',
-    'privacy.store.r7.what': 'Music you add and your radio favourites',
-    'privacy.store.r7.leaves': 'No',
+    'privacy.store.r7.what': 'Audio you add and your saved radio stations',
+    'privacy.store.r7.leaves':
+        'The audio, never. The station list only if you switch on its sync, which is off by default',
     'privacy.store.r8.what': 'Web activity: seconds, visits and sessions per site, per day',
     'privacy.store.r8.leaves': 'No, unless you switch on that record’s own sync, which is off by default',
     'privacy.store.r9.what': 'Snippets, keyboard overrides and omnibar preferences',
@@ -857,6 +895,12 @@ export const en = {
     'privacy.net.r2.host': 'Chrome’s built-in on-device model',
     'privacy.net.r2.what': 'Nothing. It runs inside Chrome, on this machine, and makes no request at all',
     'privacy.net.r2.when': 'When you choose it instead of Gemini',
+    'privacy.net.r3.what': 'The station name or genre you typed, and nothing else',
+    'privacy.net.r3.when': 'While you search or browse online radio',
+    'privacy.net.r4.host': 'The radio station you press play on',
+    'privacy.net.r4.what':
+        'An ordinary audio request to that station’s own server, which sees your IP address as any website does',
+    'privacy.net.r4.when': 'While a station is playing',
     'privacy.net.r5.what': 'The video id, for the thumbnail and the embedded player',
     'privacy.net.r5.when': 'Only for a YouTube link you preview or play',
     'privacy.net.r7.what':
@@ -873,7 +917,7 @@ export const en = {
     'privacy.retention.p1':
         'Nothing here has a server-side lifetime, because there is no server holding it. What exists on your device stays until you delete it, and these are the rules it follows.',
     'privacy.retention.li1':
-        'Notes, screenshots, backups, conversations, Pomodoro history and the music library: kept until you delete them or remove the extension.',
+        'Notes, screenshots, backups, conversations, Pomodoro history and the audio library: kept until you delete them or remove the extension.',
     'privacy.retention.li2':
         'The web activity record: kept for the number of days you set in its own settings, and older days are dropped automatically.',
     'privacy.retention.li3':
@@ -1006,7 +1050,7 @@ export const en = {
 
     'terms.service.title': 'What Intelligent Workspace is',
     'terms.service.p1':
-        'It is an extension for Chrome and Chromium-based browsers, distributed through the Chrome Web Store, that turns the browser into a workspace: tab groups and rules, a side panel with notes, bookmarks, history, screenshots, a timer and a music player, keyboard navigation, and an optional assistant.',
+        'It is an extension for Chrome and Chromium-based browsers, distributed through the Chrome Web Store, that turns the browser into a workspace: tab groups and rules, a side panel with notes, bookmarks, history, screenshots, a timer and an audio player, keyboard navigation, and an optional assistant.',
     'terms.service.li1':
         'It works without an account, without registration and without a server of ours holding your data.',
     'terms.service.li2':
@@ -1102,7 +1146,7 @@ export const en = {
     'terms.third.li2':
         'The Chrome Web Store, which distributes and updates the extension under Google’s terms.',
     'terms.third.li3':
-        'YouTube, for video previews, and the CDN that serves the text-recognition model that runs on your machine.',
+        'The online radio directory and the stations it lists, YouTube for video previews, and the CDN that serves the on-device text-recognition model.',
     'terms.third.li4': 'Stripe, for tips, as described in section 8.',
     'terms.third.p2':
         'Content you reach through the extension belongs to whoever published it, and linking to it is not an endorsement. The privacy policy lists every host the extension can contact, what it sends and when.',

@@ -45,7 +45,7 @@ export const es: Dictionary = {
     'hero.slide3.line1': 'Toda tu estación de trabajo',
     'hero.slide3.line2': 'integrada en el panel lateral',
     'hero.slide3.lede':
-        'Marcadores, historial, pestañas cerradas, lista de lectura y descargas dejan de ser páginas que hay que ir a abrir. Al lado: notas con listas y tableros Kanban, la galería de capturas con OCR en tu propio equipo, el asistente de IA, el temporizador Pomodoro y tu música o la radio online.',
+        'Marcadores, historial, pestañas cerradas, lista de lectura y descargas dejan de ser páginas que hay que ir a abrir. Al lado: notas con listas y tableros Kanban, la galería de capturas con OCR en tu propio equipo, el asistente de IA, el temporizador Pomodoro y un reproductor de audio para sonidos de concentración o radio online.',
     'hero.slide3.tag': 'Un panel lateral con todo dentro',
 
     'hero.carousel.prev': 'Slide anterior',
@@ -106,6 +106,7 @@ export const es: Dictionary = {
     'fhub.tab2': 'Pestañas y reglas',
     'fhub.tab3': 'Tiempo y foco',
     'fhub.tab4': 'Teclado',
+    'fhub.tab5': 'Audio y radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Un asistente que actúa sobre el navegador, no que habla de él',
@@ -159,7 +160,25 @@ export const es: Dictionary = {
     'fhub.keys.f4':
         'Modo oscuro, sepia, escala de grises o claro para una pestaña o para todas, pantalla dividida, picture-in-picture y lectura en voz alta, cada uno con su tecla.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Sonido para concentrarte y radio para aprender',
+    'fhub.media.lead':
+        'Un reproductor de audio dentro del panel lateral para el ruido blanco, la lluvia o cualquier sonido que te ayude a concentrarte, y para las emisoras de radio por internet con las que aprendes o trabajas. El sonido lo produce un documento offscreen y no el panel, así que sigue sonando cuando ocultas el cajón, cambias de vista o cierras la página.',
+    'fhub.media.f1':
+        'Le señalas una carpeta de ruido blanco, lluvia o sonido ambiente, o un puñado de archivos: hasta quinientas pistas, agrupadas por la carpeta de la que vienen, reordenables arrastrando y buscables por nombre.',
+    'fhub.media.f2':
+        'Radio por internet en el mismo reproductor, para un idioma que estás aprendiendo, una emisora hablada o algo tranquilo con lo que trabajar: busca en el directorio de Radio Browser por nombre, país o etiqueta, o pega tú mismo la dirección de una emisión.',
+    'fhub.media.f3':
+        'Transporte, saltos de diez segundos, volumen y silencio en el panel, y los mismos controles bajo el botón de la barra mientras el cajón está cerrado. Una emisión muestra una barra en directo en lugar de una barra de posición, porque no tiene final al que ir.',
+    'fhub.media.f4':
+        'No se sube nada. La carpeta se entrega con la File System Access API y no con un campo de archivo, y la lista de reproducción y las emisoras viven en el almacenamiento del propio navegador.',
+    'fhub.media.mockup.badge': 'Reproductor de audio',
+    'fhub.media.mockup.searchPlaceholder': 'Buscar pista…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'Todo',
+    'fhub.media.mockup.savedStations': 'Emisoras guardadas',
+    'fhub.media.mockup.folder': 'Concentración',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Pestañas de Funcionalidades',
@@ -578,9 +597,28 @@ export const es: Dictionary = {
     'bento.qrTools.h2': 'Escaneo directo en pantalla sin cámara externa',
     'bento.qrTools.h3': 'Exportación en PNG de alta resolución y SVG vectorial',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Radio por internet para aprender o concentrarte',
+    'bento.radio.desc':
+        'Busca en el directorio de Radio Browser por nombre, país o etiqueta, o pega tú mismo la dirección de una emisión: una emisora en el idioma que estás aprendiendo, un canal hablado o algo tranquilo con lo que trabajar. Las emisoras que guardes viven en el mismo reproductor que tus sonidos, en su propia pestaña.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'En directo',
+    'bento.radio.h1': 'Miles de emisoras para buscar, o una dirección que pegas tú',
+    'bento.radio.h2': 'Exporta e importa la lista en JSON',
+    'bento.radio.h3': 'Sincronización opcional de tus emisoras entre los Chrome en los que inicias sesión',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Un reproductor de audio para concentrarte, en el panel lateral',
+    'bento.musicPlayer.desc':
+        'Le das una carpeta de ruido blanco, lluvia o cualquier sonido que te ayude a concentrarte, y suena junto a la página que estás leyendo. El sonido lo produce un documento offscreen y no el panel, así que ocultar el cajón, cambiar de vista o cerrar la página no lo detiene.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Sigue sonando oculto',
+    'bento.musicPlayer.h1':
+        'Una carpeta o una selección de archivos, agrupados por carpeta y reordenables arrastrando',
+    'bento.musicPlayer.h2':
+        'Barra de posición, saltos de diez segundos, volumen y silencio, y los mismos controles bajo el botón de la barra',
+    'bento.musicPlayer.h3':
+        'No se sube nada: la carpeta se lee en tu equipo y se guarda en tu propio navegador',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Pantalla Dividida (Split Screen)',
@@ -822,8 +860,9 @@ export const es: Dictionary = {
     'privacy.store.r5.leaves': 'Solo dentro de un archivo que exportas tú, a la carpeta que elijas',
     'privacy.store.r6.what': 'Sesiones de Pomodoro y su historial',
     'privacy.store.r6.leaves': 'No',
-    'privacy.store.r7.what': 'La música que añades y tus emisoras favoritas',
-    'privacy.store.r7.leaves': 'No',
+    'privacy.store.r7.what': 'El audio que añades y tus emisoras guardadas',
+    'privacy.store.r7.leaves':
+        'El audio, nunca. La lista de emisoras solo si activas su sincronización, que viene apagada',
     'privacy.store.r8.what': 'Actividad web: segundos, visitas y sesiones por sitio y por día',
     'privacy.store.r8.leaves':
         'No, salvo que actives la sincronización propia de ese registro, desactivada por defecto',
@@ -856,6 +895,12 @@ export const es: Dictionary = {
     'privacy.net.r2.host': 'El modelo local integrado en Chrome',
     'privacy.net.r2.what': 'Nada. Se ejecuta dentro de Chrome, en esta máquina, y no hace ninguna petición',
     'privacy.net.r2.when': 'Cuando lo eliges en lugar de Gemini',
+    'privacy.net.r3.what': 'El nombre o el género de emisora que escribes, y nada más',
+    'privacy.net.r3.when': 'Mientras buscas o exploras la radio en línea',
+    'privacy.net.r4.host': 'La emisora a la que le das al play',
+    'privacy.net.r4.what':
+        'Una petición de audio corriente al servidor de la propia emisora, que ve tu IP como la ve cualquier web',
+    'privacy.net.r4.when': 'Mientras suena una emisora',
     'privacy.net.r5.what': 'El identificador del vídeo, para la miniatura y el reproductor incrustado',
     'privacy.net.r5.when': 'Solo con un enlace de YouTube que previsualizas o reproduces',
     'privacy.net.r7.what':
@@ -872,7 +917,7 @@ export const es: Dictionary = {
     'privacy.retention.p1':
         'Nada de esto tiene una vida útil en servidor, porque no hay servidor que lo guarde. Lo que existe en tu dispositivo se queda hasta que lo borras, y estas son las reglas que sigue.',
     'privacy.retention.li1':
-        'Notas, capturas, copias de seguridad, conversaciones, historial del Pomodoro y biblioteca de música: hasta que los borres o quites la extensión.',
+        'Notas, capturas, copias de seguridad, conversaciones, historial del Pomodoro y biblioteca de audio: hasta que los borres o quites la extensión.',
     'privacy.retention.li2':
         'El registro de actividad web: los días que fijes en sus propios ajustes, y los días más antiguos se descartan solos.',
     'privacy.retention.li3':
@@ -1005,7 +1050,7 @@ export const es: Dictionary = {
 
     'terms.service.title': 'Qué es Intelligent Workspace',
     'terms.service.p1':
-        'Es una extensión para Chrome y navegadores basados en Chromium, distribuida a través de la Chrome Web Store, que convierte el navegador en una estación de trabajo: grupos de pestañas y reglas, un panel lateral con notas, marcadores, historial, capturas, temporizador y reproductor de música, navegación por teclado y un asistente opcional.',
+        'Es una extensión para Chrome y navegadores basados en Chromium, distribuida a través de la Chrome Web Store, que convierte el navegador en una estación de trabajo: grupos de pestañas y reglas, un panel lateral con notas, marcadores, historial, capturas, temporizador y reproductor de audio, navegación por teclado y un asistente opcional.',
     'terms.service.li1':
         'Funciona sin cuenta, sin registro y sin ningún servidor nuestro que guarde tus datos.',
     'terms.service.li2':
@@ -1104,7 +1149,7 @@ export const es: Dictionary = {
     'terms.third.li2':
         'La Chrome Web Store, que distribuye y actualiza la extensión bajo las condiciones de Google.',
     'terms.third.li3':
-        'YouTube, para las vistas previas de vídeo, y la CDN que sirve el modelo de reconocimiento de texto que corre en tu equipo.',
+        'El directorio de radios en línea y las emisoras que lista, YouTube para las vistas previas de vídeo, y la CDN que sirve el modelo de reconocimiento de texto que corre en tu equipo.',
     'terms.third.li4': 'Stripe, para las propinas, según se describe en el apartado 8.',
     'terms.third.p2':
         'Los contenidos a los que llegues a través de la extensión son de quien los publicó, y enlazarlos no supone respaldarlos. La política de privacidad enumera todos los servidores con los que la extensión puede contactar, qué envía y cuándo.',

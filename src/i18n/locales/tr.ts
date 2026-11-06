@@ -46,7 +46,7 @@ export const tr: Dictionary = {
     'hero.slide3.line1': 'Eksiksiz çalışma istasyonunuz',
     'hero.slide3.line2': 'yan panele entegre',
     'hero.slide3.lede':
-        'Yer imleri, geçmiş, son kapatılan sekmeler, okuma listesi ve indirmeler artık gidip açmanız gereken sayfalar değil. Yanlarında: kontrol listeli notlar ve Kanban panoları, cihaz üzerinde OCR destekli ekran görüntüsü galerisi, yapay zekâ asistanı, Pomodoro zamanlayıcı ve kendi müziğiniz ya da çevrimiçi radyo.',
+        'Yer imleri, geçmiş, son kapatılan sekmeler, okuma listesi ve indirmeler artık gidip açmanız gereken sayfalar değil. Yanlarında: kontrol listeli notlar ve Kanban panoları, cihaz üzerinde OCR destekli ekran görüntüsü galerisi, yapay zekâ asistanı, Pomodoro zamanlayıcı ve odaklanma sesleri ya da çevrimiçi radyo için bir ses oynatıcı.',
     'hero.slide3.tag': 'Tek yan panel, her şey içinde',
 
     'hero.carousel.prev': 'Önceki slayt',
@@ -107,6 +107,7 @@ export const tr: Dictionary = {
     'fhub.tab2': 'Sekmeler ve kurallar',
     'fhub.tab3': 'Zaman ve odak',
     'fhub.tab4': 'Klavye',
+    'fhub.tab5': 'Ses ve radyo',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Tarayıcı hakkında konuşmakla kalmayıp onun üzerinde işlem yapabilen bir asistan',
@@ -160,7 +161,25 @@ export const tr: Dictionary = {
     'fhub.keys.f4':
         'Tek bir sekme ya da hepsi için koyu, sepya, gri tonlama veya açık mod; bölünmüş ekran, resim içinde resim ve sesli okuma, her biri kendi tuşunda.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Odaklanmak için ses, öğrenmek için radyo',
+    'fhub.media.lead':
+        'Yan panelin içinde bir ses oynatıcı: beyaz gürültü, yağmur ya da odaklanmanıza yardımcı olan her türlü ses için ve öğrenirken ya da çalışırken dinlediğiniz internet radyo istasyonları için. Sesi panel değil, ekran dışı (offscreen) bir belge üretir; bu yüzden çekmeceyi gizlediğinizde, görünümü değiştirdiğinizde ya da sayfayı kapattığınızda çalmaya devam eder.',
+    'fhub.media.f1':
+        'Ona beyaz gürültü, yağmur ya da ortam sesi içeren bir klasör veya birkaç dosya gösterin: beş yüz parçaya kadar, geldikleri klasöre göre gruplanır, sürükleyerek yeniden sıralanır ve adıyla aranabilir.',
+    'fhub.media.f2':
+        'Aynı oynatıcıda internet radyosu; öğrendiğiniz bir dil, bir sohbet istasyonu ya da çalışırken dinleyecek sakin bir şey için: Radio Browser dizininde ada, ülkeye veya etikete göre arayın ya da bir yayın adresini kendiniz yapıştırın.',
+    'fhub.media.f3':
+        'Panelde oynatma kontrolleri, on saniyelik atlamalar, ses düzeyi ve sessize alma; çekmece kapalıyken araç çubuğu düğmesinin altında da aynı kontroller. Canlı yayında konum çubuğu yerine canlı yayın çubuğu görünür, çünkü atlanacak bir sonu yoktur.',
+    'fhub.media.f4':
+        'Hiçbir şey yüklenmez. Klasör bir dosya seçme alanıyla değil, File System Access API ile verilir; çalma listesi ve istasyonlar tarayıcınızın kendi depolama alanında durur.',
+    'fhub.media.mockup.badge': 'Ses oynatıcı',
+    'fhub.media.mockup.searchPlaceholder': 'Parça ara…',
+    'fhub.media.mockup.tabMusic': 'Ses',
+    'fhub.media.mockup.tabRadio': 'Radyo',
+    'fhub.media.mockup.tabAll': 'Tümü',
+    'fhub.media.mockup.savedStations': 'Kayıtlı istasyonlar',
+    'fhub.media.mockup.folder': 'Odak',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Özellik Sekmeleri',
@@ -578,9 +597,27 @@ export const tr: Dictionary = {
     'bento.qrTools.h2': 'Kamerasız, doğrudan ekrandan tarama',
     'bento.qrTools.h3': 'Yüksek çözünürlüklü PNG veya vektör SVG olarak dışa aktarın',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Öğrenmek veya odaklanmak için internet radyosu',
+    'bento.radio.desc':
+        'Radio Browser dizininde ada, ülkeye veya etikete göre arayın ya da bir yayının adresini kendiniz yapıştırın: öğrendiğiniz dilde bir istasyon, bir sohbet kanalı ya da çalışırken dinleyecek sakin bir şey. Kaydettiğiniz istasyonlar, seslerinizle aynı oynatıcıda, kendi sekmelerinde durur.',
+    'bento.radio.tag': 'Radyo',
+    'bento.radio.badge': 'Canlı yayınlar',
+    'bento.radio.h1': 'Aranacak binlerce istasyon ya da kendi yapıştırdığınız bir adres',
+    'bento.radio.h2': 'Listeyi JSON olarak dışa ve içe aktarın',
+    'bento.radio.h3': 'Oturum açtığınız Chrome’lar arasında istasyonlarınızın isteğe bağlı eşitlenmesi',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Yan panelde, odaklanmak için bir ses oynatıcı',
+    'bento.musicPlayer.desc':
+        'Ona beyaz gürültü, yağmur ya da odaklanmanıza yardımcı olan herhangi bir ses içeren bir klasör verin, okuduğunuz sayfanın yanında çalsın. Sesi panel değil, ekran dışı (offscreen) bir belge üretir; bu yüzden çekmeceyi gizlemek, görünümü değiştirmek ya da sayfayı kapatmak onu durdurmaz.',
+    'bento.musicPlayer.tag': 'Ses',
+    'bento.musicPlayer.badge': 'Gizliyken de çalmaya devam eder',
+    'bento.musicPlayer.h1':
+        'Bir klasör ya da seçtiğiniz dosyalar, klasöre göre gruplanır ve sürükleyerek yeniden sıralanır',
+    'bento.musicPlayer.h2':
+        'Konum çubuğu, on saniyelik atlamalar, ses düzeyi ve sessize alma; araç çubuğu düğmesinin altında da aynı kontroller',
+    'bento.musicPlayer.h3': 'Hiçbir şey yüklenmez: klasör makinenizde okunur ve kendi tarayıcınızda saklanır',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'İki Sekmeli Bölünmüş Ekran',
@@ -821,8 +858,9 @@ export const tr: Dictionary = {
     'privacy.store.r5.leaves': 'Yalnızca kendiniz dışa aktardığınız bir dosyanın içinde, seçtiğiniz klasöre',
     'privacy.store.r6.what': 'Pomodoro oturumları ve geçmişleri',
     'privacy.store.r6.leaves': 'Hayır',
-    'privacy.store.r7.what': 'Eklediğiniz müzikler ve favori radyolarınız',
-    'privacy.store.r7.leaves': 'Hayır',
+    'privacy.store.r7.what': 'Eklediğiniz sesler ve kayıtlı radyo istasyonlarınız',
+    'privacy.store.r7.leaves':
+        'Sesler asla. İstasyon listesi ise yalnızca varsayılan olarak kapalı olan kendi eşitlemesini açarsanız',
     'privacy.store.r8.what': 'Web etkinliği: site başına, gün başına saniyeler, ziyaretler ve oturumlar',
     'privacy.store.r8.leaves':
         'Hayır; varsayılan olarak kapalı olan bu kaydın kendi eşitlemesini açmadığınız sürece',
@@ -854,6 +892,12 @@ export const tr: Dictionary = {
     'privacy.net.r2.host': 'Chrome’un yerleşik, cihaz üzerindeki modeli',
     'privacy.net.r2.what': 'Hiçbir şey. Chrome’un içinde, bu makinede çalışır ve hiçbir istek yapmaz',
     'privacy.net.r2.when': 'Gemini yerine onu seçtiğinizde',
+    'privacy.net.r3.what': 'Yazdığınız istasyon adı veya tür, başka hiçbir şey',
+    'privacy.net.r3.when': 'Çevrimiçi radyoda arama yaparken veya göz atarken',
+    'privacy.net.r4.host': 'Oynat’a bastığınız radyo istasyonu',
+    'privacy.net.r4.what':
+        'O istasyonun kendi sunucusuna sıradan bir ses isteği; sunucu, her web sitesi gibi IP adresinizi görür',
+    'privacy.net.r4.when': 'Bir istasyon çalarken',
     'privacy.net.r5.what': 'Küçük resim ve gömülü oynatıcı için video kimliği',
     'privacy.net.r5.when': 'Yalnızca önizlediğiniz veya oynattığınız bir YouTube bağlantısı için',
     'privacy.net.r7.what':
@@ -870,7 +914,7 @@ export const tr: Dictionary = {
     'privacy.retention.p1':
         'Burada hiçbir şeyin sunucu tarafında bir ömrü yoktur, çünkü onu tutan bir sunucu yoktur. Cihazınızda var olan şey siz silene kadar kalır ve izlediği kurallar şunlardır.',
     'privacy.retention.li1':
-        'Notlar, ekran görüntüleri, yedekler, sohbetler, Pomodoro geçmişi ve müzik kitaplığı: siz silene veya uzantıyı kaldırana kadar tutulur.',
+        'Notlar, ekran görüntüleri, yedekler, sohbetler, Pomodoro geçmişi ve ses kitaplığı: siz silene veya uzantıyı kaldırana kadar tutulur.',
     'privacy.retention.li2':
         'Web etkinliği kaydı: kendi ayarlarında belirlediğiniz gün sayısı kadar tutulur; daha eski günler otomatik olarak silinir.',
     'privacy.retention.li3':
@@ -1003,7 +1047,7 @@ export const tr: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace nedir',
     'terms.service.p1':
-        'Chrome Web Store üzerinden dağıtılan, Chrome ve Chromium tabanlı tarayıcılar için bir uzantıdır ve tarayıcıyı bir çalışma alanına dönüştürür: sekme grupları ve kurallar; notlar, yer imleri, geçmiş, ekran görüntüleri, zamanlayıcı ve müzik çalar içeren bir yan panel; klavye ile gezinme ve isteğe bağlı bir asistan.',
+        'Chrome Web Store üzerinden dağıtılan, Chrome ve Chromium tabanlı tarayıcılar için bir uzantıdır ve tarayıcıyı bir çalışma alanına dönüştürür: sekme grupları ve kurallar; notlar, yer imleri, geçmiş, ekran görüntüleri, zamanlayıcı ve ses oynatıcı içeren bir yan panel; klavye ile gezinme ve isteğe bağlı bir asistan.',
     'terms.service.li1':
         'Hesap olmadan, kayıt olmadan ve verilerinizi tutan bize ait bir sunucu olmadan çalışır.',
     'terms.service.li2':
@@ -1099,7 +1143,7 @@ export const tr: Dictionary = {
         'Asistan için Google Gemini. API anahtarı sizindir, sizin tarafınızdan girilir ve makinenizde saklanır: bu anahtarın kotası, maliyeti ve koşulları sizinle Google arasındadır.',
     'terms.third.li2': 'Uzantıyı Google’ın koşulları altında dağıtan ve güncelleyen Chrome Web Store.',
     'terms.third.li3':
-        'Video önizlemeleri için YouTube ve makinenizde çalışan metin tanıma modelini sunan CDN.',
+        'Çevrimiçi radyo dizini ve listelediği istasyonlar, video önizlemeleri için YouTube ve makinenizde çalışan metin tanıma modelini sunan CDN.',
     'terms.third.li4': '8. bölümde açıklandığı gibi bahşişler için Stripe.',
     'terms.third.p2':
         'Uzantı aracılığıyla ulaştığınız içerik onu yayımlayana aittir ve ona bağlantı vermek bir onay anlamına gelmez. Gizlilik politikası, uzantının iletişim kurabileceği her sunucuyu, ne gönderdiğini ve ne zaman gönderdiğini listeler.',

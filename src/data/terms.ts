@@ -37,7 +37,7 @@ import type { TranslationKey } from '@/i18n/ui';
 import { site } from '@/data/site';
 
 /** Bump this, and the date in the page's header moves. ISO, so `<time>` can use it. */
-export const effectiveDate = '2026-09-08';
+export const effectiveDate = '2026-11-06';
 
 export interface TermsSection {
     /** The `id` on the `<section>` and the fragment the contents list points at. */

@@ -46,7 +46,7 @@ export const de: Dictionary = {
     'hero.slide3.line1': 'Ihre komplette Arbeitsstation',
     'hero.slide3.line2': 'integriert in die Seitenleiste',
     'hero.slide3.lede':
-        'Lesezeichen, Verlauf, kürzlich geschlossene Tabs, die Leseliste und Downloads sind keine Seiten mehr, die Sie erst öffnen müssen. Daneben: Notizen mit Checklisten und Kanban-Boards, die Screenshot-Galerie mit OCR direkt auf dem Gerät, der KI-Assistent, der Pomodoro-Timer und Ihre eigene Musik oder ein Online-Radio.',
+        'Lesezeichen, Verlauf, kürzlich geschlossene Tabs, die Leseliste und Downloads sind keine Seiten mehr, die Sie erst öffnen müssen. Daneben: Notizen mit Checklisten und Kanban-Boards, die Screenshot-Galerie mit OCR direkt auf dem Gerät, der KI-Assistent, der Pomodoro-Timer und ein Audioplayer für Konzentrationsklänge oder Online-Radio.',
     'hero.slide3.tag': 'Eine Seitenleiste, alles darin',
 
     'hero.carousel.prev': 'Vorherige Folie',
@@ -107,6 +107,7 @@ export const de: Dictionary = {
     'fhub.tab2': 'Tabs & Regeln',
     'fhub.tab3': 'Zeit & Fokus',
     'fhub.tab4': 'Tastatur',
+    'fhub.tab5': 'Audio & Radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Ein Assistent, der im Browser handelt, statt nur darüber zu reden',
@@ -160,7 +161,25 @@ export const de: Dictionary = {
     'fhub.keys.f4':
         'Dunkel-, Sepia-, Graustufen- oder Hellmodus für einen Tab oder alle, Split-Screen, Bild-in-Bild und Vorlesen, jeweils auf einer eigenen Taste.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Klang zum Konzentrieren, Radio zum Lernen',
+    'fhub.media.lead':
+        'Ein Audioplayer in der Seitenleiste für weißes Rauschen, Regen oder jeden anderen Klang, der Ihnen beim Konzentrieren hilft, und für die Internetradiosender, mit denen Sie lernen oder arbeiten. Der Ton kommt aus einem Offscreen-Dokument und nicht aus der Leiste selbst, deshalb läuft er weiter, wenn Sie die Seitenleiste ausblenden, die Ansicht wechseln oder die Seite schließen.',
+    'fhub.media.f1':
+        'Wählen Sie einen Ordner mit weißem Rauschen, Regen oder Umgebungsklängen oder eine Handvoll Dateien: bis zu fünfhundert Titel, gruppiert nach ihrem Herkunftsordner, per Drag-and-drop sortierbar und nach Namen durchsuchbar.',
+    'fhub.media.f2':
+        'Internetradio im selben Player, für eine Sprache, die Sie gerade lernen, einen Wortsender oder etwas Ruhiges zum Arbeiten: Durchsuchen Sie das Verzeichnis von Radio Browser nach Name, Land oder Tag, oder fügen Sie selbst die Adresse eines Streams ein.',
+    'fhub.media.f3':
+        'Wiedergabesteuerung, Sprünge um zehn Sekunden, Lautstärke und Stummschaltung in der Seitenleiste, dazu dieselben Bedienelemente unter dem Symbolleisten-Button, solange die Leiste geschlossen ist. Ein Stream zeigt statt einer Fortschrittsleiste eine Live-Anzeige, denn er hat kein Ende, zu dem man springen könnte.',
+    'fhub.media.f4':
+        'Es wird nichts hochgeladen. Der Ordner wird über die File System Access API übergeben, nicht über ein Dateifeld, und Playlist und Sender liegen im eigenen Speicher Ihres Browsers.',
+    'fhub.media.mockup.badge': 'Audioplayer',
+    'fhub.media.mockup.searchPlaceholder': 'Titel suchen…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'Alle',
+    'fhub.media.mockup.savedStations': 'Gespeicherte Sender',
+    'fhub.media.mockup.folder': 'Fokus',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Funktionsbereiche',
@@ -579,9 +598,29 @@ export const de: Dictionary = {
     'bento.qrTools.h2': 'Scanner direkt auf dem Bildschirm, ohne Kamera',
     'bento.qrTools.h3': 'Export als hochauflösendes PNG oder Vektor-SVG',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Internetradio zum Lernen oder Konzentrieren',
+    'bento.radio.desc':
+        'Durchsuchen Sie das Verzeichnis von Radio Browser nach Name, Land oder Tag, oder fügen Sie selbst die Adresse eines Streams ein: einen Sender in der Sprache, die Sie lernen, einen Wortsender oder etwas Ruhiges zum Arbeiten. Die Sender, die Sie behalten, liegen im selben Player wie Ihre Klänge, in einem eigenen Tab.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'Livestreams',
+    'bento.radio.h1': 'Tausende Sender zum Durchsuchen oder eine Adresse, die Sie selbst einfügen',
+    'bento.radio.h2': 'Die Liste als JSON exportieren und importieren',
+    'bento.radio.h3':
+        'Optionale Synchronisierung Ihrer Sender zwischen allen Chrome-Browsern, in denen Sie angemeldet sind',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Ein Audioplayer zum Konzentrieren, in der Seitenleiste',
+    'bento.musicPlayer.desc':
+        'Geben Sie ihm einen Ordner mit weißem Rauschen, Regen oder jedem anderen Klang, der Ihnen beim Konzentrieren hilft, und er spielt neben der Seite, die Sie gerade lesen. Der Ton kommt aus einem Offscreen-Dokument und nicht aus der Leiste selbst, deshalb hört er nicht auf, wenn Sie die Seitenleiste ausblenden, die Ansicht wechseln oder die Seite schließen.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Spielt auch ausgeblendet weiter',
+    'bento.musicPlayer.h1':
+        'Ein Ordner oder eine Dateiauswahl, nach Ordner gruppiert und per Drag-and-drop sortiert',
+    'bento.musicPlayer.h2':
+        'Fortschrittsleiste, Sprünge um zehn Sekunden, Lautstärke und Stummschaltung, dazu dieselben Bedienelemente unter dem Symbolleisten-Button',
+    'bento.musicPlayer.h3':
+        'Nichts wird hochgeladen: Der Ordner wird auf Ihrem Rechner gelesen und in Ihrem eigenen Browser gespeichert',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Split-Screen mit zwei Tabs',
@@ -823,8 +862,9 @@ export const de: Dictionary = {
     'privacy.store.r5.leaves': 'Nur in einer Datei, die Sie selbst in einen Ordner Ihrer Wahl exportieren',
     'privacy.store.r6.what': 'Pomodoro-Sitzungen und ihr Verlauf',
     'privacy.store.r6.leaves': 'Nein',
-    'privacy.store.r7.what': 'Von Ihnen hinzugefügte Musik und Ihre Radiofavoriten',
-    'privacy.store.r7.leaves': 'Nein',
+    'privacy.store.r7.what': 'Von Ihnen hinzugefügtes Audio und Ihre gespeicherten Radiosender',
+    'privacy.store.r7.leaves':
+        'Das Audio nie. Die Senderliste nur, wenn Sie ihre Synchronisierung aktivieren, die standardmäßig aus ist',
     'privacy.store.r8.what': 'Webaktivität: Sekunden, Besuche und Sitzungen pro Website und Tag',
     'privacy.store.r8.leaves':
         'Nein, es sei denn, Sie aktivieren die eigene Synchronisierung dieser Aufzeichnung, die standardmäßig aus ist',
@@ -858,6 +898,12 @@ export const de: Dictionary = {
     'privacy.net.r2.what':
         'Nichts. Es läuft in Chrome, auf diesem Rechner, und stellt überhaupt keine Anfrage',
     'privacy.net.r2.when': 'Wenn Sie es statt Gemini wählen',
+    'privacy.net.r3.what': 'Der eingegebene Sendername oder das Genre, sonst nichts',
+    'privacy.net.r3.when': 'Während Sie Online-Radio durchsuchen oder durchstöbern',
+    'privacy.net.r4.host': 'Der Radiosender, bei dem Sie auf Play drücken',
+    'privacy.net.r4.what':
+        'Eine gewöhnliche Audioanfrage an den eigenen Server des Senders, der Ihre IP-Adresse sieht wie jede Website',
+    'privacy.net.r4.when': 'Während ein Sender läuft',
     'privacy.net.r5.what': 'Die Video-ID, für das Vorschaubild und den eingebetteten Player',
     'privacy.net.r5.when': 'Nur für einen YouTube-Link, den Sie in der Vorschau ansehen oder abspielen',
     'privacy.net.r7.what':
@@ -874,7 +920,7 @@ export const de: Dictionary = {
     'privacy.retention.p1':
         'Nichts hier hat eine serverseitige Speicherdauer, denn es gibt keinen Server, der es aufbewahrt. Was auf Ihrem Gerät existiert, bleibt, bis Sie es löschen, und dabei gelten diese Regeln.',
     'privacy.retention.li1':
-        'Notizen, Screenshots, Backups, Gespräche, Pomodoro-Verlauf und die Musikbibliothek: aufbewahrt, bis Sie sie löschen oder die Erweiterung entfernen.',
+        'Notizen, Screenshots, Backups, Gespräche, Pomodoro-Verlauf und die Audiobibliothek: aufbewahrt, bis Sie sie löschen oder die Erweiterung entfernen.',
     'privacy.retention.li2':
         'Die Webaktivitätsaufzeichnung: aufbewahrt für die Anzahl an Tagen, die Sie in ihren Einstellungen festlegen; ältere Tage werden automatisch verworfen.',
     'privacy.retention.li3':
@@ -1007,7 +1053,7 @@ export const de: Dictionary = {
 
     'terms.service.title': 'Was Intelligent Workspace ist',
     'terms.service.p1':
-        'Es ist eine Erweiterung für Chrome und Chromium-basierte Browser, die über den Chrome Web Store vertrieben wird und den Browser in einen Arbeitsbereich verwandelt: Tab-Gruppen und Regeln, eine Seitenleiste mit Notizen, Lesezeichen, Verlauf, Screenshots, einem Timer und einem Musikplayer, Tastaturnavigation und ein optionaler Assistent.',
+        'Es ist eine Erweiterung für Chrome und Chromium-basierte Browser, die über den Chrome Web Store vertrieben wird und den Browser in einen Arbeitsbereich verwandelt: Tab-Gruppen und Regeln, eine Seitenleiste mit Notizen, Lesezeichen, Verlauf, Screenshots, einem Timer und einem Audioplayer, Tastaturnavigation und ein optionaler Assistent.',
     'terms.service.li1':
         'Sie funktioniert ohne Konto, ohne Registrierung und ohne einen Server von uns, der Ihre Daten speichert.',
     'terms.service.li2':
@@ -1108,7 +1154,7 @@ export const de: Dictionary = {
     'terms.third.li2':
         'Der Chrome Web Store, der die Erweiterung zu den Bedingungen von Google vertreibt und aktualisiert.',
     'terms.third.li3':
-        'YouTube für Videovorschauen, und das CDN, das das Texterkennungsmodell bereitstellt, das auf Ihrem Rechner läuft.',
+        'Das Online-Radioverzeichnis und die darin gelisteten Sender, YouTube für Videovorschauen, und das CDN, das das Texterkennungsmodell bereitstellt, das auf Ihrem Rechner läuft.',
     'terms.third.li4': 'Stripe für Trinkgelder, wie in Abschnitt 8 beschrieben.',
     'terms.third.p2':
         'Inhalte, die Sie über die Erweiterung erreichen, gehören denjenigen, die sie veröffentlicht haben, und ein Link darauf ist keine Empfehlung. Die Datenschutzerklärung listet jeden Host auf, den die Erweiterung kontaktieren kann, was sie sendet und wann.',
