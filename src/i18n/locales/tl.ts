@@ -46,7 +46,7 @@ export const tl: Dictionary = {
     'hero.slide3.line1': 'Ang iyong kumpletong workstation',
     'hero.slide3.line2': 'nasa loob ng side panel',
     'hero.slide3.lede':
-        'Ang mga bookmark, history, kamakailang isinarang tab, reading list at mga download ay hindi na mga pahinang kailangan mo pang buksan. Kasama nila: mga tala na may checklist at Kanban board, ang gallery ng screenshot na may on-device OCR, ang AI assistant, ang Pomodoro timer, at ang sarili mong musika o online radio.',
+        'Ang mga bookmark, history, kamakailang isinarang tab, reading list at mga download ay hindi na mga pahinang kailangan mo pang buksan. Kasama nila: mga tala na may checklist at Kanban board, ang gallery ng screenshot na may on-device OCR, ang AI assistant, ang Pomodoro timer, at isang audio player para sa mga tunog na pampokus o online radio.',
     'hero.slide3.tag': 'Isang side panel, lahat ay narito',
 
     'hero.carousel.prev': 'Nakaraang slide',
@@ -107,6 +107,7 @@ export const tl: Dictionary = {
     'fhub.tab2': 'Tab at panuntunan',
     'fhub.tab3': 'Oras at pokus',
     'fhub.tab4': 'Keyboard',
+    'fhub.tab5': 'Audio at radyo',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Isang assistant na kumikilos sa browser, hindi lang nagsasalita tungkol dito',
@@ -162,7 +163,25 @@ export const tl: Dictionary = {
     'fhub.keys.f4':
         'Dark, sepia, grayscale o light mode para sa isang tab o sa lahat, split screen, picture-in-picture at read-aloud, bawat isa ay may sariling key.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Tunog para makapag-pokus, at radyo para matuto',
+    'fhub.media.lead':
+        'Isang audio player sa loob ng side panel para sa white noise, ulan o anumang tunog na tumutulong sa iyong mag-concentrate, at para sa mga internet radio station na pinakikinggan mo habang nag-aaral o nagtatrabaho. Offscreen document ang gumagawa ng tunog at hindi ang panel, kaya tuloy ito kahit itago mo ang drawer, magpalit ng view o isara ang pahina.',
+    'fhub.media.f1':
+        'Ituro ito sa isang folder ng white noise, ulan o ambient sound, o sa ilang file: hanggang limandaang track, naka-grupo ayon sa folder na pinagmulan nila, naaayos sa pag-drag at nahahanap ayon sa pangalan.',
+    'fhub.media.f2':
+        'Internet radio sa parehong player, para sa wikang pinag-aaralan mo, isang talk station o anumang kalmadong kasama sa trabaho: maghanap sa Radio Browser directory ayon sa pangalan, bansa o tag, o i-paste mo mismo ang address ng stream.',
+    'fhub.media.f3':
+        'Mga playback control, sampung-segundong pagtalon, volume at mute sa panel, at ang parehong mga control sa ilalim ng button sa toolbar habang nakasara ang drawer. Live bar ang ipinapakita ng stream sa halip na seek bar, dahil wala itong dulong mapupuntahan.',
+    'fhub.media.f4':
+        'Walang ina-upload. Ibinibigay ang folder sa pamamagitan ng File System Access API at hindi ng isang file input, at ang playlist at mga station ay nasa sariling storage ng iyong browser.',
+    'fhub.media.mockup.badge': 'Audio player',
+    'fhub.media.mockup.searchPlaceholder': 'Maghanap ng track…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radyo',
+    'fhub.media.mockup.tabAll': 'Lahat',
+    'fhub.media.mockup.savedStations': 'Mga naka-save na station',
+    'fhub.media.mockup.folder': 'Pokus',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Mga Tab ng Feature',
@@ -584,9 +603,28 @@ export const tl: Dictionary = {
     'bento.qrTools.h2': 'Direktang scanner sa screen nang walang camera',
     'bento.qrTools.h3': 'I-export bilang high-resolution na PNG o vector SVG',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Internet radio para matuto o makapag-pokus',
+    'bento.radio.desc':
+        'Maghanap sa Radio Browser directory ayon sa pangalan, bansa o tag, o i-paste mo mismo ang address ng isang stream: isang station sa wikang pinag-aaralan mo, isang talk channel, o anumang kalmadong kasama sa trabaho. Ang mga station na itinatabi mo ay nasa parehong player ng iyong mga tunog, sa sarili nilang tab.',
+    'bento.radio.tag': 'Radyo',
+    'bento.radio.badge': 'Mga live stream',
+    'bento.radio.h1': 'Libu-libong station na mahahanap, o isang address na ikaw mismo ang mag-paste',
+    'bento.radio.h2': 'I-export at i-import ang listahan bilang JSON',
+    'bento.radio.h3': 'Opsyonal na sync ng iyong mga station sa mga Chrome na naka-sign in ka',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Isang audio player para sa pokus, sa side panel',
+    'bento.musicPlayer.desc':
+        'Bigyan ito ng folder ng white noise, ulan o anumang tunog na tumutulong sa iyong mag-concentrate, at tutugtog ito sa tabi ng pahinang binabasa mo. Offscreen document ang gumagawa ng tunog at hindi ang panel, kaya hindi ito tumitigil kahit itago mo ang drawer, magpalit ng view o isara ang pahina.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Tuloy ang tunog kahit nakatago',
+    'bento.musicPlayer.h1':
+        'Isang folder o piling mga file, naka-grupo ayon sa folder at naaayos sa pag-drag',
+    'bento.musicPlayer.h2':
+        'Seek bar, sampung-segundong pagtalon, volume at mute, at ang parehong mga control sa ilalim ng button sa toolbar',
+    'bento.musicPlayer.h3':
+        'Walang ina-upload: binabasa ang folder sa iyong makina at itinatago sa sarili mong browser',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Split Screen ng Dalawang Tab',
@@ -830,8 +868,9 @@ export const tl: Dictionary = {
     'privacy.store.r5.leaves': 'Sa loob lang ng file na ikaw mismo ang nag-export, sa folder na pipiliin mo',
     'privacy.store.r6.what': 'Mga session ng Pomodoro at ang history nito',
     'privacy.store.r6.leaves': 'Hindi',
-    'privacy.store.r7.what': 'Musikang idinagdag mo at ang iyong mga paboritong radyo',
-    'privacy.store.r7.leaves': 'Hindi',
+    'privacy.store.r7.what': 'Audio na idinagdag mo at ang iyong mga naka-save na radio station',
+    'privacy.store.r7.leaves':
+        'Ang audio, hindi kailanman. Ang listahan ng station, kung i-on mo lang ang sarili nitong sync, na naka-off bilang default',
     'privacy.store.r8.what': 'Aktibidad sa web: mga segundo, pagbisita at session bawat site, bawat araw',
     'privacy.store.r8.leaves':
         'Hindi, maliban kung i-on mo ang sariling sync ng talaang iyon, na naka-off bilang default',
@@ -865,6 +904,12 @@ export const tl: Dictionary = {
     'privacy.net.r2.what':
         'Wala. Tumatakbo ito sa loob ng Chrome, sa makinang ito, at hindi gumagawa ng anumang request',
     'privacy.net.r2.when': 'Kapag pinili mo ito sa halip na Gemini',
+    'privacy.net.r3.what': 'Ang pangalan o genre ng station na tinype mo, at wala nang iba',
+    'privacy.net.r3.when': 'Habang naghahanap o nagba-browse ka ng online radio',
+    'privacy.net.r4.host': 'Ang radio station na pinindot mo ang play',
+    'privacy.net.r4.what':
+        'Isang karaniwang audio request sa sariling server ng station na iyon, na nakikita ang iyong IP address gaya ng sa anumang website',
+    'privacy.net.r4.when': 'Habang may tumutugtog na station',
     'privacy.net.r5.what': 'Ang video id, para sa thumbnail at sa naka-embed na player',
     'privacy.net.r5.when': 'Para lang sa YouTube link na pini-preview o pinapatugtog mo',
     'privacy.net.r7.what':
@@ -881,7 +926,7 @@ export const tl: Dictionary = {
     'privacy.retention.p1':
         'Walang anuman dito ang may tagal sa server, dahil walang server na humahawak nito. Ang umiiral sa iyong device ay nananatili hanggang burahin mo ito, at ito ang mga tuntuning sinusunod nito.',
     'privacy.retention.li1':
-        'Mga tala, screenshot, backup, usapan, history ng Pomodoro at ang music library: itinatago hanggang burahin mo ang mga ito o alisin ang extension.',
+        'Mga tala, screenshot, backup, usapan, history ng Pomodoro at ang audio library: itinatago hanggang burahin mo ang mga ito o alisin ang extension.',
     'privacy.retention.li2':
         'Ang talaan ng aktibidad sa web: itinatago sa bilang ng araw na itinakda mo sa sarili nitong mga setting, at awtomatikong inaalis ang mas lumang mga araw.',
     'privacy.retention.li3':
@@ -1014,7 +1059,7 @@ export const tl: Dictionary = {
 
     'terms.service.title': 'Ano ang Intelligent Workspace',
     'terms.service.p1':
-        'Ito ay isang extension para sa Chrome at mga browser na nakabatay sa Chromium, ipinamamahagi sa pamamagitan ng Chrome Web Store, na ginagawang workspace ang browser: mga tab group at panuntunan, isang side panel na may mga tala, bookmark, history, screenshot, timer at music player, pag-navigate gamit ang keyboard, at isang opsyonal na assistant.',
+        'Ito ay isang extension para sa Chrome at mga browser na nakabatay sa Chromium, ipinamamahagi sa pamamagitan ng Chrome Web Store, na ginagawang workspace ang browser: mga tab group at panuntunan, isang side panel na may mga tala, bookmark, history, screenshot, timer at audio player, pag-navigate gamit ang keyboard, at isang opsyonal na assistant.',
     'terms.service.li1':
         'Gumagana ito nang walang account, walang pagpaparehistro at walang server namin na humahawak sa iyong data.',
     'terms.service.li2':
@@ -1113,7 +1158,7 @@ export const tl: Dictionary = {
     'terms.third.li2':
         'Ang Chrome Web Store, na namamahagi at nag-a-update ng extension sa ilalim ng mga tuntunin ng Google.',
     'terms.third.li3':
-        'YouTube, para sa mga preview ng video, at ang CDN na naghahain ng text-recognition model na tumatakbo sa iyong makina.',
+        'Ang online radio directory at ang mga station na nakalista roon, YouTube, para sa mga preview ng video, at ang CDN na naghahain ng text-recognition model na tumatakbo sa iyong makina.',
     'terms.third.li4': 'Stripe, para sa mga tip, gaya ng inilarawan sa seksyon 8.',
     'terms.third.p2':
         'Ang nilalamang naaabot mo sa pamamagitan ng extension ay pag-aari ng sinumang naglathala nito, at ang pag-link dito ay hindi pag-endorso. Inililista ng patakaran sa privacy ang bawat host na maaaring kontakin ng extension, kung ano ang ipinapadala nito at kailan.',

@@ -46,7 +46,7 @@ export const vi: Dictionary = {
     'hero.slide3.line1': 'Toàn bộ trạm làm việc của bạn',
     'hero.slide3.line2': 'tích hợp trong bảng điều khiển bên',
     'hero.slide3.lede':
-        'Dấu trang, lịch sử, thẻ vừa đóng, danh sách đọc và tệp tải xuống không còn là những trang bạn phải tìm mở. Bên cạnh đó: ghi chú với danh sách kiểm tra và bảng Kanban, thư viện ảnh chụp màn hình với OCR ngay trên thiết bị, trợ lý AI, hẹn giờ Pomodoro, cùng nhạc của riêng bạn hoặc radio trực tuyến.',
+        'Dấu trang, lịch sử, thẻ vừa đóng, danh sách đọc và tệp tải xuống không còn là những trang bạn phải tìm mở. Bên cạnh đó: ghi chú với danh sách kiểm tra và bảng Kanban, thư viện ảnh chụp màn hình với OCR ngay trên thiết bị, trợ lý AI, hẹn giờ Pomodoro, cùng một trình phát âm thanh cho tiếng nền giúp tập trung hoặc radio trực tuyến.',
     'hero.slide3.tag': 'Một bảng điều khiển bên, chứa mọi thứ',
 
     'hero.carousel.prev': 'Trang chiếu trước',
@@ -107,6 +107,7 @@ export const vi: Dictionary = {
     'fhub.tab2': 'Thẻ & quy tắc',
     'fhub.tab3': 'Thời gian & tập trung',
     'fhub.tab4': 'Bàn phím',
+    'fhub.tab5': 'Âm thanh & radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Một trợ lý có thể hành động trên trình duyệt, không chỉ nói về nó',
@@ -160,7 +161,25 @@ export const vi: Dictionary = {
     'fhub.keys.f4':
         'Chế độ tối, nâu đỏ, thang xám hoặc sáng cho một thẻ hay tất cả, chia đôi màn hình, hình trong hình và đọc thành tiếng, mỗi thứ một phím riêng.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Âm thanh để tập trung, radio để học',
+    'fhub.media.lead':
+        'Một trình phát âm thanh ngay trong bảng điều khiển bên, dành cho tiếng ồn trắng, tiếng mưa hay bất kỳ âm thanh nào giúp bạn tập trung, và cho các đài radio internet bạn nghe khi học hoặc làm việc. Âm thanh được phát từ một tài liệu offscreen chứ không phải từ bảng điều khiển, nên vẫn tiếp tục khi bạn ẩn ngăn trình phát, đổi chế độ xem hay đóng trang.',
+    'fhub.media.f1':
+        'Chỉ cho nó một thư mục tiếng ồn trắng, tiếng mưa hay âm thanh môi trường, hoặc vài tệp lẻ: tối đa năm trăm bản, nhóm theo thư mục gốc, sắp xếp lại bằng cách kéo thả và tìm được theo tên.',
+    'fhub.media.f2':
+        'Radio internet ngay trong cùng trình phát, cho ngôn ngữ bạn đang học, một đài nói chuyện hay thứ gì đó nhẹ nhàng để làm việc: tìm trong danh bạ Radio Browser theo tên, quốc gia hoặc nhãn, hoặc tự dán địa chỉ luồng phát.',
+    'fhub.media.f3':
+        'Điều khiển phát, tua mười giây, âm lượng và tắt tiếng trong bảng điều khiển, cùng các nút điều khiển y hệt dưới nút trên thanh công cụ khi ngăn trình phát đang đóng. Luồng phát trực tiếp hiển thị thanh trực tiếp thay cho thanh tua, vì nó không có điểm kết thúc để tua tới.',
+    'fhub.media.f4':
+        'Không có gì được tải lên. Thư mục được trao qua File System Access API chứ không qua ô chọn tệp, còn danh sách phát và các đài nằm trong bộ nhớ riêng của trình duyệt.',
+    'fhub.media.mockup.badge': 'Trình phát âm thanh',
+    'fhub.media.mockup.searchPlaceholder': 'Tìm bản âm thanh…',
+    'fhub.media.mockup.tabMusic': 'Âm thanh',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'Tất cả',
+    'fhub.media.mockup.savedStations': 'Đài đã lưu',
+    'fhub.media.mockup.folder': 'Tập trung',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Thẻ tính năng',
@@ -579,9 +598,28 @@ export const vi: Dictionary = {
     'bento.qrTools.h2': 'Quét trực tiếp trên màn hình, không cần camera',
     'bento.qrTools.h3': 'Xuất dạng PNG độ phân giải cao hoặc SVG vector',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Radio internet để học hoặc tập trung',
+    'bento.radio.desc':
+        'Tìm trong danh bạ Radio Browser theo tên, quốc gia hoặc nhãn, hoặc tự dán địa chỉ một luồng phát: một đài bằng ngôn ngữ bạn đang học, một kênh nói chuyện, hay thứ gì đó nhẹ nhàng để làm việc. Các đài bạn giữ lại nằm cùng trình phát với âm thanh của bạn, trong thẻ riêng của chúng.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'Phát trực tiếp',
+    'bento.radio.h1': 'Hàng nghìn đài để tìm, hoặc một địa chỉ bạn tự dán vào',
+    'bento.radio.h2': 'Xuất và nhập danh sách dưới dạng JSON',
+    'bento.radio.h3': 'Tùy chọn đồng bộ các đài giữa những trình duyệt Chrome bạn đã đăng nhập',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Trình phát âm thanh giúp tập trung, ngay trong bảng điều khiển bên',
+    'bento.musicPlayer.desc':
+        'Đưa cho nó một thư mục tiếng ồn trắng, tiếng mưa hay bất kỳ âm thanh nào giúp bạn tập trung, và nó sẽ phát bên cạnh trang bạn đang đọc. Âm thanh được phát từ một tài liệu offscreen chứ không phải từ bảng điều khiển, nên ẩn ngăn trình phát, đổi chế độ xem hay đóng trang cũng không làm nó dừng.',
+    'bento.musicPlayer.tag': 'Âm thanh',
+    'bento.musicPlayer.badge': 'Vẫn phát khi bị ẩn',
+    'bento.musicPlayer.h1':
+        'Một thư mục hoặc các tệp tự chọn, nhóm theo thư mục và sắp xếp lại bằng cách kéo thả',
+    'bento.musicPlayer.h2':
+        'Thanh tua, tua mười giây, âm lượng và tắt tiếng, cùng các nút điều khiển y hệt dưới nút trên thanh công cụ',
+    'bento.musicPlayer.h3':
+        'Không tải lên gì cả: thư mục được đọc trên máy bạn và lưu trong chính trình duyệt của bạn',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Chia đôi màn hình hai thẻ',
@@ -821,8 +859,9 @@ export const vi: Dictionary = {
     'privacy.store.r5.leaves': 'Chỉ trong tệp do chính bạn xuất ra, vào thư mục bạn chọn',
     'privacy.store.r6.what': 'Các phiên Pomodoro và lịch sử của chúng',
     'privacy.store.r6.leaves': 'Không',
-    'privacy.store.r7.what': 'Nhạc bạn thêm vào và các đài radio yêu thích',
-    'privacy.store.r7.leaves': 'Không',
+    'privacy.store.r7.what': 'Âm thanh bạn thêm vào và các đài radio đã lưu',
+    'privacy.store.r7.leaves':
+        'Âm thanh thì không bao giờ. Danh sách đài chỉ khi bạn bật tính năng đồng bộ riêng của nó, vốn tắt theo mặc định',
     'privacy.store.r8.what': 'Hoạt động web: số giây, lượt truy cập và phiên theo trang, theo ngày',
     'privacy.store.r8.leaves':
         'Không, trừ khi bạn bật tính năng đồng bộ riêng của bản ghi này, vốn tắt theo mặc định',
@@ -854,6 +893,12 @@ export const vi: Dictionary = {
     'privacy.net.r2.host': 'Mô hình tích hợp trên thiết bị của Chrome',
     'privacy.net.r2.what': 'Không gì cả. Nó chạy bên trong Chrome, trên máy này, và không gửi yêu cầu nào',
     'privacy.net.r2.when': 'Khi bạn chọn nó thay cho Gemini',
+    'privacy.net.r3.what': 'Tên đài hoặc thể loại bạn gõ, ngoài ra không có gì',
+    'privacy.net.r3.when': 'Khi bạn tìm kiếm hoặc duyệt radio trực tuyến',
+    'privacy.net.r4.host': 'Đài radio bạn bấm phát',
+    'privacy.net.r4.what':
+        'Một yêu cầu âm thanh bình thường tới máy chủ riêng của đài đó, máy chủ này thấy địa chỉ IP của bạn như bất kỳ trang web nào',
+    'privacy.net.r4.when': 'Trong khi một đài đang phát',
     'privacy.net.r5.what': 'ID của video, cho ảnh thu nhỏ và trình phát nhúng',
     'privacy.net.r5.when': 'Chỉ với liên kết YouTube bạn xem trước hoặc phát',
     'privacy.net.r7.what':
@@ -870,7 +915,7 @@ export const vi: Dictionary = {
     'privacy.retention.p1':
         'Không có gì ở đây có thời hạn lưu trữ phía máy chủ, vì không có máy chủ nào giữ nó. Những gì tồn tại trên thiết bị của bạn sẽ ở đó cho đến khi bạn xóa, và đây là các quy tắc nó tuân theo.',
     'privacy.retention.li1':
-        'Ghi chú, ảnh chụp màn hình, bản sao lưu, cuộc trò chuyện, lịch sử Pomodoro và thư viện nhạc: được giữ cho đến khi bạn xóa chúng hoặc gỡ tiện ích.',
+        'Ghi chú, ảnh chụp màn hình, bản sao lưu, cuộc trò chuyện, lịch sử Pomodoro và thư viện âm thanh: được giữ cho đến khi bạn xóa chúng hoặc gỡ tiện ích.',
     'privacy.retention.li2':
         'Bản ghi hoạt động web: được giữ trong số ngày bạn đặt trong cài đặt riêng của nó, và những ngày cũ hơn sẽ tự động bị loại bỏ.',
     'privacy.retention.li3':
@@ -1002,7 +1047,7 @@ export const vi: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace là gì',
     'terms.service.p1':
-        'Đây là một tiện ích dành cho Chrome và các trình duyệt dựa trên Chromium, được phân phối qua Chrome Web Store, biến trình duyệt thành một không gian làm việc: nhóm thẻ và quy tắc, bảng điều khiển bên với ghi chú, dấu trang, lịch sử, ảnh chụp màn hình, hẹn giờ và trình phát nhạc, điều hướng bằng bàn phím, và một trợ lý tùy chọn.',
+        'Đây là một tiện ích dành cho Chrome và các trình duyệt dựa trên Chromium, được phân phối qua Chrome Web Store, biến trình duyệt thành một không gian làm việc: nhóm thẻ và quy tắc, bảng điều khiển bên với ghi chú, dấu trang, lịch sử, ảnh chụp màn hình, hẹn giờ và trình phát âm thanh, điều hướng bằng bàn phím, và một trợ lý tùy chọn.',
     'terms.service.li1':
         'Nó hoạt động mà không cần tài khoản, không cần đăng ký và không có máy chủ nào của chúng tôi giữ dữ liệu của bạn.',
     'terms.service.li2':
@@ -1098,7 +1143,7 @@ export const vi: Dictionary = {
         'Google Gemini, cho trợ lý. Khóa API là của bạn, do bạn nhập và lưu trên máy của bạn: hạn mức, chi phí và điều khoản của khóa đó là chuyện giữa bạn và Google.',
     'terms.third.li2': 'Chrome Web Store, nơi phân phối và cập nhật tiện ích theo điều khoản của Google.',
     'terms.third.li3':
-        'YouTube, cho xem trước video, và CDN cung cấp mô hình nhận dạng văn bản chạy trên máy của bạn.',
+        'Danh bạ radio trực tuyến và các đài có trong đó, YouTube, cho xem trước video, và CDN cung cấp mô hình nhận dạng văn bản chạy trên máy của bạn.',
     'terms.third.li4': 'Stripe, để xử lý các khoản ủng hộ, như mô tả ở mục 8.',
     'terms.third.p2':
         'Nội dung bạn truy cập qua tiện ích thuộc về người đã đăng nó, và việc liên kết đến nó không phải là sự xác nhận. Chính sách quyền riêng tư liệt kê mọi máy chủ mà tiện ích có thể liên hệ, những gì nó gửi và khi nào.',

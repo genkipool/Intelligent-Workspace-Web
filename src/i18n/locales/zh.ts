@@ -46,7 +46,7 @@ export const zh: Dictionary = {
     'hero.slide3.line1': '你的完整工作站',
     'hero.slide3.line2': '尽在侧边栏',
     'hero.slide3.lede':
-        '书签、历史记录、最近关闭的标签页、阅读清单和下载，不再是需要专门打开的页面。在它们旁边还有：带清单和看板的笔记、支持本地 OCR 的截图库、AI 助手、番茄钟计时器，以及你自己的音乐或网络电台。',
+        '书签、历史记录、最近关闭的标签页、阅读清单和下载，不再是需要专门打开的页面。在它们旁边还有：带清单和看板的笔记、支持本地 OCR 的截图库、AI 助手、番茄钟计时器，以及一个用于专注声音或网络电台的音频播放器。',
     'hero.slide3.tag': '一个侧边栏，应有尽有',
 
     'hero.carousel.prev': '上一张',
@@ -106,6 +106,7 @@ export const zh: Dictionary = {
     'fhub.tab2': '标签页与规则',
     'fhub.tab3': '时间与专注',
     'fhub.tab4': '键盘',
+    'fhub.tab5': '音频与电台',
 
     // Tab 1: AI Agent
     'fhub.agent.title': '能动手操作浏览器的助手，而不只是陪你聊天',
@@ -154,7 +155,25 @@ export const zh: Dictionary = {
     'fhub.keys.f4':
         '为单个或全部标签页启用深色、复古、灰度或浅色模式，另有分屏、画中画和朗读，各有专属按键。',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': '专注时听声音，学习时听电台',
+    'fhub.media.lead':
+        '侧边栏里的音频播放器，用来播放白噪音、雨声或任何能帮你集中注意力的声音，也能收听你用来学习或陪你工作的网络电台。声音由离屏文档（offscreen document）而不是面板发出，所以即使你隐藏面板、切换视图或关闭页面，它也会继续播放。',
+    'fhub.media.f1':
+        '指定一个装有白噪音、雨声或环境音的文件夹，或者挑几个文件：最多五百首曲目，按来源文件夹分组，可拖动排序，也能按名称搜索。',
+    'fhub.media.f2':
+        '网络电台就在同一个播放器里，适合你正在学的语言、谈话类电台，或者陪你安静工作的声音：在 Radio Browser 目录中按名称、国家或标签搜索，或者自己粘贴一个音频流地址。',
+    'fhub.media.f3':
+        '面板里有播放控制、十秒快进快退、音量和静音；面板关闭时，工具栏按钮下方也有同样的控制。直播流显示的是直播条而不是进度条，因为它没有终点可供跳转。',
+    'fhub.media.f4':
+        '不上传任何内容。文件夹通过 File System Access API 而不是文件选择框交给扩展，播放列表和电台都保存在你浏览器自己的存储中。',
+    'fhub.media.mockup.badge': '音频播放器',
+    'fhub.media.mockup.searchPlaceholder': '搜索曲目…',
+    'fhub.media.mockup.tabMusic': '音频',
+    'fhub.media.mockup.tabRadio': '电台',
+    'fhub.media.mockup.tabAll': '全部',
+    'fhub.media.mockup.savedStations': '已保存的电台',
+    'fhub.media.mockup.folder': '专注',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': '功能选项卡',
@@ -563,9 +582,25 @@ export const zh: Dictionary = {
     'bento.qrTools.h2': '无需摄像头，直接在屏幕上扫描',
     'bento.qrTools.h3': '导出为高分辨率 PNG 或矢量 SVG',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': '用来学习或专注的网络电台',
+    'bento.radio.desc':
+        '在 Radio Browser 目录中按名称、国家或标签搜索，或者自己粘贴音频流地址：用你正在学的语言播出的电台、谈话频道，或者陪你安静工作的声音。你保存的电台和你的声音放在同一个播放器里，有自己的标签页。',
+    'bento.radio.tag': '电台',
+    'bento.radio.badge': '直播流',
+    'bento.radio.h1': '数千个电台可供搜索，也可以粘贴你自己的地址',
+    'bento.radio.h2': '以 JSON 格式导出和导入电台列表',
+    'bento.radio.h3': '可选：在你登录的各个 Chrome 之间同步你的电台',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': '侧边栏里的专注音频播放器',
+    'bento.musicPlayer.desc':
+        '给它一个装有白噪音、雨声或任何能帮你集中注意力的声音的文件夹，它就会在你正在阅读的页面旁播放。声音由离屏文档（offscreen document）而不是面板发出，所以隐藏面板、切换视图或关闭页面都不会让它停下。',
+    'bento.musicPlayer.tag': '音频',
+    'bento.musicPlayer.badge': '隐藏后继续播放',
+    'bento.musicPlayer.h1': '一个文件夹或一组选中的文件，按文件夹分组，可拖动排序',
+    'bento.musicPlayer.h2': '进度条、十秒快进快退、音量和静音，工具栏按钮下方也有同样的控制',
+    'bento.musicPlayer.h3': '不上传任何内容：文件夹在你的电脑上读取，并保存在你自己的浏览器中',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': '双标签页分屏',
@@ -784,8 +819,8 @@ export const zh: Dictionary = {
     'privacy.store.r5.leaves': '仅存在于你自己导出到所选文件夹的文件中',
     'privacy.store.r6.what': '番茄钟会话及其历史',
     'privacy.store.r6.leaves': '否',
-    'privacy.store.r7.what': '你添加的音乐和收藏的电台',
-    'privacy.store.r7.leaves': '否',
+    'privacy.store.r7.what': '你添加的音频和保存的电台',
+    'privacy.store.r7.leaves': '音频永远不会。电台列表仅在你开启它的同步功能时才会离开（默认关闭）',
     'privacy.store.r8.what': '网页活动：每个网站每天的秒数、访问次数和会话',
     'privacy.store.r8.leaves': '否，除非你开启该记录自身的同步功能（默认关闭）',
     'privacy.store.r9.what': '文本片段、键盘自定义设置和 Omnibar 偏好',
@@ -815,6 +850,11 @@ export const zh: Dictionary = {
     'privacy.net.r2.host': 'Chrome 内置的设备端模型',
     'privacy.net.r2.what': '不发送任何内容。它在 Chrome 内部、在本机上运行，完全不发出任何请求',
     'privacy.net.r2.when': '当你选择它而不是 Gemini 时',
+    'privacy.net.r3.what': '你输入的电台名称或类型，仅此而已',
+    'privacy.net.r3.when': '当你在线搜索或浏览电台时',
+    'privacy.net.r4.host': '你点击播放的电台',
+    'privacy.net.r4.what': '向该电台自己的服务器发出的普通音频请求，它会像任何网站一样看到你的 IP 地址',
+    'privacy.net.r4.when': '电台播放期间',
     'privacy.net.r5.what': '视频 ID，用于获取缩略图和嵌入式播放器',
     'privacy.net.r5.when': '仅针对你预览或播放的 YouTube 链接',
     'privacy.net.r7.what':
@@ -830,7 +870,7 @@ export const zh: Dictionary = {
     'privacy.retention.title': '数据保留多久',
     'privacy.retention.p1':
         '这里的任何数据都没有服务器端的保留期限，因为根本没有保存它的服务器。存在于你设备上的数据会一直保留到你删除为止，并遵循以下规则。',
-    'privacy.retention.li1': '笔记、截图、备份、对话、番茄钟历史和音乐库：保留至你删除它们或移除扩展为止。',
+    'privacy.retention.li1': '笔记、截图、备份、对话、番茄钟历史和音频库：保留至你删除它们或移除扩展为止。',
     'privacy.retention.li2': '网页活动记录：按你在其设置中指定的天数保留，更早的数据会被自动删除。',
     'privacy.retention.li3':
         '设置、规则和文本片段：在扩展安装期间保留。如果 Chrome 同步保存了副本，移除扩展也会清除该副本。',
@@ -955,7 +995,7 @@ export const zh: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace 是什么',
     'terms.service.p1':
-        '它是一款适用于 Chrome 及基于 Chromium 的浏览器的扩展，通过 Chrome Web Store 分发，能把浏览器变成工作区：标签页分组与规则，一个包含笔记、书签、历史记录、截图、计时器和音乐播放器的侧边栏，键盘导航，以及一个可选的助手。',
+        '它是一款适用于 Chrome 及基于 Chromium 的浏览器的扩展，通过 Chrome Web Store 分发，能把浏览器变成工作区：标签页分组与规则，一个包含笔记、书签、历史记录、截图、计时器和音频播放器的侧边栏，键盘导航，以及一个可选的助手。',
     'terms.service.li1': '它无需账号、无需注册，也没有我们的服务器保存你的数据。',
     'terms.service.li2':
         '它在你的浏览器中、在你的电脑上运行。少数功能会访问第三方服务，且仅在你使用该功能时访问。',
@@ -1041,7 +1081,8 @@ export const zh: Dictionary = {
     'terms.third.li1':
         'Google Gemini，用于助手。API 密钥属于你，由你输入并存储在你的电脑上：该密钥的配额、费用和条款是你与 Google 之间的事。',
     'terms.third.li2': 'Chrome Web Store，依据 Google 的条款分发和更新本扩展。',
-    'terms.third.li3': 'YouTube，用于视频预览；以及提供在你电脑上运行的文字识别模型的 CDN。',
+    'terms.third.li3':
+        '网络电台目录及其收录的电台；YouTube，用于视频预览；以及提供在你电脑上运行的文字识别模型的 CDN。',
     'terms.third.li4': 'Stripe，用于打赏，详见第 8 节。',
     'terms.third.p2':
         '你通过扩展访问的内容归其发布者所有，提供链接并不代表认可。隐私政策列出了扩展可能联系的每个主机、发送的内容及发送时机。',

@@ -46,7 +46,7 @@ export const fr: Dictionary = {
     'hero.slide3.line1': 'Tout votre poste de travail',
     'hero.slide3.line2': 'intégré au panneau latéral',
     'hero.slide3.lede':
-        'Favoris, historique, onglets récemment fermés, liste de lecture et téléchargements ne sont plus des pages à aller ouvrir. À côté : des notes avec listes de contrôle et tableaux Kanban, la galerie de captures avec OCR sur l’appareil, l’assistant IA, le minuteur Pomodoro, et votre propre musique ou la radio en ligne.',
+        'Favoris, historique, onglets récemment fermés, liste de lecture et téléchargements ne sont plus des pages à aller ouvrir. À côté : des notes avec listes de contrôle et tableaux Kanban, la galerie de captures avec OCR sur l’appareil, l’assistant IA, le minuteur Pomodoro, et un lecteur audio pour des sons de concentration ou la radio en ligne.',
     'hero.slide3.tag': 'Un seul panneau latéral pour tout',
 
     'hero.carousel.prev': 'Diapositive précédente',
@@ -107,6 +107,7 @@ export const fr: Dictionary = {
     'fhub.tab2': 'Onglets et règles',
     'fhub.tab3': 'Temps et focus',
     'fhub.tab4': 'Clavier',
+    'fhub.tab5': 'Audio et radio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Un assistant qui agit sur le navigateur, pas seulement qui en parle',
@@ -160,7 +161,25 @@ export const fr: Dictionary = {
     'fhub.keys.f4':
         'Mode sombre, sépia, niveaux de gris ou clair pour un onglet ou pour tous, écran partagé, picture-in-picture et lecture à voix haute, chacun sur sa propre touche.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Du son pour se concentrer, de la radio pour apprendre',
+    'fhub.media.lead':
+        'Un lecteur audio dans le panneau latéral, pour le bruit blanc, la pluie ou tout son qui vous aide à vous concentrer, et pour les radios en ligne avec lesquelles vous apprenez ou travaillez. Le son est produit par un document hors écran (offscreen) et non par le panneau : il continue quand vous masquez le panneau, changez de vue ou fermez la page.',
+    'fhub.media.f1':
+        'Indiquez-lui un dossier de bruit blanc, de pluie ou d’ambiance sonore, ou une poignée de fichiers : jusqu’à cinq cents pistes, regroupées par dossier d’origine, réorganisables par glisser-déposer et faciles à retrouver par leur nom.',
+    'fhub.media.f2':
+        'La radio en ligne dans le même lecteur, pour une langue que vous apprenez, une station parlée ou quelque chose de calme pour travailler : cherchez dans l’annuaire Radio Browser par nom, pays ou tag, ou collez vous-même l’adresse d’un flux.',
+    'fhub.media.f3':
+        'Lecture, sauts de dix secondes, volume et sourdine dans le panneau, et les mêmes commandes sous le bouton de la barre d’outils quand le panneau est fermé. Un flux affiche une barre de direct au lieu d’une barre de progression, puisqu’il n’a pas de fin vers laquelle avancer.',
+    'fhub.media.f4':
+        'Rien n’est téléversé. Le dossier est transmis par la File System Access API et non par un champ de fichier, et la playlist comme les stations restent dans le stockage de votre propre navigateur.',
+    'fhub.media.mockup.badge': 'Lecteur audio',
+    'fhub.media.mockup.searchPlaceholder': 'Rechercher une piste…',
+    'fhub.media.mockup.tabMusic': 'Audio',
+    'fhub.media.mockup.tabRadio': 'Radio',
+    'fhub.media.mockup.tabAll': 'Tout',
+    'fhub.media.mockup.savedStations': 'Stations enregistrées',
+    'fhub.media.mockup.folder': 'Concentration',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Onglets des fonctionnalités',
@@ -579,9 +598,28 @@ export const fr: Dictionary = {
     'bento.qrTools.h2': 'Lecture directe à l’écran, sans caméra',
     'bento.qrTools.h3': 'Export en PNG haute résolution ou en SVG vectoriel',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'La radio en ligne pour apprendre ou se concentrer',
+    'bento.radio.desc':
+        'Cherchez dans l’annuaire Radio Browser par nom, pays ou tag, ou collez vous-même l’adresse d’un flux : une station dans la langue que vous apprenez, une chaîne parlée ou quelque chose de calme pour travailler. Les stations que vous gardez vivent dans le même lecteur que vos sons, dans leur propre onglet.',
+    'bento.radio.tag': 'Radio',
+    'bento.radio.badge': 'En direct',
+    'bento.radio.h1': 'Des milliers de stations à rechercher, ou une adresse que vous collez vous-même',
+    'bento.radio.h2': 'Exportez et importez la liste en JSON',
+    'bento.radio.h3': 'Synchronisation facultative de vos stations entre les Chrome où vous êtes connecté',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Un lecteur audio pour se concentrer, dans le panneau latéral',
+    'bento.musicPlayer.desc':
+        'Donnez-lui un dossier de bruit blanc, de pluie ou de tout son qui vous aide à vous concentrer, et il joue à côté de la page que vous lisez. Le son est produit par un document hors écran (offscreen) et non par le panneau : masquer le panneau, changer de vue ou fermer la page ne l’arrête pas.',
+    'bento.musicPlayer.tag': 'Audio',
+    'bento.musicPlayer.badge': 'Continue même masqué',
+    'bento.musicPlayer.h1':
+        'Un dossier ou une sélection de fichiers, regroupés par dossier et réorganisables par glisser-déposer',
+    'bento.musicPlayer.h2':
+        'Barre de progression, sauts de dix secondes, volume et sourdine, et les mêmes commandes sous le bouton de la barre d’outils',
+    'bento.musicPlayer.h3':
+        'Rien n’est téléversé : le dossier est lu sur votre machine et conservé dans votre propre navigateur',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Écran partagé à deux onglets',
@@ -824,8 +862,9 @@ export const fr: Dictionary = {
         'Uniquement dans un fichier que vous exportez vous-même, dans le dossier de votre choix',
     'privacy.store.r6.what': 'Sessions Pomodoro et leur historique',
     'privacy.store.r6.leaves': 'Non',
-    'privacy.store.r7.what': 'La musique que vous ajoutez et vos radios favorites',
-    'privacy.store.r7.leaves': 'Non',
+    'privacy.store.r7.what': 'L’audio que vous ajoutez et vos radios enregistrées',
+    'privacy.store.r7.leaves':
+        'L’audio, jamais. La liste des stations seulement si vous activez sa synchronisation, désactivée par défaut',
     'privacy.store.r8.what': 'Activité web : secondes, visites et sessions par site et par jour',
     'privacy.store.r8.leaves':
         'Non, sauf si vous activez la synchronisation propre à ce relevé, désactivée par défaut',
@@ -857,6 +896,12 @@ export const fr: Dictionary = {
     'privacy.net.r2.host': 'Le modèle intégré de Chrome, sur l’appareil',
     'privacy.net.r2.what': 'Rien. Il tourne dans Chrome, sur cette machine, et n’effectue aucune requête',
     'privacy.net.r2.when': 'Lorsque vous le choisissez à la place de Gemini',
+    'privacy.net.r3.what': 'Le nom ou le genre de station que vous avez saisi, et rien d’autre',
+    'privacy.net.r3.when': 'Pendant que vous cherchez ou parcourez la radio en ligne',
+    'privacy.net.r4.host': 'La station de radio que vous lancez',
+    'privacy.net.r4.what':
+        'Une requête audio ordinaire vers le serveur de cette station, qui voit votre adresse IP comme n’importe quel site web',
+    'privacy.net.r4.when': 'Pendant qu’une station est en lecture',
     'privacy.net.r5.what': 'L’identifiant de la vidéo, pour la miniature et le lecteur intégré',
     'privacy.net.r5.when': 'Uniquement pour un lien YouTube que vous prévisualisez ou lisez',
     'privacy.net.r7.what':
@@ -873,7 +918,7 @@ export const fr: Dictionary = {
     'privacy.retention.p1':
         'Rien ici n’a de durée de vie côté serveur, puisqu’aucun serveur ne le détient. Ce qui existe sur votre appareil y reste jusqu’à ce que vous le supprimiez, selon les règles suivantes.',
     'privacy.retention.li1':
-        'Notes, captures, sauvegardes, conversations, historique Pomodoro et bibliothèque musicale : conservés jusqu’à ce que vous les supprimiez ou désinstalliez l’extension.',
+        'Notes, captures, sauvegardes, conversations, historique Pomodoro et bibliothèque audio : conservés jusqu’à ce que vous les supprimiez ou désinstalliez l’extension.',
     'privacy.retention.li2':
         'Le relevé d’activité web : conservé pendant le nombre de jours défini dans ses propres réglages, les jours plus anciens étant supprimés automatiquement.',
     'privacy.retention.li3':
@@ -1006,7 +1051,7 @@ export const fr: Dictionary = {
 
     'terms.service.title': 'Ce qu’est Intelligent Workspace',
     'terms.service.p1':
-        'C’est une extension pour Chrome et les navigateurs basés sur Chromium, distribuée via le Chrome Web Store, qui transforme le navigateur en espace de travail : groupes d’onglets et règles, un panneau latéral avec notes, favoris, historique, captures, minuteur et lecteur de musique, navigation au clavier, et un assistant facultatif.',
+        'C’est une extension pour Chrome et les navigateurs basés sur Chromium, distribuée via le Chrome Web Store, qui transforme le navigateur en espace de travail : groupes d’onglets et règles, un panneau latéral avec notes, favoris, historique, captures, minuteur et lecteur audio, navigation au clavier, et un assistant facultatif.',
     'terms.service.li1':
         'Elle fonctionne sans compte, sans inscription et sans qu’aucun serveur de notre part ne détienne vos données.',
     'terms.service.li2':
@@ -1104,7 +1149,7 @@ export const fr: Dictionary = {
     'terms.third.li2':
         'Le Chrome Web Store, qui distribue et met à jour l’extension selon les conditions de Google.',
     'terms.third.li3':
-        'YouTube, pour les aperçus vidéo, et le CDN qui sert le modèle de reconnaissance de texte exécuté sur votre machine.',
+        'L’annuaire de radios en ligne et les stations qu’il répertorie, YouTube pour les aperçus vidéo, et le CDN qui sert le modèle de reconnaissance de texte exécuté sur votre machine.',
     'terms.third.li4': 'Stripe, pour les pourboires, comme décrit à la section 8.',
     'terms.third.p2':
         'Les contenus auxquels vous accédez via l’extension appartiennent à ceux qui les ont publiés, et y renvoyer ne vaut pas approbation. La politique de confidentialité liste chaque hôte que l’extension peut contacter, ce qu’elle envoie et quand.',

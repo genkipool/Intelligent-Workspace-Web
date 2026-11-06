@@ -46,7 +46,7 @@ export const ko: Dictionary = {
     'hero.slide3.line1': '사이드 패널에 통합된',
     'hero.slide3.line2': '완전한 워크스테이션',
     'hero.slide3.lede':
-        '북마크, 방문 기록, 최근에 닫은 탭, 읽기 목록, 다운로드를 더 이상 따로 찾아가 열 필요가 없습니다. 그 옆에는 체크리스트와 Kanban 보드가 있는 노트, 기기 내 OCR을 지원하는 스크린샷 갤러리, AI 어시스턴트, Pomodoro 타이머, 그리고 내 음악이나 온라인 라디오가 있습니다.',
+        '북마크, 방문 기록, 최근에 닫은 탭, 읽기 목록, 다운로드를 더 이상 따로 찾아가 열 필요가 없습니다. 그 옆에는 체크리스트와 Kanban 보드가 있는 노트, 기기 내 OCR을 지원하는 스크린샷 갤러리, AI 어시스턴트, Pomodoro 타이머, 그리고 집중용 사운드나 온라인 라디오를 위한 오디오 플레이어가 있습니다.',
     'hero.slide3.tag': '사이드 패널 하나에 모든 것을',
 
     'hero.carousel.prev': '이전 슬라이드',
@@ -107,6 +107,7 @@ export const ko: Dictionary = {
     'fhub.tab2': '탭 & 규칙',
     'fhub.tab3': '시간 & 집중',
     'fhub.tab4': '키보드',
+    'fhub.tab5': '오디오 & 라디오',
 
     // Tab 1: AI Agent
     'fhub.agent.title': '말만 하는 게 아니라 브라우저에서 직접 실행하는 어시스턴트',
@@ -158,7 +159,25 @@ export const ko: Dictionary = {
     'fhub.keys.f4':
         '탭 하나 또는 전체에 적용하는 다크, 세피아, 흑백, 라이트 모드, 화면 분할, PiP, 소리 내어 읽기. 각각 고유한 키가 있습니다.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': '집중을 돕는 소리, 배움을 주는 라디오',
+    'fhub.media.lead':
+        '사이드 패널 안의 오디오 플레이어로, 화이트 노이즈, 빗소리처럼 집중에 도움이 되는 소리와 공부하거나 일할 때 듣는 인터넷 라디오 방송국을 재생합니다. 소리는 패널이 아니라 오프스크린 문서에서 나오므로, 플레이어를 접거나 보기를 바꾸거나 페이지를 닫아도 계속 재생됩니다.',
+    'fhub.media.f1':
+        '화이트 노이즈, 빗소리, 앰비언트 사운드가 담긴 폴더나 파일 몇 개를 지정하세요. 최대 500개 트랙을 원래 폴더별로 묶어 주며, 드래그로 순서를 바꾸고 이름으로 검색할 수 있습니다.',
+    'fhub.media.f2':
+        '같은 플레이어에서 인터넷 라디오도 들을 수 있습니다. 배우고 있는 언어, 토크 방송, 일하면서 틀어 둘 잔잔한 방송까지. Radio Browser 디렉터리에서 이름, 국가, 태그로 검색하거나 스트림 주소를 직접 붙여 넣으세요.',
+    'fhub.media.f3':
+        '패널에서는 재생 컨트롤, 10초 건너뛰기, 볼륨, 음소거를 쓸 수 있고, 플레이어를 접어 둔 동안에는 툴바 버튼 아래에서 같은 컨트롤을 쓸 수 있습니다. 스트림은 끝이 없어 이동할 위치가 없으므로 탐색 막대 대신 실시간 막대가 표시됩니다.',
+    'fhub.media.f4':
+        '아무것도 업로드되지 않습니다. 폴더는 파일 입력란이 아니라 File System Access API로 전달되며, 재생 목록과 방송국은 브라우저 자체 저장소에 보관됩니다.',
+    'fhub.media.mockup.badge': '오디오 플레이어',
+    'fhub.media.mockup.searchPlaceholder': '트랙 검색…',
+    'fhub.media.mockup.tabMusic': '오디오',
+    'fhub.media.mockup.tabRadio': '라디오',
+    'fhub.media.mockup.tabAll': '전체',
+    'fhub.media.mockup.savedStations': '저장된 방송국',
+    'fhub.media.mockup.folder': '집중',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': '기능 탭',
@@ -575,9 +594,25 @@ export const ko: Dictionary = {
     'bento.qrTools.h2': '카메라 없이 화면에서 바로 스캔',
     'bento.qrTools.h3': '고해상도 PNG 또는 벡터 SVG로 내보내기',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': '배움과 집중을 위한 인터넷 라디오',
+    'bento.radio.desc':
+        'Radio Browser 디렉터리에서 이름, 국가, 태그로 검색하거나 스트림 주소를 직접 붙여 넣으세요. 배우고 있는 언어의 방송국, 토크 채널, 일하면서 틀어 둘 잔잔한 방송 모두 좋습니다. 저장한 방송국은 내 사운드와 같은 플레이어의 별도 탭에 보관됩니다.',
+    'bento.radio.tag': '라디오',
+    'bento.radio.badge': '실시간 스트림',
+    'bento.radio.h1': '검색할 수 있는 수천 개의 방송국, 또는 직접 붙여 넣는 주소',
+    'bento.radio.h2': '목록을 JSON으로 내보내고 가져오기',
+    'bento.radio.h3': '로그인한 여러 Chrome 간 방송국 동기화(선택 사항)',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': '사이드 패널 속, 집중을 위한 오디오 플레이어',
+    'bento.musicPlayer.desc':
+        '화이트 노이즈, 빗소리처럼 집중에 도움이 되는 소리가 담긴 폴더를 넘겨주면, 읽고 있는 페이지 옆에서 재생됩니다. 소리는 패널이 아니라 오프스크린 문서에서 나오므로, 플레이어를 접거나 보기를 바꾸거나 페이지를 닫아도 멈추지 않습니다.',
+    'bento.musicPlayer.tag': '오디오',
+    'bento.musicPlayer.badge': '숨겨도 계속 재생',
+    'bento.musicPlayer.h1': '폴더 또는 선택한 파일을 폴더별로 묶고 드래그로 순서 변경',
+    'bento.musicPlayer.h2': '탐색 막대, 10초 건너뛰기, 볼륨, 음소거, 그리고 툴바 버튼 아래의 같은 컨트롤',
+    'bento.musicPlayer.h3': '업로드 없음: 폴더는 내 컴퓨터에서 읽고 내 브라우저에 보관',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': '두 탭 화면 분할',
@@ -808,8 +843,9 @@ export const ko: Dictionary = {
     'privacy.store.r5.leaves': '직접 내보낸 파일 안에서, 선택한 폴더로만',
     'privacy.store.r6.what': 'Pomodoro 세션과 기록',
     'privacy.store.r6.leaves': '아니요',
-    'privacy.store.r7.what': '추가한 음악과 즐겨찾는 라디오',
-    'privacy.store.r7.leaves': '아니요',
+    'privacy.store.r7.what': '추가한 오디오와 저장한 라디오 방송국',
+    'privacy.store.r7.leaves':
+        '오디오는 절대 나가지 않습니다. 방송국 목록은 기본적으로 꺼져 있는 자체 동기화를 켠 경우에만',
     'privacy.store.r8.what': '웹 활동: 사이트별, 일별 시간(초), 방문, 세션',
     'privacy.store.r8.leaves': '아니요. 기본적으로 꺼져 있는 이 기록 자체의 동기화를 켜지 않는 한',
     'privacy.store.r9.what': '스니펫, 키보드 재지정, Omnibar 환경설정',
@@ -839,6 +875,12 @@ export const ko: Dictionary = {
     'privacy.net.r2.host': 'Chrome 내장 기기 내 모델',
     'privacy.net.r2.what': '없음. 이 컴퓨터의 Chrome 안에서 실행되며 어떤 요청도 보내지 않습니다',
     'privacy.net.r2.when': 'Gemini 대신 이 모델을 선택할 때',
+    'privacy.net.r3.what': '입력한 방송국 이름이나 장르, 그 외에는 없음',
+    'privacy.net.r3.when': '온라인 라디오를 검색하거나 둘러볼 때',
+    'privacy.net.r4.host': '재생을 누른 라디오 방송국',
+    'privacy.net.r4.what':
+        '해당 방송국 자체 서버로 보내는 일반적인 오디오 요청. 여느 웹사이트와 마찬가지로 서버는 IP 주소를 볼 수 있습니다',
+    'privacy.net.r4.when': '방송국이 재생되는 동안',
     'privacy.net.r5.what': '썸네일과 임베드 플레이어를 위한 동영상 ID',
     'privacy.net.r5.when': '미리 보거나 재생하는 YouTube 링크에 대해서만',
     'privacy.net.r7.what':
@@ -855,7 +897,7 @@ export const ko: Dictionary = {
     'privacy.retention.p1':
         '보관하는 서버가 없으므로 여기에는 서버 측 보관 기간이라는 것이 없습니다. 사용자 기기에 있는 데이터는 직접 삭제할 때까지 남아 있으며, 다음 규칙을 따릅니다.',
     'privacy.retention.li1':
-        '노트, 스크린샷, 백업, 대화, Pomodoro 기록, 음악 라이브러리: 직접 삭제하거나 확장 프로그램을 제거할 때까지 보관됩니다.',
+        '노트, 스크린샷, 백업, 대화, Pomodoro 기록, 오디오 라이브러리: 직접 삭제하거나 확장 프로그램을 제거할 때까지 보관됩니다.',
     'privacy.retention.li2':
         '웹 활동 기록: 해당 설정에서 지정한 일수만큼 보관되며, 그보다 오래된 날은 자동으로 삭제됩니다.',
     'privacy.retention.li3':
@@ -985,7 +1027,7 @@ export const ko: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace란',
     'terms.service.p1':
-        'Chrome Web Store를 통해 배포되는 Chrome 및 Chromium 기반 브라우저용 확장 프로그램으로, 브라우저를 작업 공간으로 바꿉니다: 탭 그룹과 규칙, 노트, 북마크, 방문 기록, 스크린샷, 타이머, 음악 플레이어가 있는 사이드 패널, 키보드 탐색, 그리고 선택 사항인 어시스턴트.',
+        'Chrome Web Store를 통해 배포되는 Chrome 및 Chromium 기반 브라우저용 확장 프로그램으로, 브라우저를 작업 공간으로 바꿉니다: 탭 그룹과 규칙, 노트, 북마크, 방문 기록, 스크린샷, 타이머, 오디오 플레이어가 있는 사이드 패널, 키보드 탐색, 그리고 선택 사항인 어시스턴트.',
     'terms.service.li1': '계정, 회원 가입, 데이터를 보관하는 저희 서버 없이 작동합니다.',
     'terms.service.li2':
         '사용자의 컴퓨터, 사용자의 브라우저에서 실행됩니다. 몇몇 기능은 제3자 서비스에 접속하며, 해당 기능을 사용할 때만 그렇습니다.',
@@ -1077,7 +1119,7 @@ export const ko: Dictionary = {
         '어시스턴트를 위한 Google Gemini. API 키는 사용자가 직접 입력해 사용자 컴퓨터에 저장한 사용자의 것입니다: 그 키의 할당량, 비용, 약관은 사용자와 Google 사이의 문제입니다.',
     'terms.third.li2': 'Google 약관에 따라 확장 프로그램을 배포하고 업데이트하는 Chrome Web Store.',
     'terms.third.li3':
-        '동영상 미리보기를 위한 YouTube, 그리고 사용자 컴퓨터에서 실행되는 텍스트 인식 모델을 제공하는 CDN.',
+        '온라인 라디오 디렉터리와 그곳에 등록된 방송국, 동영상 미리보기를 위한 YouTube, 그리고 사용자 컴퓨터에서 실행되는 텍스트 인식 모델을 제공하는 CDN.',
     'terms.third.li4': '8항에 설명된 대로, 후원 결제를 위한 Stripe.',
     'terms.third.p2':
         '확장 프로그램을 통해 접근하는 콘텐츠는 그것을 게시한 사람에게 속하며, 링크한다고 해서 보증하는 것은 아닙니다. 개인정보 처리방침에 확장 프로그램이 접속할 수 있는 모든 호스트와 무엇을 언제 보내는지 나열되어 있습니다.',

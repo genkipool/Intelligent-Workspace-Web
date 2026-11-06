@@ -46,7 +46,7 @@ export const ha: Dictionary = {
     'hero.slide3.line1': 'Cikakken wurin aikinka',
     'hero.slide3.line2': 'a haɗe cikin allon gefe',
     'hero.slide3.lede':
-        'Alamun shafi, tarihi, shafukan da aka rufe kwanan nan, jerin karatu da abubuwan da aka sauke ba sa zama shafukan da sai ka je ka buɗe. A gefensu: bayanan kula masu jerin dubawa da allunan Kanban, tarin hotunan allo tare da OCR a cikin na’ura, mataimakin AI, agogon Pomodoro, da waƙoƙinka ko rediyon intanet.',
+        'Alamun shafi, tarihi, shafukan da aka rufe kwanan nan, jerin karatu da abubuwan da aka sauke ba sa zama shafukan da sai ka je ka buɗe. A gefensu: bayanan kula masu jerin dubawa da allunan Kanban, tarin hotunan allo tare da OCR a cikin na’ura, mataimakin AI, agogon Pomodoro, da na’urar kunna sauti don sautukan mai da hankali ko rediyon intanet.',
     'hero.slide3.tag': 'Allon gefe ɗaya, komai a ciki',
 
     'hero.carousel.prev': 'Hoto na baya',
@@ -107,6 +107,7 @@ export const ha: Dictionary = {
     'fhub.tab2': 'Shafuka da ƙa’idoji',
     'fhub.tab3': 'Lokaci da mai da hankali',
     'fhub.tab4': 'Maɓallai',
+    'fhub.tab5': 'Sauti da rediyo',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Mataimaki da zai iya aiki a kan manhajar bincike, ba magana kawai ba',
@@ -160,7 +161,25 @@ export const ha: Dictionary = {
     'fhub.keys.f4':
         'Yanayin duhu, sepia, toka ko haske ga shafi ɗaya ko dukansu, raba fuska, hoto-cikin-hoto, da karantawa da murya, kowanne a kan maɓallinsa.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Sauti don mai da hankali, da rediyo don koyo',
+    'fhub.media.lead':
+        'Na’urar kunna sauti a cikin allon gefe don farin amo, ruwan sama ko duk wani sauti da ke taimaka maka ka mai da hankali, da kuma tashoshin rediyon intanet da kake koyo ko aiki da su. Takardar offscreen ce ke fitar da sautin ba allon ba, don haka yana ci gaba idan ka ɓoye allon, ka sauya kallo ko ka rufe shafin.',
+    'fhub.media.f1':
+        'Nuna masa babban fayil na farin amo, ruwan sama ko sautin yanayi, ko ’yan fayiloli: har zuwa sautuka ɗari biyar, a haɗe bisa babban fayil ɗin da suka fito, ana iya sake jera su ta hanyar ja, kuma ana iya nemo su da suna.',
+    'fhub.media.f2':
+        'Rediyon intanet a cikin na’urar kunnawa ɗaya, don harshen da kake koyo, tashar magana ko wani abu mai natsuwa da za ka yi aiki da shi: nemo a cikin kundin Radio Browser da suna, ƙasa ko alama, ko ka liƙa adireshin watsawa da kanka.',
+    'fhub.media.f3':
+        'Maɓallan kunnawa, tsallake daƙiƙa goma, ƙarar sauti da yin shiru a cikin allon, da maɓallai iri ɗaya a ƙarƙashin maɓallin mashigin kayan aiki lokacin da allon ke rufe. Watsawa kai tsaye tana nuna sandar kai tsaye maimakon sandar matsayi, domin ba ta da ƙarshen da za a je.',
+    'fhub.media.f4':
+        'Ba a loda komai ba. File System Access API ce ke miƙa babban fayil ɗin, ba filin zaɓar fayil ba, kuma jerin kunnawa da tashoshin suna zaune a ma’ajiyar manhajar bincikenka.',
+    'fhub.media.mockup.badge': 'Na’urar kunna sauti',
+    'fhub.media.mockup.searchPlaceholder': 'Nemo sautuka…',
+    'fhub.media.mockup.tabMusic': 'Sauti',
+    'fhub.media.mockup.tabRadio': 'Rediyo',
+    'fhub.media.mockup.tabAll': 'Duka',
+    'fhub.media.mockup.savedStations': 'Tashoshin da aka ajiye',
+    'fhub.media.mockup.folder': 'Mai da hankali',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Shafukan Siffofi',
@@ -579,9 +598,28 @@ export const ha: Dictionary = {
     'bento.qrTools.h2': 'Mai karantawa kai tsaye a allo ba tare da kyamara ba',
     'bento.qrTools.h3': 'Fitarwa a PNG mai inganci ko SVG na vector',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Rediyon intanet don koyo ko mai da hankali',
+    'bento.radio.desc':
+        'Nemo a cikin kundin Radio Browser da suna, ƙasa ko alama, ko ka liƙa adireshin watsawa da kanka: tasha a harshen da kake koyo, tashar magana, ko wani abu mai natsuwa da za ka yi aiki da shi. Tashoshin da ka ajiye suna zaune a cikin na’urar kunnawa ɗaya da sautukanka, a shafinsu na kansu.',
+    'bento.radio.tag': 'Rediyo',
+    'bento.radio.badge': 'Watsawa kai tsaye',
+    'bento.radio.h1': 'Dubban tashoshi da za ka nema, ko adireshin da ka liƙa da kanka',
+    'bento.radio.h2': 'Fitarwa da shigo da jerin a matsayin JSON',
+    'bento.radio.h3': 'Daidaitawar tashoshinka ta zaɓi a duk Chrome da ka shiga da asusunka',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Na’urar kunna sauti don mai da hankali, a allon gefe',
+    'bento.musicPlayer.desc':
+        'Ba shi babban fayil na farin amo, ruwan sama ko duk wani sauti da ke taimaka maka ka mai da hankali, zai kunna shi a gefen shafin da kake karantawa. Takardar offscreen ce ke fitar da sautin ba allon ba, don haka ɓoye allon, sauya kallo ko rufe shafin ba ya tsayar da shi.',
+    'bento.musicPlayer.tag': 'Sauti',
+    'bento.musicPlayer.badge': 'Yana ci gaba ko an ɓoye shi',
+    'bento.musicPlayer.h1':
+        'Babban fayil ko zaɓin fayiloli, a haɗe bisa babban fayil kuma ana sake jera su ta hanyar ja',
+    'bento.musicPlayer.h2':
+        'Sandar matsayi, tsallake daƙiƙa goma, ƙarar sauti da yin shiru, da maɓallai iri ɗaya a ƙarƙashin maɓallin mashigin kayan aiki',
+    'bento.musicPlayer.h3':
+        'Ba a loda komai ba: ana karanta babban fayil ɗin a kan na’urarka kuma a ajiye shi a manhajar bincikenka',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Raba Fuska da Shafuka Biyu',
@@ -821,8 +859,9 @@ export const ha: Dictionary = {
     'privacy.store.r5.leaves': 'Sai a cikin fayil da kai da kanka ka fitar, zuwa foldar da ka zaɓa',
     'privacy.store.r6.what': 'Zaman Pomodoro da tarihinsu',
     'privacy.store.r6.leaves': 'A’a',
-    'privacy.store.r7.what': 'Waƙoƙin da ka ƙara da rediyon da ka fi so',
-    'privacy.store.r7.leaves': 'A’a',
+    'privacy.store.r7.what': 'Sautin da ka ƙara da tashoshin rediyon da ka ajiye',
+    'privacy.store.r7.leaves':
+        'Sautin, faufau. Jerin tashoshi sai idan ka kunna daidaitawarsa, wadda a kashe take a tsarin asali',
     'privacy.store.r8.what': 'Ayyukan yanar gizo: daƙiƙoƙi, ziyara da zama ga kowane shafi, kowace rana',
     'privacy.store.r8.leaves':
         'A’a, sai dai idan ka kunna daidaitawar wannan rikodin, wadda a kashe take a tsarin asali',
@@ -855,6 +894,12 @@ export const ha: Dictionary = {
     'privacy.net.r2.what':
         'Babu komai. Yana aiki a cikin Chrome, a wannan na’urar, kuma ba ya yin wata buƙata kwata-kwata',
     'privacy.net.r2.when': 'Lokacin da ka zaɓe shi a madadin Gemini',
+    'privacy.net.r3.what': 'Sunan tasha ko nau’in da ka rubuta, babu wani abu kuma',
+    'privacy.net.r3.when': 'Yayin da kake nema ko bincika rediyon intanet',
+    'privacy.net.r4.host': 'Tashar rediyon da ka danna kunnawa a kanta',
+    'privacy.net.r4.what':
+        'Buƙatar sauti ta yau da kullum zuwa sabar tashar kanta, wadda ke ganin adireshin IP naka kamar yadda kowane shafin yanar gizo ke gani',
+    'privacy.net.r4.when': 'Yayin da tasha ke kunne',
     'privacy.net.r5.what': 'ID na bidiyon, don ƙaramin hoto da na’urar kunnawa da aka saka',
     'privacy.net.r5.when': 'Sai ga mahaɗar YouTube da ka duba ko ka kunna',
     'privacy.net.r7.what':
@@ -871,7 +916,7 @@ export const ha: Dictionary = {
     'privacy.retention.p1':
         'Babu abin da ke nan da ke da tsawon rai a gefen sabar, saboda babu sabar da ke riƙe da shi. Abin da ke kan na’urarka yana zama har sai ka share shi, kuma ga ƙa’idojin da yake bi.',
     'privacy.retention.li1':
-        'Bayanan kula, hotunan allo, kwafin ajiya, tattaunawa, tarihin Pomodoro da ɗakin waƙoƙi: ana adana su har sai ka share su ko ka cire manhajar.',
+        'Bayanan kula, hotunan allo, kwafin ajiya, tattaunawa, tarihin Pomodoro da ɗakin sauti: ana adana su har sai ka share su ko ka cire manhajar.',
     'privacy.retention.li2':
         'Rikodin ayyukan yanar gizo: ana adana shi na adadin kwanakin da ka saita a saitunansa, kuma ana zubar da tsofaffin kwanaki ta atomatik.',
     'privacy.retention.li3':
@@ -1004,7 +1049,7 @@ export const ha: Dictionary = {
 
     'terms.service.title': 'Menene Intelligent Workspace',
     'terms.service.p1':
-        'Manhaja ce ta ƙari ga Chrome da manhajojin bincike masu tushen Chromium, da ake rarrabawa ta Chrome Web Store, wadda ke mayar da manhajar bincike wurin aiki: rukunonin shafuka da ƙa’idoji, allon gefe mai bayanan kula, alamun shafi, tarihi, hotunan allo, agogo da na’urar kunna waƙa, kewayawa da maɓallai, da mataimaki na zaɓi.',
+        'Manhaja ce ta ƙari ga Chrome da manhajojin bincike masu tushen Chromium, da ake rarrabawa ta Chrome Web Store, wadda ke mayar da manhajar bincike wurin aiki: rukunonin shafuka da ƙa’idoji, allon gefe mai bayanan kula, alamun shafi, tarihi, hotunan allo, agogo da na’urar kunna sauti, kewayawa da maɓallai, da mataimaki na zaɓi.',
     'terms.service.li1':
         'Tana aiki ba tare da asusu ba, ba tare da rajista ba kuma ba tare da sabar tamu da ke riƙe da bayananka ba.',
     'terms.service.li2':
@@ -1101,7 +1146,7 @@ export const ha: Dictionary = {
         'Google Gemini, don mataimakin. Maɓallin API naka ne, kai ne ka shigar da shi kuma an adana shi a kan na’urarka: adadin, farashin da sharuɗɗan wannan maɓalli tsakaninka da Google ne.',
     'terms.third.li2': 'Chrome Web Store, wanda ke rarrabawa da sabunta manhajar ƙarƙashin sharuɗɗan Google.',
     'terms.third.li3':
-        'YouTube, don duba bidiyo, da CDN da ke bayar da samfurin gane rubutu da ke aiki a kan na’urarka.',
+        'Kundin rediyon intanet da tashoshin da ke cikinsa, YouTube, don duba bidiyo, da CDN da ke bayar da samfurin gane rubutu da ke aiki a kan na’urarka.',
     'terms.third.li4': 'Stripe, don kyautar godiya, kamar yadda aka bayyana a sashe na 8.',
     'terms.third.p2':
         'Abun cikin da kake kaiwa ta manhajar na wanda ya wallafa shi ne, kuma sa mahaɗa zuwa gare shi ba amincewa ba ce. Manufar sirri tana lissafa kowane mai masauki da manhajar za ta iya tuntuɓa, abin da take aikawa da lokacin.',

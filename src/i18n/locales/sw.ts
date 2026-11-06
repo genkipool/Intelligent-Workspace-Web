@@ -46,7 +46,7 @@ export const sw: Dictionary = {
     'hero.slide3.line1': 'Kituo chako kamili cha kazi',
     'hero.slide3.line2': 'ndani ya kidirisha cha pembeni',
     'hero.slide3.lede':
-        'Alamisho, historia, vichupo vilivyofungwa hivi karibuni, orodha ya kusoma na vipakuliwa havibaki tena kuwa kurasa unazopaswa kwenda kufungua. Kando yake: madokezo yenye orodha za ukaguzi na ubao wa Kanban, matunzio ya picha za skrini yenye OCR ndani ya kifaa, msaidizi wa AI, kipima muda cha Pomodoro, na muziki wako mwenyewe au redio ya mtandaoni.',
+        'Alamisho, historia, vichupo vilivyofungwa hivi karibuni, orodha ya kusoma na vipakuliwa havibaki tena kuwa kurasa unazopaswa kwenda kufungua. Kando yake: madokezo yenye orodha za ukaguzi na ubao wa Kanban, matunzio ya picha za skrini yenye OCR ndani ya kifaa, msaidizi wa AI, kipima muda cha Pomodoro, na kicheza sauti kwa sauti za kukusaidia kuzingatia au redio ya mtandaoni.',
     'hero.slide3.tag': 'Kidirisha kimoja cha pembeni, kila kitu ndani yake',
 
     'hero.carousel.prev': 'Slaidi iliyotangulia',
@@ -107,6 +107,7 @@ export const sw: Dictionary = {
     'fhub.tab2': 'Vichupo na sheria',
     'fhub.tab3': 'Muda na umakini',
     'fhub.tab4': 'Kibodi',
+    'fhub.tab5': 'Sauti na redio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Msaidizi anayeweza kutenda kwenye kivinjari, si kuzungumza tu kukihusu',
@@ -160,7 +161,25 @@ export const sw: Dictionary = {
     'fhub.keys.f4':
         'Hali ya giza, sepia, kijivu au angavu kwa kichupo kimoja au vyote, skrini iliyogawanywa, picture-in-picture, na kusoma kwa sauti, kila kimoja kwenye kifunguo chake.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Sauti ya kukusaidia kuzingatia, na redio ya kujifunzia',
+    'fhub.media.lead':
+        'Kicheza sauti ndani ya kidirisha cha pembeni kwa kelele nyeupe, mvua au sauti yoyote inayokusaidia kuzingatia, na kwa vituo vya redio ya mtandaoni unavyojifunza navyo au kufanyia kazi. Sauti hutolewa na hati ya offscreen badala ya kidirisha, kwa hivyo huendelea kucheza unapoficha kidirisha, unapobadilisha mwonekano au unapofunga ukurasa.',
+    'fhub.media.f1':
+        'Kielekeze kwenye folda ya kelele nyeupe, mvua au sauti za mazingira, au kwenye faili chache: hadi vipande mia tano vya sauti, vilivyopangwa kwa folda vilikotoka, vinavyoweza kupangwa upya kwa kuburuta na kutafutwa kwa jina.',
+    'fhub.media.f2':
+        'Redio ya mtandaoni ndani ya kicheza kilekile, kwa lugha unayojifunza, kituo cha mazungumzo au kitu tulivu cha kufanyia kazi: tafuta kwenye saraka ya Radio Browser kwa jina, nchi au lebo, au bandika anwani ya mtiririko wewe mwenyewe.',
+    'fhub.media.f3':
+        'Vidhibiti vya kucheza, kuruka sekunde kumi, kiwango cha sauti na kunyamazisha kwenye kidirisha, na vidhibiti hivyo hivyo chini ya kitufe cha upau wa zana wakati kidirisha kimefungwa. Mtiririko huonyesha upau wa moja kwa moja badala ya upau wa kusogeza, kwa sababu hauna mwisho wa kwenda.',
+    'fhub.media.f4':
+        'Hakuna kinachopakiwa. Folda hukabidhiwa kupitia File System Access API badala ya sehemu ya kuchagua faili, na orodha ya kucheza pamoja na vituo hukaa kwenye hifadhi ya kivinjari chako mwenyewe.',
+    'fhub.media.mockup.badge': 'Kicheza sauti',
+    'fhub.media.mockup.searchPlaceholder': 'Tafuta sauti…',
+    'fhub.media.mockup.tabMusic': 'Sauti',
+    'fhub.media.mockup.tabRadio': 'Redio',
+    'fhub.media.mockup.tabAll': 'Zote',
+    'fhub.media.mockup.savedStations': 'Vituo vilivyohifadhiwa',
+    'fhub.media.mockup.folder': 'Umakini',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Vichupo vya vipengele',
@@ -580,9 +599,28 @@ export const sw: Dictionary = {
     'bento.qrTools.h2': 'Kichanganuzi cha moja kwa moja kwenye skrini bila kamera',
     'bento.qrTools.h3': 'Safirisha kama PNG ya ubora wa juu au SVG ya vekta',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Redio ya mtandaoni ya kujifunza au kuzingatia',
+    'bento.radio.desc':
+        'Tafuta kwenye saraka ya Radio Browser kwa jina, nchi au lebo, au bandika anwani ya mtiririko wewe mwenyewe: kituo katika lugha unayojifunza, chaneli ya mazungumzo, au kitu tulivu cha kufanyia kazi. Vituo unavyohifadhi hukaa kwenye kicheza kilekile pamoja na sauti zako, katika kichupo chao wenyewe.',
+    'bento.radio.tag': 'Redio',
+    'bento.radio.badge': 'Matangazo ya moja kwa moja',
+    'bento.radio.h1': 'Maelfu ya vituo vya kutafuta, au anwani unayoibandika mwenyewe',
+    'bento.radio.h2': 'Safirisha na uingize orodha kama JSON',
+    'bento.radio.h3': 'Usawazishaji wa hiari wa vituo vyako katika Chrome zote ulizoingia kwa akaunti yako',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Kicheza sauti cha kukusaidia kuzingatia, kwenye kidirisha cha pembeni',
+    'bento.musicPlayer.desc':
+        'Kipe folda ya kelele nyeupe, mvua au sauti yoyote inayokusaidia kuzingatia, nacho hucheza kando ya ukurasa unaousoma. Sauti hutolewa na hati ya offscreen badala ya kidirisha, kwa hivyo kuficha kidirisha, kubadilisha mwonekano au kufunga ukurasa hakuisimamishi.',
+    'bento.musicPlayer.tag': 'Sauti',
+    'bento.musicPlayer.badge': 'Huendelea kucheza hata kikiwa kimefichwa',
+    'bento.musicPlayer.h1':
+        'Folda au faili ulizochagua, zilizopangwa kwa folda na zinazoweza kupangwa upya kwa kuburuta',
+    'bento.musicPlayer.h2':
+        'Upau wa kusogeza, kuruka sekunde kumi, kiwango cha sauti na kunyamazisha, na vidhibiti hivyo hivyo chini ya kitufe cha upau wa zana',
+    'bento.musicPlayer.h3':
+        'Hakuna kinachopakiwa: folda husomwa kwenye mashine yako na kuhifadhiwa kwenye kivinjari chako mwenyewe',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Skrini Iliyogawanywa ya Vichupo Viwili',
@@ -823,8 +861,9 @@ export const sw: Dictionary = {
     'privacy.store.r5.leaves': 'Ndani ya faili unalosafirisha mwenyewe pekee, kwenye folda unayochagua',
     'privacy.store.r6.what': 'Vipindi vya Pomodoro na historia yake',
     'privacy.store.r6.leaves': 'Hapana',
-    'privacy.store.r7.what': 'Muziki unaoongeza na redio unazopenda',
-    'privacy.store.r7.leaves': 'Hapana',
+    'privacy.store.r7.what': 'Sauti unazoongeza na vituo vyako vya redio vilivyohifadhiwa',
+    'privacy.store.r7.leaves':
+        'Sauti, kamwe. Orodha ya vituo ikiwa tu utawasha usawazishaji wake, ambao umezimwa kwa chaguo-msingi',
     'privacy.store.r8.what': 'Shughuli za wavuti: sekunde, ziara na vipindi kwa kila tovuti, kwa kila siku',
     'privacy.store.r8.leaves':
         'Hapana, isipokuwa uwashe usawazishaji wa rekodi hiyo wenyewe, ambao umezimwa kwa chaguo-msingi',
@@ -856,6 +895,12 @@ export const sw: Dictionary = {
     'privacy.net.r2.host': 'Modeli ya Chrome iliyojengwa ndani ya kifaa',
     'privacy.net.r2.what': 'Hakuna. Inaendeshwa ndani ya Chrome, kwenye mashine hii, na haifanyi ombi lolote',
     'privacy.net.r2.when': 'Unapoichagua badala ya Gemini',
+    'privacy.net.r3.what': 'Jina au aina ya kituo uliyoandika, na hakuna kingine',
+    'privacy.net.r3.when': 'Unapotafuta au kuvinjari redio ya mtandaoni',
+    'privacy.net.r4.host': 'Kituo cha redio unachobonyeza kucheza',
+    'privacy.net.r4.what':
+        'Ombi la kawaida la sauti kwa seva ya kituo hicho chenyewe, ambayo huona anwani yako ya IP kama tovuti yoyote ile',
+    'privacy.net.r4.when': 'Wakati kituo kinacheza',
     'privacy.net.r5.what': 'Kitambulisho cha video, kwa picha ndogo na kicheza kilichopachikwa',
     'privacy.net.r5.when': 'Kwa kiungo cha YouTube unachokihakiki au kukicheza pekee',
     'privacy.net.r7.what':
@@ -872,7 +917,7 @@ export const sw: Dictionary = {
     'privacy.retention.p1':
         'Hakuna chochote hapa chenye muda wa kuishi upande wa seva, kwa sababu hakuna seva inayokishikilia. Kilichopo kwenye kifaa chako hubaki hadi utakapokifuta, na hizi ndizo kanuni kinazofuata.',
     'privacy.retention.li1':
-        'Madokezo, picha za skrini, nakala rudufu, mazungumzo, historia ya Pomodoro na maktaba ya muziki: huhifadhiwa hadi utakapovifuta au kuondoa kirefusho.',
+        'Madokezo, picha za skrini, nakala rudufu, mazungumzo, historia ya Pomodoro na maktaba ya sauti: huhifadhiwa hadi utakapovifuta au kuondoa kirefusho.',
     'privacy.retention.li2':
         'Rekodi ya shughuli za wavuti: huhifadhiwa kwa idadi ya siku unazoweka kwenye mipangilio yake, na siku za zamani zaidi huondolewa kiotomatiki.',
     'privacy.retention.li3':
@@ -1005,7 +1050,7 @@ export const sw: Dictionary = {
 
     'terms.service.title': 'Intelligent Workspace ni nini',
     'terms.service.p1':
-        'Ni kirefusho cha Chrome na vivinjari vinavyotegemea Chromium, kinachosambazwa kupitia Chrome Web Store, kinachogeuza kivinjari kuwa eneo la kazi: vikundi vya vichupo na sheria, kidirisha cha pembeni chenye madokezo, alamisho, historia, picha za skrini, kipima muda na kicheza muziki, urambazaji kwa kibodi, na msaidizi wa hiari.',
+        'Ni kirefusho cha Chrome na vivinjari vinavyotegemea Chromium, kinachosambazwa kupitia Chrome Web Store, kinachogeuza kivinjari kuwa eneo la kazi: vikundi vya vichupo na sheria, kidirisha cha pembeni chenye madokezo, alamisho, historia, picha za skrini, kipima muda na kicheza sauti, urambazaji kwa kibodi, na msaidizi wa hiari.',
     'terms.service.li1':
         'Kinafanya kazi bila akaunti, bila usajili na bila seva yetu inayoshikilia data yako.',
     'terms.service.li2':
@@ -1102,7 +1147,7 @@ export const sw: Dictionary = {
         'Google Gemini, kwa msaidizi. Ufunguo wa API ni wako, umeingizwa na wewe na kuhifadhiwa kwenye mashine yako: mgao, gharama na masharti ya ufunguo huo ni kati yako na Google.',
     'terms.third.li2': 'Chrome Web Store, inayosambaza na kusasisha kirefusho chini ya masharti ya Google.',
     'terms.third.li3':
-        'YouTube, kwa hakikisho za video, na CDN inayohudumia modeli ya utambuzi wa maandishi inayoendeshwa kwenye mashine yako.',
+        'Saraka ya redio ya mtandaoni na vituo inavyoorodhesha, YouTube kwa hakikisho za video, na CDN inayohudumia modeli ya utambuzi wa maandishi inayoendeshwa kwenye mashine yako.',
     'terms.third.li4': 'Stripe, kwa michango ya shukrani, kama ilivyoelezwa katika sehemu ya 8.',
     'terms.third.p2':
         'Maudhui unayoyafikia kupitia kirefusho ni mali ya aliyeyachapisha, na kuyaunganisha si uidhinishaji. Sera ya faragha inaorodhesha kila seva pangishi ambayo kirefusho kinaweza kuwasiliana nayo, kinachotuma na lini.',

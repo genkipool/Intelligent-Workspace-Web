@@ -46,7 +46,7 @@ export const pt: Dictionary = {
     'hero.slide3.line1': 'Sua estação de trabalho completa',
     'hero.slide3.line2': 'integrada ao painel lateral',
     'hero.slide3.lede':
-        'Favoritos, histórico, abas fechadas recentemente, a lista de leitura e os downloads deixam de ser páginas que você precisa abrir. Ao lado deles: notas com checklists e quadros Kanban, a galeria de capturas com OCR no próprio dispositivo, o assistente de IA, o timer Pomodoro e sua própria música ou rádio online.',
+        'Favoritos, histórico, abas fechadas recentemente, a lista de leitura e os downloads deixam de ser páginas que você precisa abrir. Ao lado deles: notas com checklists e quadros Kanban, a galeria de capturas com OCR no próprio dispositivo, o assistente de IA, o timer Pomodoro e um player de áudio para sons de concentração ou rádio online.',
     'hero.slide3.tag': 'Um painel lateral, tudo dentro dele',
 
     'hero.carousel.prev': 'Slide anterior',
@@ -107,6 +107,7 @@ export const pt: Dictionary = {
     'fhub.tab2': 'Abas e regras',
     'fhub.tab3': 'Tempo e foco',
     'fhub.tab4': 'Teclado',
+    'fhub.tab5': 'Áudio e rádio',
 
     // Tab 1: AI Agent
     'fhub.agent.title': 'Um assistente que age no navegador, não apenas fala sobre ele',
@@ -160,7 +161,25 @@ export const pt: Dictionary = {
     'fhub.keys.f4':
         'Modo escuro, sépia, escala de cinza ou claro para uma aba ou para todas, tela dividida, picture-in-picture e leitura em voz alta, cada um com sua própria tecla.',
 
-    // Tab 5: Music player and online radio
+    // Tab 5: Audio player and internet radio
+    'fhub.media.title': 'Som para se concentrar, rádio para aprender',
+    'fhub.media.lead':
+        'Um player de áudio dentro do painel lateral para ruído branco, chuva ou qualquer som que ajude você a se concentrar, e para as rádios online com que você aprende ou trabalha. O som sai de um documento offscreen, e não do painel, então continua tocando quando você esconde o painel, muda de visualização ou fecha a página.',
+    'fhub.media.f1':
+        'Aponte para uma pasta de ruído branco, chuva ou som ambiente, ou para alguns arquivos: até quinhentas faixas, agrupadas pela pasta de origem, reordenáveis arrastando e pesquisáveis pelo nome.',
+    'fhub.media.f2':
+        'Rádio pela internet no mesmo player, para um idioma que você está aprendendo, uma rádio de conversa ou algo tranquilo para trabalhar: busque no diretório do Radio Browser por nome, país ou tag, ou cole você mesmo o endereço de uma transmissão.',
+    'fhub.media.f3':
+        'Controles de reprodução, saltos de dez segundos, volume e mudo no painel, e os mesmos controles sob o botão da barra de ferramentas enquanto o painel está fechado. Uma transmissão mostra uma barra de ao vivo em vez de uma barra de progresso, porque não tem um fim para onde avançar.',
+    'fhub.media.f4':
+        'Nada é enviado. A pasta é entregue pela File System Access API, e não por um campo de arquivo, e a playlist e as rádios ficam no armazenamento do seu próprio navegador.',
+    'fhub.media.mockup.badge': 'Player de áudio',
+    'fhub.media.mockup.searchPlaceholder': 'Buscar faixas…',
+    'fhub.media.mockup.tabMusic': 'Áudio',
+    'fhub.media.mockup.tabRadio': 'Rádio',
+    'fhub.media.mockup.tabAll': 'Tudo',
+    'fhub.media.mockup.savedStations': 'Rádios salvas',
+    'fhub.media.mockup.folder': 'Foco',
 
     // Feature Hub Mockups & Visual Previews (Bilingual)
     'fhub.tablistLabel': 'Abas de recursos',
@@ -579,9 +598,28 @@ export const pt: Dictionary = {
     'bento.qrTools.h2': 'Leitor direto na tela, sem câmera',
     'bento.qrTools.h3': 'Exporte em PNG de alta resolução ou SVG vetorial',
 
-    // 20. Online Radio
+    // 20. Internet radio
+    'bento.radio.title': 'Rádio pela internet para aprender ou se concentrar',
+    'bento.radio.desc':
+        'Busque no diretório do Radio Browser por nome, país ou tag, ou cole você mesmo o endereço de uma transmissão: uma rádio no idioma que você está aprendendo, um canal de conversa ou algo tranquilo para trabalhar. As rádios que você guarda ficam no mesmo player que seus sons, em uma aba própria.',
+    'bento.radio.tag': 'Rádio',
+    'bento.radio.badge': 'Ao vivo',
+    'bento.radio.h1': 'Milhares de rádios para buscar, ou um endereço que você mesmo cola',
+    'bento.radio.h2': 'Exporte e importe a lista em JSON',
+    'bento.radio.h3': 'Sincronização opcional das suas rádios entre os Chromes em que você está conectado',
 
-    // 21. Music Player
+    // 21. Audio player
+    'bento.musicPlayer.title': 'Um player de áudio para foco, no painel lateral',
+    'bento.musicPlayer.desc':
+        'Dê a ele uma pasta de ruído branco, chuva ou qualquer som que ajude você a se concentrar, e ele toca ao lado da página que você está lendo. O som sai de um documento offscreen, e não do painel, então esconder o painel, mudar de visualização ou fechar a página não o interrompe.',
+    'bento.musicPlayer.tag': 'Áudio',
+    'bento.musicPlayer.badge': 'Continua tocando escondido',
+    'bento.musicPlayer.h1':
+        'Uma pasta ou uma seleção de arquivos, agrupados por pasta e reordenáveis arrastando',
+    'bento.musicPlayer.h2':
+        'Barra de progresso, saltos de dez segundos, volume e mudo, e os mesmos controles sob o botão da barra de ferramentas',
+    'bento.musicPlayer.h3':
+        'Nada é enviado: a pasta é lida na sua máquina e guardada no seu próprio navegador',
 
     // Legacy compatibility keys for footer
     'bento.c1.title': 'Tela dividida com duas abas',
@@ -823,8 +861,9 @@ export const pt: Dictionary = {
         'Apenas dentro de um arquivo que você mesmo exporta, para a pasta que escolher',
     'privacy.store.r6.what': 'Sessões Pomodoro e seu histórico',
     'privacy.store.r6.leaves': 'Não',
-    'privacy.store.r7.what': 'Músicas que você adiciona e suas rádios favoritas',
-    'privacy.store.r7.leaves': 'Não',
+    'privacy.store.r7.what': 'Áudio que você adiciona e suas rádios salvas',
+    'privacy.store.r7.leaves':
+        'O áudio, nunca. A lista de rádios só se você ativar a sincronização dela, que vem desativada',
     'privacy.store.r8.what': 'Atividade web: segundos, visitas e sessões por site, por dia',
     'privacy.store.r8.leaves':
         'Não, a menos que você ative a sincronização própria desse registro, que vem desativada',
@@ -857,6 +896,12 @@ export const pt: Dictionary = {
     'privacy.net.r2.host': 'O modelo integrado do Chrome no dispositivo',
     'privacy.net.r2.what': 'Nada. Ele roda dentro do Chrome, nesta máquina, e não faz nenhuma solicitação',
     'privacy.net.r2.when': 'Quando você o escolhe em vez do Gemini',
+    'privacy.net.r3.what': 'O nome ou o gênero de rádio que você digitou, e nada mais',
+    'privacy.net.r3.when': 'Enquanto você busca ou explora rádios online',
+    'privacy.net.r4.host': 'A rádio em que você dá play',
+    'privacy.net.r4.what':
+        'Uma solicitação de áudio comum ao servidor da própria rádio, que vê seu endereço IP como qualquer site vê',
+    'privacy.net.r4.when': 'Enquanto uma rádio está tocando',
     'privacy.net.r5.what': 'O ID do vídeo, para a miniatura e o player incorporado',
     'privacy.net.r5.when': 'Somente para um link do YouTube que você visualiza ou reproduz',
     'privacy.net.r7.what':
@@ -873,7 +918,7 @@ export const pt: Dictionary = {
     'privacy.retention.p1':
         'Nada aqui tem prazo de conservação em servidor, porque não há servidor que guarde nada. O que existe no seu dispositivo fica até você excluir, e estas são as regras que ele segue.',
     'privacy.retention.li1':
-        'Notas, capturas, backups, conversas, histórico do Pomodoro e a biblioteca de músicas: guardados até você excluí-los ou remover a extensão.',
+        'Notas, capturas, backups, conversas, histórico do Pomodoro e a biblioteca de áudio: guardados até você excluí-los ou remover a extensão.',
     'privacy.retention.li2':
         'O registro de atividade web: guardado pelo número de dias que você definir nas configurações dele, e os dias mais antigos são descartados automaticamente.',
     'privacy.retention.li3':
@@ -1006,7 +1051,7 @@ export const pt: Dictionary = {
 
     'terms.service.title': 'O que é o Intelligent Workspace',
     'terms.service.p1':
-        'É uma extensão para o Chrome e navegadores baseados em Chromium, distribuída pela Chrome Web Store, que transforma o navegador em um espaço de trabalho: grupos de abas e regras, um painel lateral com notas, favoritos, histórico, capturas, um timer e um player de música, navegação por teclado e um assistente opcional.',
+        'É uma extensão para o Chrome e navegadores baseados em Chromium, distribuída pela Chrome Web Store, que transforma o navegador em um espaço de trabalho: grupos de abas e regras, um painel lateral com notas, favoritos, histórico, capturas, um timer e um player de áudio, navegação por teclado e um assistente opcional.',
     'terms.service.li1': 'Funciona sem conta, sem cadastro e sem nenhum servidor nosso guardando seus dados.',
     'terms.service.li2':
         'Roda no seu navegador, na sua máquina. Alguns recursos acessam um serviço de terceiros, e somente quando você usa esse recurso.',
@@ -1102,7 +1147,7 @@ export const pt: Dictionary = {
         'Google Gemini, para o assistente. A chave de API é sua, inserida por você e armazenada na sua máquina: a cota, o custo e os termos dessa chave são assunto entre você e o Google.',
     'terms.third.li2': 'A Chrome Web Store, que distribui e atualiza a extensão sob os termos do Google.',
     'terms.third.li3':
-        'O YouTube, para prévias de vídeo, e a CDN que fornece o modelo de reconhecimento de texto que roda na sua máquina.',
+        'O diretório de rádios online e as rádios que ele lista, o YouTube, para prévias de vídeo, e a CDN que fornece o modelo de reconhecimento de texto que roda na sua máquina.',
     'terms.third.li4': 'O Stripe, para gorjetas, conforme descrito na seção 8.',
     'terms.third.p2':
         'O conteúdo que você acessa pela extensão pertence a quem o publicou, e criar um link para ele não é um endosso. A política de privacidade lista cada host com que a extensão pode se comunicar, o que envia e quando.',
