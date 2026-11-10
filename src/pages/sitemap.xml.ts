@@ -10,6 +10,11 @@
  * to rank — a payment sheet in a search result is a worse answer than the page that links
  * to it. They stay crawlable, they are simply not advertised.
  *
+ * Nor the `llms*.txt` files. They are written for language models, which find them at
+ * `/llms.txt` by convention, and Google will not rank a plain text file over the page it
+ * describes: listing them only spent crawl budget on 26 files it reported as "Crawled -
+ * currently not indexed" while the translated pages waited as "Discovered".
+ *
  * `Astro.site` is the origin from `astro.config.mjs`, so a domain change moves this with
  * it. Prerendered like everything except `api/intent`, so it ships as a static file.
  */
@@ -23,39 +28,6 @@ const PATHS = ['/', '/privacy', '/support', '/terms'] as const;
 
 /** `en` lives at the root and every other language under its prefix, as in `localisePath`. */
 const LANGS = langs.map((code) => ({ code, prefix: code === defaultLang ? '' : `/${code}` }));
-
-/**
- * The LLM specification files across 25 languages.
- * Master English specification at `/llms.txt`, and 24 localized files at `/llms-{code}.txt`.
- */
-const LLMS_SPECS = [
-    '/llms.txt',
-    '/llms-full.txt',
-    '/llms-zh.txt',
-    '/llms-hi.txt',
-    '/llms-es.txt',
-    '/llms-fr.txt',
-    '/llms-ar.txt',
-    '/llms-bn.txt',
-    '/llms-pt.txt',
-    '/llms-ru.txt',
-    '/llms-ur.txt',
-    '/llms-id.txt',
-    '/llms-de.txt',
-    '/llms-ja.txt',
-    '/llms-mr.txt',
-    '/llms-te.txt',
-    '/llms-tr.txt',
-    '/llms-ta.txt',
-    '/llms-vi.txt',
-    '/llms-tl.txt',
-    '/llms-ko.txt',
-    '/llms-fa.txt',
-    '/llms-ha.txt',
-    '/llms-sw.txt',
-    '/llms-it.txt',
-    '/llms-pa.txt',
-] as const;
 
 function localised(prefix: string, path: string): string {
     if (path === '/') return prefix === '' ? '/' : `${prefix}/`;
@@ -85,15 +57,10 @@ export const GET: APIRoute = ({ site }) => {
         }),
     );
 
-    const llmsEntries = LLMS_SPECS.map((path) =>
-        ['    <url>', `        <loc>${origin}${path}</loc>`, '    </url>'].join('\n'),
-    );
-
     const xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
         ...entries,
-        ...llmsEntries,
         '</urlset>',
         '',
     ].join('\n');

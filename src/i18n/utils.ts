@@ -38,9 +38,18 @@ export function localisePath(lang: Lang, path: string): string {
     return lang === defaultLang ? clean : `/${lang}${clean}`;
 }
 
-/** The path a page has in every language: the current URL with its prefix taken off. */
+/**
+ * The path a page has in every language: the current URL with its prefix taken off.
+ *
+ * The trailing slash goes too. A static build sees `/ta/privacy/` (the folder its
+ * `index.html` lives in), while every link, the sitemap and the headers in `vercel.json`
+ * use `/ta/privacy`. A canonical built from the slashed form told Google the URL it had
+ * been handed was only an alternate, so the page was reported as "Alternate page with
+ * proper canonical tag" and the sitemap entry never counted. The root stays `/`.
+ */
 export function barePath(lang: Lang, pathname: string): string {
-    return lang === defaultLang ? pathname : pathname.replace(`/${lang}`, '') || '/';
+    const unprefixed = lang === defaultLang ? pathname : pathname.replace(`/${lang}`, '');
+    return unprefixed.replace(/\/+$/, '') || '/';
 }
 
 /** `getStaticPaths` for a page that exists once per prefixed language. */

@@ -45,6 +45,9 @@ describe('barePath', () => {
         expect(barePath('ja', '/ja/support')).toBe('/support');
         expect(barePath('ja', '/ja/')).toBe('/');
         expect(barePath('fr', '/fr')).toBe('/');
+        expect(barePath('ta', '/ta/privacy/')).toBe('/privacy');
+        expect(barePath('en', '/privacy/')).toBe('/privacy');
+        expect(barePath('en', '/')).toBe('/');
     });
 });
 
